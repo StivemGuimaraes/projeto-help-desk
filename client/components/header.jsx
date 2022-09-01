@@ -2,16 +2,13 @@ const { useState } = React;
 const Header = () => {
   return (
     <>
-      <header
-        class=" shadow border-secondary border-bottom py-3 mb-4"
-        style={{ backgroundColor: "SlateBlue" }}
-      >
+      <header class="shadow border-secondary border-bottom py-3 mb-4 bg-dark">
         <div class="container-fluid">
           <div class="row align-items-center">
             <div class="col-md-2 col-sm-1 col-xl-1">
               <a
                 href="/client/index.html"
-                class="text-decoration-none text-dark"
+                class="text-decoration-none text-white"
               >
                 <img class="img-fluid float-start" src="" alt="logo aqui" />
               </a>
@@ -19,7 +16,7 @@ const Header = () => {
             <div class="col-md-10 col-sm-11 col-xl-11">
               <a
                 href="/client/index.html"
-                class="text-dark text-decoration-none"
+                class="text-white text-decoration-none"
               >
                 <h1 class="text-start fs-2">academy help desk</h1>
               </a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,23 +21,19 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <script
-      defer
-      crossorigin
-      src="https://unpkg.com/react@17/umd/react.development.js"
-    ></script>
-    <script
-      defer
-      crossorigin
-      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
-    ></script>
-    <script
-      defer
-      src="https://unpkg.com/@babel/standalone/babel.min.js"
-    ></script>
   </head>
   <body>
-    <header class="shadow border-secondary border-bottom py-3 mb-4 bg-dark">
+    <header
+      class="py-3"
+      style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+    >
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col-md-2 col-sm-1 col-xl-1">
@@ -50,7 +46,7 @@
           </div>
           <div class="col-md-10 col-sm-11 col-xl-11">
             <a
-              href="/client/index.html"
+              href="index.html"
               class="text-white text-decoration-none"
             >
               <h1 class="text-start fs-2">academy help desk</h1>
@@ -60,18 +56,25 @@
       </div>
     </header>
     <main>
-      <div>
-        <h1 class="text-center">
-          aqui eu vou colocar uma imagem ou um Carrossel, o que voces acham
-        </h1>
+      <div class="container-fluid p-0">
+          <div class="col-md-12 p-0">
+            <img
+              class="img-fluid m-0 p-0 shadow border-bottom"
+              src="/public/img/estudante.jpg"
+              alt="opa, erro"
+              width="110%"
+              style="height: 32rem"
+            />
+          </div>
+        </div>
       </div>
-      <div class="container">
+      <div class="container mt-5">
         <div class="row g-5 d-flex justify-content-center">
           <div class="col-md-4 col-lg-4" style="width: 15rem">
-            <div class="card rounded">
+            <div class="card rounded border-secondary">
               <div class="card-body text-center">
                 <img
-                  src="/client/public/img/headset.png"
+                  src="/public/img/headset.png"
                   alt=""
                   height="40%"
                   width="40%"
@@ -81,10 +84,10 @@
             </div>
           </div>
           <div class="col-md-4 col-lg-4" style="width: 15rem">
-            <div class="card rounded">
+            <div class="card rounded border-secondary">
               <div class="card-body text-center">
                 <img
-                  src="/client/public/img/users-avatar.png"
+                  src="/public/img/users-avatar.png"
                   alt=""
                   height="40%"
                   width="40%"
@@ -94,10 +97,10 @@
             </div>
           </div>
           <div class="col-md-4 col-lg-4" style="width: 15rem">
-            <div class="card rounded">
+            <div class="card rounded border-secondary">
               <div class="card-body text-center">
                 <img
-                  src="/client/public/img/documents.png"
+                  src="/public/img/documents.png"
                   alt="ola"
                   height="40%"
                   width="40%"

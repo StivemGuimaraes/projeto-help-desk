@@ -4,14 +4,13 @@
   "description": "projeto de TCC",
   "main": "index.js",
   "scripts": {
-    "nodemon": "node index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.21.4"
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

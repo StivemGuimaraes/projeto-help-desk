@@ -21,7 +21,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <script defer src="/public/js/cadastro_validacao.js"></script>
+    <script defer src="/js/cadastro_validacao.js"></script>
     <style>
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
@@ -137,6 +137,7 @@
                   <div class="invalid-feedback">
                     Por favor, digite sua senha
                   </div>
+                  <div id="error-password"></div>
                 </div>
                 <label
                   class="form-label"
@@ -164,7 +165,7 @@
                     <button class="btn btn-outline-primary" type="submit">
                       Cadastrar
                     </button>
-                    <a href="/public/html/login.html"
+                    <a href="/Login"
                       ><button
                         type="button"
                         class="btn btn-link"

@@ -1,0 +1,155 @@
+<head>
+  <title>Criar chamado</title>
+</head>
+<header
+  class="py-3"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-xl-1">
+        <a href="/client/index.html" class="text-decoration-none text-white">
+          <img class="img-fluid float-start" src="" alt="logo aqui" />
+        </a>
+      </div>
+      <div class="col-md-10 col-sm-11 col-xl-11">
+        <a href="index.html" class="text-white text-decoration-none">
+          <h1 class="text-start fs-2">academy help desk</h1>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="container" style="margin-top: 50px">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <h1 class="text-center text-dark mb-5">Criar chamado</h1>
+        <div class="card border border-secondary">
+          <div class="card-body">
+            <form action="" method="post">
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    for="floatingInput-titulo"
+                    class="form-label fs-5"
+                  >Titulo</label>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput-titulo"
+                      placeholder="Titulo"
+                    />
+                    <label for="floatingInput-titulo">Titulo</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    for="floatingInput-titulo1"
+                    class="form-label fs-5"
+                  >Assunto</label>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput-titulo1"
+                      placeholder="Assunto"
+                    />
+                    <label for="floatingInput-titulo1">Assunto</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    for="floatingInput-titulo1"
+                    class="form-label fs-5"
+                  >Nome do cliente</label>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput-titulo1"
+                      placeholder="Assunto"
+                    />
+                    <label for="floatingInput-titulo1">Nome</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                  <label class="form-label fs-5">Nível</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>Selecione</option>
+                    <option value="2">2 - Remoto</option>
+                    <option value="3">3 - Presencial</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                  <label class="form-label fs-5">Prioridade</label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>Selecione</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label class="form-label fs-5">Descrição</label>
+                  <div class="form-floating">
+                    <textarea
+                      class="form-control"
+                      placeholder="Deixe seu problema aqui"
+                      id="floatingTextarea"
+                    ></textarea>
+                    <label for="floatingTextarea">Descreva seu problema</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                  <label class="form-label fs-5">Arquivo</label>
+                  <label for="formFileMultiple" class="form-label"></label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="formFileMultiple"
+                    multiple
+                  />
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-5 col-sm-12 col-md-8">
+                  <input
+                    type="submit"
+                    class="btn btn-primary"
+                    value="Criar chamado"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

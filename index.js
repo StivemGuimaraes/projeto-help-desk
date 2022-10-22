@@ -3,6 +3,9 @@ const app = express();
 const exphbs = require("express-handlebars");
 const path = require("path");
 const admin = require("./routes/admin");
+const aluno = require("./routes/aluno");
+const funcionario = require("./routes/funcionario");
+const professor = require("./routes/professor");
 const port = 8008;
 
 // config
@@ -23,16 +26,19 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(path.join(__dirname, "public")));
 
 //mysql
-(async () => {
+/*(async () => {
   const bd = require("./conexao");
   await bd.teste({ matricula: "14785", usuario: "stivem", senha: "stivem123" });
-})();
+})();*/
 
 //Rotas
 app.get("/", (req, res) => {
   res.render("login");
 });
 app.use("/admin", admin);
+app.use("/aluno", aluno);
+app.use("/professor", professor);
+app.use("/funcionario", funcionario);
 
 // outros
 app.listen(port, () => {

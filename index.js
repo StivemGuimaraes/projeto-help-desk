@@ -6,6 +6,8 @@ const admin = require("./routes/admin");
 const aluno = require("./routes/aluno");
 const funcionario = require("./routes/funcionario");
 const professor = require("./routes/professor");
+const bd = require("./conexao");
+const bodyParser = require("body-parser");
 const port = 8008;
 
 // config
@@ -19,17 +21,16 @@ app.engine(
     },
   })
 );
+
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
+//--body-parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // Static Files
 app.use(express.static(path.join(__dirname, "public")));
-
-//mysql
-/*(async () => {
-  const bd = require("./conexao");
-  await bd.teste({ matricula: "14785", usuario: "stivem", senha: "stivem123" });
-})();*/
 
 //Rotas
 app.get("/", (req, res) => {

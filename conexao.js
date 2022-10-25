@@ -7,7 +7,7 @@ const con = () => {
       host: "localhost",
       user: "root",
       database: "academy_desk",
-      password: "",
+      password: "algo",
       waitForConnections: true,
       connectionLimit: 20,
       queueLimit: 0,

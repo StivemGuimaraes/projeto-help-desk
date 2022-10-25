@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bd = require("../models/bd_professor");
 const bd1 = require("../models/bd_funcionario");
+const bd2 = require("../models/bd_aluno");
 
 router.get("/", (req, res) => {
   res.render("admin/index");
@@ -35,6 +36,13 @@ router.get("/cadastrar-aluno", (req, res) => {
   res.render("admin/cadastro_aluno");
 });
 
+router.post("/cadastrar-aluno/nova", (req, res) => {
+  bd2.insert_aluno({
+    matricula: req.body.matricula,
+    usuario: req.body.usuario,
+    senha: req.body.senha,
+  });
+});
 router.get("/login", (req, res) => {
   res.render("admin/login");
 });

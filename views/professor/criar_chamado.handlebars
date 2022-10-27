@@ -34,7 +34,7 @@
         <h1 class="text-center text-dark mb-5">Criar chamado</h1>
         <div class="card border border-secondary">
           <div class="card-body">
-            <form action="" method="post">
+            <form action="/professor/criar-chamado/nova" method="post">
               <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
@@ -47,6 +47,7 @@
                       class="form-control"
                       id="floatingInput-titulo"
                       placeholder="Titulo"
+                      name="titulo"
                     />
                     <label for="floatingInput-titulo">Titulo</label>
                   </div>
@@ -64,6 +65,7 @@
                       class="form-control"
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
+                      name="assunto"
                     />
                     <label for="floatingInput-titulo1">Assunto</label>
                   </div>
@@ -81,6 +83,7 @@
                       class="form-control"
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
+                      name="nome"
                     />
                     <label for="floatingInput-titulo1">Nome</label>
                   </div>
@@ -92,6 +95,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    name="nivel"
                   >
                     <option selected>Selecione</option>
                     <option value="2">2 - Remoto</option>
@@ -103,6 +107,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    name="prioridade"
                   >
                     <option selected>Selecione</option>
                     <option value="Baixa">Baixa</option>
@@ -120,6 +125,7 @@
                       class="form-control"
                       placeholder="Deixe seu problema aqui"
                       id="floatingTextarea"
+                      name="descricao"
                     ></textarea>
                     <label for="floatingTextarea">Descreva seu problema</label>
                   </div>
@@ -127,7 +133,7 @@
               </div>
               <div class="row mb-4">
                 <div class="col-md-12 col-sm-12 col-lg-12">
-                  <label class="form-label fs-5">Arquivo</label>
+                  <label class="form-label fs-5">Arquivo de imagem</label>
                   <label for="formFileMultiple" class="form-label"></label>
                   <input
                     class="form-control"

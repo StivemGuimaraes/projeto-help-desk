@@ -23,6 +23,11 @@ router.get("/cadastrar-professor", (req, res) => {
   res.render("funcionario/cadastro_professor");
 });
 
+router.get("/professores", (req, res) => {
+  res.render("funcionario/professores");
+  bd1.select_professorer
+});
+
 router.post("/cadastrar-professor/nova", (req, res) => {
   bd1.insert_professor({
     matricula: req.body.matricula,

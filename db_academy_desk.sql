@@ -30,6 +30,7 @@ id int not null primary key auto_increment,
 titulo varchar(90) not null,
 assunto varchar(20) not null,
 nome_cliente varchar(90) not null,
+statusd varchar(20) default Aberto,
 nivel char(1) not null,
 prioridade varchar(8),
 descricao text not null

@@ -13,4 +13,15 @@ const insert_professor = (professor) => {
   }
 };
 
-module.exports = { insert_professor };
+const select_professor = () => {
+  try {
+    const conn = bd.con();
+    const sql = "SELECT * FROM professor;";
+    conn.query(sql);
+    console.log("pegando dados do professor realizado com sucesso");
+  } catch (error) {
+    console.log("deu erro, por alguma causa", error);
+  }
+};
+
+module.exports = { insert_professor, select_professor };

@@ -30,6 +30,11 @@ router.post("/criar-chamado/nova", (req, res) => {
     prioridade: req.body.prioridade,
     descricao: req.body.descricao,
   });
+  res.redirect("/");
+});
+
+router.get("/chamado", (req, res) => {
+  res.render("professor/chamado_professor");
 });
 
 router.get("/atendimento", (req, res) => {

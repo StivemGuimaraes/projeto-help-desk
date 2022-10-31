@@ -57,9 +57,9 @@ mens_aluno text not null,
 id_funcionario int,
 mens_func text not null
 );
+
 alter table chat
 add foreign key(id_chamado) references chamado(id),
 add foreign key(matricula_A) references aluno(matricula),
 add foreign key(matricula_F) references professor(matricula);
-
  

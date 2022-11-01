@@ -48,7 +48,7 @@ alter table funcionario
 add foreign key(id_chamado) references chamado(id);
 
 create table chat (
-id_chat int not null auto_increment, 
+id_chat int not null primary key auto_increment, 
 id_chamado int,
 matricula_A int,
 matricula_F int,

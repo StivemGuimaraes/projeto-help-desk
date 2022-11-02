@@ -13,12 +13,13 @@ const insert_professor = async (professor) => {
   }
 };
 
-const select_professor = () => {
+const select_professor = async () => {
   try {
-    const conn = bd.con();
+    const conn = await bd.con();
     const sql = "SELECT * FROM professor;";
-    conn.query(sql);
+    const [professor] = await conn.query(sql);
     console.log("pegando dados do professor realizado com sucesso");
+    return professor;
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
   }

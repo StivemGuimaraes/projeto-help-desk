@@ -8,9 +8,28 @@ const funcionario = require("./routes/funcionario");
 const professor = require("./routes/professor");
 const bd = require("./conexao");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const flash = require("connect-flash");
 const port = 8008;
 
 // config
+//--sessão
+app.use(
+  session({
+    secret: "sistemahelpdesk",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
+//--middleware
+app.use((req, res, next) => {
+  res.locals.matricula = req.flash("matricula");
+  res.locals.usuario = req.flash("usuario");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.sucess_msg = req.flash("sucess_msg");
+  next();
+});
 //--Template Engine
 app.engine(
   "handlebars",
@@ -36,6 +55,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.render("login");
 });
+app.post("/", (req, res) => {});
 app.use("/admin", admin);
 app.use("/aluno", aluno);
 app.use("/professor", professor);

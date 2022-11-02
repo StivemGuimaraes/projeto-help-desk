@@ -38,11 +38,48 @@ router.get("/cadastrar-aluno", (req, res) => {
 });
 
 router.post("/cadastrar-aluno/nova", (req, res) => {
-  bd2.insert_aluno({
-    matricula: req.body.matricula,
-    usuario: req.body.usuario,
-    senha: req.body.senha,
-  });
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "matricula invalida";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "usuario invalido";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "senha invalida";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "repetição de senha invalida";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "senhas diferentes";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+    error = "senha muito pequena";
+    res.render("admin/cadastro_aluno", { error });
+  } else {
+    bd2.insert_aluno({
+      matricula: req.body.matricula,
+      usuario: req.body.usuario,
+      senha: req.body.senha,
+    });
+  }
 });
 router.get("/login", (req, res) => {
   res.render("admin/login");
@@ -59,15 +96,21 @@ router.get("/relatorios", (req, res) => {
 });
 
 router.get("/funcionario", (req, res) => {
-  res.render("admin/funcionarios");
+  bd1.select_funcionario().then((funcionario) => {
+    res.render("admin/funcionarios", { funcionario });
+  });
 });
 
 router.get("/aluno", (req, res) => {
-  res.render("admin/alunos");
+  bd2.select_aluno().then((aluno) => {
+    res.render("admin/alunos", { aluno });
+  });
 });
 
 router.get("/professor", (req, res) => {
-  res.render("admin/professores");
+  bd.select_professor().then((professor) => {
+    res.render("admin/professores", { professor });
+  });
 });
 
 module.exports = router;

@@ -16,4 +16,16 @@ const insert_funcionario = async (funcionario) => {
     console.log("deu erro, por alguma causa", error);
   }
 };
-module.exports = { insert_funcionario };
+
+const select_funcionario = async () => {
+  try {
+    const conn = bd.con();
+    const sql = "SELECT * FROM funcionario;";
+    const [funcionario] = await conn.query(sql);
+    console.log("selcionamento do funcionario");
+    return funcionario;
+  } catch (error) {
+    console.log("deu error, por alguma causa", error);
+  }
+};
+module.exports = { insert_funcionario, select_funcionario };

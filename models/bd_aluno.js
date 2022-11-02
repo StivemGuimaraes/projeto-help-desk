@@ -11,4 +11,16 @@ const insert_aluno = async (aluno) => {
     console.log("deu erro, por alguma causa", error);
   }
 };
-module.exports = { insert_aluno };
+
+const select_aluno = async () => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM aluno;";
+    const [aluno] = await conn.query(sql);
+    console.log("selecionamento do aluno realizado aluno");
+    return aluno;
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+module.exports = { insert_aluno, select_aluno };

@@ -3,7 +3,7 @@ const router = express.Router();
 const bd = require("../models/bd_professor");
 const bd1 = require("../models/bd_funcionario");
 const bd2 = require("../models/bd_aluno");
-const bd3 = require("../models/bd_chamado");
+var bd3 = require("../models/bd_chamado");
 
 router.get("/", (req, res) => {
   res.render("admin/index");
@@ -47,10 +47,14 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("admin/login");
 });
+const person = {
+  pessoa:"stivem",
+  algo: "drwett",
+};
 
 router.get("/chamado", (req, res) => {
-  res.render("admin/chamado", {chamado: bd3.select_chamado});
-  console.log(bd3.select_chamado());
+    res.render("admin/chamado", {chamado: person});
+    console.log(bd3.select_chamado());
 });
 
 router.get("/relatorios", (req, res) => {

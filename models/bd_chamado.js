@@ -25,6 +25,7 @@ const  select_chamado = async () => {
     const conn = await bd.con();
     const [select] = await conn.query("SELECT * FROM chamado;");
     console.log("seleção dos chamados realizado com sucesso");
+    return select;
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
   }

@@ -47,14 +47,11 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("admin/login");
 });
-const person = {
-  pessoa:"stivem",
-  algo: "drwett",
-};
 
 router.get("/chamado", (req, res) => {
-    res.render("admin/chamado", {chamado: person});
-    console.log(bd3.select_chamado());
+  bd3.select_chamado().then((chamado) => {
+    res.render("admin/chamado", { chamado });
+  });
 });
 
 router.get("/relatorios", (req, res) => {

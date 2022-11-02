@@ -28,7 +28,14 @@
   </div>
 </header>
 <main>
-    
-    <p>{{chamado.pessoa}}</p>
-    <p></p>
+  {{#each chamado}}
+    <p>{{this.id}}</p>
+    <p>{{this.titulo}}</p>
+    <p>{{this.nome_cliente}}</p>
+    <p>{{this.statusd}}</p>
+    <p>{{this.nivel}}</p>
+    <p>{{this.prioridade}}</p>
+    <p>{{this.descricao}}</p>
+    <hr />
+  {{/each}}
 </main>

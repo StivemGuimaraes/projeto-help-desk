@@ -79,7 +79,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
         matricula: req.body.matricula,
       })
       .then((matricula) => {
-        if (matricula) {
+        if (matricula === req.body.matricula) {
           error = "Aluno já cadastrado no sistema";
           res.render("admin/cadastro_aluno", { error });
         } else {

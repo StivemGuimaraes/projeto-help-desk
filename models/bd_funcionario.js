@@ -17,7 +17,7 @@ const insert_funcionario = async (funcionario) => {
   }
 };
 
-const select_funcionario = async () => {
+const select_funcionarioAll = async () => {
   try {
     const conn = bd.con();
     const sql = "SELECT * FROM funcionario;";
@@ -28,4 +28,4 @@ const select_funcionario = async () => {
     console.log("deu error, por alguma causa", error);
   }
 };
-module.exports = { insert_funcionario, select_funcionario };
+module.exports = { insert_funcionario, select_funcionarioAll };

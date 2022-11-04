@@ -71,14 +71,31 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "senhas diferentes";
     res.render("admin/cadastro_aluno", { error });
   } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
-    error = "senha muito pequena";
+    error = "A senha deve ter mais do que 7 caracteres";
     res.render("admin/cadastro_aluno", { error });
   } else {
-    bd2.insert_aluno({
+    bd2
+      .select_aluno({
+        matricula: req.body.matricula,
+      })
+      .then((matricula) => {
+        if (matricula) {
+          error = "Aluno já cadastrado no sistema";
+          res.render("admin/cadastro_aluno", { error });
+        }
+      })
+      .catch((error) => {
+        console.log("deu error", error);
+        req.flash("error_msg", "error no sistema, tente novamente mais tarde");
+        res.redirect("/admin");
+      });
+    /*bd2.insert_aluno({
       matricula: req.body.matricula,
       usuario: req.body.usuario,
       senha: req.body.senha,
     });
+    req.flash("sucess_msg", "aluno cadastrado com sucesso");
+    res.redirect("/admin/aluno");*/
   }
 });
 router.get("/login", (req, res) => {
@@ -96,19 +113,19 @@ router.get("/relatorios", (req, res) => {
 });
 
 router.get("/funcionario", (req, res) => {
-  bd1.select_funcionario().then((funcionario) => {
+  bd1.select_funcionarioAll().then((funcionario) => {
     res.render("admin/funcionarios", { funcionario });
   });
 });
 
 router.get("/aluno", (req, res) => {
-  bd2.select_aluno().then((aluno) => {
+  bd2.select_alunoAll().then((aluno) => {
     res.render("admin/alunos", { aluno });
   });
 });
 
 router.get("/professor", (req, res) => {
-  bd.select_professor().then((professor) => {
+  bd.select_professorAll().then((professor) => {
     res.render("admin/professores", { professor });
   });
 });

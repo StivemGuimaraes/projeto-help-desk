@@ -20,7 +20,7 @@ const insert_chamado = async (chamado) => {
   }
 };
 
-const  select_chamado = async () => {
+const  select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
     const [select] = await conn.query("SELECT * FROM chamado;");
@@ -30,4 +30,4 @@ const  select_chamado = async () => {
     console.log("deu erro, por alguma causa", error);
   }
 }
-module.exports = { insert_chamado, select_chamado };
+module.exports = { insert_chamado, select_chamadoAll };

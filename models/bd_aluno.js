@@ -12,7 +12,7 @@ const insert_aluno = async (aluno) => {
   }
 };
 
-const select_aluno = async () => {
+const select_alunoAll = async () => {
   try {
     const conn = await bd.con();
     const sql = "SELECT * FROM aluno;";
@@ -23,4 +23,16 @@ const select_aluno = async () => {
     console.log("deu error por alguma causa", error);
   }
 };
-module.exports = { insert_aluno, select_aluno };
+const select_aluno = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT matricula FROM aluno WHERE matricula = ?";
+    const value = aluno;
+    const matricula = await conn.query(sql, value);
+    console.log("selecionamento da matricula do aluno realizado com sucesso");
+    return matricula;
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+module.exports = { insert_aluno, select_alunoAll, select_aluno };

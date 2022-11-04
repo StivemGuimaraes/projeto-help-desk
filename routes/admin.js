@@ -82,20 +82,24 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
         if (matricula) {
           error = "Aluno já cadastrado no sistema";
           res.render("admin/cadastro_aluno", { error });
+        } else {
+          bd2
+            .insert_aluno({
+              matricula: req.body.matricula,
+              usuario: req.body.usuario,
+              senha: req.body.senha,
+            })
+            .catch((error) => {
+              console.log("deu error", error);
+              req.flash(
+                "error_msg",
+                "error no sistema tente novamente mais tarde"
+              );
+            });
+          req.flash("sucess_msg", "aluno cadastrado com sucesso");
+          res.redirect("/admin/aluno");
         }
-      })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "error no sistema, tente novamente mais tarde");
-        res.redirect("/admin");
       });
-    /*bd2.insert_aluno({
-      matricula: req.body.matricula,
-      usuario: req.body.usuario,
-      senha: req.body.senha,
-    });
-    req.flash("sucess_msg", "aluno cadastrado com sucesso");
-    res.redirect("/admin/aluno");*/
   }
 });
 router.get("/login", (req, res) => {

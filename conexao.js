@@ -7,7 +7,7 @@ const con = () => {
       host: "localhost",
       user: "root",
       database: "academy_desk",
-      password: "Mysqlstivem123",
+      password: "",
       waitForConnections: true,
       connectionLimit: 20,
       queueLimit: 0,

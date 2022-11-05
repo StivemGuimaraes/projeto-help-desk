@@ -25,7 +25,6 @@ router.get("/cadastrar-professor", (req, res) => {
 
 router.get("/professores", (req, res) => {
   res.render("funcionario/professores");
-  bd1.select_professorer
 });
 
 router.post("/cadastrar-professor/nova", (req, res) => {

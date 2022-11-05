@@ -13,7 +13,7 @@ const insert_professor = async (professor) => {
   }
 };
 
-const select_professor = async () => {
+const select_professorAll = async () => {
   try {
     const conn = await bd.con();
     const sql = "SELECT * FROM professor;";
@@ -33,4 +33,4 @@ const select_professor = async () => {
   }
 };
 
-module.exports = { insert_professor, select_professor };
+module.exports = { insert_professor, select_professorAll };

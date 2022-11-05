@@ -6,7 +6,6 @@ matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
 id_chamado int,
-id_funcionario int
 );
 create table aluno
 (
@@ -14,7 +13,6 @@ matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
 id_chamado int,
-id_funcionario int,
 id_professor int
 );
 create table funcionario
@@ -37,11 +35,9 @@ descricao text not null
 );
 alter table professor
 add foreign key(id_chamado) references chamado(id),
-add foreign key(id_funcionario) references funcionario(matricula);
 
 alter table aluno
 add foreign key(id_chamado) references chamado(id),
-add foreign key(id_funcionario) references funcionario(matricula),
 add foreign key(id_professor) references professor(matricula);
 
 alter table funcionario

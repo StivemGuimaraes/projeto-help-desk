@@ -23,6 +23,14 @@ const select_professor = async () => {
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
   }
+
+  const select_where = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 };
 
 module.exports = { insert_professor, select_professor };

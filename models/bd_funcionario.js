@@ -28,4 +28,48 @@ const select_funcionarioAll = async () => {
     console.log("deu error, por alguma causa", error);
   }
 };
-module.exports = { insert_funcionario, select_funcionarioAll };
+
+const select_funcionario = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT matricula FROM funcionario WHERE matricula = ?";
+    const value = [funcionario];
+    const [matricula] = await conn.query(sql, value);
+    if (matricula == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento da matricula do funcionario realizado com sucesso"
+      );
+      return matricula;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+
+const select_senha = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT senha FROM funcionario WHERE senha = ?";
+    const value = [funcionario];
+    const [senha] = await conn.query(sql, value);
+    if (senha == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento da senha do funcionario realizado com sucesso"
+      );
+      return senha;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+
+module.exports = {
+  insert_funcionario,
+  select_funcionarioAll,
+  select_funcionario,
+  select_senha,
+};

@@ -92,11 +92,79 @@ router.get("/cadastrar-funcionario", (req, res) => {
 });
 
 router.post("/cadastrar-funcionario/nova", (req, res) => {
-  bd1.insert_funcionario({
-    matricula: req.body.matricula,
-    usuario: req.body.usuario,
-    senha: req.body.senha,
-  });
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "matricula invalida";
+    res.render("admin/cadastro_funcionario", { error });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "usuario invalido";
+    res.render("admin/cadastro_funcionario", { error });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "senha invalida";
+    res.render("admin/cadastro_funcionario", { error });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "repetição de senha invalida";
+    res.render("admin/cadastro_funcionario", { error });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "senhas diferentes";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("admin/cadastro_funcionario", { error });
+  } else {
+    bd1
+      .select_funcionario(req.body.matricula)
+      .then((matricula) => {
+        if (matricula) {
+          error = "funcionario já cadastrado no sistema";
+          res.render("admin/cadastro_funcionario", { error });
+        } else {
+          bd1
+            .select_senha(req.body.senha)
+            .then((senha) => {
+              if (senha) {
+                error = "Senha já cadastrada no sistema";
+                res.render("admin/cadastro_funcionario", { error });
+              } else {
+                bd1.insert_funcionario({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  senha: req.body.senha,
+                });
+                req.flash("sucess_msg", "funcionario cadastrado com sucesso");
+                res.redirect("/admin/funcionario");
+              }
+            })
+            .catch((error) => {
+              console.log("deu error", error);
+              req.flash(
+                "error_msg",
+                "error no sistema tente novamente mais tarde"
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("deu error", error);
+        req.flash("error_msg", "error no sistema tente novamente mais tarde");
+      });
+  }
 });
 
 router.get("/cadastrar-aluno", (req, res) => {

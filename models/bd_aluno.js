@@ -23,16 +23,39 @@ const select_alunoAll = async () => {
     console.log("deu error por alguma causa", error);
   }
 };
+
 const select_aluno = async (aluno) => {
   try {
     const conn = await bd.con();
     const sql = "SELECT matricula FROM aluno WHERE matricula = ?";
-    const value = aluno;
-    const matricula = await conn.query(sql, value);
-    console.log("selecionamento da matricula do aluno realizado com sucesso");
-    return matricula;
+    const value = [aluno];
+    const [matricula] = await conn.query(sql, value);
+    if (matricula == "") {
+      return false;
+    } else {
+      console.log("selecionamento da matricula do aluno realizado com sucesso");
+      return matricula;
+    }
   } catch (error) {
     console.log("deu error por alguma causa", error);
   }
 };
-module.exports = { insert_aluno, select_alunoAll, select_aluno };
+
+const select_senha = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT senha FROM aluno WHERE senha = ?";
+    const value = [aluno];
+    const [senha] = await conn.query(sql, value);
+    if (senha == "") {
+      return false;
+    } else {
+      console.log("selecionamento da senha do aluno realizado com sucesso");
+      return senha;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+
+module.exports = { insert_aluno, select_alunoAll, select_aluno, select_senha };

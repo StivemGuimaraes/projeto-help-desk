@@ -14,11 +14,77 @@ router.get("/cadastrar-professor", (req, res) => {
 });
 
 router.post("/cadastrar-professor/nova", (req, res) => {
-  bd.insert_professor({
-    matricula: req.body.matricula,
-    usuario: req.body.usuario,
-    senha: req.body.senha,
-  });
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "matricula invalida";
+    res.render("admin/cadastro_professor", { error });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "usuario invalido";
+    res.render("admin/cadastro_professor", { error });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "senha invalida";
+    res.render("admin/cadastro_professor", { error });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "repetição de senha invalida";
+    res.render("admin/cadastro_professor", { error });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "senhas diferentes";
+    res.render("admin/cadastro_professor", { error });
+  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("admin/cadastro_professor", { error });
+  } else {
+    bd.select_professor(req.body.matricula)
+      .then((matricula) => {
+        if (matricula) {
+          error = "professor já cadastrado no sistema";
+          res.render("admin/cadastro_professor", { error });
+        } else {
+          bd.select_senha(req.body.senha)
+            .then((senha) => {
+              if (senha) {
+                error = "Senha já cadastrada no sistema";
+                res.render("admin/cadastro_professor", { error });
+              } else {
+                bd.insert_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  senha: req.body.senha,
+                });
+                req.flash("sucess_msg", "professor cadastrado com sucesso");
+                res.redirect("/admin/professor");
+              }
+            })
+            .catch((error) => {
+              console.log("deu error", error);
+              req.flash(
+                "error_msg",
+                "error no sistema tente novamente mais tarde"
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("deu error", error);
+        req.flash("error_msg", "error no sistema tente novamente mais tarde");
+      });
+  }
 });
 
 router.get("/cadastrar-funcionario", (req, res) => {
@@ -75,19 +141,27 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     res.render("admin/cadastro_aluno", { error });
   } else {
     bd2
-      .select_aluno({
-        matricula: req.body.matricula,
-      })
+      .select_aluno(req.body.matricula)
       .then((matricula) => {
-        if (matricula === req.body.matricula) {
+        if (matricula) {
           error = "Aluno já cadastrado no sistema";
           res.render("admin/cadastro_aluno", { error });
         } else {
           bd2
-            .insert_aluno({
-              matricula: req.body.matricula,
-              usuario: req.body.usuario,
-              senha: req.body.senha,
+            .select_senha(req.body.senha)
+            .then((senha) => {
+              if (senha) {
+                error = "Senha já cadastrada no sistema";
+                res.render("admin/cadastro_aluno", { error });
+              } else {
+                bd2.insert_aluno({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  senha: req.body.senha,
+                });
+                req.flash("sucess_msg", "aluno cadastrado com sucesso");
+                res.redirect("/admin/aluno");
+              }
             })
             .catch((error) => {
               console.log("deu error", error);
@@ -96,9 +170,11 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                 "error no sistema tente novamente mais tarde"
               );
             });
-          req.flash("sucess_msg", "aluno cadastrado com sucesso");
-          res.redirect("/admin/aluno");
         }
+      })
+      .catch((error) => {
+        console.log("deu error", error);
+        req.flash("error_msg", "error no sistema tente novamente mais tarde");
       });
   }
 });

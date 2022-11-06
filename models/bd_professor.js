@@ -18,19 +18,52 @@ const select_professorAll = async () => {
     const conn = await bd.con();
     const sql = "SELECT * FROM professor;";
     const [professor] = await conn.query(sql);
-    console.log("pegando dados do professor realizado com sucesso");
+    console.log("selecionamento do professor realizado com sucesso");
     return professor;
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
   }
+};
 
-  const select_where = async () => {
-    try {
-      
-    } catch (error) {
-      
+const select_professor = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT matricula FROM professor WHERE matricula = ?";
+    const value = [professor];
+    const [matricula] = await conn.query(sql, value);
+    if (matricula == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento da matricula do professor realizado com sucesso"
+      );
+      return matricula;
     }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
   }
 };
 
-module.exports = { insert_professor, select_professorAll };
+const select_senha = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT senha FROM professor WHERE senha = ?";
+    const value = [professor];
+    const [senha] = await conn.query(sql, value);
+    if (senha == "") {
+      return false;
+    } else {
+      console.log("selecionamento da senha do professor realizado com sucesso");
+      return senha;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+  }
+};
+
+module.exports = {
+  insert_professor,
+  select_professorAll,
+  select_professor,
+  select_senha,
+};

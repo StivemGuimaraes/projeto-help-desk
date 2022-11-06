@@ -34,7 +34,7 @@ prioridade varchar(8),
 descricao text not null
 );
 alter table professor
-add foreign key(id_chamado) references chamado(id),
+add foreign key(id_chamado) references chamado(id);
 
 alter table aluno
 add foreign key(id_chamado) references chamado(id),

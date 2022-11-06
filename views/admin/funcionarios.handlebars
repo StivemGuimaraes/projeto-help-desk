@@ -28,10 +28,18 @@
   </div>
 </header>
 <main>
+  {{> _msg}}
   {{#each funcionario}}
-    <p>{{this.matricula}}</p>
-    <p>{{this.usuario}}</p>
-    <p>{{this.senha}}</p>
-    <hr />
+  <div class="container w-50">
+  <div class="card mt-4">
+  <h5 class="card-header">{{this.matricula}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">{{this.usuario}}</h5>
+    <p class="card-text">Senha: {{this.senha}}</p>
+    <a href="#" class="btn btn-warning">Alterar</a>
+    <a href="#" class="btn btn-danger">Deletar</a>
+  </div>
+</div>
+</div>
   {{/each}}
 </main>

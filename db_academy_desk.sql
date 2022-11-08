@@ -5,7 +5,7 @@ create table professor
 matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
-id_chamado int,
+id_chamado int
 );
 create table aluno
 (

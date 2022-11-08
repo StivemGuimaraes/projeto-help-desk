@@ -19,7 +19,7 @@ const insert_funcionario = async (funcionario) => {
 
 const select_funcionarioAll = async () => {
   try {
-    const conn = bd.con();
+    const conn = await bd.con();
     const sql = "SELECT * FROM funcionario;";
     const [funcionario] = await conn.query(sql);
     console.log("selcionamento do funcionario");

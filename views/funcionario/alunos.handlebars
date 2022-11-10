@@ -1,5 +1,5 @@
 <head>
-  <title>Listas de Funcionarios</title>
+  <title>Lista de Alunos</title>
 </head>
 <header
   class="py-3"
@@ -15,12 +15,12 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-xl-1">
-        <a href="/admin" class="text-decoration-none text-white">
+        <a href="/funcionario" class="text-decoration-none text-white">
           <img class="img-fluid float-start" src="" alt="logo aqui" />
         </a>
       </div>
       <div class="col-md-10 col-sm-11 col-xl-11">
-        <a href="/admin" class="text-white text-decoration-none">
+        <a href="/funcionario" class="text-white text-decoration-none">
           <h1 class="text-start fs-2">academy help desk</h1>
         </a>
       </div>
@@ -29,7 +29,7 @@
 </header>
 <main>
   {{> _msg}}
-  {{#each funcionario}}
+  {{#each aluno}}
   <div class="container w-50">
   <div class="card mt-4 mb-4">
   <h5 class="card-header">{{this.matricula}}</h5>

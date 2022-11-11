@@ -20,31 +20,31 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     typeof req.body.matricula === undefined ||
     req.body.matricula === null
   ) {
-    error = "matricula invalida";
+    error = "Matricula invalida";
     res.render("admin/cadastro_professor", { error });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
-    error = "usuario invalido";
+    error = "Usuário invalido";
     res.render("admin/cadastro_professor", { error });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
-    error = "senha invalida";
+    error = "Senha invalida";
     res.render("admin/cadastro_professor", { error });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
-    error = "repetição de senha invalida";
+    error = "Repetição de senha invalida";
     res.render("admin/cadastro_professor", { error });
   } else if (req.body.senha !== req.body.senha2) {
-    error = "senhas diferentes";
+    error = "Senhas diferentes";
     res.render("admin/cadastro_professor", { error });
   } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
     error = "A senha deve ter mais do que 7 caracteres";
@@ -53,7 +53,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     bd.select_professor(req.body.matricula)
       .then((matricula) => {
         if (matricula) {
-          error = "professor já cadastrado no sistema";
+          error = "Professor já cadastrado no sistema";
           res.render("admin/cadastro_professor", { error });
         } else {
           bd.select_senha(req.body.senha)
@@ -67,7 +67,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                   usuario: req.body.usuario,
                   senha: req.body.senha,
                 });
-                req.flash("sucess_msg", "professor cadastrado com sucesso");
+                req.flash("sucess_msg", "Professor cadastrado com sucesso");
                 res.redirect("/admin/professor");
               }
             })
@@ -75,14 +75,14 @@ router.post("/cadastrar-professor/nova", (req, res) => {
               console.log("deu error", error);
               req.flash(
                 "error_msg",
-                "error no sistema tente novamente mais tarde"
+                "Error no sistema tente novamente mais tarde"
               );
             });
         }
       })
       .catch((error) => {
         console.log("deu error", error);
-        req.flash("error_msg", "error no sistema tente novamente mais tarde");
+        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
       });
   }
 });
@@ -98,31 +98,31 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     typeof req.body.matricula === undefined ||
     req.body.matricula === null
   ) {
-    error = "matricula invalida";
+    error = "Matricula invalida";
     res.render("admin/cadastro_funcionario", { error });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
-    error = "usuario invalido";
+    error = "Usuário invalido";
     res.render("admin/cadastro_funcionario", { error });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
-    error = "senha invalida";
+    error = "Senha invalida";
     res.render("admin/cadastro_funcionario", { error });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
-    error = "repetição de senha invalida";
+    error = "Repetição de senha invalida";
     res.render("admin/cadastro_funcionario", { error });
   } else if (req.body.senha !== req.body.senha2) {
-    error = "senhas diferentes";
+    error = "Senhas diferentes";
     res.render("admin/cadastro_funcionario", { error });
   } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
     error = "A senha deve ter mais do que 7 caracteres";
@@ -132,7 +132,7 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
       .select_funcionario(req.body.matricula)
       .then((matricula) => {
         if (matricula) {
-          error = "funcionario já cadastrado no sistema";
+          error = "Funcionario já cadastrado no sistema";
           res.render("admin/cadastro_funcionario", { error });
         } else {
           bd1
@@ -147,7 +147,7 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
                   usuario: req.body.usuario,
                   senha: req.body.senha,
                 });
-                req.flash("sucess_msg", "funcionario cadastrado com sucesso");
+                req.flash("sucess_msg", "Funcionário cadastrado com sucesso");
                 res.redirect("/admin/funcionario");
               }
             })
@@ -155,14 +155,14 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
               console.log("deu error", error);
               req.flash(
                 "error_msg",
-                "error no sistema tente novamente mais tarde"
+                "Error no sistema tente novamente mais tarde"
               );
             });
         }
       })
       .catch((error) => {
         console.log("deu error", error);
-        req.flash("error_msg", "error no sistema tente novamente mais tarde");
+        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
       });
   }
 });
@@ -178,31 +178,31 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     typeof req.body.matricula === undefined ||
     req.body.matricula === null
   ) {
-    error = "matricula invalida";
+    error = "Matricula invalida";
     res.render("admin/cadastro_aluno", { error });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
-    error = "usuario invalido";
+    error = "Usuário invalido";
     res.render("admin/cadastro_aluno", { error });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
-    error = "senha invalida";
+    error = "Senha invalida";
     res.render("admin/cadastro_aluno", { error });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
-    error = "repetição de senha invalida";
+    error = "Repetição de senha invalida";
     res.render("admin/cadastro_aluno", { error });
   } else if (req.body.senha !== req.body.senha2) {
-    error = "senhas diferentes";
+    error = "Senhas diferentes";
     res.render("admin/cadastro_aluno", { error });
   } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
     error = "A senha deve ter mais do que 7 caracteres";
@@ -227,7 +227,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                   usuario: req.body.usuario,
                   senha: req.body.senha,
                 });
-                req.flash("sucess_msg", "aluno cadastrado com sucesso");
+                req.flash("sucess_msg", "Aluno cadastrado com sucesso");
                 res.redirect("/admin/aluno");
               }
             })
@@ -235,14 +235,14 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
               console.log("deu error", error);
               req.flash(
                 "error_msg",
-                "error no sistema tente novamente mais tarde"
+                "Error no sistema tente novamente mais tarde"
               );
             });
         }
       })
       .catch((error) => {
         console.log("deu error", error);
-        req.flash("error_msg", "error no sistema tente novamente mais tarde");
+        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
       });
   }
 });

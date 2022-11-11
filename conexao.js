@@ -12,12 +12,10 @@ const con = () => {
       connectionLimit: 20,
       queueLimit: 0,
     });
-    console.log("Conectou no mysql");
     global.con = con;
     return con;
   } catch (error) {
     console.log("algo deu erro na conexão com banco de dados");
   }
 };
-
 module.exports = { con };

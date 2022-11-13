@@ -9,6 +9,7 @@ const insert_aluno = async (aluno) => {
     console.log("cadastramento do aluno realizado com sucesso");
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Erro no sistema tente novamente mais tarde";
   }
 };
 
@@ -21,6 +22,7 @@ const select_alunoAll = async () => {
     return aluno;
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error";
   }
 };
 
@@ -34,10 +36,11 @@ const select_aluno = async (aluno) => {
       return false;
     } else {
       console.log("selecionamento da matricula do aluno realizado com sucesso");
-      return matricula;
+      return "Aluno já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
@@ -51,10 +54,11 @@ const select_senha = async (aluno) => {
       return false;
     } else {
       console.log("selecionamento da senha do aluno realizado com sucesso");
-      return senha;
+      return "Senha já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 

@@ -14,6 +14,7 @@ const insert_funcionario = async (funcionario) => {
     console.log("cadastramento do funcionario realizado com sucesso");
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
@@ -26,6 +27,7 @@ const select_funcionarioAll = async () => {
     return funcionario;
   } catch (error) {
     console.log("deu error, por alguma causa", error);
+    return "Error";
   }
 };
 
@@ -41,10 +43,11 @@ const select_funcionario = async (funcionario) => {
       console.log(
         "selecionamento da matricula do funcionario realizado com sucesso"
       );
-      return matricula;
+      return "Funcionario já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
@@ -60,10 +63,11 @@ const select_senha = async (funcionario) => {
       console.log(
         "selecionamento da senha do funcionario realizado com sucesso"
       );
-      return senha;
+      return "Senha já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 

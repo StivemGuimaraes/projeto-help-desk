@@ -51,24 +51,41 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     res.render("admin/cadastro_professor", { error });
   } else {
     bd.select_professor(req.body.matricula)
-      .then((matricula) => {
-        if (matricula) {
-          error = "Professor já cadastrado no sistema";
+      .then((msg) => {
+        if (msg) {
+          error = msg;
           res.render("admin/cadastro_professor", { error });
         } else {
           bd.select_senha(req.body.senha)
-            .then((senha) => {
-              if (senha) {
-                error = "Senha já cadastrada no sistema";
+            .then((msg) => {
+              if (msg) {
+                error = msg;
                 res.render("admin/cadastro_professor", { error });
               } else {
                 bd.insert_professor({
                   matricula: req.body.matricula,
                   usuario: req.body.usuario,
                   senha: req.body.senha,
-                });
-                req.flash("sucess_msg", "Professor cadastrado com sucesso");
-                res.redirect("/admin/professor");
+                })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("admin/cadastro_professor", { error });
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Professor cadastrado com sucesso"
+                      );
+                      res.redirect("/admin/professor");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("deu error", error);
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                  });
               }
             })
             .catch((error) => {
@@ -130,25 +147,43 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
   } else {
     bd1
       .select_funcionario(req.body.matricula)
-      .then((matricula) => {
-        if (matricula) {
-          error = "Funcionario já cadastrado no sistema";
+      .then((msg) => {
+        if (msg) {
+          error = msg;
           res.render("admin/cadastro_funcionario", { error });
         } else {
           bd1
             .select_senha(req.body.senha)
-            .then((senha) => {
-              if (senha) {
-                error = "Senha já cadastrada no sistema";
+            .then((msg) => {
+              if (msg) {
+                error = msg;
                 res.render("admin/cadastro_funcionario", { error });
               } else {
-                bd1.insert_funcionario({
-                  matricula: req.body.matricula,
-                  usuario: req.body.usuario,
-                  senha: req.body.senha,
-                });
-                req.flash("sucess_msg", "Funcionário cadastrado com sucesso");
-                res.redirect("/admin/funcionario");
+                bd1
+                  .insert_funcionario({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    senha: req.body.senha,
+                  })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("admin/cadastro_funcionario", { error });
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Funcionário cadastrado com sucesso"
+                      );
+                      res.redirect("/admin/funcionario");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("deu error", error);
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                  });
               }
             })
             .catch((error) => {
@@ -210,25 +245,40 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
   } else {
     bd2
       .select_aluno(req.body.matricula)
-      .then((matricula) => {
-        if (matricula) {
-          error = "Aluno já cadastrado no sistema";
+      .then((msg) => {
+        if (msg) {
+          error = msg;
           res.render("admin/cadastro_aluno", { error });
         } else {
           bd2
             .select_senha(req.body.senha)
-            .then((senha) => {
-              if (senha) {
-                error = "Senha já cadastrada no sistema";
+            .then((msg) => {
+              if (msg) {
+                error = msg;
                 res.render("admin/cadastro_aluno", { error });
               } else {
-                bd2.insert_aluno({
-                  matricula: req.body.matricula,
-                  usuario: req.body.usuario,
-                  senha: req.body.senha,
-                });
-                req.flash("sucess_msg", "Aluno cadastrado com sucesso");
-                res.redirect("/admin/aluno");
+                bd2
+                  .insert_aluno({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    senha: req.body.senha,
+                  })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("admin/cadastro_aluno", { error });
+                    } else {
+                      req.flash("sucess_msg", "Aluno cadastrado com sucesso");
+                      res.redirect("/admin/aluno");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("deu error", error);
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                  });
               }
             })
             .catch((error) => {
@@ -262,19 +312,34 @@ router.get("/relatorios", (req, res) => {
 
 router.get("/funcionario", (req, res) => {
   bd1.select_funcionarioAll().then((funcionario) => {
-    res.render("admin/funcionarios", { funcionario });
+    if (funcionario === "Error") {
+      res.render("admin/funcionarios");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("admin/funcionarios", { funcionario });
+    }
   });
 });
 
 router.get("/aluno", (req, res) => {
   bd2.select_alunoAll().then((aluno) => {
-    res.render("admin/alunos", { aluno });
+    if (aluno === "Error") {
+      res.render("admin/alunos");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("admin/alunos", { aluno });
+    }
   });
 });
 
 router.get("/professor", (req, res) => {
   bd.select_professorAll().then((professor) => {
-    res.render("admin/professores", { professor });
+    if (professor) {
+      res.render("admin/professores");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("admin/professores", { professor });
+    }
   });
 });
 

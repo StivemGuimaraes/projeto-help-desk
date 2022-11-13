@@ -10,6 +10,7 @@ const insert_professor = async (professor) => {
     console.log("cadastramento do professor realizado com sucesso");
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
@@ -22,6 +23,7 @@ const select_professorAll = async () => {
     return professor;
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Error";
   }
 };
 
@@ -37,10 +39,11 @@ const select_professor = async (professor) => {
       console.log(
         "selecionamento da matricula do professor realizado com sucesso"
       );
-      return matricula;
+      return "Professor já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
@@ -54,10 +57,11 @@ const select_senha = async (professor) => {
       return false;
     } else {
       console.log("selecionamento da senha do professor realizado com sucesso");
-      return senha;
+      return "Senha já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 

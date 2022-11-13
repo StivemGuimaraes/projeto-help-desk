@@ -49,24 +49,38 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     res.render("funcionario/cadastro_aluno", { error });
   } else {
     bd.select_aluno(req.body.matricula)
-      .then((matricula) => {
-        if (matricula) {
-          error = "Aluno já cadastrado no sistema";
+      .then((msg) => {
+        if (msg) {
+          error = msg;
           res.render("funcionario/cadastro_aluno", { error });
         } else {
           bd.select_senha(req.body.senha)
-            .then((senha) => {
-              if (senha) {
-                error = "Senha já cadastrada no sistema";
+            .then((msg) => {
+              if (msg) {
+                error = msg;
                 res.render("funcionario/cadastro_aluno", { error });
               } else {
                 bd.insert_aluno({
                   matricula: req.body.matricula,
                   usuario: req.body.usuario,
                   senha: req.body.senha,
-                });
-                req.flash("sucess_msg", "Aluno cadastrado com sucesso");
-                res.redirect("/funcionario/aluno");
+                })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("funcionario/cadastro_aluno", { error });
+                    } else {
+                      req.flash("sucess_msg", "Aluno cadastrado com sucesso");
+                      res.redirect("/funcionario/aluno");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("deu error", error);
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                  });
               }
             })
             .catch((error) => {
@@ -75,14 +89,12 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                 "error_msg",
                 "Error no sistema tente novamente mais tarde"
               );
-              res.redirect("/funcionario/aluno");
             });
         }
       })
       .catch((error) => {
         console.log("deu error", error);
         req.flash("error_msg", "Error no sistema tente novamente mais tarde");
-        res.redirect("/funcionario/alunos");
       });
   }
 });
@@ -130,25 +142,43 @@ router.post("/cadastrar-professor/nova", (req, res) => {
   } else {
     bd1
       .select_professor(req.body.matricula)
-      .then((matricula) => {
-        if (matricula) {
-          error = "Professor já cadastrado no sistema";
+      .then((msg) => {
+        if (msg) {
+          error = msg;
           res.render("funcionario/cadastro_professor", { error });
         } else {
           bd1
             .select_senha(req.body.senha)
-            .then((senha) => {
-              if (senha) {
-                error = "Senha já cadastrada no sistema";
+            .then((msg) => {
+              if (msg) {
+                error = msg;
                 res.render("funcionario/cadastro_professor", { error });
               } else {
-                bd1.insert_professor({
-                  matricula: req.body.matricula,
-                  usuario: req.body.usuario,
-                  senha: req.body.senha,
-                });
-                req.flash("sucess_msg", "Professor cadastrado com sucesso");
-                res.redirect("/funcionario/professor");
+                bd1
+                  .insert_professor({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    senha: req.body.senha,
+                  })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("funcionario/cadastro_professor", { error });
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Professor cadastrado com sucesso"
+                      );
+                      res.redirect("/funcionario/professor");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("deu error", error);
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                  });
               }
             })
             .catch((error) => {
@@ -169,13 +199,23 @@ router.post("/cadastrar-professor/nova", (req, res) => {
 
 router.get("/professor", (req, res) => {
   bd1.select_professorAll().then((professor) => {
-    res.render("funcionario/professores", { professor });
+    if (professor === "Error") {
+      res.render("funcionario/alunos");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("funcionario/professores", { professor });
+    }
   });
 });
 
 router.get("/aluno", (req, res) => {
   bd.select_alunoAll().then((aluno) => {
-    res.render("funcionario/alunos", { aluno });
+    if (aluno === "Error") {
+      res.render("funcionario/alunos");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("funcionario/alunos", { aluno });
+    }
   });
 });
 

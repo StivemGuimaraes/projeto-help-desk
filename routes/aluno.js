@@ -58,6 +58,17 @@ router.post("/criar-chamado/nova", (req, res) => {
     nivel: req.body.nivel,
     prioridade: req.body.Prioridade,
     descricao: req.body.descricao,
+  }).then((msg) => {
+    if (msg) {
+      error = msg;
+      res.render("admin/cadastro_funcionario", { error });
+    } else {
+      req.flash(
+        "sucess_msg",
+        "Chamado cadastrado com sucesso"
+      );
+      res.redirect("admin/chamado");
+    }
   });
 });
 

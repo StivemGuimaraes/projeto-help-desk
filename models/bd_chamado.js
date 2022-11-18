@@ -17,17 +17,19 @@ const insert_chamado = async (chamado) => {
     console.log("cadastramento do chamado realizado com sucesso");
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
   }
 };
 
-const  select_chamadoAll = async () => {
+const select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
-    const [select] = await conn.query("SELECT * FROM chamado;");
+    const [chamado] = await conn.query("SELECT * FROM chamado;");
     console.log("seleção dos chamados realizado com sucesso");
-    return select;
+    return chamado;
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
+    return "Error";
   }
-}
+};
 module.exports = { insert_chamado, select_chamadoAll };

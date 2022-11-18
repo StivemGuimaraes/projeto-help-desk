@@ -302,7 +302,12 @@ router.get("/login", (req, res) => {
 
 router.get("/chamado", (req, res) => {
   bd3.select_chamado().then((chamado) => {
-    res.render("admin/chamado", { chamado });
+    if (chamado === "Error") {
+      res.render("admin/chamado");
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    } else {
+      res.render("admin/chamado", { chamado });
+    }
   });
 });
 

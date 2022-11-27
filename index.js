@@ -10,17 +10,23 @@ const bd = require("./conexao");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+require("./config/auth")(passport);
 const port = 8008;
 
 // config
 //--sessão
 app.use(
   session({
+    key: "cookie_name",
     secret: "sistemahelpdesk",
     resave: true,
     saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 //--middleware
 app.use((req, res, next) => {
@@ -28,6 +34,7 @@ app.use((req, res, next) => {
   res.locals.usuario = req.flash("usuario");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.sucess_msg = req.flash("sucess_msg");
+  res.locals.error = req.flash("error");
   next();
 });
 //--Template Engine
@@ -55,7 +62,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.render("login");
 });
-app.post("/", (req, res) => {});
+app.post("/", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/admin",
+    failureRedirect: "/",
+    failureFlash: true,
+  })(req, res, next);
+});
 app.use("/admin", admin);
 app.use("/aluno", aluno);
 app.use("/professor", professor);

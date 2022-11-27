@@ -5,6 +5,7 @@ create table professor
 matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
+eAdmin int not null default 0,
 id_chamado int
 );
 create table aluno
@@ -12,6 +13,7 @@ create table aluno
 matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
+eAdmin int not null default 0,
 id_chamado int,
 id_professor int
 );
@@ -20,6 +22,7 @@ create table funcionario
 matricula int not null primary key,
 usuario varchar(90) not null,
 senha varchar(30) not null,
+eAdmin int not null default 0,
 id_chamado int
 );
 create table chamado

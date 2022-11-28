@@ -2,7 +2,7 @@ const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const bd = require("../conexao");
 
-const admin = async (admin1) => {
+const professor = async (professor1) => {
   passport.use(
     new localStrategy(
       { usernameField: "usuario", passwordField: "senha" },
@@ -10,15 +10,15 @@ const admin = async (admin1) => {
         try {
           const conn = await bd.con();
           const sql =
-            "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
+            "SELECT * FROM professor WHERE usuario = ? AND senha = ?;";
           const values = [usuario, senha];
-          const [admin] = await conn.query(sql, values);
-          if (admin == "") {
+          const [professor] = await conn.query(sql, values);
+          if (professor == "") {
             return done(null, false, {
               message: "Usuário ou Senha incorretos",
             });
           } else {
-            return done(null, admin);
+            return done(null, professor);
           }
         } catch (error) {
           console.log("deu error", error);
@@ -35,16 +35,17 @@ const admin = async (admin1) => {
   });
   try {
     const conn = await bd.con();
-    const sql = "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
-    const values = [admin1.usuario, admin1.senha];
-    const [admin] = await conn.query(sql, values);
-    if (admin == "") {
+    const sql = "SELECT * FROM professor WHERE usuario = ? AND senha = ?;";
+    const values = [professor1.usuario, professor1.senha];
+    const [professor] = await conn.query(sql, values);
+    if (professor == "") {
       return [{ error: "error" }];
     } else {
-      return admin;
+      return professor;
     }
   } catch (error) {
     console.log("deu error", error);
   }
 };
-module.exports = { admin };
+
+module.exports = { professor };

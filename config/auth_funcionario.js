@@ -13,7 +13,6 @@ const funcionario = async (funcionario1) => {
             "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
           const values = [usuario, senha];
           const [funcionario] = await conn.query(sql, values);
-          console.log("funciona");
           if (funcionario == "") {
             return done(null, false, {
               message: "Usuário ou Senha incorretos",
@@ -39,7 +38,6 @@ const funcionario = async (funcionario1) => {
     const sql = "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
     const values = [funcionario1.usuario, funcionario1.senha];
     const [funcionario] = await conn.query(sql, values);
-    console.log(funcionario);
     if (funcionario == "") {
       return [{ error: "error" }];
     } else {

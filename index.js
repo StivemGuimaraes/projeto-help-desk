@@ -11,8 +11,10 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const auth1 = require("./config/auth_admin");
-const auth2 = require("./config/auth_funcionario");
+const auth_admin = require("./config/auth_admin");
+const auth_funcionario = require("./config/auth_funcionario");
+const auth_professor = require("./config/auth_professor");
+const auth_aluno = require("./config/auth_aluno");
 const port = 8008;
 
 // config
@@ -63,38 +65,77 @@ app.get("/", (req, res) => {
   res.render("login");
 });
 app.post("/", (req, res, next) => {
-  auth1
+  auth_admin
     .admin({ usuario: req.body.usuario, senha: req.body.senha })
     .then((admin) => {
       var [admin1] = admin;
-      if (admin1.eAdmin == 1 || admin1.error == "error") {
+      if (admin1.eAdmin == 1) {
         passport.authenticate("local", {
           successRedirect: "/admin",
           failureRedirect: "/",
           failureFlash: true,
         })(req, res, next);
       } else {
-        console.log("next");
-        next();
+        if (admin1.error == "error" || admin1.eAdmin != 1) {
+          console.log("next");
+          next();
+        }
       }
     });
 });
 app.post("/", (req, res, next) => {
-  auth2
+  auth_funcionario
     .funcionario({ usuario: req.body.usuario, senha: req.body.senha })
     .then((funcionario) => {
       var [funcionario1] = funcionario;
-      if (funcionario1.eAdmin == 0 || funcionario1.error == "error") {
+      if (funcionario1.eAdmin == 0) {
         passport.authenticate("local", {
           successRedirect: "/funcionario",
           failureRedirect: "/",
           failureFlash: true,
         })(req, res, next);
       } else {
-        next();
+        if (funcionario1.error == "error") {
+          console.log("next");
+          next();
+        }
       }
     });
 });
+app.post("/", (req, res, next) => {
+  auth_professor
+    .professor({ usuario: req.body.usuario, senha: req.body.senha })
+    .then((professor) => {
+      var [professor1] = professor;
+      if (professor1.eAdmin == 2) {
+        passport.authenticate("local", {
+          successRedirect: "/professor",
+          failureRedirect: "/",
+          failureFlash: true,
+        })(req, res, next);
+      } else {
+        if (professor1.error == "error") {
+          console.log("next");
+          next();
+        }
+      }
+    });
+});
+app.post("/", (req, res, next) => {
+  auth_aluno
+    .aluno({ usuario: req.body.usuario, senha: req.body.senha })
+    .then((aluno) => {
+      var [aluno1] = aluno;
+      if (aluno1.eAdmin == 3 || aluno1.error == "error") {
+        passport.authenticate("local", {
+          successRedirect: "/aluno",
+          failureRedirect: "/",
+          failureFlash: true,
+        })(req, res, next);
+      }
+    });
+});
+
 app.use("/admin", admin);
 app.use("/aluno", aluno);
 app.use("/professor", professor);

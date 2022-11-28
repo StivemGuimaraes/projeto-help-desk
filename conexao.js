@@ -9,7 +9,7 @@ const con = () => {
       database: "academy_desk",
       password: "Mysqlstivem123",
       waitForConnections: true,
-      connectionLimit: 20,
+      connectionLimit: 30,
       queueLimit: 0,
     });
     global.con = con;

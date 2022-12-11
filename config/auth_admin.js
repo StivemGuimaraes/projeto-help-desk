@@ -3,6 +3,22 @@ const localStrategy = require("passport-local").Strategy;
 const bd = require("../conexao");
 
 const admin = async (admin1) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
+    const values = [admin1.usuario, admin1.senha];
+    const [admin] = await conn.query(sql, values);
+    if (admin == "") {
+      return [{ error: "error" }];
+    } else {
+      return admin;
+    }
+  } catch (error) {
+    console.log("deu error", error);
+  }
+};
+
+const auth_admin1 = () => {
   passport.use(
     new localStrategy(
       { usernameField: "usuario", passwordField: "senha" },
@@ -26,6 +42,7 @@ const admin = async (admin1) => {
       }
     )
   );
+
   passport.serializeUser((usuario, done) => {
     done(null, usuario);
   });
@@ -33,18 +50,6 @@ const admin = async (admin1) => {
   passport.deserializeUser((usuario, done) => {
     done(null, usuario);
   });
-  try {
-    const conn = await bd.con();
-    const sql = "SELECT * FROM funcionario WHERE usuario = ? AND senha = ?;";
-    const values = [admin1.usuario, admin1.senha];
-    const [admin] = await conn.query(sql, values);
-    if (admin == "") {
-      return [{ error: "error" }];
-    } else {
-      return admin;
-    }
-  } catch (error) {
-    console.log("deu error", error);
-  }
 };
-module.exports = { admin };
+
+module.exports = { admin, auth_admin1 };

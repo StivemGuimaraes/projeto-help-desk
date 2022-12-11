@@ -30,13 +30,30 @@
 <main>
   {{> _msg}}
   {{#each chamado}}
-    <p>{{this.id}}</p>
-    <p>{{this.titulo}}</p>
-    <p>{{this.nome_cliente}}</p>
-    <p>{{this.statusd}}</p>
-    <p>{{this.nivel}}</p>
-    <p>{{this.prioridade}}</p>
-    <p>{{this.descricao}}</p>
-    <hr />
+  <div class="container w-50 mt-5 mb-5">
+  <div class="card">
+  <div class="card-header h-0">
+    <div class="row">
+      <div class="col-sm-12 col-md-1 col-lg-1">
+        <div class="rounded-circle bg-success w-50 h-75 mt-1 ms-3"></div>
+      </div>
+      <div class="col-sm-12 col-md-11 col-lg-11 p-0">
+        <p class="mb-0 me-2 fs-6">{{this.statusd}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{this.titulo}}</h5>
+    <p class="card-text mb-0">{{this.assunto}}</p>
+    <p class="card-text">nome do cliente: {{this.fk_aluno}}</p>
+    <p class="card-text mb-0">Nível: {{this.nivel}}</p>
+    <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    <label for="descricao" class="form-label">Descrição:</label>
+    <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
+    <a href="#" class="btn btn-warning">Alterar</a>
+    <a href="#" class="btn btn-danger">Deletar</a>
+  </div>
+</div>
+</div>
   {{/each}}
 </main>

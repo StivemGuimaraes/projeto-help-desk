@@ -70,6 +70,7 @@ app.post("/", (req, res, next) => {
     .then((admin) => {
       var [admin1] = admin;
       if (admin1.eAdmin == 1) {
+        auth_admin.auth_admin1();
         passport.authenticate("local", {
           successRedirect: "/admin",
           failureRedirect: "/",
@@ -89,6 +90,7 @@ app.post("/", (req, res, next) => {
     .then((funcionario) => {
       var [funcionario1] = funcionario;
       if (funcionario1.eAdmin == 0) {
+        auth_funcionario.auth_funcionario1();
         passport.authenticate("local", {
           successRedirect: "/funcionario",
           failureRedirect: "/",
@@ -108,6 +110,7 @@ app.post("/", (req, res, next) => {
     .then((professor) => {
       var [professor1] = professor;
       if (professor1.eAdmin == 2) {
+        auth_professor.auth_professor1();
         passport.authenticate("local", {
           successRedirect: "/professor",
           failureRedirect: "/",
@@ -127,6 +130,7 @@ app.post("/", (req, res, next) => {
     .then((aluno) => {
       var [aluno1] = aluno;
       if (aluno1.eAdmin == 3 || aluno1.error == "error") {
+        auth_aluno.auth_aluno1();
         passport.authenticate("local", {
           successRedirect: "/aluno",
           failureRedirect: "/",

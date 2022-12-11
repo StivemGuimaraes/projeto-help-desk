@@ -15,6 +15,11 @@ router.get("/criar-chamado", (req, res) => {
 
 router.post("/criar-chamado/nova", (req, res) => {
   var error;
+  if (req.user[0].eAdmin == 3) {
+    var aluno_matricula = req.user[0].matricula;
+  } else {
+    var aluno_matricula = null;
+  }
   if (
     !req.body.titulo ||
     typeof req.body.titulo === undefined ||
@@ -58,16 +63,13 @@ router.post("/criar-chamado/nova", (req, res) => {
     nivel: req.body.nivel,
     prioridade: req.body.Prioridade,
     descricao: req.body.descricao,
+    fk_aluno: aluno_matricula,
   }).then((msg) => {
     if (msg) {
       error = msg;
-      res.render("admin/cadastro_funcionario", { error });
+      res.render("/aluno/criar_chamado", { error });
     } else {
-      req.flash(
-        "sucess_msg",
-        "Chamado cadastrado com sucesso"
-      );
-      res.redirect("admin/chamado");
+      req.flash("sucess_msg", "Chamado cadastrado com sucesso");
     }
   });
 });

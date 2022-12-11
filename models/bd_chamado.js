@@ -4,14 +4,15 @@ const insert_chamado = async (chamado) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO chamado(titulo,assunto,nome_cliente,nivel,prioridade,descricao) VALUES (?,?,?,?,?,?)";
+      "INSERT INTO chamado(titulo,assunto,nivel,prioridade,descricao,fk_aluno,fk_professor) VALUES (?,?,?,?,?,?,?)";
     const values = [
       chamado.titulo,
       chamado.assunto,
-      chamado.nome,
       chamado.nivel,
       chamado.prioridade,
       chamado.descricao,
+      chamado.fk_aluno,
+      chamado.fk_professor
     ];
     await conn.query(sql, values);
     console.log("cadastramento do chamado realizado com sucesso");

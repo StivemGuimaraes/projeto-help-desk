@@ -3,6 +3,22 @@ const localStrategy = require("passport-local").Strategy;
 const bd = require("../conexao");
 
 const professor = async (professor1) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM professor WHERE usuario = ? AND senha = ?;";
+    const values = [professor1.usuario, professor1.senha];
+    const [professor] = await conn.query(sql, values);
+    if (professor == "") {
+      return [{ error: "error" }];
+    } else {
+      return professor;
+    }
+  } catch (error) {
+    console.log("deu error", error);
+  }
+};
+
+const auth_professor1 = () => {
   passport.use(
     new localStrategy(
       { usernameField: "usuario", passwordField: "senha" },
@@ -26,6 +42,7 @@ const professor = async (professor1) => {
       }
     )
   );
+
   passport.serializeUser((usuario, done) => {
     done(null, usuario);
   });
@@ -33,19 +50,5 @@ const professor = async (professor1) => {
   passport.deserializeUser((usuario, done) => {
     done(null, usuario);
   });
-  try {
-    const conn = await bd.con();
-    const sql = "SELECT * FROM professor WHERE usuario = ? AND senha = ?;";
-    const values = [professor1.usuario, professor1.senha];
-    const [professor] = await conn.query(sql, values);
-    if (professor == "") {
-      return [{ error: "error" }];
-    } else {
-      return professor;
-    }
-  } catch (error) {
-    console.log("deu error", error);
-  }
 };
-
-module.exports = { professor };
+module.exports = { professor, auth_professor1 };

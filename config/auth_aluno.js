@@ -3,6 +3,22 @@ const localStrategy = require("passport-local").Strategy;
 const bd = require("../conexao");
 
 const aluno = async (aluno1) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM aluno WHERE usuario = ? AND senha = ?;";
+    const values = [aluno1.usuario, aluno1.senha];
+    const [aluno] = await conn.query(sql, values);
+    if (aluno == "") {
+      return [{ error: "error" }];
+    } else {
+      return aluno;
+    }
+  } catch (error) {
+    console.log("deu error", error);
+  }
+};
+
+const auth_aluno1 = () => {
   passport.use(
     new localStrategy(
       { usernameField: "usuario", passwordField: "senha" },
@@ -25,6 +41,7 @@ const aluno = async (aluno1) => {
       }
     )
   );
+
   passport.serializeUser((usuario, done) => {
     done(null, usuario);
   });
@@ -32,19 +49,6 @@ const aluno = async (aluno1) => {
   passport.deserializeUser((usuario, done) => {
     done(null, usuario);
   });
-  try {
-    const conn = await bd.con();
-    const sql = "SELECT * FROM aluno WHERE usuario = ? AND senha = ?;";
-    const values = [aluno1.usuario, aluno1.senha];
-    const [aluno] = await conn.query(sql, values);
-    if (aluno == "") {
-      return [{ error: "error" }];
-    } else {
-      return aluno;
-    }
-  } catch (error) {
-    console.log("deu error", error);
-  }
 };
 
-module.exports = { aluno };
+module.exports = { aluno, auth_aluno1 };

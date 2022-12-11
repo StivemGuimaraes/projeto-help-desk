@@ -296,12 +296,8 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
       });
   }
 });
-router.get("/login", (req, res) => {
-  res.render("admin/login");
-});
-
 router.get("/chamado", (req, res) => {
-  bd3.select_chamado().then((chamado) => {
+  bd3.select_chamadoAll().then((chamado) => {
     if (chamado === "Error") {
       res.render("admin/chamado");
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");

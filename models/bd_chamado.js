@@ -12,7 +12,7 @@ const insert_chamado = async (chamado) => {
       chamado.prioridade,
       chamado.descricao,
       chamado.fk_aluno,
-      chamado.fk_professor
+      chamado.fk_professor,
     ];
     await conn.query(sql, values);
     console.log("cadastramento do chamado realizado com sucesso");
@@ -25,7 +25,9 @@ const insert_chamado = async (chamado) => {
 const select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
-    const [chamado] = await conn.query("SELECT * FROM chamado;");
+    const [chamado] = await conn.query(
+      "SELECT c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.descricao, a.usuario AS nome_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula;"
+    );
     console.log("seleção dos chamados realizado com sucesso");
     return chamado;
   } catch (error) {

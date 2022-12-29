@@ -26,7 +26,7 @@ const select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
     const [chamado] = await conn.query(
-      "SELECT c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.descricao, a.usuario AS nome_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula;"
+      "SELECT c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
     );
     console.log("seleção dos chamados realizado com sucesso");
     return chamado;

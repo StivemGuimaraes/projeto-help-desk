@@ -78,4 +78,22 @@ router.post("/criar-chamado/nova", (req, res) => {
   }
 });
 
+router.get("/chamado", (req, res) => {
+  bd.select_chamadoAluno(req.user).then((chamado_aluno) => {
+    if (chamado_aluno === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("aluno/chamado_aluno", { error_mensagem });
+    } else if (chamado_aluno === "matricula") {
+      res.render("aluno/chamado_aluno");
+      error_mensagem = "Você não é aluno, o que você tá fazendo aqui?";
+      res.render("aluno/chamado_aluno", { error_mensagem });
+    } else if (chamado_aluno === "vazio") {
+      var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
+      res.render("aluno/chamado_aluno", { aviso_mensagem });
+    } else {
+      res.render("aluno/chamado_aluno", { chamado_aluno });
+    }
+  });
+});
+
 module.exports = router;

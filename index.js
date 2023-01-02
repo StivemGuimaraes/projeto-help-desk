@@ -21,11 +21,9 @@ const port = 8008;
 //--sessão
 app.use(
   session({
-    key: "cookie_name",
     secret: "sistemahelpdesk",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 app.use(passport.initialize());
@@ -36,6 +34,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.sucess_msg = req.flash("sucess_msg");
   res.locals.error = req.flash("error");
+  res.locals.teste = req.teste;
   res.locals.user = req.user || null;
   next();
 });
@@ -64,6 +63,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.render("login");
 });
+
+app.use("/admin", admin);
+app.use("/aluno", aluno);
+app.use("/professor", professor);
+app.use("/funcionario", funcionario);
+
 app.post("/", (req, res, next) => {
   auth_admin
     .admin({ usuario: req.body.usuario, senha: req.body.senha })
@@ -139,11 +144,6 @@ app.post("/", (req, res, next) => {
       }
     });
 });
-
-app.use("/admin", admin);
-app.use("/aluno", aluno);
-app.use("/professor", professor);
-app.use("/funcionario", funcionario);
 
 // outros
 app.listen(port, () => {

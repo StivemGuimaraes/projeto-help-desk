@@ -74,27 +74,24 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                       res.redirect("/funcionario/aluno");
                     }
                   })
-                  .catch((error) => {
-                    console.log("deu error", error);
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("funcionario/cadastro_aluno", { error });
                   });
               }
             })
-            .catch((error) => {
-              console.log("deu error", error);
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("funcionario/cadastro_aluno", { error });
             });
         }
       })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("funcionario/cadastro_aluno", { error });
       });
   }
 });
@@ -172,27 +169,24 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                       res.redirect("/funcionario/professor");
                     }
                   })
-                  .catch((error) => {
-                    console.log("deu error", error);
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("funcionario/cadastro_professor", { error });
                   });
               }
             })
-            .catch((error) => {
-              console.log("deu error", error);
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("funcionario/cadastro_professor", { error });
             });
         }
       })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("funcionario/cadastro_professor", { error });
       });
   }
 });
@@ -200,8 +194,11 @@ router.post("/cadastrar-professor/nova", (req, res) => {
 router.get("/professor", (req, res) => {
   bd1.select_professorAll().then((professor) => {
     if (professor === "Error") {
-      res.render("funcionario/alunos");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("funcionario/professores", { error_mensagem });
+    } else if (professor === "vazio") {
+      var aviso_mensagem = "!!! Nenhum professor cadastrado no sistema !!!";
+      res.render("funcionario/professores", { aviso_mensagem });
     } else {
       res.render("funcionario/professores", { professor });
     }
@@ -211,8 +208,11 @@ router.get("/professor", (req, res) => {
 router.get("/aluno", (req, res) => {
   bd.select_alunoAll().then((aluno) => {
     if (aluno === "Error") {
-      res.render("funcionario/alunos");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("funcionario/alunos", { error_mensagem });
+    } else if (aluno === "vazio") {
+      var aviso_mensagem = "!!! Nenhum aluno cadastrado no sistema !!!";
+      res.render("funcionario/alunos", { aviso_mensagem });
     } else {
       res.render("funcionario/alunos", { aluno });
     }

@@ -79,27 +79,24 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                       res.redirect("/admin/professor");
                     }
                   })
-                  .catch((error) => {
-                    console.log("deu error", error);
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("admin/cadastro_professor", { error });
                   });
               }
             })
-            .catch((error) => {
-              console.log("deu error", error);
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("admin/cadastro_professor", { error });
             });
         }
       })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("admin/cadastro_professor", { error });
       });
   }
 });
@@ -177,27 +174,24 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
                       res.redirect("/admin/funcionario");
                     }
                   })
-                  .catch((error) => {
-                    console.log("deu error", error);
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("admin/cadastro_funcionario", { error });
                   });
               }
             })
-            .catch((error) => {
-              console.log("deu error", error);
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("admin/cadastro_funcionario", { error });
             });
         }
       })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("admin/cadastro_funcionario", { error });
       });
   }
 });
@@ -272,35 +266,35 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                       res.redirect("/admin/aluno");
                     }
                   })
-                  .catch((error) => {
-                    console.log("deu error", error);
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("admin/cadastro_aluno", { error });
                   });
               }
             })
-            .catch((error) => {
-              console.log("deu error", error);
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("admin/cadastro_aluno", { error });
             });
         }
       })
-      .catch((error) => {
-        console.log("deu error", error);
-        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("admin/cadastro_aluno", { error });
       });
   }
 });
 router.get("/chamado", (req, res) => {
   bd3.select_chamadoAll().then((chamado) => {
     if (chamado === "Error") {
-      res.render("admin/chamado");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("admin/chamado", { error_mensagem });
+    } else if (chamado === "vazio") {
+      var aviso_mensagem = "!!! Nenhum chamado cadastrado no sistema !!!";
+      res.render("admin/chamado", { aviso_mensagem });
     } else {
       res.render("admin/chamado", { chamado });
     }
@@ -314,8 +308,11 @@ router.get("/relatorios", (req, res) => {
 router.get("/funcionario", (req, res) => {
   bd1.select_funcionarioAll().then((funcionario) => {
     if (funcionario === "Error") {
-      res.render("admin/funcionarios");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("admin/funcionarios", { error_mensagem });
+    } else if (funcionario === "vazio") {
+      var aviso_mensagem = "!!! Nenhum funcionário cadastrado no sistema !!!";
+      res.render("admin/funcionarios", { aviso_mensagem });
     } else {
       res.render("admin/funcionarios", { funcionario });
     }
@@ -325,8 +322,11 @@ router.get("/funcionario", (req, res) => {
 router.get("/aluno", (req, res) => {
   bd2.select_alunoAll().then((aluno) => {
     if (aluno === "Error") {
-      res.render("admin/alunos");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("admin/alunos", { error_mensagem });
+    } else if (aluno === "vazio") {
+      var aviso_mensagem = "!!! Nenhum aluno cadastrado no sistema !!!";
+      res.render("admin/alunos", { aviso_mensagem });
     } else {
       res.render("admin/alunos", { aluno });
     }
@@ -335,9 +335,12 @@ router.get("/aluno", (req, res) => {
 
 router.get("/professor", (req, res) => {
   bd.select_professorAll().then((professor) => {
-    if (professor) {
-      res.render("admin/professores");
-      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    if (professor === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("admin/professores", { error_mensagem });
+    } else if (professor === "vazio") {
+      var aviso_mensagem = "!!! Nenhum professor cadastrado no sistema !!!";
+      res.render("admin/professores", { aviso_mensagem });
     } else {
       res.render("admin/professores", { professor });
     }

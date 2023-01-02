@@ -18,8 +18,12 @@ const select_alunoAll = async () => {
     const conn = await bd.con();
     const sql = "SELECT * FROM aluno;";
     const [aluno] = await conn.query(sql);
-    console.log("selecionamento do aluno realizado com sucesso");
-    return aluno;
+    if (aluno == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do aluno realizado com sucesso");
+      return aluno;
+    }
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "Error";

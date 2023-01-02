@@ -2,7 +2,7 @@
   <title>chamado</title>
 </head>
 <header
-  class="py-3"
+  class="shadow border-secondary border-bottom py-3 mb-4"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -28,5 +28,48 @@
   </div>
 </header>
 <main>
-
+{{> _msg}}
+{{#if error_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-danger w-50">{{error_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+{{#if aviso_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-warning w-50">{{aviso_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+  {{#each chamado_professor}}
+  <div class="container w-50 mt-5 mb-5">
+  <div class="card">
+  <div class="card-header h-0">
+    <div class="row">
+      <div class="col-sm-12 col-md-1 col-lg-1">
+        <div class="rounded-circle bg-success w-50 h-75 mt-1 ms-3"></div>
+      </div>
+      <div class="col-sm-12 col-md-11 col-lg-11 p-0">
+        <p class="mb-0 me-2 fs-6">{{this.statusd}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
+    <div class="collapse" id="collapse{{this.id}}">
+    <p class="card-text mb-0">{{this.assunto}}</p>
+    <p class="card-text">nome do cliente: {{this.nome_professor}}</p>
+    <p class="card-text mb-0">Nível: {{this.nivel}}</p>
+    <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    <label for="descricao" class="form-label">Descrição</label>
+    <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
+    <a href="#" class="btn btn-warning">Alterar</a>
+    <a href="#" class="btn btn-danger">Deletar</a>
+    </div>
+    </div>
+  </div>
+  </div>
+  {{/each}}
 </main>

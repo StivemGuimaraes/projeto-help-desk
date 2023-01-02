@@ -2,7 +2,7 @@
   <title>Listas de Alunos</title>
 </head>
 <header
-  class="py-3"
+  class="shadow border-secondary border-bottom py-3 mb-4"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -29,6 +29,20 @@
 </header>
 <main>
   {{> _msg}}
+  {{#if error_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-danger w-50">{{error_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+{{#if aviso_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-warning w-50">{{aviso_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
   {{#each aluno}}
   <div class="container w-50">
   <div class="card mt-4 mb-4">

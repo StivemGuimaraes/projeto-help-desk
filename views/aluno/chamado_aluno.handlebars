@@ -1,5 +1,5 @@
 <head>
-  <title>Listas de Chamados</title>
+  <title>chamado</title>
 </head>
 <header
   class="shadow border-secondary border-bottom py-3 mb-4"
@@ -15,12 +15,12 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-xl-1">
-        <a href="/client/index.html" class="text-decoration-none text-white">
+        <a href="/aluno" class="text-decoration-none text-white">
           <img class="img-fluid float-start" src="" alt="logo aqui" />
         </a>
       </div>
       <div class="col-md-3 col-sm-11 col-xl-3">
-        <a href="index.html" class="text-white text-decoration-none">
+        <a href="/aluno" class="text-white text-decoration-none">
           <h1 class="text-start fs-2">academy help desk</h1>
         </a>
       </div>
@@ -28,8 +28,8 @@
   </div>
 </header>
 <main>
-  {{> _msg}}
-  {{#if error_mensagem}}
+{{> _msg}}
+{{#if error_mensagem}}
   <div class="container mt-5">
     <div class="row justify-content-center text-center">
       <div class="alert alert-danger w-50">{{error_mensagem}}</div>
@@ -43,7 +43,7 @@
     </div>
   </div>
 {{/if}}
-  {{#each chamado}}
+  {{#each chamado_aluno}}
   <div class="container w-50 mt-5 mb-5">
   <div class="card">
   <div class="card-header h-0">
@@ -56,36 +56,20 @@
       </div>
     </div>
   </div>
-  {{#if this.nome_aluno}}
-  <div class="card-body">
-    <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">{{this.titulo}}</h5></a>
-    <div class="collapse" id="collapseExample{{this.id}}">
-    <p class="card-text mb-0">{{this.assunto}}</p>
-    <p class="card-text">nome do cliente: {{this.nome_aluno}}</p>
-    <p class="card-text mb-0">Nível: {{this.nivel}}</p>
-    <p class="card-text">Prioridade: {{this.prioridade}}</p>
-    <label for="descricao" class="form-label">Descrição:</label>
-    <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
-    <a href="#" class="btn btn-warning">Alterar</a>
-    <a href="#" class="btn btn-danger">Deletar</a>
-    </div>
-  </div>
-  {{else}}
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapse{{this.id}}">
     <p class="card-text mb-0">{{this.assunto}}</p>
-    <p class="card-text">nome do cliente: {{this.nome_professor}}</p>
+    <p class="card-text">nome do cliente: {{this.nome_aluno}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
     <p class="card-text">Prioridade: {{this.prioridade}}</p>
-    <label for="descricao" class="form-label">Descrição:</label>
+    <label for="descricao" class="form-label">Descrição</label>
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="#" class="btn btn-warning">Alterar</a>
     <a href="#" class="btn btn-danger">Deletar</a>
     </div>
+    </div>
   </div>
-  {{/if}}
-</div>
-</div>
+  </div>
   {{/each}}
 </main>

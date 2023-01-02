@@ -23,8 +23,12 @@ const select_funcionarioAll = async () => {
     const conn = await bd.con();
     const sql = "SELECT * FROM funcionario;";
     const [funcionario] = await conn.query(sql);
-    console.log("selcionamento do funcionario");
-    return funcionario;
+    if (funcionario == "") {
+      return "vazio";
+    } else {
+      console.log("selcionamento do funcionario realizado com sucesso");
+      return funcionario;
+    }
   } catch (error) {
     console.log("deu error, por alguma causa", error);
     return "Error";

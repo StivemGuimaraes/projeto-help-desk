@@ -1,4 +1,5 @@
 const express = require("express");
+const { professor } = require("../config/auth_professor");
 const router = express.Router();
 const bd = require("../models/bd_aluno");
 const bd1 = require("../models/bd_chamado");
@@ -10,11 +11,88 @@ router.get("/cadastrar-aluno", (req, res) => {
   res.render("professor/cadastro_aluno");
 });
 router.post("/cadastrar-aluno/nova", (req, res) => {
-  bd.insert_aluno({
-    matricula: req.body.matricula,
-    usuario: req.body.usuario,
-    senha: req.body.senha,
-  });
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "Matricula invalida";
+    res.render("professor/cadastro_aluno", { error });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "Usuário invalido";
+    res.render("professor/cadastro_aluno", { error });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "Senha invalida";
+    res.render("professor/cadastro_aluno", { error });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "Repetição de senha invalida";
+    res.render("professor/cadastro_aluno", { error });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "Senhas diferentes";
+    res.render("professor/cadastro_aluno", { error });
+  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("professor/cadastro_aluno", { error });
+  } else {
+    bd.select_aluno(req.body.matricula)
+      .then((msg) => {
+        if (msg) {
+          error = msg;
+          res.render("professor/cadastro_aluno", { error });
+        } else {
+          bd.select_senha(req.body.senha)
+            .then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("professor/cadastro_aluno", { error });
+              } else {
+                bd.insert_aluno({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  senha: req.body.senha,
+                })
+                  .then((msg) => {
+                    if (msg) {
+                      error = msg;
+                      res.render("professor/cadastro_aluno", { error });
+                    } else {
+                      req.flash("sucess_msg", "Aluno cadastrado com sucesso");
+                      res.redirect("/professor/aluno");
+                    }
+                  })
+                  .catch((error1) => {
+                    console.log("deu error", error1);
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("admin/cadastro_aluno", { error });
+                  });
+              }
+            })
+            .catch((error1) => {
+              console.log("deu error", error1);
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("admin/cadastro_aluno", { error });
+            });
+        }
+      })
+      .catch((error1) => {
+        console.log("deu error", error1);
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("admin/cadastro_aluno", { error });
+      });
+  }
 });
 
 router.get("/criar-chamado", (req, res) => {
@@ -82,14 +160,42 @@ router.post("/criar-chamado/nova", (req, res) => {
           res.render("/professor/criar_chamado", { error });
         } else {
           req.flash("sucess_msg", "Chamado cadastrado com sucesso");
-          res.redirect("/professor/criar-chamado");
+          res.redirect("/professor/chamado");
         }
       });
   }
 });
 
+router.get("/aluno", (req, res) => {
+  bd.select_alunoAll().then((aluno) => {
+    if (aluno === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("professor/alunos", { error_mensagem });
+    } else if (aluno === "vazio") {
+      var aviso_mensagem = "!!! Nenhum aluno cadastrado no sistema !!!";
+      res.render("professor/alunos", { aviso_mensagem });
+    } else {
+      res.render("professor/alunos", { aluno });
+    }
+  });
+});
+
 router.get("/chamado", (req, res) => {
-  res.render("professor/chamado_professor");
+  bd1.select_chamadoProfessor(req.user).then((chamado_professor) => {
+    if (chamado_professor === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("professor/chamado_professor", { error_mensagem });
+    } else if (chamado_professor === "matricula") {
+      res.render("professor/chamado_professor");
+      error_mensagem = "Você não é professor, o que você tá fazendo aqui?";
+      res.render("professor/chamado_professor", { error_mensagem });
+    } else if (chamado_professor === "vazio") {
+      var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
+      res.render("professor/chamado_professor", { aviso_mensagem });
+    } else {
+      res.render("professor/chamado_professor", { chamado_professor });
+    }
+  });
 });
 
 router.get("/atendimento", (req, res) => {

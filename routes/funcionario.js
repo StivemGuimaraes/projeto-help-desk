@@ -44,7 +44,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("funcionario/cadastro_aluno", { error });
-  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+  } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("funcionario/cadastro_aluno", { error });
   } else {
@@ -133,7 +133,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("funcionario/cadastro_professor", { error });
-  } else if (req.body.senha.length < 7 || req.body.senha2.length < 7) {
+  } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("funcionario/cadastro_professor", { error });
   } else {

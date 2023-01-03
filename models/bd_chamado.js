@@ -70,12 +70,12 @@ const select_chamadoAluno = async (aluno) => {
       const conn = await bd.con();
       const sql =
         "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.descricao, a.usuario AS nome_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula WHERE a.matricula = ?;";
-      const [chamado_professor] = await conn.query(sql, aluno_matricula);
-      if (chamado_professor == "") {
+      const [chamado_aluno] = await conn.query(sql, aluno_matricula);
+      if (chamado_aluno == "") {
         return "vazio";
       } else {
         console.log("seleção dos chamados do aluno realizado com sucesso");
-        return chamado_professor;
+        return chamado_aluno;
       }
     } else {
       return "matricula";

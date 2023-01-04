@@ -84,13 +84,14 @@ const select_aluno1 = async (matricula) => {
   }
 };
 
-const update_aluno = async (aluno) => {
+const delete_update_aluno = async (aluno) => {
   console.log(aluno);
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE aluno SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
+      "DELETE FROM chamado WHERE fk_aluno = ?; UPDATE aluno SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
     const values = [
+      aluno.matricula1,
       aluno.matricula,
       aluno.usuario,
       aluno.senha,
@@ -110,5 +111,5 @@ module.exports = {
   select_aluno,
   select_senha,
   select_aluno1,
-  update_aluno,
+  delete_update_aluno,
 };

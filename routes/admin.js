@@ -411,7 +411,7 @@ router.post("/aluno/alteracao/", (req, res) => {
     res.render("admin/edicao_aluno", { error, aluno: aluno1 });
   } else {
     bd2
-      .update_aluno({
+      .delete_update_aluno({
         matricula: req.body.matricula,
         usuario: req.body.usuario,
         senha: req.body.senha,

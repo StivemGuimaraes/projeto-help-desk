@@ -1,6 +1,7 @@
 <head>
   <title>alteração do aluno</title>
   <script defer src="/js/cadastro_validacao.js"></script>
+  <script defer src="/js/modal_edicao_admin.js"></script>
   <style>
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none; margin: 0; } input[type="number"] {
@@ -55,13 +56,14 @@
               action="/admin/aluno/alteracao"
               method="POST"
               class="needs-validation"
+              id="form"
               novalidate
             >
               <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
-                    for="floatingInput"
+                    for="floatingInput1"
                     style="font-weight: bold"
                   >Digite sua matricula</label>
 
@@ -69,7 +71,7 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="floatingInput"
+                      id="floatingInput1"
                       placeholder="user"
                       name="matricula"
                       value="{{aluno.matricula}}"
@@ -120,12 +122,12 @@
                     <input
                       type="password"
                       class="form-control"
-                      id="floatingPassword"
+                      id="floatingPassword2"
                       placeholder="Password"
                       name="senha"
                       required
                     />
-                    <label for="floatingPassword">Digite sua senha</label>
+                    <label for="floatingPassword2">Digite sua senha</label>
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">
                       Por favor, digite sua senha
@@ -145,12 +147,12 @@
                     <input
                       type="password"
                       class="form-control"
-                      id="floatingPassword"
+                      id="floatingPassword3"
                       placeholder="Password"
                       name="senha2"
                       required
                     />
-                    <label for="floatingPassword">Repita sua senha</label>
+                    <label for="floatingPassword3">Repita sua senha</label>
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">
                       Por favor, repita sua senha
@@ -158,14 +160,34 @@
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
-                  <button class="btn btn-outline-warning" type="submit">
+                  <button class="btn btn-outline-warning" type="submit" id="botao_alterar">
                     Alterar
                   </button>
                 </div>
               </div>
+              <!--Modal-->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" style="margin-left: 210px;" id="exampleModalLabel">AVISO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <p>Infelizmente, se você alterar a matrícula do aluno</p>
+                    <p>ele excluirá o chamado do aluno no sistema.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <div style="margin-right: 100px;">
+                    <button type="button" id="botao_fechar" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-warning">Alterar mesmo assim</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             </form>
           </div>
         </div>

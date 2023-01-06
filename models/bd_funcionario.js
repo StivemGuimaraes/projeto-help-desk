@@ -47,7 +47,7 @@ const select_funcionario = async (funcionario) => {
       console.log(
         "selecionamento da matricula do funcionario realizado com sucesso"
       );
-      return "Funcionario já cadastrado no sistema";
+      return "Matrícula do funcionario já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);

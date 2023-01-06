@@ -1,12 +1,12 @@
 <head>
-  <title>alteração do aluno</title>
+  <title>alteração do professor</title>
   <script defer src="/js/cadastro_validacao.js"></script>
   <script defer src="/js/modal_edicao_admin.js"></script>
   <style>
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none; margin: 0; } input[type="number"] {
     -moz-appearance: textfield; }
-    @media (max-width: 768px) {
+        @media (max-width: 768px) {
             .botao {
                 width: 100%;
             } 
@@ -56,9 +56,9 @@
             <div class="text-center">
               <img src="" alt="logo aqui" class="img-fluid mb-4 mt-4" />
             </div>
-            <h2 class="text-center text-dark mb-4">Alteração do Aluno</h2>
+            <h2 class="text-center text-dark mb-4">Alteração do professor</h2>
             <form
-              action="/admin/aluno/alteracao"
+              action="/admin/professor/alteracao"
               method="POST"
               class="needs-validation"
               id="form"
@@ -79,7 +79,7 @@
                       id="floatingInput1"
                       placeholder="user"
                       name="matricula"
-                      value="{{aluno.matricula}}"
+                      value="{{professor.matricula}}"
                       required
                     />
                     <label for="floatingInput">Digite sua matricula</label>
@@ -105,7 +105,7 @@
                       id="floatingInput"
                       placeholder="user"
                       name="usuario"
-                      value="{{aluno.usuario}}"
+                      value="{{professor.usuario}}"
                       required
                     />
                     <label for="floatingInput">Digite seu usuário</label>
@@ -172,7 +172,7 @@
                   </button>
                 </div>
                 <div class="col-md-1 col-lg-1 col-sm-12">
-                  <a href="/admin/aluno"><button class="btn btn-outline-primary botao" type="button">
+                  <a href="/admin/professor"><button class="btn btn-outline-primary botao" type="button">
                     Voltar
                   </button></a>
                 </div>
@@ -186,9 +186,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-center">
-                    <p>Infelizmente, se você alterar a matrícula do aluno</p>
-                    <p>se o aluno tiver cadastrado um chamado</p>
-                    <p>ele excluirá o chamado do aluno no sistema.</p>
+                    <p>Infelizmente, se você alterar a matrícula do professor</p>
+                    <p>se o professor tiver cadastrado um chamado</p>
+                    <p>ele excluirá o chamado do professor no sistema.</p>
                   </div>
                   <div class="modal-footer">
                     <div style="margin-right: 100px;">

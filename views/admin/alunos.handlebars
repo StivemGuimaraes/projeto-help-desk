@@ -51,9 +51,31 @@
     <h5 class="card-title">{{this.usuario}}</h5>
     <p class="card-text">Senha: {{this.senha}}</p>
     <a href="/admin/aluno/alteracao/{{this.matricula}}" class="btn btn-warning">Alterar</a>
-    <a href="#" class="btn btn-danger">Deletar</a>
+    <a data-bs-toggle="modal" data-bs-target="#exampleModal{{this.matricula}}" class="btn btn-danger">Deletar</a>
   </div>
 </div>
 </div>
+<!--Modal-->
+  <div class="modal fade" id="exampleModal{{this.matricula}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="margin-left: 210px;" id="exampleModalLabel">AVISO</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Certeza que deseja excluir um aluno do sistema?</p>
+          <p>se o aluno tiver cadastrado um chamado</p>
+          <p>ele excluirá o chamado do aluno também.</p>
+        </div>
+        <div class="modal-footer">
+          <div style="margin-right: 100px;">
+          <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <a href="/admin/aluno/exclucao/{{this.matricula}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   {{/each}}
 </main>

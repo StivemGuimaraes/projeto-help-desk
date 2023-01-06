@@ -5,6 +5,9 @@ const bd1 = require("../models/bd_funcionario");
 const bd2 = require("../models/bd_aluno");
 const bd3 = require("../models/bd_chamado");
 var aluno1;
+var professor1;
+var funcionario1;
+var chamado1;
 
 router.get("/", (req, res) => {
   res.render("admin/index");
@@ -409,23 +412,211 @@ router.post("/aluno/alteracao/", (req, res) => {
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("admin/edicao_aluno", { error, aluno: aluno1 });
+  } else if (req.body.matricula != aluno1.matricula) {
+    bd2.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
+      } else {
+        bd2.select_senha(req.body.senha).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_aluno", {
+              error,
+              aluno: aluno1,
+            });
+          } else {
+            bd2
+              .delete_update_aluno({
+                matricula: req.body.matricula,
+                usuario: req.body.usuario,
+                senha: req.body.senha,
+                matricula1: aluno1.matricula,
+              })
+              .then((aluno) => {
+                if (aluno === "error") {
+                  req.flash(
+                    "error_msg",
+                    "Error no sistema tente novamente mais tarde"
+                  );
+                  res.redirect("/admin/aluno");
+                } else {
+                  req.flash(
+                    "sucess_msg",
+                    "Alteração do aluno feita com sucesso"
+                  );
+                  res.redirect("/admin/aluno");
+                }
+              });
+          }
+        });
+      }
+    });
   } else {
-    bd2
-      .delete_update_aluno({
-        matricula: req.body.matricula,
-        usuario: req.body.usuario,
-        senha: req.body.senha,
-        matricula1: aluno1.matricula,
-      })
-      .then((aluno) => {
-        if (aluno === "error") {
-          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
-          res.redirect("/admin/aluno");
-        } else {
-          req.flash("sucess_msg", "Alteração do aluno feita com sucesso");
-          res.redirect("/admin/aluno");
-        }
-      });
+    bd2.select_senha(req.body.senha).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_aluno", {
+          error,
+          aluno: aluno1,
+        });
+      } else {
+        bd2
+          .delete_update_aluno({
+            matricula: req.body.matricula,
+            usuario: req.body.usuario,
+            senha: req.body.senha,
+            matricula1: aluno1.matricula,
+          })
+          .then((aluno) => {
+            if (aluno === "error") {
+              req.flash(
+                "error_msg",
+                "Error no sistema tente novamente mais tarde"
+              );
+              res.redirect("/admin/aluno");
+            } else {
+              req.flash("sucess_msg", "Alteração do aluno feita com sucesso");
+              res.redirect("/admin/aluno");
+            }
+          });
+      }
+    });
   }
+});
+
+/*alteração de dados do professor*/
+router.get("/professor/alteracao/:matricula", (req, res) => {
+  bd.select_professor1(req.params.matricula).then((professor) => {
+    if (professor === "vazio") {
+      req.flash("error_msg", "Professor não encontrado");
+      res.redirect("/admin/professor");
+    } else if (professor === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("admin/professor");
+    } else {
+      professor = professor[0];
+      professor1 = professor;
+      res.render("admin/edicao_professor", { professor });
+    }
+  });
+});
+
+router.post("/professor/alteracao/", (req, res) => {
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "Matricula invalida";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "Usuário invalido";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "Senha invalida";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "Repetição de senha invalida";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "Senhas diferentes";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (req.body.matricula != professor1.matricula) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd.select_senha(req.body.senha).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd.delete_update_professor({
+              matricula: req.body.matricula,
+              usuario: req.body.usuario,
+              senha: req.body.senha,
+              matricula1: professor1.matricula,
+            }).then((professor) => {
+              if (professor === "error") {
+                req.flash(
+                  "error_msg",
+                  "Error no sistema tente novamente mais tarde"
+                );
+                res.redirect("/admin/professor");
+              } else {
+                req.flash(
+                  "sucess_msg",
+                  "Alteração do professor feita com sucesso"
+                );
+                res.redirect("/admin/professor");
+              }
+            });
+          }
+        });
+      }
+    });
+  } else {
+    bd.select_senha(req.body.senha).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_professor", {
+          error,
+          professor: professor1,
+        });
+      } else {
+        bd.delete_update_professor({
+          matricula: req.body.matricula,
+          usuario: req.body.usuario,
+          senha: req.body.senha,
+          matricula1: professor1.matricula,
+        }).then((professor) => {
+          if (professor === "error") {
+            req.flash(
+              "error_msg",
+              "Error no sistema tente novamente mais tarde"
+            );
+            res.redirect("/admin/professor");
+          } else {
+            req.flash("sucess_msg", "Alteração do professor feita com sucesso");
+            res.redirect("/admin/professor");
+          }
+        });
+      }
+    });
+  }
+});
+
+/*exclusao do aluno*/
+router.get("/aluno/exclucao/:matricula", (req, res) => {
+  bd2.delete_aluno(req.params.matricula).then((error) => {
+    if (error === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/admin/aluno");
+    } else {
+      req.flash("sucess_msg", "Exclusão do aluno feita com sucesso");
+      res.redirect("/admin/aluno");
+    }
+  });
 });
 module.exports = router;

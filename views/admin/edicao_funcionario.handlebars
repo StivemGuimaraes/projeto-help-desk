@@ -1,0 +1,185 @@
+<head>
+  <title>alteração do funcionario</title>
+  <script defer src="/js/cadastro_validacao.js"></script>
+  <style>
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0; } input[type="number"] {
+    -moz-appearance: textfield; }
+    @media (max-width: 768px) {
+            .botao {
+                width: 100%;
+            } 
+        }
+  </style>
+</head>
+<header
+  class="shadow border-secondary border-bottom py-3 mb-4"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-xl-1">
+        <a href="/admin" class="text-decoration-none text-white">
+          <img class="img-fluid float-start" src="" alt="logo aqui" />
+        </a>
+      </div>
+      <div class="col-md-3 col-sm-11 col-xl-3">
+        <a href="/admin" class="text-white text-decoration-none">
+          <h1 class="text-start fs-2">academy help desk</h1>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  {{> _msg}}
+  {{#if error}}
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="alert alert-danger w-50">{{error}}</div>
+      </div>
+    </div>
+  {{/if}}
+  <div class="container w-50" style="margin-top: 50px">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <div class="card border border-secondary">
+          <div class="card-body">
+            <div class="text-center">
+              <img src="" alt="logo aqui" class="img-fluid mb-4 mt-4" />
+            </div>
+            <h2 class="text-center text-dark mb-4">Alteração do funcionário</h2>
+            <form
+              action="/admin/funcionario/alteracao"
+              method="POST"
+              class="needs-validation"
+              id="form"
+              novalidate
+            >
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput1"
+                    style="font-weight: bold"
+                  >Digite sua matricula</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="floatingInput1"
+                      placeholder="user"
+                      name="matricula"
+                      value="{{funcionario.matricula}}"
+                      required
+                    />
+                    <label for="floatingInput">Digite sua matricula</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite sua matricula
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite seu usuário</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      placeholder="user"
+                      name="usuario"
+                      value="{{funcionario.usuario}}"
+                      required
+                    />
+                    <label for="floatingInput">Digite seu usuário</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu usuário
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite sua senha</label>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="floatingPassword2"
+                      placeholder="Password"
+                      name="senha"
+                      value="{{funcionario.senha}}"
+                    />
+                    <label for="floatingPassword2">Digite sua senha</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite sua senha
+                    </div>
+                    <div id="error-password"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Repita sua senha</label>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="floatingPassword3"
+                      placeholder="Password"
+                      name="senha2"
+                      value="{{funcionario.senha}}"
+                    />
+                    <label for="floatingPassword3">Repita sua senha</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, repita sua senha
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row gx-5 text-sm-center">
+                <div class="col-md-1 col-lg-1 col-sm-12 me-lg-3 me-md-5 mb-sm-1">
+                  <button class="btn btn-outline-warning botao" type="submit">
+                    Alterar
+                  </button>
+                </div>
+                <div class="col-md-1 col-lg-1 col-sm-12">
+                  <a href="/admin/funcionario"><button class="btn btn-outline-primary botao" type="button">
+                    Voltar
+                  </button></a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

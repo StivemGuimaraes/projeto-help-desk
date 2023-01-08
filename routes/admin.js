@@ -607,8 +607,208 @@ router.post("/professor/alteracao/", (req, res) => {
   }
 });
 
+/*alteracao do funcionario*/
+router.get("/funcionario/alteracao/:matricula", (req, res) => {
+  bd1.select_funcionario1(req.params.matricula).then((funcionario) => {
+    if (funcionario === "vazio") {
+      req.flash("error_msg", "funcionário não encontrado");
+      res.redirect("/admin/funcionario");
+    } else if (funcionario === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("admin/funcionario");
+    } else {
+      funcionario = funcionario[0];
+      funcionario1 = funcionario;
+      res.render("admin/edicao_funcionario", { funcionario });
+    }
+  });
+});
+
+router.post("/funcionario/alteracao", (req, res) => {
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "Matricula invalida";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (
+    !req.body.usuario ||
+    typeof req.body.usuario === undefined ||
+    req.body.usuario === null
+  ) {
+    error = "Usuário invalido";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "Senha invalida";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "Repetição de senha invalida";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "Senhas diferentes";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (req.body.matricula != funcionario1.matricula) {
+    bd1.select_funcionario(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1
+          .update_funcionario({
+            matricula: req.body.matricula,
+            usuario: req.body.usuario,
+            senha: req.body.senha,
+            matricula1: funcionario1.matricula,
+          })
+          .then((funcionario) => {
+            if (funcionario === "error") {
+              req.flash(
+                "error_msg",
+                "Error no sistema tente novamente mais tarde"
+              );
+              res.redirect("/admin/funcionario");
+            } else {
+              req.flash(
+                "sucess_msg",
+                "Alteração do funcionário feita com sucesso"
+              );
+              res.redirect("/admin/funcionario");
+            }
+          });
+      }
+    });
+  } else if (req.body.senha != funcionario1.senha) {
+    bd1.select_senha(req.body.senha).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1
+          .update_funcionario({
+            matricula: req.body.matricula,
+            usuario: req.body.usuario,
+            senha: req.body.senha,
+            matricula1: funcionario1.matricula,
+          })
+          .then((funcionario) => {
+            if (funcionario === "error") {
+              req.flash(
+                "error_msg",
+                "Error no sistema tente novamente mais tarde"
+              );
+              res.redirect("/admin/funcionario");
+            } else {
+              req.flash(
+                "sucess_msg",
+                "Alteração do funcionário feita com sucesso"
+              );
+              res.redirect("/admin/funcionario");
+            }
+          });
+      }
+    });
+  } else if (req.body.matricula != funcionario1.matricula) {
+    bd1.select_funcionario(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else if (req.body.senha != funcionario1.senha) {
+        bd1.select_senha(req.body.senha).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd1
+              .update_funcionario({
+                matricula: req.body.matricula,
+                usuario: req.body.usuario,
+                senha: req.body.senha,
+                matricula1: funcionario1.matricula,
+              })
+              .then((funcionario) => {
+                if (funcionario === "error") {
+                  req.flash(
+                    "error_msg",
+                    "Error no sistema tente novamente mais tarde"
+                  );
+                  res.redirect("/admin/funcionario");
+                } else {
+                  req.flash(
+                    "sucess_msg",
+                    "Alteração do funcionário feita com sucesso"
+                  );
+                  res.redirect("/admin/funcionario");
+                }
+              });
+          }
+        });
+      }
+    });
+  } else {
+    bd1
+      .update_funcionario({
+        matricula: req.body.matricula,
+        usuario: req.body.usuario,
+        senha: req.body.senha,
+        matricula1: funcionario1.matricula,
+      })
+      .then((funcionario) => {
+        if (funcionario === "error") {
+          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+          res.redirect("/admin/funcionario");
+        } else {
+          req.flash("sucess_msg", "Alteração do funcionário feita com sucesso");
+          res.redirect("/admin/funcionario");
+        }
+      });
+  }
+});
+
 /*exclusao do aluno*/
-router.get("/aluno/exclucao/:matricula", (req, res) => {
+router.get("/aluno/exclusao/:matricula", (req, res) => {
   bd2.delete_aluno(req.params.matricula).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");

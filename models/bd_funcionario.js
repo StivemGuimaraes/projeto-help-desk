@@ -1,5 +1,6 @@
 const bd = require("../conexao");
 
+/*inclusão do funcionario*/
 const insert_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
@@ -18,6 +19,7 @@ const insert_funcionario = async (funcionario) => {
   }
 };
 
+/*seleção de todos os funcionarios*/
 const select_funcionarioAll = async () => {
   try {
     const conn = await bd.con();
@@ -35,6 +37,7 @@ const select_funcionarioAll = async () => {
   }
 };
 
+/*seleção da matricula do funcionario*/
 const select_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
@@ -55,6 +58,7 @@ const select_funcionario = async (funcionario) => {
   }
 };
 
+/*seleção da senha do funcionario*/
 const select_senha = async (funcionario) => {
   try {
     const conn = await bd.con();
@@ -75,9 +79,50 @@ const select_senha = async (funcionario) => {
   }
 };
 
+/*seleção de um funcionario*/
+const select_funcionario1 = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM funcionario WHERE matricula = ?;";
+    const value = matricula;
+    const [funcionario] = await conn.query(sql, value);
+    if (funcionario == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do funcionario realizado com sucesso");
+      return funcionario;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*alteração do funcionario*/
+const update_funcionario = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "UPDATE funcionario SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
+    const values = [
+      funcionario.matricula,
+      funcionario.usuario,
+      funcionario.senha,
+      funcionario.matricula1,
+    ];
+    await conn.query(sql, values);
+    console.log("alteração do funcionario feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 module.exports = {
   insert_funcionario,
   select_funcionarioAll,
   select_funcionario,
   select_senha,
+  select_funcionario1,
+  update_funcionario,
 };

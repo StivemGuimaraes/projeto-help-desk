@@ -58,7 +58,7 @@ const select_professor = async (professor) => {
 const select_senha = async (professor) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT senha FROM professor WHERE senha = ?";
+    const sql = "SELECT senha FROM professor WHERE matricula = ?";
     const value = [professor];
     const [senha] = await conn.query(sql, value);
     if (senha == "") {

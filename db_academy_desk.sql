@@ -4,21 +4,27 @@ create table professor
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(30) not null,
+senha varchar(150) not null,
+telefone_celular varchar(11) not null,
+telefone_residencial varchar(10),
 eAdmin int not null default 2
 );
 create table aluno
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(30) not null,
+senha varchar(150) not null,
+telefone_celular varchar(11),
+telefone_residencial varchar(10),
 eAdmin int not null default 3
 );
 create table funcionario
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(30) not null,
+senha varchar(150) not null,
+telefone_celular varchar(11),
+telefone_residencial varchar(10),
 eAdmin int not null default 0,
 relatorio text
 );
@@ -32,8 +38,7 @@ nivel char(1) not null,
 prioridade varchar(8),
 descricao text not null,
 fk_professor int,
-fk_aluno int,
-fk_funcionario int
+fk_aluno int
 );
 alter table chamado
 add foreign key(fk_aluno) references aluno(matricula),

@@ -4,27 +4,27 @@ create table professor
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(150) not null,
-telefone_celular varchar(11) not null,
-telefone_residencial varchar(10),
+senha varchar(40) not null,
+telefone_celular varchar(15) not null,
+telefone_residencial varchar(14),
 eAdmin int not null default 2
 );
 create table aluno
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(150) not null,
-telefone_celular varchar(11),
-telefone_residencial varchar(10),
+senha varchar(40) not null,
+telefone_celular varchar(15),
+telefone_residencial varchar(14),
 eAdmin int not null default 3
 );
 create table funcionario
 (
 matricula int not null primary key,
 usuario varchar(90) not null,
-senha varchar(150) not null,
-telefone_celular varchar(11),
-telefone_residencial varchar(10),
+senha varchar(40) not null,
+telefone_celular varchar(15),
+telefone_residencial varchar(14),
 eAdmin int not null default 0,
 relatorio text
 );

@@ -35,6 +35,13 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     error = "Usuário invalido";
     res.render("admin/cadastro_professor", { error });
   } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
+    res.render("admin/cadastro_professor", { error });
+  } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -61,27 +68,60 @@ router.post("/cadastrar-professor/nova", (req, res) => {
           error = msg;
           res.render("admin/cadastro_professor", { error });
         } else {
-          bd.select_senha(req.body.senha)
+          bd.select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_professor", { error });
               } else {
-                bd.insert_professor({
-                  matricula: req.body.matricula,
-                  usuario: req.body.usuario,
-                  senha: req.body.senha,
-                })
+                bd.select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
                       res.render("admin/cadastro_professor", { error });
                     } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Professor cadastrado com sucesso"
-                      );
-                      res.redirect("/admin/professor");
+                      bd.select_senha(req.body.senha)
+                        .then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/cadastro_professor", { error });
+                          } else {
+                            bd.insert_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: req.body.senha,
+                            })
+                              .then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/cadastro_professor", {
+                                    error,
+                                  });
+                                } else {
+                                  var sucesso =
+                                    "Professor cadastrado com sucesso";
+                                  res.render("admin/cadastro_professor", {
+                                    sucesso,
+                                  });
+                                }
+                              })
+                              .catch((error1) => {
+                                console.log("deu error", error1);
+                                error =
+                                  "Error no sistema tente novamente mais tarde";
+                                res.render("admin/cadastro_professor", {
+                                  error,
+                                });
+                              });
+                          }
+                        })
+                        .catch((error1) => {
+                          console.log("deu error", error1);
+                          error = "Error no sistema tente novamente mais tarde";
+                          res.render("admin/cadastro_professor", { error });
+                        });
                     }
                   })
                   .catch((error1) => {
@@ -128,6 +168,13 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     error = "Usuário invalido";
     res.render("admin/cadastro_funcionario", { error });
   } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
+    res.render("admin/cadastro_funcionario", { error });
+  } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -156,48 +203,83 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
           res.render("admin/cadastro_funcionario", { error });
         } else {
           bd1
-            .select_senha(req.body.senha)
+            .select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_funcionario", { error });
               } else {
                 bd1
-                  .insert_funcionario({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    senha: req.body.senha,
-                  })
+                  .select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
                       res.render("admin/cadastro_funcionario", { error });
                     } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Funcionário cadastrado com sucesso"
-                      );
-                      res.redirect("/admin/funcionario");
+                      bd1
+                        .select_senha(req.body.senha)
+                        .then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/cadastro_funcionario", { error });
+                          } else {
+                            bd1
+                              .insert_funcionario({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: req.body.senha,
+                              })
+                              .then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/cadastro_funcionario", {
+                                    error,
+                                  });
+                                } else {
+                                  var sucesso =
+                                    "Professor cadastrado com sucesso";
+                                  res.render("admin/cadastro_funcionario", {
+                                    sucesso,
+                                  });
+                                }
+                              })
+                              .catch((error1) => {
+                                console.log("deu error", error1);
+                                error =
+                                  "Error no sistema tente novamente mais tarde";
+                                res.render("admin/cadastro_professor", {
+                                  error,
+                                });
+                              });
+                          }
+                        })
+                        .catch((error1) => {
+                          console.log("deu error", error1);
+                          error = "Error no sistema tente novamente mais tarde";
+                          res.render("admin/cadastro_professor", { error });
+                        });
                     }
                   })
                   .catch((error1) => {
                     console.log("deu error", error1);
                     error = "Error no sistema tente novamente mais tarde";
-                    res.render("admin/cadastro_funcionario", { error });
+                    res.render("admin/cadastro_professor", { error });
                   });
               }
             })
             .catch((error1) => {
               console.log("deu error", error1);
               error = "Error no sistema tente novamente mais tarde";
-              res.render("admin/cadastro_funcionario", { error });
+              res.render("admin/cadastro_professor", { error });
             });
         }
       })
       .catch((error1) => {
         console.log("deu error", error1);
         error = "Error no sistema tente novamente mais tarde";
-        res.render("admin/cadastro_funcionario", { error });
+        res.render("admin/cadastro_professor", { error });
       });
   }
 });
@@ -222,6 +304,13 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
+    res.render("admin/cadastro_aluno", { error });
+  } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
     res.render("admin/cadastro_aluno", { error });
   } else if (
     !req.body.senha ||
@@ -252,45 +341,82 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
           res.render("admin/cadastro_aluno", { error });
         } else {
           bd2
-            .select_senha(req.body.senha)
+            .select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_aluno", { error });
               } else {
                 bd2
-                  .insert_aluno({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    senha: req.body.senha,
-                  })
+                  .select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
                       res.render("admin/cadastro_aluno", { error });
                     } else {
-                      req.flash("sucess_msg", "Aluno cadastrado com sucesso");
-                      res.redirect("/admin/aluno");
+                      bd2
+                        .select_senha(req.body.senha)
+                        .then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/cadastro_aluno", { error });
+                          } else {
+                            bd2
+                              .insert_aluno({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: req.body.senha,
+                              })
+                              .then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/cadastro_aluno", {
+                                    error,
+                                  });
+                                } else {
+                                  var sucesso = "Aluno cadastrado com sucesso";
+                                  res.render("admin/cadastro_aluno", {
+                                    sucesso,
+                                  });
+                                }
+                              })
+                              .catch((error1) => {
+                                console.log("deu error", error1);
+                                error =
+                                  "Error no sistema tente novamente mais tarde";
+                                res.render("admin/cadastro_professor", {
+                                  error,
+                                });
+                              });
+                          }
+                        })
+                        .catch((error1) => {
+                          console.log("deu error", error1);
+                          error = "Error no sistema tente novamente mais tarde";
+                          res.render("admin/cadastro_professor", { error });
+                        });
                     }
                   })
                   .catch((error1) => {
                     console.log("deu error", error1);
                     error = "Error no sistema tente novamente mais tarde";
-                    res.render("admin/cadastro_aluno", { error });
+                    res.render("admin/cadastro_professor", { error });
                   });
               }
             })
             .catch((error1) => {
               console.log("deu error", error1);
               error = "Error no sistema tente novamente mais tarde";
-              res.render("admin/cadastro_aluno", { error });
+              res.render("admin/cadastro_professor", { error });
             });
         }
       })
       .catch((error1) => {
         console.log("deu error", error1);
         error = "Error no sistema tente novamente mais tarde";
-        res.render("admin/cadastro_aluno", { error });
+        res.render("admin/cadastro_professor", { error });
       });
   }
 });
@@ -651,21 +777,43 @@ router.post("/funcionario/alteracao", (req, res) => {
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
-    error = "Senha invalida";
-    res.render("admin/edicao_funcionario", {
-      error,
-      funcionario: funcionario1,
-    });
+    bd1
+      .update_funcionario({
+        matricula: req.body.matricula,
+        usuario: req.body.usuario,
+        senha: funcionario1.senha,
+        matricula1: funcionario1.matricula,
+      })
+      .then((funcionario) => {
+        if (funcionario === "error") {
+          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+          res.redirect("/admin/funcionario");
+        } else {
+          req.flash("sucess_msg", "Alteração do funcionário feita com sucesso");
+          res.redirect("/admin/funcionario");
+        }
+      });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
-    error = "Repetição de senha invalida";
-    res.render("admin/edicao_funcionario", {
-      error,
-      funcionario: funcionario1,
-    });
+    bd1
+      .update_funcionario({
+        matricula: req.body.matricula,
+        usuario: req.body.usuario,
+        senha: funcionario1.senha,
+        matricula1: funcionario1.matricula,
+      })
+      .then((funcionario) => {
+        if (funcionario === "error") {
+          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+          res.redirect("/admin/funcionario");
+        } else {
+          req.flash("sucess_msg", "Alteração do funcionário feita com sucesso");
+          res.redirect("/admin/funcionario");
+        }
+      });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("admin/edicao_funcionario", {

@@ -2,6 +2,7 @@
   <title>alteração do professor</title>
   <script defer src="/js/cadastro_validacao.js"></script>
   <script defer src="/js/modal_edicao_admin.js"></script>
+    <script defer src="/js/mascara_input.js"></script>
   <style>
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none; margin: 0; } input[type="number"] {
@@ -113,6 +114,54 @@
                     <div class="invalid-feedback">
                       Por favor, digite seu usuário
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput1"
+                    style="font-weight: bold"
+                  >Digite seu telefone celular</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput1"
+                      placeholder="user"
+                      name="celular"
+                      maxlength="15"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu telefone celular</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu telefone celular
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput2"
+                    style="font-weight: bold"
+                  >Digite seu telefone residencial</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput2"
+                      placeholder="user"
+                      name="residencial"
+                      maxlength="14"
+                    />
+                    <label for="floatingInput2">Opcional</label>
+                    <div class="valid-feedback">Campo opcional</div>
                   </div>
                 </div>
               </div>

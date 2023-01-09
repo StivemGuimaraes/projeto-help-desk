@@ -5,8 +5,14 @@ const insert_professor = async (professor) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO professor(matricula,usuario,senha) VALUES (?,?,?);";
-    const values = [professor.matricula, professor.usuario, professor.senha];
+      "INSERT INTO professor(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?);";
+    const values = [
+      professor.matricula,
+      professor.usuario,
+      professor.celular,
+      professor.residencial,
+      professor.senha,
+    ];
     await conn.query(sql, values);
     console.log("cadastramento do professor realizado com sucesso");
   } catch (error) {
@@ -58,7 +64,7 @@ const select_professor = async (professor) => {
 const select_senha = async (professor) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT senha FROM professor WHERE matricula = ?";
+    const sql = "SELECT senha FROM professor WHERE senha = ?";
     const value = [professor];
     const [senha] = await conn.query(sql, value);
     if (senha == "") {
@@ -66,6 +72,50 @@ const select_senha = async (professor) => {
     } else {
       console.log("selecionamento da senha do professor realizado com sucesso");
       return "Senha já cadastrada no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção do telefone celular*/
+const select_celular = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT telefone_celular FROM professor WHERE telefone_celular = ?";
+    const value = [professor];
+    const [celular] = await conn.query(sql, value);
+    if (celular == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone celular do professor realizado com sucesso"
+      );
+      return "Telefone celular já cadastrado no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção do telefone residencial*/
+const select_residencial = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT telefone_residencial FROM professor WHERE telefone_residencial = ?";
+    const value = [professor];
+    const [residencial] = await conn.query(sql, value);
+    if (residencial == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone residencial do professor realizado com sucesso"
+      );
+      return "Telefone residencial já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -120,6 +170,8 @@ module.exports = {
   select_professorAll,
   select_professor,
   select_senha,
+  select_celular,
+  select_residencial,
   select_professor1,
   delete_update_professor,
 };

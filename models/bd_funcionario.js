@@ -79,6 +79,50 @@ const select_senha = async (funcionario) => {
   }
 };
 
+/*seleção do telefone celular*/
+const select_celular = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT telefone_celular FROM funcionario WHERE telefone_celular = ?";
+    const value = [funcionario];
+    const [celular] = await conn.query(sql, value);
+    if (celular == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone celular do funcionario realizado com sucesso"
+      );
+      return "Telefone celular já cadastrado no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção do telefone residencial*/
+const select_residencial = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT telefone_residencial FROM funcionario WHERE telefone_residencial = ?";
+    const value = [funcionario];
+    const [residencial] = await conn.query(sql, value);
+    if (residencial == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone residencial do funcionario realizado com sucesso"
+      );
+      return "Telefone residencial já cadastrado no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
 /*seleção de um funcionario*/
 const select_funcionario1 = async (matricula) => {
   try {
@@ -123,6 +167,8 @@ module.exports = {
   select_funcionarioAll,
   select_funcionario,
   select_senha,
+  select_celular,
+  select_residencial,
   select_funcionario1,
   update_funcionario,
 };

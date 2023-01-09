@@ -1,6 +1,7 @@
 <head>
   <title>cadastro de funcionario</title>
   <script defer src="/js/cadastro_validacao.js"></script>
+  <script defer src="/js/mascara_input.js"></script>
   <style>
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none; margin: 0; } input[type="number"] {
@@ -34,11 +35,17 @@
   </div>
 </header>
 <main>
-  {{> _msg}}
   {{#if error}}
     <div class="container">
       <div class="row justify-content-center text-center">
         <div class="alert alert-danger w-50">{{error}}</div>
+      </div>
+    </div>
+  {{/if}}
+  {{#if sucesso}}
+    <div class="container mt-5">
+      <div class="row justify-content-center text-center">
+        <div class="alert alert-success w-50">{{sucesso}}</div>
       </div>
     </div>
   {{/if}}
@@ -111,6 +118,54 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
+                    for="floatingInput1"
+                    style="font-weight: bold"
+                  >Digite seu telefone celular</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput1"
+                      placeholder="user"
+                      name="celular"
+                      maxlength="15"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu telefone celular</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu telefone celular
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput2"
+                    style="font-weight: bold"
+                  >Digite seu telefone residencial</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput2"
+                      placeholder="user"
+                      name="residencial"
+                      maxlength="14"
+                    />
+                    <label for="floatingInput2">Opcional</label>
+                    <div class="valid-feedback">Campo opcional</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
                     for="floatingInput"
                     style="font-weight: bold"
                   >Digite sua senha</label>
@@ -162,12 +217,11 @@
                   <button class="btn btn-outline-primary" type="submit">
                     Cadastrar
                   </button>
-                  <a href="/"><button
+                  <a href="/admin"><button
                       type="button"
-                      class="btn btn-link"
-                      style="border: none; box-shadow: none"
+                      class="btn btn-outline-primary"
                     >
-                      Login
+                      Voltar
                     </button></a>
                 </div>
               </div>

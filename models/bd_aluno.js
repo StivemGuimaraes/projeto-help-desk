@@ -4,8 +4,15 @@ const bd = require("../conexao");
 const insert_aluno = async (aluno) => {
   try {
     const conn = await bd.con();
-    const sql = "INSERT INTO aluno(matricula,usuario,senha) VALUES (?,?,?);";
-    const values = [aluno.matricula, aluno.usuario, aluno.senha];
+    const sql =
+      "INSERT INTO aluno(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?);";
+    const values = [
+      aluno.matricula,
+      aluno.usuario,
+      aluno.celular,
+      aluno.residencial,
+      aluno.senha,
+    ];
     await conn.query(sql, values);
     console.log("cadastramento do aluno realizado com sucesso");
   } catch (error) {
@@ -63,6 +70,49 @@ const select_senha = async (aluno) => {
     } else {
       console.log("selecionamento da senha do aluno realizado com sucesso");
       return "Senha já cadastrada no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção do telefone celular*/
+const select_celular = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT telefone_celular FROM aluno WHERE telefone_celular = ?";
+    const value = [aluno];
+    const [celular] = await conn.query(sql, value);
+    if (celular == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone celular do aluno realizado com sucesso"
+      );
+      return "Telefone celular já cadastrado no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção do telefone residencial*/
+const select_residencial = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT telefone_residencial FROM aluno WHERE telefone_residencial = ?";
+    const value = [aluno];
+    const [residencial] = await conn.query(sql, value);
+    if (residencial == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do telefone residencial do aluno realizado com sucesso"
+      );
+      return "Telefone residencial já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -134,6 +184,8 @@ module.exports = {
   select_alunoAll,
   select_aluno,
   select_senha,
+  select_celular,
+  select_residencial,
   select_aluno1,
   delete_update_aluno,
   delete_aluno,

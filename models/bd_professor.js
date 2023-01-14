@@ -109,7 +109,8 @@ const select_residencial = async (professor) => {
       "SELECT telefone_residencial FROM professor WHERE telefone_residencial = ?";
     const value = [professor];
     const [residencial] = await conn.query(sql, value);
-    if (residencial == "") {
+    console.log(residencial);
+    if (residencial == "" || residencial[0].telefone_residencial == "") {
       return false;
     } else {
       console.log(
@@ -151,15 +152,55 @@ const delete_update_professor = async (professor) => {
     await conn.query(sql, values);
     console.log("deletação do chamado do professor feita com sucesso");
     const sql1 =
-      "UPDATE professor SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values1 = [
       professor.matricula,
       professor.usuario,
+      professor.celular,
+      professor.residencial,
       professor.senha,
       professor.matricula1,
     ];
     await conn.query(sql1, values1);
     console.log("alteração do professor feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*alteração do professor*/
+const update_professor = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+    const values = [
+      professor.matricula,
+      professor.usuario,
+      professor.celular,
+      professor.residencial,
+      professor.senha,
+      professor.matricula1,
+    ];
+    await conn.query(sql, values);
+    console.log("alteração do professor feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*exclusão do professor*/
+const delete_professor = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "DELETE FROM chamado WHERE fk_professor = ?;";
+    await conn.query(sql, matricula);
+    console.log("exclução do chamado do professor feita com sucesso");
+    const sql1 = "DELETE FROM professor WHERE matricula = ?;";
+    await conn.query(sql1, matricula);
+    console.log("exclução do professor feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "error";
@@ -174,4 +215,6 @@ module.exports = {
   select_residencial,
   select_professor1,
   delete_update_professor,
+  update_professor,
+  delete_professor,
 };

@@ -5,10 +5,12 @@ const insert_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO funcionario(matricula,usuario,senha) VALUES (?,?,?)";
+      "INSERT INTO funcionario(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?)";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.celular,
+      funcionario.residencial,
       funcionario.senha,
     ];
     await conn.query(sql, values);
@@ -41,7 +43,7 @@ const select_funcionarioAll = async () => {
 const select_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT matricula FROM funcionario WHERE matricula = ?";
+    const sql = "SELECT matricula FROM funcionario WHERE matricula = ?;";
     const value = [funcionario];
     const [matricula] = await conn.query(sql, value);
     if (matricula == "") {
@@ -62,7 +64,7 @@ const select_funcionario = async (funcionario) => {
 const select_senha = async (funcionario) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT senha FROM funcionario WHERE senha = ?";
+    const sql = "SELECT senha FROM funcionario WHERE senha = ?;";
     const value = [funcionario];
     const [senha] = await conn.query(sql, value);
     if (senha == "") {
@@ -84,7 +86,7 @@ const select_celular = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "SELECT telefone_celular FROM funcionario WHERE telefone_celular = ?";
+      "SELECT telefone_celular FROM funcionario WHERE telefone_celular = ?;";
     const value = [funcionario];
     const [celular] = await conn.query(sql, value);
     if (celular == "") {
@@ -106,10 +108,10 @@ const select_residencial = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "SELECT telefone_residencial FROM funcionario WHERE telefone_residencial = ?";
+      "SELECT telefone_residencial FROM funcionario WHERE telefone_residencial = ?;";
     const value = [funcionario];
     const [residencial] = await conn.query(sql, value);
-    if (residencial == "") {
+    if (residencial == "" || residencial[0].telefone_residencial == "") {
       return false;
     } else {
       console.log(
@@ -147,15 +149,30 @@ const update_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE funcionario SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE funcionario SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.celular,
+      funcionario.residencial,
       funcionario.senha,
       funcionario.matricula1,
     ];
     await conn.query(sql, values);
     console.log("alteração do funcionario feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*exclusão do professor*/
+const delete_funcionario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "DELETE FROM funcionario WHERE matricula = ?;";
+    await conn.query(sql, matricula);
+    console.log("exclução do chamado do funcionario feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "error";
@@ -171,4 +188,5 @@ module.exports = {
   select_residencial,
   select_funcionario1,
   update_funcionario,
+  delete_funcionario,
 };

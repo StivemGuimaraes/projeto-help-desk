@@ -106,7 +106,7 @@ const select_residencial = async (aluno) => {
       "SELECT telefone_residencial FROM aluno WHERE telefone_residencial = ?";
     const value = [aluno];
     const [residencial] = await conn.query(sql, value);
-    if (residencial == "") {
+    if (residencial == "" || residencial[0].telefone_residencial == "") {
       return false;
     } else {
       console.log(
@@ -148,10 +148,12 @@ const delete_update_aluno = async (aluno) => {
     await conn.query(sql, values);
     console.log("deletação do chamado do aluno feita com sucesso");
     const sql1 =
-      "UPDATE aluno SET matricula = ?, usuario = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE aluno SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values1 = [
       aluno.matricula,
       aluno.usuario,
+      aluno.celular,
+      aluno.residencial,
       aluno.senha,
       aluno.matricula1,
     ];
@@ -163,7 +165,29 @@ const delete_update_aluno = async (aluno) => {
   }
 };
 
-/*exclusão do aluno de um aluno*/
+/*alteração do aluno*/
+const update_aluno = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "UPDATE aluno SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+    const values = [
+      aluno.matricula,
+      aluno.usuario,
+      aluno.celular,
+      aluno.residencial,
+      aluno.senha,
+      aluno.matricula1,
+    ];
+    await conn.query(sql, values);
+    console.log("alteração do aluno feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*exclusão do aluno*/
 const delete_aluno = async (matricula) => {
   try {
     const conn = await bd.con();
@@ -188,5 +212,6 @@ module.exports = {
   select_residencial,
   select_aluno1,
   delete_update_aluno,
+  update_aluno,
   delete_aluno,
 };

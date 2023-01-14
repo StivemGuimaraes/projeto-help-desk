@@ -1,5 +1,5 @@
 <head>
-  <title>Listas de Alunos</title>
+  <title>listas de alunos</title>
 </head>
 <header
   class="shadow border-secondary border-bottom py-3 mb-4"
@@ -49,7 +49,13 @@
   <h5 class="card-header">{{this.matricula}}</h5>
   <div class="card-body">
     <h5 class="card-title">{{this.usuario}}</h5>
-    <p class="card-text">Senha: {{this.senha}}</p>
+    <p class="card-text mb-1">Senha: {{this.senha}}</p>
+    {{#if telefone_residencial}}
+    <p class="card-text mb-1">Telefone celular: {{this.telefone_celular}}</p>
+    <p class="card-text">Telefone residencial: {{this.telefone_residencial}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular: {{this.telefone_celular}}</p>
+    {{/if}}   
     <a href="/admin/aluno/alteracao/{{this.matricula}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#exampleModal{{this.matricula}}" class="btn btn-danger">Deletar</a>
   </div>

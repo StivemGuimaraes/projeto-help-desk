@@ -69,7 +69,7 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
-                    for="floatingInput1"
+                    for="floatingInput"
                     style="font-weight: bold"
                   >Digite sua matricula</label>
 
@@ -77,7 +77,7 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="floatingInput1"
+                      id="floatingInput"
                       placeholder="user"
                       name="matricula"
                       value="{{aluno.matricula}}"
@@ -95,7 +95,7 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
-                    for="floatingInput"
+                    for="floatingInput#"
                     style="font-weight: bold"
                   >Digite seu usuário</label>
 
@@ -103,13 +103,13 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="floatingInput"
+                      id="floatingInput#"
                       placeholder="user"
                       name="usuario"
                       value="{{aluno.usuario}}"
                       required
                     />
-                    <label for="floatingInput">Digite seu usuário</label>
+                    <label for="floatingInput#">Digite seu usuário</label>
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">
                       Por favor, digite seu usuário
@@ -132,6 +132,7 @@
                       id="floatingInput1"
                       placeholder="user"
                       name="celular"
+                      value="{{aluno.telefone_celular}}"
                       maxlength="15"
                       required
                     />
@@ -158,6 +159,7 @@
                       id="floatingInput2"
                       placeholder="user"
                       name="residencial"
+                      value="{{aluno.telefone_residencial}}"
                       maxlength="14"
                     />
                     <label for="floatingInput2">Opcional</label>
@@ -179,14 +181,9 @@
                       id="floatingPassword2"
                       placeholder="Password"
                       name="senha"
-                      required
                     />
                     <label for="floatingPassword2">Digite sua senha</label>
                     <div class="valid-feedback">Validado!</div>
-                    <div class="invalid-feedback">
-                      Por favor, digite sua senha
-                    </div>
-                    <div id="error-password"></div>
                   </div>
                 </div>
               </div>
@@ -204,13 +201,9 @@
                       id="floatingPassword3"
                       placeholder="Password"
                       name="senha2"
-                      required
                     />
                     <label for="floatingPassword3">Repita sua senha</label>
                     <div class="valid-feedback">Validado!</div>
-                    <div class="invalid-feedback">
-                      Por favor, repita sua senha
-                    </div>
                   </div>
                 </div>
               </div>

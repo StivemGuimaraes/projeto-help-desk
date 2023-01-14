@@ -1,4 +1,4 @@
-var matricula = document.getElementById("floatingInput1");
+var matricula = document.getElementById("floatingInput");
 var botao_alterar = document.getElementById("botao_alterar");
 var form = document.getElementById("form");
 var senha = document.getElementById("floatingPassword2");
@@ -7,12 +7,14 @@ var modal = document.getElementById("exampleModal");
 var botao_fechar = document.getElementById("botao_fechar");
 var valor_matricula = matricula.value;
 
+form.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+});
+
 form.addEventListener("change", () => {
-  if (
-    valor_matricula !== matricula.value &&
-    senha.value !== "" &&
-    senha2.value !== ""
-  ) {
+  if (valor_matricula !== matricula.value) {
     botao_alterar.setAttribute("data-bs-toggle", "modal");
     botao_alterar.setAttribute("data-bs-target", "#exampleModal");
     botao_alterar.removeAttribute("type");

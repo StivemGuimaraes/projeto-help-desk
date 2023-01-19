@@ -4,13 +4,16 @@ const insert_chamado = async (chamado) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO chamado(titulo,assunto,nivel,prioridade,descricao,fk_aluno,fk_professor) VALUES (?,?,?,?,?,?,?)";
+      "INSERT INTO chamado(titulo,assunto,nivel,prioridade,descricao,img1,img2,img3,fk_aluno,fk_professor) VALUES (?,?,?,?,?,?,?,?,?,?)";
     const values = [
       chamado.titulo,
       chamado.assunto,
       chamado.nivel,
       chamado.prioridade,
       chamado.descricao,
+      chamado.img1,
+      chamado.img2,
+      chamado.img3,
       chamado.fk_aluno,
       chamado.fk_professor,
     ];

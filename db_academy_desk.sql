@@ -37,6 +37,9 @@ statusd varchar(20) default "Aberto",
 nivel char(1) not null,
 prioridade varchar(8),
 descricao text not null,
+img1 varchar(150),
+img2 varchar(150),
+img3 varchar(150),
 fk_professor int,
 fk_aluno int
 );

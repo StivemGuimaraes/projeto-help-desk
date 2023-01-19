@@ -6,7 +6,6 @@ const admin = require("./routes/admin");
 const aluno = require("./routes/aluno");
 const funcionario = require("./routes/funcionario");
 const professor = require("./routes/professor");
-const bd = require("./conexao");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const flash = require("connect-flash");

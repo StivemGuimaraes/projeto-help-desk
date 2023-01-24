@@ -6,8 +6,7 @@ const upload = require("../config/multer");
 const multer = require("multer");
 const uploadChamadoProfessor = upload
   .upload_chamado_professor()
-  .array("imagem_chamado", 3);
-const uploadProfessor = upload.upload_professor();
+  .array("imagem_chamado1", 3);
 
 router.get("/", (req, res) => {
   res.render("professor/index");
@@ -107,14 +106,13 @@ router.get("/criar-chamado", (req, res) => {
 router.post("/criar-chamado/nova", (req, res) => {
   uploadChamadoProfessor(req, res, (err) => {
     var error;
-    console.log(req.files[1]);
     if (req.user[0].eAdmin == 2) {
       var professor_matricula = req.user[0].matricula;
     } else {
       var professor_matricula = null;
     }
 
-    if (req.files[0] == "") {
+    if (typeof req.files[0] === "undefined") {
       req.files[0] = { filename: null };
       req.files[1] = { filename: null };
       req.files[2] = { filename: null };
@@ -163,9 +161,11 @@ router.post("/criar-chamado/nova", (req, res) => {
       error = "Descrição invalida";
       res.render("professor/criar_chamado", { error });
     } else if (err instanceof multer.MulterError) {
-      error = "O envio máximo de arquivos são 3";
-      res.render("professor/criar_chamado", { error });
+      err = "Envio de arquivos invalida";
+      res.setTimeout(480000);
+      res.render("professor/criar_chamado", { error: err });
     } else if (err) {
+      res.setTimeout(480000);
       res.render("professor/criar_chamado", { error: err });
     } else {
       bd1

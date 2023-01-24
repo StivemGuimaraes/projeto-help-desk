@@ -26,25 +26,77 @@ const upload_chamado_professor = () =>
     },
   });
 
-const upload_chamado_aluno = () =>
+const alteracao_professor_imagem = () =>
   multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.resolve(__dirname, "./public/upload/chamado_aluno"));
+        cb(null, path.resolve("./public/upload/chamado_professor"));
       },
       filename: (req, file, cb) => {
         cb(null, Date.now().toString() + "_" + file.originalname);
       },
     }),
     fileFilter: (req, file, cb) => {
-      const extensaoImg = ["Image/png", "image/jpg", "image/jpeg"].find(
-        (formatoAceito) => formatoAceito == file.mimetype
-      );
+      var extensaoImg = path.extname(file.originalname).toLocaleLowerCase();
 
-      if (extensaoImg) {
+      if (
+        extensaoImg == ".jpg" ||
+        extensaoImg == ".png" ||
+        extensaoImg == ".jpeg"
+      ) {
         return cb(null, true);
       } else {
-        return cb(null, false);
+        cb("Apenas envio de arquivos de imagens", false);
+      }
+    },
+  });
+
+const upload_chamado_aluno = () =>
+  multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.resolve("./public/upload/chamado_aluno"));
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now().toString() + "_" + file.originalname);
+      },
+    }),
+    fileFilter: (req, file, cb) => {
+      var extensaoImg = path.extname(file.originalname).toLocaleLowerCase();
+
+      if (
+        extensaoImg == ".jpg" ||
+        extensaoImg == ".png" ||
+        extensaoImg == ".jpeg"
+      ) {
+        return cb(null, true);
+      } else {
+        cb("Apenas envio de arquivos de imagens", false);
+      }
+    },
+  });
+
+const alteracao_aluno_imagem = () =>
+  multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.resolve("./public/upload/chamado_aluno"));
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now().toString() + "_" + file.originalname);
+      },
+    }),
+    fileFilter: (req, file, cb) => {
+      var extensaoImg = path.extname(file.originalname).toLocaleLowerCase();
+
+      if (
+        extensaoImg == ".jpg" ||
+        extensaoImg == ".png" ||
+        extensaoImg == ".jpeg"
+      ) {
+        return cb(null, true);
+      } else {
+        cb("Apenas envio de arquivos de imagens", false);
       }
     },
   });
@@ -97,6 +149,8 @@ const upload_professor = () =>
 
 module.exports = {
   upload_chamado_professor,
+  alteracao_professor_imagem,
+  alteracao_aluno_imagem,
   upload_chamado_aluno,
   upload_aluno,
   upload_professor,

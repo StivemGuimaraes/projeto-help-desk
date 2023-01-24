@@ -172,7 +172,7 @@ const delete_funcionario = async (matricula) => {
     const conn = await bd.con();
     const sql = "DELETE FROM funcionario WHERE matricula = ?;";
     await conn.query(sql, matricula);
-    console.log("exclução do chamado do funcionario feita com sucesso");
+    console.log("exclução do funcionario feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "error";

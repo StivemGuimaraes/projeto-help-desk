@@ -1,5 +1,5 @@
 <head>
-  <title>chamado</title>
+  <title>Chamado</title>
 </head>
 <header
   class="shadow border-secondary border-bottom py-3 mb-4"
@@ -63,6 +63,18 @@
     <p class="card-text">nome do cliente: {{this.nome_professor}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
     <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    {{#if this.img1}}
+    <p class="card-text mb-0">Imagens:</p>
+    <div class="row">
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem1_professor{{this.id}}" src="/upload/chamado_professor/{{this.img1}}" alt="algo deu errado">
+    {{#if this.img2}}
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem2_professor{{this.id}}" src="/upload/chamado_professor/{{this.img2}}" alt="algo deu errado">
+    {{/if}}
+    {{#if this.img3}}
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem3_professor{{this.id}}" src="/upload/chamado_professor/{{this.img3}}" alt="algo deu errado">
+    {{/if}}
+    </div>
+    {{/if}}
     <label for="descricao" class="form-label">Descrição</label>
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="#" class="btn btn-warning">Alterar</a>
@@ -71,5 +83,50 @@
     </div>
   </div>
   </div>
+  <!-- Modal_Professor -->
+<div class="modal fade" id="imagem1_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img1}}" alt="error" width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal_Professor -->
+<div class="modal fade" id="imagem2_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img2}}" alt="error"  width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal_Professor -->
+<div class="modal fade" id="imagem3_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img3}}" alt="error" width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   {{/each}}
 </main>

@@ -64,6 +64,22 @@ const select_chamado1 = async (id) => {
   }
 };
 
+/*seleção de um usuario*/
+const select_usuario_imagem = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT c.img1, c.img2, c.img3, a.usuario AS nome_aluno, p.usuario AS nome_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) where id = ?;";
+    const value = id;
+    const [chamado] = await conn.query(sql, value);
+    console.log("selecionamento do chamado realizado com sucesso");
+    return chamado;
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 const select_chamadoProfessor = async (professor) => {
   try {
     if (professor[0].eAdmin == 2) {
@@ -135,11 +151,39 @@ const update_chamado = async (chamado) => {
   }
 };
 
+const update_imagem = async (chamado) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE chamado SET img1 = ?, img2 = ?, img3 = ? WHERE id = ?;";
+    const values = [chamado.img1, chamado.img2, chamado.img3, chamado.id];
+    await conn.query(sql, values);
+    console.log("alteração das imagens realizado com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+const delete_chamado = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql = "DELETE FROM chamado WHERE id = ?;";
+    await conn.query(sql, id);
+    console.log("exclução do chamado feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 module.exports = {
   insert_chamado,
   select_chamadoAll,
   select_chamado1,
+  select_usuario_imagem,
   select_chamadoProfessor,
   select_chamadoAluno,
   update_chamado,
+  update_imagem,
+  delete_chamado,
 };

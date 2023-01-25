@@ -2,6 +2,17 @@
   <title>Criar chamado</title>
   <script defer src="/js/cadastro_validacao.js"></script>
 </head>
+<style>
+  @media (max-width: 768px) {
+            .botao {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .nivel {
+              margin-bottom: 16px;
+            } 
+        }
+</style>
 <header
   class="shadow border-secondary border-bottom py-3 mb-4"
   style="
@@ -99,7 +110,7 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="col-md-6 col-lg-6 col-sm-12 nivel">
                   <label class="form-label fs-5">Nível</label>
                   <select
                     class="form-select"
@@ -175,14 +186,21 @@
                 </div>
               </div>
               <div class="row mb-2">
-                <div class="col-lg-5 col-sm-12 col-md-8">
+                <div class="col-lg-1 col-sm-12 col-md-2 me-lg-4 me-md-4">
                   <input
                     type="submit"
-                    class="btn btn-primary"
+                    class="btn btn-outline-primary botao"
                     value="Criar chamado"
                   />
                 </div>
-              </div>
+                <div class="col-lg-1 col-sm-12 col-md-3">
+                  <a href="/aluno"><input
+                    type="button"
+                    class="btn btn-outline-primary botao"
+                    value="Voltar"
+                  /></a>
+                  </div>
+                </div>
             </form>
           </div>
         </div>

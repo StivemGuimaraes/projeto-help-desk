@@ -26,12 +26,12 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-xl-1">
-        <a href="/admin" class="text-decoration-none text-white">
+        <a href="/aluno" class="text-decoration-none text-white">
           <img class="img-fluid float-start" src="" alt="logo aqui" />
         </a>
       </div>
       <div class="col-md-3 col-sm-11 col-xl-3">
-        <a href="/admin" class="text-white text-decoration-none">
+        <a href="/aluno" class="text-white text-decoration-none">
           <h1 class="text-start fs-2">academy help desk</h1>
         </a>
       </div>
@@ -61,7 +61,7 @@
         <div class="card border border-secondary">
           <div class="card-body">
             <form
-              action="/admin/chamado/alteracao"
+              action="/aluno/chamado/alteracao"
               method="post"
               enctype="multipart/form-data"
             >
@@ -158,7 +158,6 @@
                   </select>
                 </div>
               </div>
-              {{#if chamado.nome_aluno}}
               {{#if chamado.img1}}
                 <p class="card-text mb-0 fs-5">Imagens:</p>
                 <div class="row">
@@ -198,48 +197,6 @@
                   />
                   </div>
                   </div>
-              {{/if}}
-              {{else}}
-              {{#if chamado.img1}}
-                <p class="card-text mb-0 fs-5">Imagens:</p>
-                <div class="row">
-                  <img
-                    class="btn img-fluid rounded float-start h-25 w-25"
-                    data-bs-toggle="modal"
-                    data-bs-target="#imagem1_professor"
-                    src="/upload/chamado_professor/{{chamado.img1}}"
-                    alt="error"
-                  />
-                  {{#if chamado.img2}}
-                    <img
-                      class="btn img-fluid rounded float-start h-25 w-25"
-                      data-bs-toggle="modal"
-                      data-bs-target="#imagem2_professor"
-                      src="/upload/chamado_professor/{{chamado.img2}}"
-                      alt="error"
-                    />
-                  {{/if}}
-                  {{#if chamado.img3}}
-                    <img
-                      class="btn img-fluid rounded float-start h-25 w-25"
-                      data-bs-toggle="modal"
-                      data-bs-target="#imagem3_professor"
-                      src="/upload/chamado_professor/{{chamado.img3}}"
-                      alt="error"
-                    />
-                  {{/if}}
-                </div>
-                <div class="row mb-2">
-                <div class="col-md-3 col-lg-3 col-sm-12 mb-sm-1">
-                  <input
-                    type="submit"
-                    class="btn btn-danger"
-                    value="Deletar imagens"
-                    name="deletar"
-                  />
-                  </div>
-                  </div>
-              {{/if}}
               {{/if}}
               <div class="row mb-3">
                 <div class="col-md-12 col-lg-12 col-sm-12">
@@ -282,7 +239,7 @@
                   />
                   </div>
                 <div class="col-md-3 col-lg-1 col-sm-12 ms-md-3">
-                  <a href="/admin/chamado"><button
+                  <a href="/aluno/chamado"><button
                     class="btn btn-outline-primary botao"
                     type="button"
                   >Voltar</button></a>
@@ -376,96 +333,6 @@
           <div class="text-center">
             <img
               src="/upload/chamado_aluno/{{chamado.img3}}"
-              alt="error"
-              width="100%"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal_Professor -->
-  <div
-    class="modal fade"
-    id="imagem1_professor"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="text-end mb-2">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="text-center">
-            <img
-              src="/upload/chamado_professor/{{chamado.img1}}"
-              alt="error"
-              width="100%"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal_Professor -->
-  <div
-    class="modal fade"
-    id="imagem2_professor"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="text-end mb-2">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="text-center">
-            <img
-              src="/upload/chamado_professor/{{chamado.img2}}"
-              alt="error"
-              width="100%"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal_Professor -->
-  <div
-    class="modal fade"
-    id="imagem3_professor"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="text-end mb-2">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="text-center">
-            <img
-              src="/upload/chamado_professor/{{chamado.img3}}"
               alt="error"
               width="100%"
             />

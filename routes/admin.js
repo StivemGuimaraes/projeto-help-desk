@@ -2991,31 +2991,87 @@ router.get("/chamado/alteracao/:id", (req, res) => {
 router.post("/chamado/alteracao", (req, res) => {
   if (chamado1.nome_aluno != null) {
     alteracaoAlunoImagem(req, res, (err) => {
-      if (typeof req.files[0] === "undefined") {
-        req.files[0] = { filename: chamado1.img1 };
-        req.files[1] = { filename: chamado1.img2 };
-        req.files[2] = { filename: chamado1.img3 };
-      } else if (typeof req.files[1] === "undefined") {
-        req.files[1] = { filename: chamado1.img2 };
-        req.files[2] = { filename: chamado1.img3 };
-        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-      } else if (typeof req.files[2] === "undefined") {
-        req.files[2] = { filename: chamado1.img3 };
-        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img2, (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-      } else if (typeof req.files[2] !== "undefined") {
+      if (req.body.alterar === "Alterar chamado") {
+        if (typeof req.files[0] === "undefined") {
+          req.files[0] = { filename: chamado1.img1 };
+          req.files[1] = { filename: chamado1.img2 };
+          req.files[2] = { filename: chamado1.img3 };
+        } else if (typeof req.files[1] === "undefined") {
+          req.files[1] = { filename: chamado1.img2 };
+          req.files[2] = { filename: chamado1.img3 };
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+        } else if (typeof req.files[2] === "undefined") {
+          req.files[2] = { filename: chamado1.img3 };
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img2, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+        } else if (typeof req.files[2] !== "undefined") {
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img2, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+          fs.unlink("./public/upload/chamado_aluno/" + chamado1.img3, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }
+
+        if (err instanceof multer.MulterError) {
+          err = "Envio de arquivos invalida";
+          res.setTimeout(480000);
+          res.render("admin/edicao_chamado", { error: err });
+        } else if (err) {
+          res.setTimeout(480000);
+          res.render("admin/edicao_chamado", { error: err });
+        } else {
+          bd3
+            .update_chamado({
+              titulo: req.body.titulo,
+              assunto: req.body.assunto,
+              statusd: req.body.status,
+              nivel: req.body.nivel,
+              prioridade: req.body.prioridade,
+              img1: req.files[0].filename,
+              img2: req.files[1].filename,
+              img3: req.files[2].filename,
+              descricao: req.body.descricao,
+              id: chamado1.id,
+            })
+            .then((error) => {
+              if (error === "error") {
+                req.flash(
+                  "error_msg",
+                  "Error no sistema tente novamente mais tarde"
+                );
+                res.redirect("/admin/chamado");
+              } else {
+                req.flash(
+                  "sucess_msg",
+                  "Alteração do chamado feita com sucesso"
+                );
+                res.redirect("/admin/chamado");
+              }
+            });
+        }
+      } else if (req.body.deletar === "Deletar imagens") {
         fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
           if (err) {
             console.log(err);
@@ -3031,27 +3087,11 @@ router.post("/chamado/alteracao", (req, res) => {
             console.log(err);
           }
         });
-      }
-
-      if (err instanceof multer.MulterError) {
-        err = "Envio de arquivos invalida";
-        res.setTimeout(480000);
-        res.render("admin/edicao_chamado", { error: err });
-      } else if (err) {
-        res.setTimeout(480000);
-        res.render("admin/edicao_chamado", { error: err });
-      } else {
         bd3
-          .update_chamado({
-            titulo: req.body.titulo,
-            assunto: req.body.assunto,
-            statusd: req.body.status,
-            nivel: req.body.nivel,
-            prioridade: req.body.prioridade,
-            img1: req.files[0].filename,
-            img2: req.files[1].filename,
-            img3: req.files[2].filename,
-            descricao: req.body.descricao,
+          .update_imagem({
+            img1: null,
+            img2: null,
+            img3: null,
             id: chamado1.id,
           })
           .then((error) => {
@@ -3062,48 +3102,113 @@ router.post("/chamado/alteracao", (req, res) => {
               );
               res.redirect("/admin/chamado");
             } else {
-              req.flash("sucess_msg", "Alteração do chamado feita com sucesso");
-              res.redirect("/admin/chamado");
+              req.flash("sucess_msg", "Exclusão das imagens feita com sucesso");
+              res.redirect("/admin/chamado/alteracao/" + chamado1.id);
             }
           });
       }
     });
   } else {
     alteracaoProfessorImagem(req, res, (err) => {
-      if (typeof req.files[0] === "undefined") {
-        req.files[0] = { filename: chamado1.img1 };
-        req.files[1] = { filename: chamado1.img2 };
-        req.files[2] = { filename: chamado1.img3 };
-      } else if (typeof req.files[1] === "undefined") {
-        req.files[1] = { filename: chamado1.img2 };
-        req.files[2] = { filename: chamado1.img3 };
-        fs.unlink(
-          "./public/upload/chamado_professor/" + chamado1.img1,
-          (err) => {
-            if (err) {
-              console.log(err);
+      if (req.body.alterar === "Alterar chamado") {
+        if (typeof req.files[0] === "undefined") {
+          req.files[0] = { filename: chamado1.img1 };
+          req.files[1] = { filename: chamado1.img2 };
+          req.files[2] = { filename: chamado1.img3 };
+        } else if (typeof req.files[1] === "undefined") {
+          req.files[1] = { filename: chamado1.img2 };
+          req.files[2] = { filename: chamado1.img3 };
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img1,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
             }
-          }
-        );
-      } else if (typeof req.files[2] === "undefined") {
-        req.files[2] = { filename: chamado1.img3 };
-        fs.unlink(
-          "./public/upload/chamado_professor/" + chamado1.img1,
-          (err) => {
-            if (err) {
-              console.log(err);
+          );
+        } else if (typeof req.files[2] === "undefined") {
+          req.files[2] = { filename: chamado1.img3 };
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img1,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
             }
-          }
-        );
-        fs.unlink(
-          "./public/upload/chamado_professor/" + chamado1.img2,
-          (err) => {
-            if (err) {
-              console.log(err);
+          );
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img2,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
             }
-          }
-        );
-      } else if (typeof req.files[2] !== "undefined") {
+          );
+        } else if (typeof req.files[2] !== "undefined") {
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img1,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img2,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+          fs.unlink(
+            "./public/upload/chamado_professor/" + chamado1.img3,
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+        }
+
+        if (err instanceof multer.MulterError) {
+          err = "Envio de arquivos invalida";
+          res.setTimeout(480000);
+          res.render("admin/edicao_chamado", { error: err });
+        } else if (err) {
+          res.setTimeout(480000);
+          res.render("admin/edicao_chamado", { error: err });
+        } else {
+          bd3
+            .update_chamado({
+              titulo: req.body.titulo,
+              assunto: req.body.assunto,
+              statusd: req.body.status,
+              nivel: req.body.nivel,
+              prioridade: req.body.prioridade,
+              img1: req.files[0].filename,
+              img2: req.files[1].filename,
+              img3: req.files[2].filename,
+              descricao: req.body.descricao,
+              id: chamado1.id,
+            })
+            .then((error) => {
+              if (error === "error") {
+                req.flash(
+                  "error_msg",
+                  "Error no sistema tente novamente mais tarde"
+                );
+                res.redirect("/admin/chamado");
+              } else {
+                req.flash(
+                  "sucess_msg",
+                  "Alteração do chamado feita com sucesso"
+                );
+                res.redirect("/admin/chamado");
+              }
+            });
+        }
+      } else if (req.body.deletar === "Deletar imagens") {
         fs.unlink(
           "./public/upload/chamado_professor/" + chamado1.img1,
           (err) => {
@@ -3128,27 +3233,11 @@ router.post("/chamado/alteracao", (req, res) => {
             }
           }
         );
-      }
-
-      if (err instanceof multer.MulterError) {
-        err = "Envio de arquivos invalida";
-        res.setTimeout(480000);
-        res.render("admin/edicao_chamado", { error: err });
-      } else if (err) {
-        res.setTimeout(480000);
-        res.render("admin/edicao_chamado", { error: err });
-      } else {
         bd3
-          .update_chamado({
-            titulo: req.body.titulo,
-            assunto: req.body.assunto,
-            statusd: req.body.status,
-            nivel: req.body.nivel,
-            prioridade: req.body.prioridade,
-            img1: req.files[0].filename,
-            img2: req.files[1].filename,
-            img3: req.files[2].filename,
-            descricao: req.body.descricao,
+          .update_imagem({
+            img1: null,
+            img2: null,
+            img3: null,
             id: chamado1.id,
           })
           .then((error) => {
@@ -3159,8 +3248,8 @@ router.post("/chamado/alteracao", (req, res) => {
               );
               res.redirect("/admin/chamado");
             } else {
-              req.flash("sucess_msg", "Alteração do chamado feita com sucesso");
-              res.redirect("/admin/chamado");
+              req.flash("sucess_msg", "Exclusão das imagens feita com sucesso");
+              res.redirect("/admin/chamado/alteracao/" + chamado1.id);
             }
           });
       }
@@ -3181,7 +3270,63 @@ router.get("/professor/exclusao/:matricula", (req, res) => {
   });
 });
 
-/*exclusao do professor*/
+/*exclusão do chamado*/
+router.get("/chamado/exclusao/:id", (req, res) => {
+  bd3.select_usuario_imagem(req.params.id).then((usuario) => {
+    if (usuario === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/admin/chamado");
+    } else {
+      usuario = usuario[0];
+      chamado1 = usuario;
+      console.log(chamado1);
+    }
+  });
+  bd3.delete_chamado(req.params.id).then((error) => {
+    if (error === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/admin/chamado");
+    } else if (chamado1.nome_aluno !== null) {
+      fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      fs.unlink("./public/upload/chamado_aluno/" + chamado1.img2, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      fs.unlink("./public/upload/chamado_aluno/" + chamado1.img3, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
+      res.redirect("/admin/chamado");
+    } else {
+      fs.unlink("./public/upload/chamado_professor/" + chamado1.img1, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      fs.unlink("./public/upload/chamado_professor/" + chamado1.img2, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      fs.unlink("./public/upload/chamado_professor/" + chamado1.img3, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
+      res.redirect("/admin/chamado");
+    }
+  });
+});
+
+/*exclusao do aluno*/
 router.get("/aluno/exclusao/:matricula", (req, res) => {
   bd2.delete_aluno(req.params.matricula).then((error) => {
     if (error === "error") {

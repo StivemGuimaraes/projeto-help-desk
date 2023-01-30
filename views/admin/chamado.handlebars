@@ -49,7 +49,15 @@
   <div class="card-header h-0">
     <div class="row">
       <div class="col-sm-12 col-md-1 col-lg-1">
+        {{#if this.i1}}
         <div class="rounded-circle bg-success w-50 h-75 mt-1 ms-3"></div>
+        {{/if}}
+        {{#if this.i2}}
+        <div class="rounded-circle bg-warning w-50 h-75 mt-1 ms-3"></div>
+        {{/if}}
+        {{#if this.i3}}
+        <div class="rounded-circle bg-danger w-50 h-75 mt-1 ms-3"></div>
+        {{/if}}
       </div>
       <div class="col-sm-12 col-md-11 col-lg-11 p-0">
         <p class="mb-0 me-2 fs-6">{{this.statusd}}</p>
@@ -104,8 +112,8 @@
     {{/if}}
     <label for="descricao" class="form-label">Descrição:</label>
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
-    <a href="#" class="btn btn-warning">Alterar</a>
-    <a href="#" class="btn btn-danger">Deletar</a>
+    <a href="/admin/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+    <a href="/admin/chamado/exclusao/{{this.id}}" class="btn btn-danger">Deletar</a>
     </div>
   </div>
   {{/if}}

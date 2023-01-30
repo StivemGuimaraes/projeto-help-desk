@@ -225,7 +225,14 @@ router.get("/chamado", (req, res) => {
     } else if (chamado_professor === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
       res.render("professor/chamado_professor", { aviso_mensagem });
-    } else {
+    } else if (chamado_professor[0].statusd == "Aberto") {
+      chamado_professor[0].i1 = "algo";
+      res.render("professor/chamado_professor", { chamado_professor });
+    } else if (chamado_professor[0].statusd == "Andamento") {
+      chamado_professor[0].i2 = "algo";
+      res.render("professor/chamado_professor", { chamado_professor });
+    } else if (chamado_professor[0].statusd == "Fechado") {
+      chamado_professor[0].i3 = "algo";
       res.render("professor/chamado_professor", { chamado_professor });
     }
   });
@@ -397,6 +404,13 @@ router.get("/chamado/exclusao/:id", (req, res) => {
     } else {
       usuario = usuario[0];
       chamado1 = usuario;
+      if (typeof chamado1 === "undefined") {
+        chamado1 = {
+          img1: null,
+          img2: null,
+          img3: null,
+        };
+      }
       console.log(chamado1);
     }
   });
@@ -404,25 +418,29 @@ router.get("/chamado/exclusao/:id", (req, res) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
       res.redirect("/professor/chamado");
-    } else {
+    } else if (chamado1.img1 != null) {
       fs.unlink("./public/upload/chamado_professor/" + chamado1.img1, (err) => {
         if (err) {
           console.log(err);
         }
       });
+    }
+    if (chamado1.img2 != null) {
       fs.unlink("./public/upload/chamado_professor/" + chamado1.img2, (err) => {
         if (err) {
           console.log(err);
         }
       });
+    }
+    if (chamado1.img3 != null) {
       fs.unlink("./public/upload/chamado_professor/" + chamado1.img3, (err) => {
         if (err) {
           console.log(err);
         }
       });
-      req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
-      res.redirect("/professor/chamado");
     }
+    req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
+    res.redirect("/professor/chamado");
   });
 });
 

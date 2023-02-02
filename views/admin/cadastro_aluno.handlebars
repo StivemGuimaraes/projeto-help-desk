@@ -76,9 +76,10 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="floatingInput"
+                      id="matricula"
                       placeholder="user"
                       name="matricula"
+                      value="{{dados.matricula}}"
                       required
                     />
                     <label for="floatingInput">Digite sua matricula</label>
@@ -104,6 +105,7 @@
                       id="floatingInput"
                       placeholder="user"
                       name="usuario"
+                      value="{{dados.usuario}}"
                       required
                     />
                     <label for="floatingInput">Digite seu usuário</label>
@@ -130,6 +132,7 @@
                       placeholder="user"
                       name="celular"
                       maxlength="15"
+                      value="{{dados.celular}}"
                       required
                     />
                     <label for="floatingInput1">Digite seu telefone celular</label>
@@ -156,6 +159,7 @@
                       placeholder="user"
                       name="residencial"
                       maxlength="14"
+                      value="{{dados.residencial}}"
                     />
                     <label for="floatingInput2">Opcional</label>
                     <div class="valid-feedback">Campo opcional</div>
@@ -177,6 +181,7 @@
                       placeholder="Password"
                       name="senha"
                       maxlength="40"
+                      value="{{dados.senha}}"
                       required
                     />
                     <label for="floatingPassword">Digite sua senha</label>
@@ -203,6 +208,7 @@
                       placeholder="Password"
                       name="senha2"
                       maxlength="40"
+                      value="{{dados.senha2}}"
                       required
                     />
                     <label for="floatingPassword">Repita sua senha</label>

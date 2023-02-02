@@ -1,9 +1,9 @@
 <head>
-    <title>Professores</title>
+    <title>Listas de professores</title>
 </head>
 <body>
     <header
-  class="py-3"
+  class="shadow border-secondary border-bottom py-3 mb-4"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -50,7 +50,13 @@
   <h5 class="card-header">{{this.matricula}}</h5>
   <div class="card-body">
     <h5 class="card-title">{{this.usuario}}</h5>
-    <p class="card-text">Senha: {{this.senha}}</p>
+    <p class="card-text mb-1">Senha: {{this.senha}}</p>
+    {{#if telefone_residencial}}
+    <p class="card-text mb-1">Telefone celular: {{this.telefone_celular}}</p>
+    <p class="card-text">Telefone residencial: {{this.telefone_residencial}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular: {{this.telefone_celular}}</p>
+    {{/if}}
     <a href="#" class="btn btn-warning">Alterar</a>
     <a href="#" class="btn btn-danger">Deletar</a>
   </div>

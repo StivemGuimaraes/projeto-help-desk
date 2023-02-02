@@ -28,6 +28,14 @@ router.get("/cadastrar-professor", (req, res) => {
 });
 
 router.post("/cadastrar-professor/nova", (req, res) => {
+  var dados = {
+    matricula: req.body.matricula,
+    usuario: req.body.usuario,
+    celular: req.body.celular,
+    residencial: req.body.residencial,
+    senha: req.body.senha,
+    senha2: req.body.senha2,
+  };
   var error;
   if (
     !req.body.matricula ||
@@ -35,65 +43,68 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
-    res.render("admin/cadastro_professor", { error });
+    res.render("admin/cadastro_professor", { error, dados });
   } else {
     bd.select_professor(req.body.matricula)
       .then((msg) => {
         if (msg) {
           error = msg;
-          res.render("admin/cadastro_professor", { error });
+          res.render("admin/cadastro_professor", { error, dados });
         } else {
           bd.select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/cadastro_professor", { error });
+                res.render("admin/cadastro_professor", { error, dados });
               } else {
                 bd.select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
-                      res.render("admin/cadastro_professor", { error });
+                      res.render("admin/cadastro_professor", { error, dados });
                     } else {
                       bd.select_senha(req.body.senha)
                         .then((msg) => {
                           if (msg) {
                             error = msg;
-                            res.render("admin/cadastro_professor", { error });
+                            res.render("admin/cadastro_professor", {
+                              error,
+                              dados,
+                            });
                           } else {
                             bd.insert_professor({
                               matricula: req.body.matricula,
@@ -107,6 +118,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                                   error = msg;
                                   res.render("admin/cadastro_professor", {
                                     error,
+                                    dados,
                                   });
                                 } else {
                                   var sucesso =
@@ -161,6 +173,14 @@ router.get("/cadastrar-funcionario", (req, res) => {
 });
 
 router.post("/cadastrar-funcionario/nova", (req, res) => {
+  var dados = {
+    matricula: req.body.matricula,
+    usuario: req.body.usuario,
+    celular: req.body.celular,
+    residencial: req.body.residencial,
+    senha: req.body.senha,
+    senha2: req.body.senha2,
+  };
   var error;
   if (
     !req.body.matricula ||
@@ -168,69 +188,75 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
-    res.render("admin/cadastro_funcionario", { error });
+    res.render("admin/cadastro_funcionario", { error, dados });
   } else {
     bd1
       .select_funcionario(req.body.matricula)
       .then((msg) => {
         if (msg) {
           error = msg;
-          res.render("admin/cadastro_funcionario", { error });
+          res.render("admin/cadastro_funcionario", { error, dados });
         } else {
           bd1
             .select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/cadastro_funcionario", { error });
+                res.render("admin/cadastro_funcionario", { error, dados });
               } else {
                 bd1
                   .select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
-                      res.render("admin/cadastro_funcionario", { error });
+                      res.render("admin/cadastro_funcionario", {
+                        error,
+                        dados,
+                      });
                     } else {
                       bd1
                         .select_senha(req.body.senha)
                         .then((msg) => {
                           if (msg) {
                             error = msg;
-                            res.render("admin/cadastro_funcionario", { error });
+                            res.render("admin/cadastro_funcionario", {
+                              error,
+                              dados,
+                            });
                           } else {
                             bd1
                               .insert_funcionario({
@@ -245,6 +271,7 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
                                   error = msg;
                                   res.render("admin/cadastro_funcionario", {
                                     error,
+                                    dados,
                                   });
                                 } else {
                                   var sucesso =
@@ -299,6 +326,14 @@ router.get("/cadastrar-aluno", (req, res) => {
 });
 
 router.post("/cadastrar-aluno/nova", (req, res) => {
+  var dados = {
+    matricula: req.body.matricula,
+    usuario: req.body.usuario,
+    celular: req.body.celular,
+    residencial: req.body.residencial,
+    senha: req.body.senha,
+    senha2: req.body.senha2,
+  };
   var error;
   if (
     !req.body.matricula ||
@@ -306,69 +341,72 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter mais do que 7 caracteres";
-    res.render("admin/cadastro_aluno", { error });
+    res.render("admin/cadastro_aluno", { error, dados });
   } else {
     bd2
       .select_aluno(req.body.matricula)
       .then((msg) => {
         if (msg) {
           error = msg;
-          res.render("admin/cadastro_aluno", { error });
+          res.render("admin/cadastro_aluno", { error, dados });
         } else {
           bd2
             .select_celular(req.body.celular)
             .then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/cadastro_aluno", { error });
+                res.render("admin/cadastro_aluno", { error, dados });
               } else {
                 bd2
                   .select_residencial(req.body.residencial)
                   .then((msg) => {
                     if (msg) {
                       error = msg;
-                      res.render("admin/cadastro_aluno", { error });
+                      res.render("admin/cadastro_aluno", { error, dados });
                     } else {
                       bd2
                         .select_senha(req.body.senha)
                         .then((msg) => {
                           if (msg) {
                             error = msg;
-                            res.render("admin/cadastro_aluno", { error });
+                            res.render("admin/cadastro_aluno", {
+                              error,
+                              dados,
+                            });
                           } else {
                             bd2
                               .insert_aluno({
@@ -383,6 +421,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                   error = msg;
                                   res.render("admin/cadastro_aluno", {
                                     error,
+                                    dados,
                                   });
                                 } else {
                                   var sucesso = "Aluno cadastrado com sucesso";

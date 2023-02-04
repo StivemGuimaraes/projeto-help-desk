@@ -13,7 +13,7 @@ const insert_funcionario = async (funcionario) => {
       funcionario.residencial,
       funcionario.senha,
     ];
-    await conn.query(sql, values);
+    await conn.execute(sql, values);
     console.log("cadastramento do funcionario realizado com sucesso");
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
@@ -26,7 +26,7 @@ const select_funcionarioAll = async () => {
   try {
     const conn = await bd.con();
     const sql = "SELECT * FROM funcionario;";
-    const [funcionario] = await conn.query(sql);
+    const [funcionario] = await conn.execute(sql);
     if (funcionario == "") {
       return "vazio";
     } else {
@@ -45,7 +45,7 @@ const select_funcionario = async (funcionario) => {
     const conn = await bd.con();
     const sql = "SELECT matricula FROM funcionario WHERE matricula = ?;";
     const value = [funcionario];
-    const [matricula] = await conn.query(sql, value);
+    const [matricula] = await conn.execute(sql, value);
     if (matricula == "") {
       return false;
     } else {
@@ -66,7 +66,7 @@ const select_senha = async (funcionario) => {
     const conn = await bd.con();
     const sql = "SELECT senha FROM funcionario WHERE senha = ?;";
     const value = [funcionario];
-    const [senha] = await conn.query(sql, value);
+    const [senha] = await conn.execute(sql, value);
     if (senha == "") {
       return false;
     } else {
@@ -88,7 +88,7 @@ const select_celular = async (funcionario) => {
     const sql =
       "SELECT telefone_celular FROM funcionario WHERE telefone_celular = ?;";
     const value = [funcionario];
-    const [celular] = await conn.query(sql, value);
+    const [celular] = await conn.execute(sql, value);
     if (celular == "") {
       return false;
     } else {
@@ -110,7 +110,7 @@ const select_residencial = async (funcionario) => {
     const sql =
       "SELECT telefone_residencial FROM funcionario WHERE telefone_residencial = ?;";
     const value = [funcionario];
-    const [residencial] = await conn.query(sql, value);
+    const [residencial] = await conn.execute(sql, value);
     if (residencial == "" || residencial[0].telefone_residencial == "") {
       return false;
     } else {
@@ -130,8 +130,8 @@ const select_funcionario1 = async (matricula) => {
   try {
     const conn = await bd.con();
     const sql = "SELECT * FROM funcionario WHERE matricula = ?;";
-    const value = matricula;
-    const [funcionario] = await conn.query(sql, value);
+    const value = [matricula];
+    const [funcionario] = await conn.execute(sql, value);
     if (funcionario == "") {
       return "vazio";
     } else {
@@ -158,7 +158,7 @@ const update_funcionario = async (funcionario) => {
       funcionario.senha,
       funcionario.matricula1,
     ];
-    await conn.query(sql, values);
+    await conn.execute(sql, values);
     console.log("alteração do funcionario feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -166,12 +166,12 @@ const update_funcionario = async (funcionario) => {
   }
 };
 
-/*exclusão do professor*/
+/*exclusão do funcionario*/
 const delete_funcionario = async (matricula) => {
   try {
     const conn = await bd.con();
     const sql = "DELETE FROM funcionario WHERE matricula = ?;";
-    await conn.query(sql, matricula);
+    await conn.execute(sql, [matricula]);
     console.log("exclução do funcionario feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);

@@ -144,6 +144,25 @@ const select_funcionario1 = async (matricula) => {
   }
 };
 
+const select_admin = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT usuario FROM funcionario WHERE matricula = ? AND eAdmin = 1;";
+    const value = [matricula];
+    const [admin] = await conn.execute(sql, value);
+    if (admin == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do admin realizado com sucesso");
+      return admin;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*alteração do funcionario*/
 const update_funcionario = async (funcionario) => {
   try {
@@ -187,6 +206,7 @@ module.exports = {
   select_celular,
   select_residencial,
   select_funcionario1,
+  select_admin,
   update_funcionario,
   delete_funcionario,
 };

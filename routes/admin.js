@@ -19,7 +19,21 @@ var funcionario1;
 var chamado1;
 
 router.get("/", (req, res) => {
-  res.render("admin/index");
+  /*if (req.user[0].eAdmin == 1) {
+    var admin_matricula = req.user[0].matricula;
+  } else {
+    var admin_matricula = null;
+  }*/
+  var admin_matricula = null;
+  bd1.select_admin(admin_matricula).then((admin) => {
+    if (admin === "vazio") {
+      res.render("admin/index", { usuario: "[coloque seu nome aqui!]" });
+    } else if (admin === "error") {
+      res.render("admin/index", { usuario: "[error com o nome do usuario]" });
+    } else {
+      res.render("admin/index", { usuario: admin[0].usuario });
+    }
+  });
 });
 
 /*inclusão de dados do professor*/

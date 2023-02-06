@@ -1,0 +1,31 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+#img-hover {
+  height: 40px;
+  width: 40px;
+  background-image: url("../img/lista-de-reproducao.png");
+  background-size: cover;
+  transition: 0.3s;
+}
+#img-hover:hover {
+  background-image: url("../img/lista.gif");
+  background-size: cover;
+  transition: 1s;
+}
+
+@media (max-width: 768px) {
+  .botao {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .nivel {
+    margin-bottom: 16px;
+  }
+}

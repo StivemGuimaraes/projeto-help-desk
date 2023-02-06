@@ -1,15 +1,8 @@
 <head>
-  <script defer src="js/animacao_hover.js"></script>
   <title>Admin</title>
-  <style>
-    #img-hover{ height: 40px; width: 40px; background-image:
-    url("img/lista-de-reproducao.png"); background-size: cover; transition:
-    0.3s; margin:auto } #img-hover:hover { background-image:
-    url("img/lista.gif"); background-size: cover; transition: 1s; }
-  </style>
 </head>
 <header
-  class="py-3 fixed-top"
+  class="shadow fixed-top"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -23,21 +16,29 @@
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
         <a href="/admin" class="text-decoration-none text-white">
-          <img class="img-fluid float-start" src="" alt="logo aqui" />
+          <img
+            class="img-fluid float-start"
+            src="/img/logo.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
         <a href="/admin" class="text-white text-decoration-none d-inline-block">
-          <h1 class="text-start fs-2">Academy help desk</h1>
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
         </a>
       </div>
-      <div class="col-md-5 col-sm-5 col-lg-7">
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
         <a
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasScrolling"
           aria-controls="offcanvasScrolling"
-          style="cursor: pointer;"
-        ><div class="me-0" id="img-hover"></div></a>
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
       </div>
     </div>
   </div>
@@ -143,7 +144,7 @@
     </div>
   </div>
 </header>
-<main class="shadow border-bottom">
+<main style="margin-top: 90px;">
   <div class="container-fluid p-0">
     <div class="col-md-12 p-0">
       <img

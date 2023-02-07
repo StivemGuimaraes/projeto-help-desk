@@ -185,6 +185,7 @@ router.post("/criar-chamado/nova", (req, res) => {
           img2: req.files[1].filename,
           img3: req.files[2].filename,
           fk_professor: professor_matricula,
+          fk_aluno: null,
         })
         .then((msg) => {
           if (msg) {
@@ -214,6 +215,7 @@ router.get("/aluno", (req, res) => {
 });
 
 router.get("/chamado", (req, res) => {
+  console.log(req.user);
   bd1.select_chamadoProfessor(req.user).then((chamado_professor) => {
     if (chamado_professor === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bd = require("../models/bd_aluno");
 const bd1 = require("../models/bd_professor");
+const bd2 = require("../models/bd_chamado");
 var aluno1;
 var professor1;
 var chamado1;
@@ -328,6 +329,29 @@ router.get("/aluno", (req, res) => {
   });
 });
 
+/*seleção de dados do chamado*/
+router.get("/chamado", (req, res) => {
+  bd2.select_chamadoAll().then((chamado) => {
+    if (chamado === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("funcionario/chamado", { error_mensagem });
+    } else if (chamado === "vazio") {
+      var aviso_mensagem = "!!! Nenhum chamado cadastrado no sistema !!!";
+      res.render("funcionario/chamado", { aviso_mensagem });
+    } else {
+      chamado.forEach((valor, i) => {
+        if (chamado[i].statusd == "Aberto") {
+          chamado[i].i1 = "algo";
+        } else if (chamado[i].statusd == "Andamento") {
+          chamado[i].i2 = "algo";
+        } else if (chamado[i].statusd == "Fechado") {
+          chamado[i].i3 = "algo";
+        }
+      });
+      res.render("funcionario/chamado", { chamado });
+    }
+  });
+});
 /*alteração de dados do aluno*/
 router.get("/aluno/alteracao/:matricula", (req, res) => {
   bd.select_aluno1(req.params.matricula).then((aluno) => {

@@ -492,14 +492,16 @@ router.get("/chamado", (req, res) => {
     } else if (chamado === "vazio") {
       var aviso_mensagem = "!!! Nenhum chamado cadastrado no sistema !!!";
       res.render("admin/chamado", { aviso_mensagem });
-    } else if (chamado[0].statusd == "Aberto") {
-      chamado[0].i1 = "algo";
-      res.render("admin/chamado", { chamado });
-    } else if (chamado[0].statusd == "Andamento") {
-      chamado[0].i2 = "algo";
-      res.render("admin/chamado", { chamado });
-    } else if (chamado[0].statusd == "Fechado") {
-      chamado[0].i3 = "algo";
+    } else {
+      chamado.forEach((valor, i) => {
+        if (chamado[i].statusd == "Aberto") {
+          chamado[i].i1 = "algo";
+        } else if (chamado[i].statusd == "Andamento") {
+          chamado[i].i2 = "algo";
+        } else if (chamado[i].statusd == "Fechado") {
+          chamado[i].i3 = "algo";
+        }
+      });
       res.render("admin/chamado", { chamado });
     }
   });

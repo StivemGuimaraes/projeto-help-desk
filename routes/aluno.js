@@ -101,6 +101,7 @@ router.post("/criar-chamado/nova", (req, res) => {
         img2: req.files[1].filename,
         img3: req.files[2].filename,
         fk_aluno: aluno_matricula,
+        fk_professor: null,
       }).then((msg) => {
         if (msg) {
           error = msg;

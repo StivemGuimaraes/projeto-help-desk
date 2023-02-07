@@ -2,7 +2,7 @@
   <title>Funcionario</title>
 </head>
 <header
-  class="py-3"
+  class="shadow fixed-top"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -12,11 +12,18 @@
         );
       "
 >
-  <div class="container">
+  <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
         <a href="/funcionario" class="text-decoration-none text-white">
-          <img class="img-fluid float-start" src="" alt="logo aqui" />
+          <img
+            class="img-fluid float-start"
+            src="/img/logo.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
@@ -24,13 +31,109 @@
           href="/funcionario"
           class="text-white text-decoration-none d-inline-block"
         >
-          <h1 class="text-start fs-2">academy help desk</h1>
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
         </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario"
+            class="btn btn-outline-dark"
+            type="button"
+          >Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Listas de chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Listas de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Listas de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a href="" class="btn btn-outline-dark" type="button">Cadastro de
+            relatorios</a>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 260px;">
+        <div class="d-grid gap-2">
+          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+        </div>
       </div>
     </div>
   </div>
 </header>
-<main>
+<main style="margin-top: 90px;">
   <div class="container-fluid p-0">
     <div class="col-md-12 p-0">
       <img
@@ -45,12 +148,15 @@
   <div class="container mt-5">
     <div class="row g-5 d-flex justify-content-center">
       <div class="col-md-4 col-lg-4" style="width: 15rem">
-        <div class="card rounded border-secondary">
-          <div class="card-body text-center">
-            <img src="/img/conferencia.png" alt="" height="40%" width="40%" />
-            <p class="mt-4" style="margin: 0">Chamados</p>
-          </div>
-        </div>
+        <a
+          href="/funcionario/chamado"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded border-secondary">
+            <div class="card-body text-center">
+              <img src="/img/conferencia.png" alt="" height="40%" width="40%" />
+              <p class="mt-4" style="margin: 0">Chamados</p>
+            </div>
+          </div></a>
       </div>
       <div class="col-md-4 col-lg-4" style="width: 15rem">
         <div class="card rounded border-secondary">
@@ -88,12 +194,7 @@
             class="card rounded border-secondary"
           >
             <div class="card-body text-center">
-              <img
-                src="/img/users-avatar.png"
-                alt=""
-                height="40%"
-                width="40%"
-              />
+              <img src="/img/aluna.png" alt="" height="40%" width="40%" />
               <p class="mt-4" style="margin: 0">Alunos</p>
             </div>
           </div></a>
@@ -119,12 +220,7 @@
           class="text-decoration-none text-dark"
         ><div class="card rounded border-secondary">
             <div class="card-body text-center">
-              <img
-                src="/img/users-avatar.png"
-                alt=""
-                height="40%"
-                width="40%"
-              />
+              <img src="/img/aluna.png" alt="" height="40%" width="40%" />
               <p class="mt-4" style="margin: 0">Cadastrar Alunos</p>
             </div>
           </div></a>

@@ -83,7 +83,8 @@ const select_usuario_imagem = async (id) => {
 const select_chamadoProfessor = async (professor) => {
   try {
     if (professor[0].eAdmin == 2) {
-      var [professor_matricula] = professor[0].matricula;
+      console.log(professor[0].matricula);
+      var professor_matricula = [professor[0].matricula];
       const conn = await bd.con();
       const sql =
         "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, p.usuario AS nome_professor FROM chamado AS c JOIN professor AS p ON c.fk_professor = p.matricula WHERE p.matricula = ?;";
@@ -106,7 +107,7 @@ const select_chamadoProfessor = async (professor) => {
 const select_chamadoAluno = async (aluno) => {
   try {
     if (aluno[0].eAdmin == 3) {
-      var [aluno_matricula] = aluno[0].matricula;
+      var aluno_matricula = [aluno[0].matricula];
       const conn = await bd.con();
       const sql =
         "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula WHERE a.matricula = ?;";

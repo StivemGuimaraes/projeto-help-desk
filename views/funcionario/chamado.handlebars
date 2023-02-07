@@ -15,7 +15,7 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
-        <a href="/admin" class="text-decoration-none text-white">
+        <a href="/funcionario" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
             src="/img/logo.png"
@@ -27,7 +27,7 @@
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
-        <a href="/admin" class="text-white text-decoration-none d-inline-block">
+        <a href="/funcionario" class="text-white text-decoration-none d-inline-block">
           <h1 class="text-start fs-2" title="academy help desk">Academy Help
             Desk</h1>
         </a>
@@ -64,22 +64,13 @@
     <div class="offcanvas-body">
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="/admin" class="btn btn-outline-dark" type="button">Inicio</a>
+          <a href="/funcionario" class="btn btn-outline-dark" type="button">Inicio</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/funcionario"
-            class="btn btn-outline-dark"
-            type="button"
-          >Listas de funcionários</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
-          <a
-            href="/admin/chamado"
+            href="/funcionario/chamado"
             class="btn btn-outline-dark"
             type="button"
           >Listas de chamados</a>
@@ -87,14 +78,8 @@
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Listas de
-            relatorios</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
           <a
-            href="/admin/professor"
+            href="/funcionario/professor"
             class="btn btn-outline-dark"
             type="button"
           >Listas de professores</a>
@@ -103,7 +88,7 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/aluno"
+            href="/funcionario/aluno"
             class="btn btn-outline-dark"
             type="button"
           >Listas de alunos</a>
@@ -112,7 +97,7 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-professor"
+            href="/funcionario/cadastrar-professor"
             class="btn btn-outline-dark"
             type="button"
           >Cadastro de professores</a>
@@ -121,7 +106,7 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-aluno"
+            href="/funcionario/cadastrar-aluno"
             class="btn btn-outline-dark"
             type="button"
           >Cadastro de alunos</a>
@@ -129,14 +114,10 @@
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a
-            href="/admin/cadastrar-funcionario"
-            class="btn btn-outline-dark"
-            type="button"
-          >Cadastro de funcionários</a>
+          <a href="" class="btn btn-outline-dark" type="button">Cadastro de relatorios</a>
         </div>
       </div>
-      <div class="row" style="margin-top: 150px;">
+      <div class="row" style="margin-top: 260px;">
         <div class="d-grid gap-2">
           <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
@@ -203,7 +184,7 @@
     {{/if}}
     <label for="descricao" class="form-label">Descrição:</label>
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
-    <a href="/admin/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+    <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_aluno{{this.id}}" class="btn btn-danger">Deletar</a>
     </div>
   </div>
@@ -229,7 +210,7 @@
     {{/if}}
     <label for="descricao" class="form-label">Descrição:</label>
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
-    <a href="/admin/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+    <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_professor{{this.id}}" class="btn btn-danger">Deletar</a>
     </div>
   </div>
@@ -340,7 +321,7 @@
         <div class="modal-footer">
           <div style="margin-right: 100px;">
           <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <a href="/admin/chamado/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
+          <a href="/funcionario/chamado/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
           </div>
         </div>
       </div>
@@ -360,7 +341,7 @@
         <div class="modal-footer">
           <div style="margin-right: 100px;">
           <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <a href="/admin/chamado/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
+          <a href="/funcionario/chamado/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
           </div>
         </div>
       </div>

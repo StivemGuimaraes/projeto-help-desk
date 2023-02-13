@@ -72,6 +72,12 @@ router.post("/cadastrar-professor/nova", (req, res) => {
   ) {
     error = "Telefone celular invalido";
     res.render("admin/cadastro_professor", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/cadastro_professor", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
+    res.render("admin/cadastro_professor", { error, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
@@ -216,6 +222,12 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
+    res.render("admin/cadastro_funcionario", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/cadastro_funcionario", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
     res.render("admin/cadastro_funcionario", { error, dados });
   } else if (
     !req.body.senha ||
@@ -369,6 +381,12 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
+    res.render("admin/cadastro_aluno", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/cadastro_aluno", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
     res.render("admin/cadastro_aluno", { error, dados });
   } else if (
     !req.body.senha ||

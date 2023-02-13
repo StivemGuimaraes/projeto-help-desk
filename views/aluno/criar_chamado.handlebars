@@ -2,17 +2,6 @@
   <title>Criar chamado</title>
   <script defer src="/js/cadastro_validacao.js"></script>
 </head>
-<style>
-  @media (max-width: 768px) {
-            .botao {
-                width: 100%;
-                margin-bottom: 5px;
-            }
-            .nivel {
-              margin-bottom: 16px;
-            } 
-        }
-</style>
 <header
   class="shadow border-secondary border-bottom py-3 mb-4"
   style="
@@ -76,6 +65,7 @@
                       id="floatingInput-titulo"
                       placeholder="Titulo"
                       name="titulo"
+                      value="{{dados.titulo}}"
                       required
                     />
                     <label for="floatingInput-titulo">Título</label>
@@ -99,6 +89,7 @@
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
                       name="assunto"
+                      value="{{dados.assunto}}"
                       required
                     />
                     <label for="floatingInput-titulo1">Assunto</label>
@@ -117,8 +108,13 @@
                     aria-label="Default select example"
                     name="nivel"
                     required
-                  >
+                  > 
+                    {{#if dados.nivel}}               
+                    <option disabled value="">Selecione</option> 
+                    <option selected value="{{dados.nivel}}">{{dados.nivel}}</option>
+                    {{else}}
                     <option selected disabled value="">Selecione</option>
+                    {{/if}}                  
                     <option value="2">2 - Remoto</option>
                     <option value="3">3 - Presencial</option>
                   </select>
@@ -135,7 +131,12 @@
                     name="prioridade"
                     required
                   >
+                    {{#if dados.prioridade}}
+                    <option disabled value="">Selecione</option>
+                    <option selected value="{{dados.prioridade}}">{{dados.prioridade}}</option>
+                    {{else}}
                     <option selected disabled value="">Selecione</option>
+                    {{/if}}
                     <option value="Baixa">Baixa</option>
                     <option value="Média">Média</option>
                     <option value="Alta">Alta</option>
@@ -159,7 +160,7 @@
                       name="descricao"
                       style="height: 220px;"
                       required
-                    ></textarea>
+                    >{{dados.descricao}}</textarea>
                     <label for="floatingTextarea">Descreva seu problema</label>
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">

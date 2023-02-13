@@ -50,6 +50,19 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "Usuario invalido";
     res.render("funcionario/cadastro_aluno", { error, dados });
   } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
+    res.render("funcionario/cadastro_aluno", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("funcionario/cadastro_aluno", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
+    res.render("funcionario/cadastro_aluno", { error, dados });
+  } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -188,6 +201,19 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
+    res.render("funcionario/cadastro_professor", { error, dados });
+  } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
+    res.render("funcionario/cadastro_professor", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("funcionario/cadastro_professor", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
     res.render("funcionario/cadastro_professor", { error, dados });
   } else if (
     !req.body.senha ||
@@ -1425,6 +1451,90 @@ router.get("/aluno/exclusao/:matricula", (req, res) => {
     } else {
       req.flash("sucess_msg", "Exclusão do aluno feita com sucesso");
       res.redirect("/funcionario/aluno");
+    }
+  });
+});
+
+/*exclusão do chamado*/
+router.get("/chamado/exclusao/:id", (req, res) => {
+  bd2.select_usuario_imagem(req.params.id).then((usuario) => {
+    if (usuario === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/funcionario/chamado");
+    } else {
+      usuario = usuario[0];
+      chamado1 = usuario;
+      if (typeof chamado1 === "undefined") {
+        chamado1 = {
+          img1: null,
+          img2: null,
+          img3: null,
+        };
+      }
+      console.log(chamado1);
+    }
+  });
+  bd2.delete_chamado(req.params.id).then((error) => {
+    if (error === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/funcionario/chamado");
+    } else if (chamado1.nome_aluno !== null) {
+      if (chamado1.img1 != null) {
+        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img1, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+      if (chamado1.img2 != null) {
+        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img2, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+      if (chamado1.img3 != null) {
+        fs.unlink("./public/upload/chamado_aluno/" + chamado1.img3, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+      req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
+      res.redirect("/funcionario/chamado");
+    } else {
+      if (chamado1.img1 != null) {
+        fs.unlink(
+          "./public/upload/chamado_professor/" + chamado1.img1,
+          (err) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+      }
+      if (chamado1.img2 != null) {
+        fs.unlink(
+          "./public/upload/chamado_professor/" + chamado1.img2,
+          (err) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+      }
+      if (chamado1.img3 != null) {
+        fs.unlink(
+          "./public/upload/chamado_professor/" + chamado1.img3,
+          (err) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+      }
+      req.flash("sucess_msg", "Exclusão do chamado feita com sucesso");
+      res.redirect("/funcionario/chamado");
     }
   });
 });

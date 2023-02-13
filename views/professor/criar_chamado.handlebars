@@ -107,7 +107,12 @@
                     name="nivel"
                     required
                   >
+                    {{#if dados.nivel}}               
+                    <option disabled value="">Selecione</option> 
+                    <option selected value="{{dados.nivel}}">{{dados.nivel}}</option>
+                    {{else}}
                     <option selected disabled value="">Selecione</option>
+                    {{/if}}
                     <option value="2">2 - Remoto</option>
                     <option value="3">3 - Presencial</option>
                   </select>
@@ -124,7 +129,12 @@
                     name="prioridade"
                     required
                   >
+                    {{#if dados.prioridade}}
+                    <option disabled value="">Selecione</option>
+                    <option selected value="{{dados.prioridade}}">{{dados.prioridade}}</option>
+                    {{else}}
                     <option selected disabled value="">Selecione</option>
+                    {{/if}}
                     <option value="Baixa">Baixa</option>
                     <option value="Média">Média</option>
                     <option value="Alta">Alta</option>

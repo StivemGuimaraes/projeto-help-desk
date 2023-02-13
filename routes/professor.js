@@ -36,6 +36,19 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "Usuário invalido";
     res.render("professor/cadastro_aluno", { error });
   } else if (
+    !req.body.celular ||
+    typeof req.body.celular === undefined ||
+    req.body.celular === null
+  ) {
+    error = "Telefone celular invalido";
+    res.render("professor/cadastro_aluno", { error, dados });
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("professor/cadastro_aluno", { error, dados });
+  } else if (req.body.residencial.length < 14) {
+    error = "Número residencial invalido";
+    res.render("professor/cadastro_aluno", { error, dados });
+  } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -110,6 +123,13 @@ router.get("/criar-chamado", (req, res) => {
 
 router.post("/criar-chamado/nova", (req, res) => {
   uploadChamadoProfessor(req, res, (err) => {
+    var dados = {
+      titulo: req.body.titulo,
+      assunto: req.body.assunto,
+      nivel: req.body.nivel,
+      prioridade: req.body.prioridade,
+      descricao: req.body.descricao,
+    };
     var error;
     if (req.user[0].eAdmin == 2) {
       var professor_matricula = req.user[0].matricula;
@@ -167,10 +187,8 @@ router.post("/criar-chamado/nova", (req, res) => {
       res.render("professor/criar_chamado", { error });
     } else if (err instanceof multer.MulterError) {
       err = "Envio de arquivos invalida";
-      res.setTimeout(480000);
       res.render("professor/criar_chamado", { error: err });
     } else if (err) {
-      res.setTimeout(480000);
       res.render("professor/criar_chamado", { error: err });
     } else {
       bd1
@@ -227,15 +245,17 @@ router.get("/chamado", (req, res) => {
     } else if (chamado_professor === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
       res.render("professor/chamado_professor", { aviso_mensagem });
-    } else if (chamado_professor[0].statusd == "Aberto") {
-      chamado_professor[0].i1 = "algo";
-      res.render("professor/chamado_professor", { chamado_professor });
-    } else if (chamado_professor[0].statusd == "Andamento") {
-      chamado_professor[0].i2 = "algo";
-      res.render("professor/chamado_professor", { chamado_professor });
-    } else if (chamado_professor[0].statusd == "Fechado") {
-      chamado_professor[0].i3 = "algo";
-      res.render("professor/chamado_professor", { chamado_professor });
+    } else {
+      chamado_professor.forEach((valor, i) => {
+        if (chamado_professor[i].statusd == "Aberto") {
+          chamado_professor[i].i1 = "algo";
+        } else if (chamado_professor[i].statusd == "Andamento") {
+          chamado_professor[i].i2 = "algo";
+        } else if (chamado_professor[i].statusd == "Fechado") {
+          chamado_professor[i].i3 = "algo";
+        }
+      });
+      res.render("professor/chamado", { chamado_professor });
     }
   });
 });

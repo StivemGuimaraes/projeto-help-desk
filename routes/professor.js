@@ -255,7 +255,7 @@ router.get("/chamado", (req, res) => {
           chamado_professor[i].i3 = "algo";
         }
       });
-      res.render("professor/chamado", { chamado_professor });
+      res.render("professor/chamado_professor", { chamado_professor });
     }
   });
 });

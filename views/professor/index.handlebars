@@ -2,7 +2,7 @@
   <title>Professor</title>
 </head>
 <header
-  class="py-3"
+  class="shadow fixed-top"
   style="
         background: rgb(45, 111, 131);
         background: linear-gradient(
@@ -12,11 +12,18 @@
         );
       "
 >
-  <div class="container">
+  <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
         <a href="/professor" class="text-decoration-none text-white">
-          <img class="img-fluid float-start" src="" alt="logo aqui" />
+          <img
+            class="img-fluid float-start"
+            src="/img/logo.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
@@ -24,8 +31,89 @@
           href="/professor"
           class="text-white text-decoration-none d-inline-block"
         >
-          <h1 class="text-start fs-2">academy help desk</h1>
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
         </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/criar-chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de chamados</a>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="d-grid gap-2">
+          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+        </div>
       </div>
     </div>
   </div>

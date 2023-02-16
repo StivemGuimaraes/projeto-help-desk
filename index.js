@@ -14,6 +14,9 @@ const auth_admin = require("./config/auth_admin");
 const auth_funcionario = require("./config/auth_funcionario");
 const auth_professor = require("./config/auth_professor");
 const auth_aluno = require("./config/auth_aluno");
+const bd = require("./models/bd_aluno")
+const bd1 = require("./models/bd_funcionario")
+const bd2 = require("./models/bd_professor")
 const port = 8008;
 
 // config
@@ -66,6 +69,14 @@ app.use("/admin", admin);
 app.use("/aluno", aluno);
 app.use("/professor", professor);
 app.use("/funcionario", funcionario);
+
+app.get("/esqueci-senha", (req, res) => {
+res.render("esqueceu_senha");
+});
+
+app.post("/esqueci-senha", (req, res) => {
+
+})
 
 app.post("/", (req, res, next) => {
   auth_admin

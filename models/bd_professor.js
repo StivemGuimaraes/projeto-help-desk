@@ -71,7 +71,7 @@ const select_senha = async (professor) => {
       return false;
     } else {
       console.log("selecionamento da senha do professor realizado com sucesso");
-      return "Senha já cadastrada no sistema";
+      return "Senha do professor já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -93,7 +93,7 @@ const select_celular = async (professor) => {
       console.log(
         "selecionamento do telefone celular do professor realizado com sucesso"
       );
-      return "Telefone celular já cadastrado no sistema";
+      return "Telefone celular do professor já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -116,7 +116,7 @@ const select_residencial = async (professor) => {
       console.log(
         "selecionamento do telefone residencial do professor realizado com sucesso"
       );
-      return "Telefone residencial já cadastrado no sistema";
+      return "Telefone residencial do professor já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);

@@ -75,10 +75,13 @@ router.post("/cadastrar-professor/nova", (req, res) => {
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
     res.render("admin/cadastro_professor", { error, dados });
-  } else if (req.body.residencial.length < 14) {
-    error = "Número residencial invalido";
-    res.render("admin/cadastro_professor", { error, dados });
-  } else if (
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/cadastro_professor", { error, dados });
+    }
+  }
+  if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -99,26 +102,38 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("admin/cadastro_professor", { error, dados });
   } else {
-    bd.select_professor(req.body.matricula)
-      .then((msg) => {
-        if (msg) {
-          error = msg;
-          res.render("admin/cadastro_professor", { error, dados });
-        } else {
-          bd.select_celular(req.body.celular)
-            .then((msg) => {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/cadastro_professor", { error, dados });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/cadastro_professor", { error, dados });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_professor", { error, dados });
               } else {
-                bd.select_residencial(req.body.residencial)
-                  .then((msg) => {
-                    if (msg) {
-                      error = msg;
-                      res.render("admin/cadastro_professor", { error, dados });
-                    } else {
-                      bd.select_senha(req.body.senha)
-                        .then((msg) => {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/cadastro_professor", {
+                      error,
+                      dados,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/cadastro_professor", {
+                          error,
+                          dados,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
                           if (msg) {
                             error = msg;
                             res.render("admin/cadastro_professor", {
@@ -126,14 +141,8 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                               dados,
                             });
                           } else {
-                            bd.insert_professor({
-                              matricula: req.body.matricula,
-                              usuario: req.body.usuario,
-                              celular: req.body.celular,
-                              residencial: req.body.residencial,
-                              senha: req.body.senha,
-                            })
-                              .then((msg) => {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
                                 if (msg) {
                                   error = msg;
                                   res.render("admin/cadastro_professor", {
@@ -141,49 +150,132 @@ router.post("/cadastrar-professor/nova", (req, res) => {
                                     dados,
                                   });
                                 } else {
-                                  var sucesso =
-                                    "Professor cadastrado com sucesso";
-                                  res.render("admin/cadastro_professor", {
-                                    sucesso,
-                                  });
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/cadastro_professor", {
+                                          error,
+                                          dados,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/cadastro_professor",
+                                                { error, dados }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "admin/cadastro_professor",
+                                                    {
+                                                      error,
+                                                      dados,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "admin/cadastro_professor",
+                                                          { error, dados }
+                                                        );
+                                                      } else {
+                                                        bd2
+                                                          .select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "admin/cadastro_professor",
+                                                                {
+                                                                  error,
+                                                                  dados,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd.insert_professor(
+                                                                {
+                                                                  matricula:
+                                                                    req.body
+                                                                      .matricula,
+                                                                  usuario:
+                                                                    req.body
+                                                                      .usuario,
+                                                                  celular:
+                                                                    req.body
+                                                                      .celular,
+                                                                  residencial:
+                                                                    req.body
+                                                                      .residencial,
+                                                                  senha:
+                                                                    req.body
+                                                                      .senha,
+                                                                }
+                                                              ).then((msg) => {
+                                                                if (msg) {
+                                                                  error = msg;
+                                                                  res.render(
+                                                                    "admin/cadastro_professor",
+                                                                    {
+                                                                      error,
+                                                                      dados,
+                                                                    }
+                                                                  );
+                                                                } else {
+                                                                  var sucesso =
+                                                                    "Professor cadastrado com sucesso";
+                                                                  res.render(
+                                                                    "admin/cadastro_professor",
+                                                                    {
+                                                                      sucesso,
+                                                                    }
+                                                                  );
+                                                                }
+                                                              });
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
                                 }
-                              })
-                              .catch((error1) => {
-                                console.log("deu error", error1);
-                                error =
-                                  "Error no sistema tente novamente mais tarde";
-                                res.render("admin/cadastro_professor", {
-                                  error,
-                                });
-                              });
+                              }
+                            );
                           }
-                        })
-                        .catch((error1) => {
-                          console.log("deu error", error1);
-                          error = "Error no sistema tente novamente mais tarde";
-                          res.render("admin/cadastro_professor", { error });
                         });
-                    }
-                  })
-                  .catch((error1) => {
-                    console.log("deu error", error1);
-                    error = "Error no sistema tente novamente mais tarde";
-                    res.render("admin/cadastro_professor", { error });
-                  });
+                      }
+                    });
+                  }
+                });
               }
-            })
-            .catch((error1) => {
-              console.log("deu error", error1);
-              error = "Error no sistema tente novamente mais tarde";
-              res.render("admin/cadastro_professor", { error });
             });
-        }
-      })
-      .catch((error1) => {
-        console.log("deu error", error1);
-        error = "Error no sistema tente novamente mais tarde";
-        res.render("admin/cadastro_professor", { error });
-      });
+          }
+        });
+      }
+    });
   }
 });
 
@@ -226,10 +318,13 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
     res.render("admin/cadastro_funcionario", { error, dados });
-  } else if (req.body.residencial.length < 14) {
-    error = "Número residencial invalido";
-    res.render("admin/cadastro_funcionario", { error, dados });
-  } else if (
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/cadastro_funcionario", { error, dados });
+    }
+  }
+  if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -250,33 +345,38 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("admin/cadastro_funcionario", { error, dados });
   } else {
-    bd1
-      .select_funcionario(req.body.matricula)
-      .then((msg) => {
-        if (msg) {
-          error = msg;
-          res.render("admin/cadastro_funcionario", { error, dados });
-        } else {
-          bd1
-            .select_celular(req.body.celular)
-            .then((msg) => {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/cadastro_funcionario", { error, dados });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/cadastro_funcionario", { error, dados });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_funcionario", { error, dados });
               } else {
-                bd1
-                  .select_residencial(req.body.residencial)
-                  .then((msg) => {
-                    if (msg) {
-                      error = msg;
-                      res.render("admin/cadastro_funcionario", {
-                        error,
-                        dados,
-                      });
-                    } else {
-                      bd1
-                        .select_senha(req.body.senha)
-                        .then((msg) => {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/cadastro_funcionario", {
+                      error,
+                      dados,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/cadastro_funcionario", {
+                          error,
+                          dados,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
                           if (msg) {
                             error = msg;
                             res.render("admin/cadastro_funcionario", {
@@ -284,15 +384,8 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
                               dados,
                             });
                           } else {
-                            bd1
-                              .insert_funcionario({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: req.body.senha,
-                              })
-                              .then((msg) => {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
                                 if (msg) {
                                   error = msg;
                                   res.render("admin/cadastro_funcionario", {
@@ -300,49 +393,137 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
                                     dados,
                                   });
                                 } else {
-                                  var sucesso =
-                                    "Funcionário cadastrado com sucesso";
-                                  res.render("admin/cadastro_funcionario", {
-                                    sucesso,
-                                  });
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render(
+                                          "admin/cadastro_funcionario",
+                                          {
+                                            error,
+                                            dados,
+                                          }
+                                        );
+                                      } else {
+                                        bd2
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/cadastro_funcionario",
+                                                { error, dados }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "admin/cadastro_funcionario",
+                                                    {
+                                                      error,
+                                                      dados,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "admin/cadastro_funcionario",
+                                                          { error, dados }
+                                                        );
+                                                      } else {
+                                                        bd2
+                                                          .select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "admin/cadastro_funcionario",
+                                                                {
+                                                                  error,
+                                                                  dados,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd1
+                                                                .insert_funcionario(
+                                                                  {
+                                                                    matricula:
+                                                                      req.body
+                                                                        .matricula,
+                                                                    usuario:
+                                                                      req.body
+                                                                        .usuario,
+                                                                    celular:
+                                                                      req.body
+                                                                        .celular,
+                                                                    residencial:
+                                                                      req.body
+                                                                        .residencial,
+                                                                    senha:
+                                                                      req.body
+                                                                        .senha,
+                                                                  }
+                                                                )
+                                                                .then((msg) => {
+                                                                  if (msg) {
+                                                                    error = msg;
+                                                                    res.render(
+                                                                      "admin/cadastro_funcionario",
+                                                                      {
+                                                                        error,
+                                                                        dados,
+                                                                      }
+                                                                    );
+                                                                  } else {
+                                                                    var sucesso =
+                                                                      "funcionário cadastrado com sucesso";
+                                                                    res.render(
+                                                                      "admin/cadastro_funcionario",
+                                                                      {
+                                                                        sucesso,
+                                                                      }
+                                                                    );
+                                                                  }
+                                                                });
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
                                 }
-                              })
-                              .catch((error1) => {
-                                console.log("deu error", error1);
-                                error =
-                                  "Error no sistema tente novamente mais tarde";
-                                res.render("admin/cadastro_professor", {
-                                  error,
-                                });
-                              });
+                              }
+                            );
                           }
-                        })
-                        .catch((error1) => {
-                          console.log("deu error", error1);
-                          error = "Error no sistema tente novamente mais tarde";
-                          res.render("admin/cadastro_professor", { error });
                         });
-                    }
-                  })
-                  .catch((error1) => {
-                    console.log("deu error", error1);
-                    error = "Error no sistema tente novamente mais tarde";
-                    res.render("admin/cadastro_professor", { error });
-                  });
+                      }
+                    });
+                  }
+                });
               }
-            })
-            .catch((error1) => {
-              console.log("deu error", error1);
-              error = "Error no sistema tente novamente mais tarde";
-              res.render("admin/cadastro_professor", { error });
             });
-        }
-      })
-      .catch((error1) => {
-        console.log("deu error", error1);
-        error = "Error no sistema tente novamente mais tarde";
-        res.render("admin/cadastro_professor", { error });
-      });
+          }
+        });
+      }
+    });
   }
 });
 
@@ -385,10 +566,13 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
     res.render("admin/cadastro_aluno", { error, dados });
-  } else if (req.body.residencial.length < 14) {
-    error = "Número residencial invalido";
-    res.render("admin/cadastro_aluno", { error, dados });
-  } else if (
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/cadastro_aluno", { error, dados });
+    }
+  }
+  if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
@@ -409,30 +593,38 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("admin/cadastro_aluno", { error, dados });
   } else {
-    bd2
-      .select_aluno(req.body.matricula)
-      .then((msg) => {
-        if (msg) {
-          error = msg;
-          res.render("admin/cadastro_aluno", { error, dados });
-        } else {
-          bd2
-            .select_celular(req.body.celular)
-            .then((msg) => {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/cadastro_aluno", { error, dados });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/cadastro_aluno", { error, dados });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_aluno", { error, dados });
               } else {
-                bd2
-                  .select_residencial(req.body.residencial)
-                  .then((msg) => {
-                    if (msg) {
-                      error = msg;
-                      res.render("admin/cadastro_aluno", { error, dados });
-                    } else {
-                      bd2
-                        .select_senha(req.body.senha)
-                        .then((msg) => {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/cadastro_aluno", {
+                      error,
+                      dados,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/cadastro_aluno", {
+                          error,
+                          dados,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
                           if (msg) {
                             error = msg;
                             res.render("admin/cadastro_aluno", {
@@ -440,15 +632,8 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                               dados,
                             });
                           } else {
-                            bd2
-                              .insert_aluno({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: req.body.senha,
-                              })
-                              .then((msg) => {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
                                 if (msg) {
                                   error = msg;
                                   res.render("admin/cadastro_aluno", {
@@ -456,48 +641,132 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                     dados,
                                   });
                                 } else {
-                                  var sucesso = "Aluno cadastrado com sucesso";
-                                  res.render("admin/cadastro_aluno", {
-                                    sucesso,
-                                  });
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/cadastro_aluno", {
+                                          error,
+                                          dados,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/cadastro_aluno",
+                                                { error, dados }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "admin/cadastro_aluno",
+                                                    {
+                                                      error,
+                                                      dados,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "admin/cadastro_aluno",
+                                                          { error, dados }
+                                                        );
+                                                      } else {
+                                                        bd2
+                                                          .select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "admin/cadastro_aluno",
+                                                                {
+                                                                  error,
+                                                                  dados,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd2
+                                                                .insert_aluno({
+                                                                  matricula:
+                                                                    req.body
+                                                                      .matricula,
+                                                                  usuario:
+                                                                    req.body
+                                                                      .usuario,
+                                                                  celular:
+                                                                    req.body
+                                                                      .celular,
+                                                                  residencial:
+                                                                    req.body
+                                                                      .residencial,
+                                                                  senha:
+                                                                    req.body
+                                                                      .senha,
+                                                                })
+                                                                .then((msg) => {
+                                                                  if (msg) {
+                                                                    error = msg;
+                                                                    res.render(
+                                                                      "admin/cadastro_aluno",
+                                                                      {
+                                                                        error,
+                                                                        dados,
+                                                                      }
+                                                                    );
+                                                                  } else {
+                                                                    var sucesso =
+                                                                      "aluno cadastrado com sucesso";
+                                                                    res.render(
+                                                                      "admin/cadastro_aluno",
+                                                                      {
+                                                                        sucesso,
+                                                                      }
+                                                                    );
+                                                                  }
+                                                                });
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
                                 }
-                              })
-                              .catch((error1) => {
-                                console.log("deu error", error1);
-                                error =
-                                  "Error no sistema tente novamente mais tarde";
-                                res.render("admin/cadastro_professor", {
-                                  error,
-                                });
-                              });
+                              }
+                            );
                           }
-                        })
-                        .catch((error1) => {
-                          console.log("deu error", error1);
-                          error = "Error no sistema tente novamente mais tarde";
-                          res.render("admin/cadastro_professor", { error });
                         });
-                    }
-                  })
-                  .catch((error1) => {
-                    console.log("deu error", error1);
-                    error = "Error no sistema tente novamente mais tarde";
-                    res.render("admin/cadastro_professor", { error });
-                  });
+                      }
+                    });
+                  }
+                });
               }
-            })
-            .catch((error1) => {
-              console.log("deu error", error1);
-              error = "Error no sistema tente novamente mais tarde";
-              res.render("admin/cadastro_professor", { error });
             });
-        }
-      })
-      .catch((error1) => {
-        console.log("deu error", error1);
-        error = "Error no sistema tente novamente mais tarde";
-        res.render("admin/cadastro_professor", { error });
-      });
+          }
+        });
+      }
+    });
   }
 });
 

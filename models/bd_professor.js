@@ -191,6 +191,25 @@ const update_professor = async (professor) => {
   }
 };
 
+/*alteração de senha do professor*/
+const update_professor_senha = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE professor SET senha = ? WHERE matricula = ?;";
+    const values = [professor.senha, professor.matricula];
+    update = await conn.execute(sql, values);
+    if (update[0].changedRows == 0) {
+      return "falha";
+    } else {
+      console.log("alteração do professor feita com sucesso");
+      return "sucesso";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do professor*/
 const delete_professor = async (matricula) => {
   try {
@@ -216,5 +235,6 @@ module.exports = {
   select_professor1,
   delete_update_professor,
   update_professor,
+  update_professor_senha,
   delete_professor,
 };

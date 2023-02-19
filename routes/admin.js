@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
   });
 });
 
-/*inclusão de dados do professor*/
+/*inclusão de professor: professor1 do professor*/
 router.get("/cadastrar-professor", (req, res) => {
   res.render("admin/cadastro_professor");
 });
@@ -904,17 +904,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -1103,17 +1103,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -1226,17 +1226,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -1347,17 +1347,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_residencial(req.body.residencial).then((msg) => {
                   if (msg) {
@@ -1477,17 +1477,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -1556,17 +1556,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd.select_residencial(req.body.residencial).then((msg) => {
                   if (msg) {
@@ -1634,17 +1634,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else if (
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
@@ -1719,17 +1719,17 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { error, dados });
+        res.render("admin/edicao_aluno", { error, aluno: aluno1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_aluno", { error, dados });
+            res.render("admin/edicao_aluno", { error, aluno: aluno1 });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_aluno", { error, dados });
+                res.render("admin/edicao_aluno", { error, aluno: aluno1 });
               } else {
                 bd2
                   .delete_update_aluno({
@@ -2394,17 +2394,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -2599,17 +2605,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -2724,17 +2736,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -2843,17 +2861,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_residencial(req.body.residencial).then((msg) => {
                   if (msg) {
@@ -2975,17 +2999,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_celular(req.body.celular).then((msg) => {
                   if (msg) {
@@ -3052,17 +3082,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.select_residencial(req.body.residencial).then((msg) => {
                   if (msg) {
@@ -3131,17 +3167,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else if (
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
@@ -3214,17 +3256,23 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_professor", { error, dados });
+        res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/edicao_professor", { error, dados });
+            res.render("admin/edicao_professor", {
+              error,
+              professor: professor1,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/edicao_professor", { error, dados });
+                res.render("admin/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
               } else {
                 bd.delete_update_professor({
                   matricula: req.body.matricula,
@@ -3765,7 +3813,7 @@ router.post("/professor/alteracao/", (req, res) => {
   }
 });
 
-/*alteracao do funcionario*/
+/*alteracao de dados do funcionario*/
 router.get("/funcionario/alteracao/:matricula", (req, res) => {
   bd1.select_funcionario1(req.params.matricula).then((funcionario) => {
     if (funcionario === "vazio") {
@@ -3826,7 +3874,7 @@ router.post("/funcionario/alteracao", (req, res) => {
     req.body.residencial != funcionario1.telefone_residencial &&
     req.body.senha != ""
   ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
+    bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
@@ -3834,7 +3882,7 @@ router.post("/funcionario/alteracao", (req, res) => {
           funcionario: funcionario1,
         });
       } else {
-        bd1.select_celular(req.body.celular).then((msg) => {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_funcionario", {
@@ -3842,7 +3890,820 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1.select_residencial(req.body.residencial).then((msg) => {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/edicao_funcionario", {
+                                    error,
+                                    funcionario: funcionario1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/edicao_funcionario", {
+                                          error,
+                                          funcionario: funcionario1,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/edicao_funcionario",
+                                                {
+                                                  error,
+                                                  funcionario: funcionario1,
+                                                }
+                                              );
+                                            } else if (
+                                              req.body.senha.length <= 7 ||
+                                              req.body.senha2.length <= 7
+                                            ) {
+                                              error =
+                                                "A senha deve ter mais do que 7 caracteres";
+                                              res.render(
+                                                "admin/edicao_funcionario",
+                                                {
+                                                  error,
+                                                  funcionario: funcionario1,
+                                                }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "admin/edicao_funcionario",
+                                                    {
+                                                      error,
+                                                      funcionario: funcionario1,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "admin/edicao_funcionario",
+                                                          {
+                                                            error,
+                                                            funcionario:
+                                                              funcionario1,
+                                                          }
+                                                        );
+                                                      } else {
+                                                        bd2
+                                                          .select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "admin/edicao_funcionario",
+                                                                {
+                                                                  error,
+                                                                  funcionario:
+                                                                    funcionario1,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd1
+                                                                .update_funcionario(
+                                                                  {
+                                                                    matricula:
+                                                                      req.body
+                                                                        .matricula,
+                                                                    usuario:
+                                                                      req.body
+                                                                        .usuario,
+                                                                    celular:
+                                                                      req.body
+                                                                        .celular,
+                                                                    residencial:
+                                                                      req.body
+                                                                        .residencial,
+                                                                    senha:
+                                                                      req.body
+                                                                        .senha,
+                                                                    matricula1:
+                                                                      funcionario1.matricula,
+                                                                  }
+                                                                )
+                                                                .then(
+                                                                  (
+                                                                    funcionario
+                                                                  ) => {
+                                                                    if (
+                                                                      funcionario ===
+                                                                      "error"
+                                                                    ) {
+                                                                      req.flash(
+                                                                        "error_msg",
+                                                                        "Error no sistema tente novamente mais tarde"
+                                                                      );
+                                                                      res.redirect(
+                                                                        "/admin/funcionario"
+                                                                      );
+                                                                    } else {
+                                                                      req.flash(
+                                                                        "sucess_msg",
+                                                                        "Alteração do funcionário feita com sucesso"
+                                                                      );
+                                                                      res.redirect(
+                                                                        "/admin/funcionario"
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                );
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.celular != funcionario1.telefone_celular &&
+    req.body.residencial != funcionario1.telefone_residencial
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/edicao_funcionario", {
+                                    error,
+                                    funcionario: funcionario1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/edicao_funcionario", {
+                                          error,
+                                          funcionario: funcionario1,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/edicao_funcionario",
+                                                {
+                                                  error,
+                                                  funcionario: funcionario1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1
+                                                .update_funcionario({
+                                                  matricula: req.body.matricula,
+                                                  usuario: req.body.usuario,
+                                                  celular: req.body.celular,
+                                                  residencial:
+                                                    req.body.residencial,
+                                                  senha: funcionario1.senha,
+                                                  matricula1:
+                                                    funcionario1.matricula,
+                                                })
+                                                .then((funcionario) => {
+                                                  if (funcionario === "error") {
+                                                    req.flash(
+                                                      "error_msg",
+                                                      "Error no sistema tente novamente mais tarde"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  } else {
+                                                    req.flash(
+                                                      "sucess_msg",
+                                                      "Alteração do funcionário feita com sucesso"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  }
+                                                });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.celular != funcionario1.telefone_celular &&
+    req.body.senha != ""
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else if (
+                            req.body.senha.length <= 7 ||
+                            req.body.senha2.length <= 7
+                          ) {
+                            error = "A senha deve ter mais do que 7 caracteres";
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd.select_senha(req.body.senha).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("admin/edicao_funcionario", {
+                                  error,
+                                  funcionario: funcionario1,
+                                });
+                              } else {
+                                bd1.select_senha(req.body.senha).then((msg) => {
+                                  if (msg) {
+                                    error = msg;
+                                    res.render("admin/edicao_funcionario", {
+                                      error,
+                                      funcionario: funcionario1,
+                                    });
+                                  } else {
+                                    bd2
+                                      .select_senha(req.body.senha)
+                                      .then((msg) => {
+                                        if (msg) {
+                                          error = msg;
+                                          res.render(
+                                            "admin/edicao_funcionario",
+                                            {
+                                              error,
+                                              funcionario: funcionario1,
+                                            }
+                                          );
+                                        } else {
+                                          bd1
+                                            .update_funcionario({
+                                              matricula: req.body.matricula,
+                                              usuario: req.body.usuario,
+                                              celular: req.body.celular,
+                                              residencial: req.body.residencial,
+                                              senha: req.body.senha,
+                                              matricula1:
+                                                funcionario1.matricula,
+                                            })
+                                            .then((funcionario) => {
+                                              if (funcionario === "error") {
+                                                req.flash(
+                                                  "error_msg",
+                                                  "Error no sistema tente novamente mais tarde"
+                                                );
+                                                res.redirect(
+                                                  "/admin/funcionario"
+                                                );
+                                              } else {
+                                                req.flash(
+                                                  "sucess_msg",
+                                                  "Alteração do funcionário feita com sucesso"
+                                                );
+                                                res.redirect(
+                                                  "/admin/funcionario"
+                                                );
+                                              }
+                                            });
+                                        }
+                                      });
+                                  }
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.residencial != funcionario1.telefone_residencial &&
+    req.body.senha != ""
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else if (
+                              req.body.senha.length <= 7 ||
+                              req.body.senha2.length <= 7
+                            ) {
+                              error =
+                                "A senha deve ter mais do que 7 caracteres";
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else {
+                              bd.select_senha(req.body.senha).then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/edicao_funcionario", {
+                                    error,
+                                    funcionario: funcionario1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_senha(req.body.senha)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/edicao_funcionario", {
+                                          error,
+                                          funcionario: funcionario1,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_senha(req.body.senha)
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/edicao_funcionario",
+                                                {
+                                                  error,
+                                                  funcionario: funcionario1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1
+                                                .update_funcionario({
+                                                  matricula: req.body.matricula,
+                                                  usuario: req.body.usuario,
+                                                  celular: req.body.celular,
+                                                  residencial:
+                                                    req.body.residencial,
+                                                  senha: req.body.senha,
+                                                  matricula1:
+                                                    funcionario1.matricula,
+                                                })
+                                                .then((funcionario) => {
+                                                  if (funcionario === "error") {
+                                                    req.flash(
+                                                      "error_msg",
+                                                      "Error no sistema tente novamente mais tarde"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  } else {
+                                                    req.flash(
+                                                      "sucess_msg",
+                                                      "Alteração do funcionário feita com sucesso"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  }
+                                                });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.celular != funcionario1.telefone_celular
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd1
+                              .update_funcionario({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: funcionario1.senha,
+                                matricula1: funcionario1.matricula,
+                              })
+                              .then((funcionario) => {
+                                if (funcionario === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do funcionário feita com sucesso"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                }
+                              });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.residencial != funcionario1.telefone_residencial
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else {
+                              bd1
+                                .update_funcionario({
+                                  matricula: req.body.matricula,
+                                  usuario: req.body.usuario,
+                                  celular: req.body.celular,
+                                  residencial: req.body.residencial,
+                                  senha: funcionario1.senha,
+                                  matricula1: funcionario1.matricula,
+                                })
+                                .then((funcionario) => {
+                                  if (funcionario === "error") {
+                                    req.flash(
+                                      "error_msg",
+                                      "Error no sistema tente novamente mais tarde"
+                                    );
+                                    res.redirect("/admin/funcionario");
+                                  } else {
+                                    req.flash(
+                                      "sucess_msg",
+                                      "Alteração do funcionário feita com sucesso"
+                                    );
+                                    res.redirect("/admin/funcionario");
+                                  }
+                                });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != funcionario1.matricula &&
+    req.body.senha != ""
+  ) {
+    bd.select_professor(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/edicao_funcionario", {
@@ -3859,7 +4720,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                   funcionario: funcionario1,
                 });
               } else {
-                bd1.select_senha(req.body.senha).then((msg) => {
+                bd.select_senha(req.body.senha).then((msg) => {
                   if (msg) {
                     error = msg;
                     res.render("admin/edicao_funcionario", {
@@ -3867,30 +4728,50 @@ router.post("/funcionario/alteracao", (req, res) => {
                       funcionario: funcionario1,
                     });
                   } else {
-                    bd1
-                      .update_funcionario({
-                        matricula: req.body.matricula,
-                        usuario: req.body.usuario,
-                        celular: req.body.celular,
-                        residencial: req.body.residencial,
-                        senha: req.body.senha,
-                        matricula1: funcionario1.matricula,
-                      })
-                      .then((funcionario) => {
-                        if (funcionario === "error") {
-                          req.flash(
-                            "error_msg",
-                            "Error no sistema tente novamente mais tarde"
-                          );
-                          res.redirect("/admin/funcionario");
-                        } else {
-                          req.flash(
-                            "sucess_msg",
-                            "Alteração do funcionário feita com sucesso"
-                          );
-                          res.redirect("/admin/funcionario");
-                        }
-                      });
+                    bd1.select_senha(req.body.senha).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_senha(req.body.senha).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd1
+                              .update_funcionario({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: req.body.senha,
+                                matricula1: funcionario1.matricula,
+                              })
+                              .then((funcionario) => {
+                                if (funcionario === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do funcionário feita com sucesso"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                }
+                              });
+                          }
+                        });
+                      }
+                    });
                   }
                 });
               }
@@ -3899,12 +4780,8 @@ router.post("/funcionario/alteracao", (req, res) => {
         });
       }
     });
-  } else if (
-    req.body.matricula != funcionario1.matricula &&
-    req.body.celular != funcionario1.telefone_celular &&
-    req.body.residencial != funcionario1.telefone_residencial
-  ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
+  } else if (req.body.matricula != funcionario1.matricula) {
+    bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
@@ -3912,7 +4789,7 @@ router.post("/funcionario/alteracao", (req, res) => {
           funcionario: funcionario1,
         });
       } else {
-        bd1.select_celular(req.body.celular).then((msg) => {
+        bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_funcionario", {
@@ -3920,7 +4797,7 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1.select_residencial(req.body.residencial).then((msg) => {
+            bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/edicao_funcionario", {
@@ -3959,146 +4836,11 @@ router.post("/funcionario/alteracao", (req, res) => {
       }
     });
   } else if (
-    req.body.matricula != funcionario1.matricula &&
     req.body.celular != funcionario1.telefone_celular &&
-    req.body.senha != ""
-  ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1.select_celular(req.body.celular).then((msg) => {
-          if (msg) {
-            error = msg;
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else if (
-            req.body.senha.length <= 7 ||
-            req.body.senha2.length <= 7
-          ) {
-            error = "A senha deve ter mais do que 7 caracteres";
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else {
-            bd1.select_senha(req.body.senha).then((msg) => {
-              if (msg) {
-                error = msg;
-                res.render("admin/edicao_funcionario", {
-                  error,
-                  funcionario: funcionario1,
-                });
-              } else {
-                bd1
-                  .update_funcionario({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: req.body.senha,
-                    matricula1: funcionario1.matricula,
-                  })
-                  .then((funcionario) => {
-                    if (funcionario === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/admin/funcionario");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do funcionário feita com sucesso"
-                      );
-                      res.redirect("/admin/funcionario");
-                    }
-                  });
-              }
-            });
-          }
-        });
-      }
-    });
-  } else if (
-    req.body.matricula != funcionario1.matricula &&
     req.body.residencial != funcionario1.telefone_residencial &&
     req.body.senha != ""
   ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1.select_residencial(req.body.residencial).then((msg) => {
-          if (msg) {
-            error = msg;
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else if (
-            req.body.senha.length <= 7 ||
-            req.body.senha2.length <= 7
-          ) {
-            error = "A senha deve ter mais do que 7 caracteres";
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else {
-            bd1.select_senha(req.body.senha).then((msg) => {
-              if (msg) {
-                error = msg;
-                res.render("admin/edicao_funcionario", {
-                  error,
-                  funcionario: funcionario1,
-                });
-              } else {
-                bd1
-                  .update_funcionario({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: req.body.senha,
-                    matricula1: funcionario1.matricula,
-                  })
-                  .then((funcionario) => {
-                    if (funcionario === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/admin/funcionario");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do funcionário feita com sucesso"
-                      );
-                      res.redirect("/admin/funcionario");
-                    }
-                  });
-              }
-            });
-          }
-        });
-      }
-    });
-  } else if (
-    req.body.matricula != funcionario1.matricula &&
-    req.body.celular != funcionario1.telefone_celular
-  ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
+    bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
@@ -4114,202 +4856,7 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: funcionario1.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
-          }
-        });
-      }
-    });
-  } else if (
-    req.body.matricula != funcionario1.matricula &&
-    req.body.residencial != funcionario1.telefone_residencial
-  ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1.select_residencial(req.body.residencial).then((msg) => {
-          if (msg) {
-            error = msg;
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: funcionario1.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
-          }
-        });
-      }
-    });
-  } else if (
-    req.body.matricula != funcionario1.matricula &&
-    req.body.senha != ""
-  ) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-        error = "A senha deve ter mais do que 7 caracteres";
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1.select_senha(req.body.senha).then((msg) => {
-          if (msg) {
-            error = msg;
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: req.body.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
-          }
-        });
-      }
-    });
-  } else if (req.body.matricula != funcionario1.matricula) {
-    bd1.select_funcionario(req.body.matricula).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1
-          .update_funcionario({
-            matricula: req.body.matricula,
-            usuario: req.body.usuario,
-            celular: req.body.celular,
-            residencial: req.body.residencial,
-            senha: funcionario1.senha,
-            matricula1: funcionario1.matricula,
-          })
-          .then((funcionario) => {
-            if (funcionario === "error") {
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
-              res.redirect("/admin/funcionario");
-            } else {
-              req.flash(
-                "sucess_msg",
-                "Alteração do funcionário feita com sucesso"
-              );
-              res.redirect("/admin/funcionario");
-            }
-          });
-      }
-    });
-  } else if (
-    req.body.celular != funcionario1.telefone_celular &&
-    req.body.residencial != funcionario1.telefone_residencial &&
-    req.body.senha != ""
-  ) {
-    bd1.select_celular(req.body.celular).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1.select_residencial(req.body.residencial).then((msg) => {
-          if (msg) {
-            error = msg;
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else if (
-            req.body.senha.length <= 7 ||
-            req.body.senha2.length <= 7
-          ) {
-            error = "A senha deve ter mais do que 7 caracteres";
-            res.render("admin/edicao_funcionario", {
-              error,
-              funcionario: funcionario1,
-            });
-          } else {
-            bd1.select_senha(req.body.senha).then((msg) => {
+            bd2.select_celular(req.body.celular).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/edicao_funcionario", {
@@ -4317,30 +4864,115 @@ router.post("/funcionario/alteracao", (req, res) => {
                   funcionario: funcionario1,
                 });
               } else {
-                bd1
-                  .update_funcionario({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: req.body.senha,
-                    matricula1: funcionario1.matricula,
-                  })
-                  .then((funcionario) => {
-                    if (funcionario === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/admin/funcionario");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do funcionário feita com sucesso"
-                      );
-                      res.redirect("/admin/funcionario");
-                    }
-                  });
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else if (
+                              req.body.senha.length <= 7 ||
+                              req.body.senha2.length <= 7
+                            ) {
+                              error =
+                                "A senha deve ter mais do que 7 caracteres";
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else {
+                              bd.select_senha(req.body.senha).then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/edicao_funcionario", {
+                                    error,
+                                    funcionario: funcionario1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_senha(req.body.senha)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/edicao_funcionario", {
+                                          error,
+                                          funcionario: funcionario1,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_senha(req.body.senha)
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/edicao_funcionario",
+                                                {
+                                                  error,
+                                                  funcionario: funcionario1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1
+                                                .update_funcionario({
+                                                  matricula: req.body.matricula,
+                                                  usuario: req.body.usuario,
+                                                  celular: req.body.celular,
+                                                  residencial:
+                                                    req.body.residencial,
+                                                  senha: req.body.senha,
+                                                  matricula1:
+                                                    funcionario1.matricula,
+                                                })
+                                                .then((funcionario) => {
+                                                  if (funcionario === "error") {
+                                                    req.flash(
+                                                      "error_msg",
+                                                      "Error no sistema tente novamente mais tarde"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  } else {
+                                                    req.flash(
+                                                      "sucess_msg",
+                                                      "Alteração do funcionário feita com sucesso"
+                                                    );
+                                                    res.redirect(
+                                                      "/admin/funcionario"
+                                                    );
+                                                  }
+                                                });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
               }
             });
           }
@@ -4351,7 +4983,7 @@ router.post("/funcionario/alteracao", (req, res) => {
     req.body.celular != funcionario1.telefone_celular &&
     req.body.residencial != funcionario1.telefone_residencial
   ) {
-    bd1.select_celular(req.body.celular).then((msg) => {
+    bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
@@ -4359,7 +4991,7 @@ router.post("/funcionario/alteracao", (req, res) => {
           funcionario: funcionario1,
         });
       } else {
-        bd1.select_residencial(req.body.residencial).then((msg) => {
+        bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_funcionario", {
@@ -4367,30 +4999,72 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: funcionario1.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
+            bd2.select_celular(req.body.celular).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("admin/edicao_funcionario", {
+                                error,
+                                funcionario: funcionario1,
+                              });
+                            } else {
+                              bd1
+                                .update_funcionario({
+                                  matricula: req.body.matricula,
+                                  usuario: req.body.usuario,
+                                  celular: req.body.celular,
+                                  residencial: req.body.residencial,
+                                  senha: funcionario1.senha,
+                                  matricula1: funcionario1.matricula,
+                                })
+                                .then((funcionario) => {
+                                  if (funcionario === "error") {
+                                    req.flash(
+                                      "error_msg",
+                                      "Error no sistema tente novamente mais tarde"
+                                    );
+                                    res.redirect("/admin/funcionario");
+                                  } else {
+                                    req.flash(
+                                      "sucess_msg",
+                                      "Alteração do funcionário feita com sucesso"
+                                    );
+                                    res.redirect("/admin/funcionario");
+                                  }
+                                });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
+              }
+            });
           }
         });
       }
@@ -4399,21 +5073,15 @@ router.post("/funcionario/alteracao", (req, res) => {
     req.body.celular != funcionario1.telefone_celular &&
     req.body.senha != ""
   ) {
-    bd1.select_celular(req.body.celular).then((msg) => {
+    bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
           error,
           funcionario: funcionario1,
         });
-      } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-        error = "A senha deve ter mais do que 7 caracteres";
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
       } else {
-        bd1.select_senha(req.body.senha).then((msg) => {
+        bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_funcionario", {
@@ -4421,36 +5089,85 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: req.body.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
+            bd2.select_celular(req.body.celular).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else if (
+                req.body.senha.length <= 7 ||
+                req.body.senha2.length <= 7
+              ) {
+                error = "A senha deve ter mais do que 7 caracteres";
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_senha(req.body.senha).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_senha(req.body.senha).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_senha(req.body.senha).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd1
+                              .update_funcionario({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: req.body.senha,
+                                matricula1: funcionario1.matricula,
+                              })
+                              .then((funcionario) => {
+                                if (funcionario === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do funcionário feita com sucesso"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                }
+                              });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
           }
         });
       }
     });
   } else if (req.body.celular != funcionario1.telefone_celular) {
-    bd1.select_celular(req.body.celular).then((msg) => {
+    bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
@@ -4458,45 +5175,208 @@ router.post("/funcionario/alteracao", (req, res) => {
           funcionario: funcionario1,
         });
       } else {
-        bd1
-          .update_funcionario({
-            matricula: req.body.matricula,
-            usuario: req.body.usuario,
-            celular: req.body.celular,
-            residencial: req.body.residencial,
-            senha: funcionario1.senha,
-            matricula1: funcionario1.matricula,
-          })
-          .then((funcionario) => {
-            if (funcionario === "error") {
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
-              res.redirect("/admin/funcionario");
-            } else {
-              req.flash(
-                "sucess_msg",
-                "Alteração do funcionário feita com sucesso"
-              );
-              res.redirect("/admin/funcionario");
-            }
-          });
+        bd1.select_celular(req.body.celular).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_celular(req.body.celular).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd1
+                  .update_funcionario({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    celular: req.body.celular,
+                    residencial: req.body.residencial,
+                    senha: funcionario1.senha,
+                    matricula1: funcionario1.matricula,
+                  })
+                  .then((funcionario) => {
+                    if (funcionario === "error") {
+                      req.flash(
+                        "error_msg",
+                        "Error no sistema tente novamente mais tarde"
+                      );
+                      res.redirect("/admin/funcionario");
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Alteração do funcionário feita com sucesso"
+                      );
+                      res.redirect("/admin/funcionario");
+                    }
+                  });
+              }
+            });
+          }
+        });
       }
     });
   } else if (
     req.body.residencial != funcionario1.telefone_residencial &&
     req.body.senha != ""
   ) {
-    bd1.select_residencial(req.body.residencial).then((msg) => {
+    bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_funcionario", {
           error,
           funcionario: funcionario1,
         });
-      } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-        error = "A senha deve ter mais do que 7 caracteres";
+      } else {
+        bd1.select_residencial(req.body.residencial).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_residencial(req.body.residencial).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else if (
+                req.body.senha.length <= 7 ||
+                req.body.senha2.length <= 7
+              ) {
+                error = "A senha deve ter mais do que 7 caracteres";
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd.select_senha(req.body.senha).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_funcionario", {
+                      error,
+                      funcionario: funcionario1,
+                    });
+                  } else {
+                    bd1.select_senha(req.body.senha).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_funcionario", {
+                          error,
+                          funcionario: funcionario1,
+                        });
+                      } else {
+                        bd2.select_senha(req.body.senha).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("admin/edicao_funcionario", {
+                              error,
+                              funcionario: funcionario1,
+                            });
+                          } else {
+                            bd1
+                              .update_funcionario({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: req.body.senha,
+                                matricula1: funcionario1.matricula,
+                              })
+                              .then((funcionario) => {
+                                if (funcionario === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do funcionário feita com sucesso"
+                                  );
+                                  res.redirect("/admin/funcionario");
+                                }
+                              });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (req.body.residencial != funcionario1.telefone_residencial) {
+    bd.select_residencial(req.body.residencial).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("admin/edicao_funcionario", {
+          error,
+          funcionario: funcionario1,
+        });
+      } else {
+        bd1.select_residencial(req.body.residencial).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("admin/edicao_funcionario", {
+              error,
+              funcionario: funcionario1,
+            });
+          } else {
+            bd2.select_residencial(req.body.residencial).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd1
+                  .update_funcionario({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    celular: req.body.celular,
+                    residencial: req.body.residencial,
+                    senha: funcionario1.senha,
+                    matricula1: funcionario1.matricula,
+                  })
+                  .then((funcionario) => {
+                    if (funcionario === "error") {
+                      req.flash(
+                        "error_msg",
+                        "Error no sistema tente novamente mais tarde"
+                      );
+                      res.redirect("/admin/funcionario");
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Alteração do funcionário feita com sucesso"
+                      );
+                      res.redirect("/admin/funcionario");
+                    }
+                  });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (req.body.senha != "") {
+    bd.select_senha(req.body.senha).then((msg) => {
+      if (msg) {
+        error = msg;
         res.render("admin/edicao_funcionario", {
           error,
           funcionario: funcionario1,
@@ -4510,108 +5390,51 @@ router.post("/funcionario/alteracao", (req, res) => {
               funcionario: funcionario1,
             });
           } else {
-            bd1
-              .update_funcionario({
-                matricula: req.body.matricula,
-                usuario: req.body.usuario,
-                celular: req.body.celular,
-                residencial: req.body.residencial,
-                senha: req.body.senha,
-                matricula1: funcionario1.matricula,
-              })
-              .then((funcionario) => {
-                if (funcionario === "error") {
-                  req.flash(
-                    "error_msg",
-                    "Error no sistema tente novamente mais tarde"
-                  );
-                  res.redirect("/admin/funcionario");
-                } else {
-                  req.flash(
-                    "sucess_msg",
-                    "Alteração do funcionário feita com sucesso"
-                  );
-                  res.redirect("/admin/funcionario");
-                }
-              });
+            bd2.select_senha(req.body.senha).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else if (
+                req.body.senha.length <= 7 ||
+                req.body.senha2.length <= 7
+              ) {
+                error = "A senha deve ter mais do que 7 caracteres";
+                res.render("admin/edicao_funcionario", {
+                  error,
+                  funcionario: funcionario1,
+                });
+              } else {
+                bd1
+                  .update_funcionario({
+                    matricula: req.body.matricula,
+                    usuario: req.body.usuario,
+                    celular: req.body.celular,
+                    residencial: req.body.residencial,
+                    senha: req.body.senha,
+                    matricula1: funcionario1.matricula,
+                  })
+                  .then((funcionario) => {
+                    if (funcionario === "error") {
+                      req.flash(
+                        "error_msg",
+                        "Error no sistema tente novamente mais tarde"
+                      );
+                      res.redirect("/admin/funcionario");
+                    } else {
+                      req.flash(
+                        "sucess_msg",
+                        "Alteração do funcionário feita com sucesso"
+                      );
+                      res.redirect("/admin/funcionario");
+                    }
+                  });
+              }
+            });
           }
         });
-      }
-    });
-  } else if (req.body.residencial != funcionario1.telefone_residencial) {
-    bd1.select_residencial(req.body.residencial).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1
-          .update_funcionario({
-            matricula: req.body.matricula,
-            usuario: req.body.usuario,
-            celular: req.body.celular,
-            residencial: req.body.residencial,
-            senha: funcionario1.senha,
-            matricula1: funcionario1.matricula,
-          })
-          .then((funcionario) => {
-            if (funcionario === "error") {
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
-              res.redirect("/admin/funcionario");
-            } else {
-              req.flash(
-                "sucess_msg",
-                "Alteração do funcionário feita com sucesso"
-              );
-              res.redirect("/admin/funcionario");
-            }
-          });
-      }
-    });
-  } else if (req.body.senha != "") {
-    bd1.select_senha(req.body.senha).then((msg) => {
-      if (msg) {
-        error = msg;
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-        error = "A senha deve ter mais do que 7 caracteres";
-        res.render("admin/edicao_funcionario", {
-          error,
-          funcionario: funcionario1,
-        });
-      } else {
-        bd1
-          .update_funcionario({
-            matricula: req.body.matricula,
-            usuario: req.body.usuario,
-            celular: req.body.celular,
-            residencial: req.body.residencial,
-            senha: req.body.senha,
-            matricula1: funcionario1.matricula,
-          })
-          .then((funcionario) => {
-            if (funcionario === "error") {
-              req.flash(
-                "error_msg",
-                "Error no sistema tente novamente mais tarde"
-              );
-              res.redirect("/admin/funcionario");
-            } else {
-              req.flash(
-                "sucess_msg",
-                "Alteração do funcionário feita com sucesso"
-              );
-              res.redirect("/admin/funcionario");
-            }
-          });
       }
     });
   } else {

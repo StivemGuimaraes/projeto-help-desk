@@ -187,6 +187,25 @@ const update_aluno = async (aluno) => {
   }
 };
 
+/*alteração de senha do aluno*/
+const update_aluno_senha = async (aluno) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE aluno SET senha = ? WHERE matricula = ?;";
+    const values = [aluno.senha, aluno.matricula];
+    update = await conn.execute(sql, values);
+    if (update[0].changedRows == 0) {
+      return "falha";
+    } else {
+      console.log("alteração do aluno feita com sucesso");
+      return "sucesso";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do aluno*/
 const delete_aluno = async (matricula) => {
   try {
@@ -213,5 +232,6 @@ module.exports = {
   select_aluno1,
   delete_update_aluno,
   update_aluno,
+  update_aluno_senha,
   delete_aluno,
 };

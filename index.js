@@ -14,9 +14,9 @@ const auth_admin = require("./config/auth_admin");
 const auth_funcionario = require("./config/auth_funcionario");
 const auth_professor = require("./config/auth_professor");
 const auth_aluno = require("./config/auth_aluno");
-const bd = require("./models/bd_aluno")
-const bd1 = require("./models/bd_funcionario")
-const bd2 = require("./models/bd_professor")
+const bd = require("./models/bd_aluno");
+const bd1 = require("./models/bd_funcionario");
+const bd2 = require("./models/bd_professor");
 const port = 8008;
 
 // config
@@ -71,12 +71,100 @@ app.use("/professor", professor);
 app.use("/funcionario", funcionario);
 
 app.get("/esqueci-senha", (req, res) => {
-res.render("esqueceu_senha");
+  res.render("esqueceu_senha");
 });
 
 app.post("/esqueci-senha", (req, res) => {
-
-})
+  var dados = {
+    matricula: req.body.matricula,
+    senha: req.body.senha,
+    senha2: req.body.senha2,
+  };
+  var error;
+  if (
+    !req.body.matricula ||
+    typeof req.body.matricula === undefined ||
+    req.body.matricula === null
+  ) {
+    error = "Matricula invalida";
+    res.render("esqueceu_senha", { error, dados });
+  } else if (
+    !req.body.senha ||
+    typeof req.body.senha === undefined ||
+    req.body.senha === null
+  ) {
+    error = "Senha invalida";
+    res.render("esqueceu_senha", { error, dados });
+  } else if (
+    !req.body.senha2 ||
+    typeof req.body.senha2 === undefined ||
+    req.body.senha2 === null
+  ) {
+    error = "Repetição de senha invalida";
+    res.render("esqueceu_senha", { error, dados });
+  } else if (req.body.senha !== req.body.senha2) {
+    error = "Senhas diferentes";
+    res.render("esqueceu_senha", { error, dados });
+  } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
+    error = "A senha deve ter mais do que 7 caracteres";
+    res.render("esqueceu_senha", { error, dados });
+  } else {
+    bd.update_aluno_senha({
+      senha: req.body.senha,
+      matricula: req.body.matricula,
+    }).then((error1) => {
+      if (error1 === "error") {
+        error = "Error no sistema tente novamente mais tarde";
+        res.render("esqueceu_senha", { error, dados });
+      } else if (error1 === "sucesso") {
+        req.flash(
+          "sucess_msg",
+          "Alteração de senha do aluno feita com sucesso"
+        );
+        res.redirect("/");
+      } else if (error1 === "falha") {
+        bd1
+          .update_funcionario_senha({
+            senha: req.body.senha,
+            matricula: req.body.matricula,
+          })
+          .then((error1) => {
+            if (error1 === "error") {
+              error = "Error no sistema tente novamente mais tarde";
+              res.render("esqueceu_senha", { error, dados });
+            } else if (error1 === "sucesso") {
+              req.flash(
+                "sucess_msg",
+                "Alteração de senha do funcionário feita com sucesso"
+              );
+              res.redirect("/");
+            } else if (error1 === "falha") {
+              bd2
+                .update_professor_senha({
+                  senha: req.body.senha,
+                  matricula: req.body.matricula,
+                })
+                .then((error1) => {
+                  if (error1 === "error") {
+                    error = "Error no sistema tente novamente mais tarde";
+                    res.render("esqueceu_senha", { error, dados });
+                  } else if (error1 === "sucesso") {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração de senha do professor feita com sucesso"
+                    );
+                    res.redirect("/");
+                  } else if (error1 === "falha") {
+                    error = "Falha ao alterar a senha, verifique a matrícula";
+                    res.render("esqueceu_senha", { error, dados });
+                  }
+                });
+            }
+          });
+      }
+    });
+  }
+});
 
 app.post("/", (req, res, next) => {
   auth_admin

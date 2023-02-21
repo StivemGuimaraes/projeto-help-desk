@@ -148,7 +148,7 @@
   <div class="container-fluid p-0">
     <div class="col-md-12 p-0">
       <img
-        class="img-fluid m-0 p-0 shadow"
+        class="img-fluid m-0 p-0"
         src="/img/estudante.jpg"
         alt="opa, erro"
         width="110%"
@@ -160,25 +160,22 @@
     <div class="row g-5 d-flex justify-content-center">
       <div class="col-md-4 col-lg-4" style="width: 15rem">
         <a href="/admin/funcionario" class="text-decoration-none text-dark"><div
-            class="card rounded border-secondary"
+            class="card rounded"
+            id="card-border"
           >
-            <div class="card-body text-center">
-              <img
-                src="/img/carteira-de-identidade.png"
-                alt=""
-                height="40%"
-                width="40%"
-              />
+            <div class="card-body text-center card-hover">
+              <div class="funcionarios-img"></div>
               <p class="mt-4" style="margin: 0">Funcionários</p>
             </div>
           </div></a>
       </div>
       <div class="col-md-4 col-lg-4" style="width: 15rem">
         <a href="/admin/chamado" class="text-decoration-none text-dark"><div
-            class="card rounded border-secondary"
+            class="card rounded"
+            id="card-border"
           >
-            <div class="card-body text-center">
-              <img src="/img/conferencia.png" alt="" height="40%" width="40%" />
+            <div class="card-body text-center card-hover">
+              <div class="chamados-img"></div>
               <p class="mt-4" style="margin: 0">Chamados</p>
             </div>
           </div></a>
@@ -196,21 +193,23 @@
   <div class="container mt-5">
     <div class="row g-5 d-flex justify-content-center mb-5">
       <div class="col-md-4 col-lg-4" style="width: 15rem">
-        <a href="admin/professor" class="text-decoration-none text-dark"><div
-            class="card rounded border-secondary"
+        <a href="/admin/professor" class="text-decoration-none text-dark"><div
+            class="card rounded"
+            id="card-border"
           >
-            <div class="card-body text-center">
-              <img src="/img/professor.png" alt="" height="40%" width="40%" />
+            <div class="card-body text-center card-hover">
+              <div class="professores-img"></div>
               <p class="mt-4" style="margin: 0">Professores</p>
             </div>
           </div></a>
       </div>
       <div class="col-md-4 col-lg-4" style="width: 15rem">
         <a href="/admin/aluno" class="text-decoration-none text-dark"><div
-            class="card rounded border-secondary"
+            class="card rounded"
+            id="card-border"
           >
-            <div class="card-body text-center">
-              <img src="/img/aluna.png" alt="" height="40%" width="40%" />
+            <div class="card-body text-center card-hover">
+              <div class="alunos-img"></div>
               <p class="mt-4" style="margin: 0">Alunos</p>
             </div>
           </div></a>
@@ -223,9 +222,9 @@
         <a
           href="/admin/cadastrar-professor"
           class="text-decoration-none text-dark"
-        ><div class="card rounded border-secondary">
-            <div class="card-body text-center">
-              <img src="/img/professor.png" alt="" height="40%" width="40%" />
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="professores-img"></div>
               <p class="mt-4" style="margin: 0">Cadastrar Professores</p>
             </div>
           </div></a>
@@ -234,9 +233,9 @@
         <a
           href="/admin/cadastrar-aluno"
           class="text-decoration-none text-dark"
-        ><div class="card rounded border-secondary">
-            <div class="card-body text-center">
-              <img src="/img/aluna.png" alt="" height="40%" width="40%" />
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="alunos-img"></div>
               <p class="mt-4" style="margin: 0">Cadastrar Alunos</p>
             </div>
           </div></a>
@@ -245,9 +244,9 @@
         <a
           href="/admin/cadastrar-funcionario"
           class="text-decoration-none text-dark"
-        ><div class="card rounded border-secondary">
-            <div class="card-body text-center">
-              <img src="/img/carteira-de-identidade.png" alt="" height="64px" />
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="funcionarios-img"></div>
               <p class="mt-4" style="margin: 0">Cadastrar Funcionários</p>
             </div>
           </div></a>

@@ -109,58 +109,87 @@ app.post("/esqueci-senha", (req, res) => {
     error = "A senha deve ter mais do que 7 caracteres";
     res.render("esqueceu_senha", { error, dados });
   } else {
-    bd.update_aluno_senha({
-      senha: req.body.senha,
-      matricula: req.body.matricula,
-    }).then((error1) => {
-      if (error1 === "error") {
-        error = "Error no sistema tente novamente mais tarde";
-        res.render("esqueceu_senha", { error, dados });
-      } else if (error1 === "sucesso") {
-        req.flash(
-          "sucess_msg",
-          "Alteração de senha do aluno feita com sucesso"
-        );
-        res.redirect("/");
-      } else if (error1 === "falha") {
-        bd1
-          .update_funcionario_senha({
-            senha: req.body.senha,
-            matricula: req.body.matricula,
-          })
-          .then((error1) => {
-            if (error1 === "error") {
-              error = "Error no sistema tente novamente mais tarde";
-              res.render("esqueceu_senha", { error, dados });
-            } else if (error1 === "sucesso") {
-              req.flash(
-                "sucess_msg",
-                "Alteração de senha do funcionário feita com sucesso"
-              );
-              res.redirect("/");
-            } else if (error1 === "falha") {
-              bd2
-                .update_professor_senha({
+    bd.select_senha(req.body.senha).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("esqueceu_senha", {
+          error,
+          dados,
+        });
+      } else {
+        bd1.select_senha(req.body.senha).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("esqueceu_senha", { error, dados });
+          } else {
+            bd2.select_senha(req.body.senha).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("esqueceu_senha", {
+                  error,
+                  dados,
+                });
+              } else {
+                bd.update_aluno_senha({
                   senha: req.body.senha,
                   matricula: req.body.matricula,
-                })
-                .then((error1) => {
+                }).then((error1) => {
                   if (error1 === "error") {
                     error = "Error no sistema tente novamente mais tarde";
                     res.render("esqueceu_senha", { error, dados });
                   } else if (error1 === "sucesso") {
                     req.flash(
                       "sucess_msg",
-                      "Alteração de senha do professor feita com sucesso"
+                      "Alteração de senha do aluno feita com sucesso"
                     );
                     res.redirect("/");
                   } else if (error1 === "falha") {
-                    error = "Falha ao alterar a senha, verifique a matrícula";
-                    res.render("esqueceu_senha", { error, dados });
+                    bd1
+                      .update_funcionario_senha({
+                        senha: req.body.senha,
+                        matricula: req.body.matricula,
+                      })
+                      .then((error1) => {
+                        if (error1 === "error") {
+                          error = "Error no sistema tente novamente mais tarde";
+                          res.render("esqueceu_senha", { error, dados });
+                        } else if (error1 === "sucesso") {
+                          req.flash(
+                            "sucess_msg",
+                            "Alteração de senha do funcionário feita com sucesso"
+                          );
+                          res.redirect("/");
+                        } else if (error1 === "falha") {
+                          bd2
+                            .update_professor_senha({
+                              senha: req.body.senha,
+                              matricula: req.body.matricula,
+                            })
+                            .then((error1) => {
+                              if (error1 === "error") {
+                                error =
+                                  "Error no sistema tente novamente mais tarde";
+                                res.render("esqueceu_senha", { error, dados });
+                              } else if (error1 === "sucesso") {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração de senha do professor feita com sucesso"
+                                );
+                                res.redirect("/");
+                              } else if (error1 === "falha") {
+                                error =
+                                  "Falha ao alterar a senha, verifique a matrícula";
+                                res.render("esqueceu_senha", { error, dados });
+                              }
+                            });
+                        }
+                      });
                   }
                 });
-            }
-          });
+              }
+            });
+          }
+        });
       }
     });
   }

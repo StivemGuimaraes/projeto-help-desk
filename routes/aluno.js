@@ -294,7 +294,6 @@ router.get("/chamado/exclusao/:id", (req, res) => {
           img3: null,
         };
       }
-      console.log(chamado1);
     }
   });
   bd.delete_chamado(req.params.id).then((error) => {

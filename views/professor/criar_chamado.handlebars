@@ -156,6 +156,7 @@
                       id="floatingInput-titulo"
                       placeholder="Titulo"
                       name="titulo"
+                      value="{{dados.titulo}}"
                       required
                     />
                     <label for="floatingInput-titulo">Título</label>
@@ -179,6 +180,7 @@
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
                       name="assunto"
+                      value="{{dados.assunto}}"
                       required
                     />
                     <label for="floatingInput-titulo1">Assunto</label>
@@ -249,7 +251,7 @@
                       name="descricao"
                       style="height: 220px;"
                       required
-                    ></textarea>
+                    >{{dados.descricao}}</textarea>
                     <label for="floatingTextarea">Descreva seu problema</label>
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">

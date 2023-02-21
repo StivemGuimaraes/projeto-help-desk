@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
   });
 });
 
-/*inclusão de professor: professor1 do professor*/
+/*inclusão de dados do professor*/
 router.get("/cadastrar-professor", (req, res) => {
   res.render("admin/cadastro_professor");
 });
@@ -99,7 +99,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
     error = "Senhas diferentes";
     res.render("admin/cadastro_professor", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-    error = "A senha deve ter mais do que 7 caracteres";
+    error = "A senha deve ter no mínimo 8 caracteres";
     res.render("admin/cadastro_professor", { error, dados });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
@@ -342,7 +342,7 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
     error = "Senhas diferentes";
     res.render("admin/cadastro_funcionario", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-    error = "A senha deve ter mais do que 7 caracteres";
+    error = "A senha deve ter no mínimo 8 caracteres";
     res.render("admin/cadastro_funcionario", { error, dados });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
@@ -590,7 +590,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "Senhas diferentes";
     res.render("admin/cadastro_aluno", { error, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-    error = "A senha deve ter mais do que 7 caracteres";
+    error = "A senha deve ter no mínimo 8 caracteres";
     res.render("admin/cadastro_aluno", { error, dados });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
@@ -975,7 +975,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               req.body.senha2.length <= 7
                                             ) {
                                               error =
-                                                "A senha deve ter mais do que 7 caracteres";
+                                                "A senha deve ter no mínimo 8 caracteres";
                                               res.render("admin/edicao_aluno", {
                                                 error,
                                                 aluno: aluno1,
@@ -1265,7 +1265,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                             req.body.senha.length <= 7 ||
                             req.body.senha2.length <= 7
                           ) {
-                            error = "A senha deve ter mais do que 7 caracteres";
+                            error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("admin/edicao_aluno", {
                               error,
                               aluno: aluno1,
@@ -1388,8 +1388,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                               req.body.senha.length <= 7 ||
                               req.body.senha2.length <= 7
                             ) {
-                              error =
-                                "A senha deve ter mais do que 7 caracteres";
+                              error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("admin/edicao_aluno", {
                                 error,
                                 aluno: aluno1,
@@ -1649,7 +1648,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_aluno", {
                   error,
                   aluno: aluno1,
@@ -1810,8 +1809,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                               req.body.senha.length <= 7 ||
                               req.body.senha2.length <= 7
                             ) {
-                              error =
-                                "A senha deve ter mais do que 7 caracteres";
+                              error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("admin/edicao_aluno", {
                                 error,
                                 aluno: aluno1,
@@ -1981,26 +1979,11 @@ router.post("/aluno/alteracao/", (req, res) => {
       if (msg) {
         error = msg;
         res.render("admin/edicao_aluno", { error, aluno: aluno1 });
-      } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
-        error = "A senha deve ter mais do que 7 caracteres";
-        res.render("admin/edicao_aluno", {
-          error,
-          aluno: aluno1,
-        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_aluno", { error, aluno: aluno1 });
-          } else if (
-            req.body.senha.length <= 7 ||
-            req.body.senha2.length <= 7
-          ) {
-            error = "A senha deve ter mais do que 7 caracteres";
-            res.render("admin/edicao_aluno", {
-              error,
-              aluno: aluno1,
-            });
           } else {
             bd2.select_celular(req.body.celular).then((msg) => {
               if (msg) {
@@ -2010,7 +1993,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_aluno", {
                   error,
                   aluno: aluno1,
@@ -2144,7 +2127,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_aluno", {
                   error,
                   aluno: aluno1,
@@ -2275,7 +2258,7 @@ router.post("/aluno/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_aluno", {
                   error,
                   aluno: aluno1,
@@ -2474,7 +2457,7 @@ router.post("/professor/alteracao/", (req, res) => {
                                               req.body.senha2.length <= 7
                                             ) {
                                               error =
-                                                "A senha deve ter mais do que 7 caracteres";
+                                                "A senha deve ter no mínimo 8 caracteres";
                                               res.render(
                                                 "admin/edicao_professor",
                                                 {
@@ -2781,7 +2764,7 @@ router.post("/professor/alteracao/", (req, res) => {
                             req.body.senha.length <= 7 ||
                             req.body.senha2.length <= 7
                           ) {
-                            error = "A senha deve ter mais do que 7 caracteres";
+                            error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("admin/edicao_professor", {
                               error,
                               professor: professor1,
@@ -2908,8 +2891,7 @@ router.post("/professor/alteracao/", (req, res) => {
                               req.body.senha.length <= 7 ||
                               req.body.senha2.length <= 7
                             ) {
-                              error =
-                                "A senha deve ter mais do que 7 caracteres";
+                              error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("admin/edicao_professor", {
                                 error,
                                 professor: professor1,
@@ -3188,7 +3170,7 @@ router.post("/professor/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_professor", {
                   error,
                   professor: professor1,
@@ -3312,24 +3294,15 @@ router.post("/professor/alteracao/", (req, res) => {
         error = msg;
         res.render("admin/edicao_professor", { error, professor: professor1 });
       } else {
-        bd.select_residencial(req.body.residencial).then((msg) => {
+        bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("admin/edicao_professor", {
               error,
               professor: professor1,
             });
-          } else if (
-            req.body.senha.length <= 7 ||
-            req.body.senha2.length <= 7
-          ) {
-            error = "A senha deve ter mais do que 7 caracteres";
-            res.render("admin/edicao_professor", {
-              error,
-              professor: professor1,
-            });
           } else {
-            bd.select_senha(req.body.senha).then((msg) => {
+            bd2.select_celular(req.body.celular).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/edicao_professor", {
@@ -3337,26 +3310,110 @@ router.post("/professor/alteracao/", (req, res) => {
                   professor: professor1,
                 });
               } else {
-                bd.update_professor({
-                  matricula: req.body.matricula,
-                  usuario: req.body.usuario,
-                  celular: req.body.celular,
-                  residencial: req.body.residencial,
-                  senha: req.body.senha,
-                  matricula1: professor1.matricula,
-                }).then((professor) => {
-                  if (professor === "error") {
-                    req.flash(
-                      "error_msg",
-                      "Error no sistema tente novamente mais tarde"
-                    );
-                    res.redirect("/admin/professor");
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("admin/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
                   } else {
-                    req.flash(
-                      "sucess_msg",
-                      "Alteração do professor feita com sucesso"
-                    );
-                    res.redirect("/admin/professor");
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("admin/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd2
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("admin/edicao_professor", {
+                                error,
+                                professor: professor1,
+                              });
+                            } else if (
+                              req.body.senha.length <= 7 ||
+                              req.body.senha2.length <= 7
+                            ) {
+                              error = "A senha deve ter no mínimo 8 caracteres";
+                              res.render("admin/edicao_professor", {
+                                error,
+                                professor: professor1,
+                              });
+                            } else {
+                              bd.select_senha(req.body.senha).then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("admin/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_senha(req.body.senha)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("admin/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd2
+                                          .select_senha(req.body.senha)
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "admin/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd.update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: req.body.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/admin/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/admin/professor"
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              });
+                            }
+                          });
+                      }
+                    });
                   }
                 });
               }
@@ -3478,7 +3535,7 @@ router.post("/professor/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_professor", {
                   error,
                   professor: professor1,
@@ -3620,7 +3677,7 @@ router.post("/professor/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_professor", {
                   error,
                   professor: professor1,
@@ -3759,7 +3816,7 @@ router.post("/professor/alteracao/", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_professor", {
                   error,
                   professor: professor1,
@@ -3960,7 +4017,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                                               req.body.senha2.length <= 7
                                             ) {
                                               error =
-                                                "A senha deve ter mais do que 7 caracteres";
+                                                "A senha deve ter no mínimo 8 caracteres";
                                               res.render(
                                                 "admin/edicao_funcionario",
                                                 {
@@ -4279,7 +4336,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                             req.body.senha.length <= 7 ||
                             req.body.senha2.length <= 7
                           ) {
-                            error = "A senha deve ter mais do que 7 caracteres";
+                            error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("admin/edicao_funcionario", {
                               error,
                               funcionario: funcionario1,
@@ -4419,8 +4476,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                               req.body.senha.length <= 7 ||
                               req.body.senha2.length <= 7
                             ) {
-                              error =
-                                "A senha deve ter mais do que 7 caracteres";
+                              error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("admin/edicao_funcionario", {
                                 error,
                                 funcionario: funcionario1,
@@ -4714,7 +4770,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_funcionario", {
                   error,
                   funcionario: funcionario1,
@@ -4893,8 +4949,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                               req.body.senha.length <= 7 ||
                               req.body.senha2.length <= 7
                             ) {
-                              error =
-                                "A senha deve ter mais do que 7 caracteres";
+                              error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("admin/edicao_funcionario", {
                                 error,
                                 funcionario: funcionario1,
@@ -5100,7 +5155,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_funcionario", {
                   error,
                   funcionario: funcionario1,
@@ -5252,7 +5307,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_funcionario", {
                   error,
                   funcionario: funcionario1,
@@ -5401,7 +5456,7 @@ router.post("/funcionario/alteracao", (req, res) => {
                 req.body.senha.length <= 7 ||
                 req.body.senha2.length <= 7
               ) {
-                error = "A senha deve ter mais do que 7 caracteres";
+                error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("admin/edicao_funcionario", {
                   error,
                   funcionario: funcionario1,

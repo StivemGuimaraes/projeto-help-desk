@@ -14,6 +14,7 @@ const alteracaoProfessorImagem = upload
   .alteracao_professor_imagem()
   .array("imagem_alteracao_chamado", 3);
 var chamado1;
+var aluno1;
 
 router.get("/", (req, res) => {
   res.render("professor/index");
@@ -22,6 +23,14 @@ router.get("/cadastrar-aluno", (req, res) => {
   res.render("professor/cadastro_aluno");
 });
 router.post("/cadastrar-aluno/nova", (req, res) => {
+  var dados = {
+    matricula: req.body.matricula,
+    usuario: req.body.usuario,
+    celular: req.body.celular,
+    residencial: req.body.residencial,
+    senha: req.body.senha,
+    senha2: req.body.senha2,
+  };
   var error;
   if (
     !req.body.matricula ||
@@ -29,14 +38,14 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("professor/cadastro_aluno", { error });
+    res.render("professor/cadastro_aluno", { error, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("professor/cadastro_aluno", { error });
+    res.render("professor/cadastro_aluno", { error, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
@@ -74,17 +83,17 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
     error = "A senha deve ter no mínimo 8 caracteres";
     res.render("professor/cadastro_aluno", { error, dados });
   } else {
-    bd.select_professor(req.body.matricula).then((msg) => {
+    bd3.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
         res.render("professor/cadastro_aluno", { error, dados });
       } else {
-        bd1.select_funcionario(req.body.matricula).then((msg) => {
+        bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/cadastro_aluno", { error, dados });
           } else {
-            bd2.select_aluno(req.body.matricula).then((msg) => {
+            bd.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("professor/cadastro_aluno", { error, dados });
@@ -97,7 +106,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                       dados,
                     });
                   } else {
-                    bd1.select_celular(req.body.celular).then((msg) => {
+                    bd2.select_celular(req.body.celular).then((msg) => {
                       if (msg) {
                         error = msg;
                         res.render("professor/cadastro_aluno", {
@@ -105,7 +114,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                           dados,
                         });
                       } else {
-                        bd2.select_celular(req.body.celular).then((msg) => {
+                        bd3.select_celular(req.body.celular).then((msg) => {
                           if (msg) {
                             error = msg;
                             res.render("professor/cadastro_aluno", {
@@ -122,7 +131,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                     dados,
                                   });
                                 } else {
-                                  bd1
+                                  bd2
                                     .select_residencial(req.body.residencial)
                                     .then((msg) => {
                                       if (msg) {
@@ -132,7 +141,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                           dados,
                                         });
                                       } else {
-                                        bd2
+                                        bd3
                                           .select_residencial(
                                             req.body.residencial
                                           )
@@ -157,7 +166,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                                     }
                                                   );
                                                 } else {
-                                                  bd1
+                                                  bd2
                                                     .select_senha(
                                                       req.body.senha
                                                     )
@@ -169,7 +178,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                                           { error, dados }
                                                         );
                                                       } else {
-                                                        bd2
+                                                        bd3
                                                           .select_senha(
                                                             req.body.senha
                                                           )
@@ -184,25 +193,23 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                                                 }
                                                               );
                                                             } else {
-                                                              bd.insert_professor(
-                                                                {
-                                                                  matricula:
-                                                                    req.body
-                                                                      .matricula,
-                                                                  usuario:
-                                                                    req.body
-                                                                      .usuario,
-                                                                  celular:
-                                                                    req.body
-                                                                      .celular,
-                                                                  residencial:
-                                                                    req.body
-                                                                      .residencial,
-                                                                  senha:
-                                                                    req.body
-                                                                      .senha,
-                                                                }
-                                                              ).then((msg) => {
+                                                              bd.insert_aluno({
+                                                                matricula:
+                                                                  req.body
+                                                                    .matricula,
+                                                                usuario:
+                                                                  req.body
+                                                                    .usuario,
+                                                                celular:
+                                                                  req.body
+                                                                    .celular,
+                                                                residencial:
+                                                                  req.body
+                                                                    .residencial,
+                                                                senha:
+                                                                  req.body
+                                                                    .senha,
+                                                              }).then((msg) => {
                                                                 if (msg) {
                                                                   error = msg;
                                                                   res.render(
@@ -214,7 +221,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
                                                                   );
                                                                 } else {
                                                                   var sucesso =
-                                                                    "Professor cadastrado com sucesso";
+                                                                    "Aluno cadastrado com sucesso";
                                                                   res.render(
                                                                     "professor/cadastro_aluno",
                                                                     {
@@ -443,7 +450,16 @@ router.post("/aluno/alteracao/", (req, res) => {
   ) {
     error = "Telefone celular invalido";
     res.render("professor/edicao_aluno", { error, aluno: aluno1 });
-  } else if (req.body.senha !== req.body.senha2) {
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("professor/edicao_aluno", { error, aluno: aluno1 });
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("professor/edicao_aluno", { error, aluno: aluno1 });
+    }
+  }
+  if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("professor/edicao_aluno", {
       error,

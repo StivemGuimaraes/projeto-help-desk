@@ -889,7 +889,16 @@ router.post("/aluno/alteracao/", (req, res) => {
   ) {
     error = "Telefone celular invalido";
     res.render("admin/edicao_aluno", { error, aluno: aluno1 });
-  } else if (req.body.senha !== req.body.senha2) {
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/edicao_aluno", { error, aluno: aluno1 });
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/edicao_aluno", { error, aluno: aluno1 });
+    }
+  }
+  if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("admin/edicao_aluno", {
       error,
@@ -2362,7 +2371,16 @@ router.post("/professor/alteracao/", (req, res) => {
   ) {
     error = "Telefone celular invalido";
     res.render("admin/edicao_professor", { error, professor: professor1 });
-  } else if (req.body.senha !== req.body.senha2) {
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/edicao_professor", { error, professor: professor1 });
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/edicao_professor", { error, professor: professor1 });
+    }
+  }
+  if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("admin/edicao_professor", {
       error,
@@ -3919,7 +3937,22 @@ router.post("/funcionario/alteracao", (req, res) => {
       error,
       funcionario: funcionario1,
     });
-  } else if (req.body.senha !== req.body.senha2) {
+  } else if (req.body.celular.length < 15) {
+    error = "Número de celular invalido";
+    res.render("admin/edicao_funcionario", {
+      error,
+      funcionario: funcionario1,
+    });
+  } else if (req.body.residencial) {
+    if (req.body.residencial.length < 14) {
+      error = "Número residencial invalido";
+      res.render("admin/edicao_funcionario", {
+        error,
+        funcionario: funcionario1,
+      });
+    }
+  }
+  if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("admin/edicao_funcionario", {
       error,

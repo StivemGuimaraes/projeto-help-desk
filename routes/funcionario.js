@@ -17,6 +17,7 @@ var aluno1;
 var professor1;
 var chamado1;
 
+/*pagina inicial do funcionario*/
 router.get("/", (req, res) => {
   res.render("funcionario/index");
 });
@@ -513,6 +514,10 @@ router.post("/cadastrar-professor/nova", (req, res) => {
   }
 });
 
+/*inclusão de relatorio*/
+router.get("/cadastrar-relatorio", (req, res) => {
+  res.render("funcionario/cadastro_professor");
+});
 /*seleção de dados do professor*/
 router.get("/professor", (req, res) => {
   bd1.select_professorAll().then((professor) => {

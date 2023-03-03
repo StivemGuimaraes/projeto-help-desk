@@ -516,8 +516,29 @@ router.post("/cadastrar-professor/nova", (req, res) => {
 
 /*inclusão de relatorio*/
 router.get("/cadastrar-relatorio", (req, res) => {
-  res.render("funcionario/cadastro_professor");
+  res.render("funcionario/cadastro_relatorio");
 });
+
+router.post("/cadastrar-relatorio", (req, res) => {
+  var dados = {
+    relatorio: req.body.relatorio,
+  };
+  var error;
+  if (req.user[0].eAdmin == 0) {
+    var funcionario_matricula = req.user[0].matricula;
+  } else {
+    var funcionario_matricula = null;
+  }
+  if (
+    !req.body.relatorio ||
+    typeof req.body.relatorio === undefined ||
+    req.body.relatorio === null
+  ) {
+    error = "relatorio invalido";
+    res.render("funcionario/cadastro_relatorio", { error, dados });
+  }
+});
+
 /*seleção de dados do professor*/
 router.get("/professor", (req, res) => {
   bd1.select_professorAll().then((professor) => {

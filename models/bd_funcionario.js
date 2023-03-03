@@ -204,6 +204,20 @@ const update_funcionario_senha = async (funcionario) => {
   }
 };
 
+/*alteração de senha do funcionario*/
+const update_relatorio = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE funcionario SET relatorio = ? WHERE matricula = ?;";
+    const values = [funcionario.relatorio, funcionario.matricula];
+    await conn.execute(sql, values);
+    console.log("alteração do relatorio do funcionario feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do funcionario*/
 const delete_funcionario = async (matricula) => {
   try {
@@ -228,5 +242,6 @@ module.exports = {
   select_admin,
   update_funcionario,
   update_funcionario_senha,
+  update_relatorio,
   delete_funcionario,
 };

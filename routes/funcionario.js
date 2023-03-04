@@ -519,7 +519,7 @@ router.get("/cadastrar-relatorio", (req, res) => {
   res.render("funcionario/cadastro_relatorio");
 });
 
-router.post("/cadastrar-relatorio", (req, res) => {
+router.post("/cadastrar-relatorio/nova", (req, res) => {
   var dados = {
     relatorio: req.body.relatorio,
   };
@@ -536,6 +536,22 @@ router.post("/cadastrar-relatorio", (req, res) => {
   ) {
     error = "relatorio invalido";
     res.render("funcionario/cadastro_relatorio", { error, dados });
+  } else {
+    bd3
+      .insert_relatorio({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo,
+        fk_funcionario: funcionario_matricula,
+      })
+      .then((msg) => {
+        if (msg === "error") {
+          error = "Error no sistema, tente novamente mais tarde";
+          res.render("funcionario/cadastro_relatorio", { error, dados });
+        } else {
+          sucesso = "Relatório cadastrado com sucesso";
+          res.render("funcionario/cadastro_relatorio", { sucesso, dados });
+        }
+      });
   }
 });
 

@@ -25,9 +25,16 @@ usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15),
 telefone_residencial varchar(14),
-eAdmin int not null default 0,
-relatorio text
+eAdmin int not null default 0
 );
+create table relatorio (
+id int not null primary key auto_increment,
+titulo varchar(40) not null,
+conteudo text not null,
+fk_funcionario int
+);
+alter table relatorio
+add foreign key(fk_funcionario) references funcionario(matricula);
 create table chamado
 (
 id int not null primary key auto_increment,

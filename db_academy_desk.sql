@@ -70,4 +70,6 @@ mens_func text not null
 alter table chat
 add foreign key(id_chamado) references chamado(id),
 add foreign key(matricula_A) references aluno(matricula),
-add foreign key(matricula_F) references professor(matricula); 
+add foreign key(matricula_F) references professor(matricula);
+
+insert into funcionario (matricula, usuario, senha, telefone_celular, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", 1);

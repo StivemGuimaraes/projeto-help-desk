@@ -377,7 +377,6 @@ router.get("/aluno", (req, res) => {
 
 /*seleção de chamados*/
 router.get("/chamado", (req, res) => {
-  console.log(req.user);
   bd1.select_chamadoProfessor(req.user).then((chamado_professor) => {
     if (chamado_professor === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";

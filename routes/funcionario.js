@@ -521,6 +521,7 @@ router.get("/cadastrar-relatorio", (req, res) => {
 
 router.post("/cadastrar-relatorio/nova", (req, res) => {
   var dados = {
+    titulo: req.body.titulo,
     relatorio: req.body.relatorio,
   };
   var error;
@@ -530,11 +531,18 @@ router.post("/cadastrar-relatorio/nova", (req, res) => {
     var funcionario_matricula = null;
   }
   if (
-    !req.body.relatorio ||
-    typeof req.body.relatorio === undefined ||
-    req.body.relatorio === null
+    !req.body.titulo ||
+    typeof req.body.titulo === undefined ||
+    req.body.titulo === null
   ) {
-    error = "relatorio invalido";
+    error = "título invalido";
+    res.render("funcionario/cadastro_relatorio", { error, dados });
+  } else if (
+    !req.body.conteudo ||
+    typeof req.body.conteudo === undefined ||
+    req.body.conteudo === null
+  ) {
+    error = "relatório invalido";
     res.render("funcionario/cadastro_relatorio", { error, dados });
   } else {
     bd3

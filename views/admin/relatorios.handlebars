@@ -1,5 +1,5 @@
 <head>
-  <title>Lista de alunos</title>
+  <title>Lista de relatórios</title>
 </head>
 <header
   class="shadow fixed-top"
@@ -38,7 +38,7 @@
           data-bs-target="#offcanvasScrolling"
           aria-controls="offcanvasScrolling"
           style="cursor: pointer; display:inline-block"
-        ><div id="img-hover" title="Lista de navagação"></div></a>
+        ><div id="img-hover" title="lista de navagação"></div></a>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
             href="/admin/funcionario"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de funcionários</a>
+          >Listas de funcionários</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -82,12 +82,12 @@
             href="/admin/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de chamados</a>
+          >Listas de chamados</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Lista de
+          <a href="" class="btn btn-outline-dark" type="button">Listas de
             relatorios</a>
         </div>
       </div>
@@ -97,7 +97,7 @@
             href="/admin/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de professores</a>
+          >Listas de professores</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -106,7 +106,7 @@
             href="/admin/aluno"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de alunos</a>
+          >Listas de alunos</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -144,8 +144,8 @@
     </div>
   </div>
 </header>
-<main style="margin-top: 100px;">
-  {{> _msg}}
+<main style="margin-top: 150px;">
+    {{> _msg}}
   {{#if error_mensagem}}
   <div class="container mt-5">
     <div class="row justify-content-center text-center">
@@ -160,26 +160,27 @@
     </div>
   </div>
 {{/if}}
-  {{#each aluno}}
-  <div class="container w-50">
-  <div class="card mt-4 mb-4 shadow">
-  <h5 class="card-header">{{this.matricula}}</h5>
-  <div class="card-body">
-    <h5 class="card-title">{{this.usuario}}</h5>
-    <p class="card-text mb-1">Senha: {{this.senha}}</p>
-    {{#if telefone_residencial}}
-    <p class="card-text mb-1">Telefone celular: {{this.telefone_celular}}</p>
-    <p class="card-text">Telefone residencial: {{this.telefone_residencial}}</p>
-    {{else}}
-    <p class="card-text">Telefone celular: {{this.telefone_celular}}</p>
-    {{/if}}   
-    <a href="/admin/aluno/alteracao/{{this.matricula}}" class="btn btn-warning">Alterar</a>
-    <a data-bs-toggle="modal" data-bs-target="#exampleModal{{this.matricula}}" class="btn btn-danger">Deletar</a>
-  </div>
-</div>
-</div>
-<!--Modal-->
-  <div class="modal fade" id="exampleModal{{this.matricula}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{#each relatorio}}
+    <div class="container w-50 mt-5 mb-5">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title m-0 p-2">{{this.titulo}}</h5></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body collapse" id="collapseExample{{this.id}}">              
+                    <label for="conteudo" class="form-label" style="font-size: 13pt;">Relatório:</label>
+                    <textarea class="form-control" id="conteudo" rows="200" style="height: 220px;" disabled readonly>{{this.conteudo}}</textarea>
+                    <p>Criado por: {{this.nome_funcionario}}</p>
+                    <a href="/admin/relatorio/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+                    <a data-bs-toggle="modal" data-bs-target="#deletar_relatorio{{this.id}}" class="btn btn-danger">Deletar</a>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
+    <div class="modal fade" id="deletar_relatorio{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -187,18 +188,16 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">
-          <p>Certeza que deseja excluir um aluno do sistema?</p>
-          <p>se o aluno tiver cadastrado um chamado</p>
-          <p>ele excluirá o chamado do aluno também.</p>
+          <p class="align-middle d-inline">Certeza que deseja excluir um relatório do usuário {{this.nome_funcionario}}?</p>
         </div>
         <div class="modal-footer">
           <div style="margin-right: 100px;">
           <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <a href="/admin/aluno/exclusao/{{this.matricula}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
+          <a href="/admin/relatorio/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  {{/each}}
+{{/each}}
 </main>

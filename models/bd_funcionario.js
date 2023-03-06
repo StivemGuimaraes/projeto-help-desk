@@ -21,6 +21,25 @@ const insert_funcionario = async (funcionario) => {
   }
 };
 
+/*inclusão de relatorio do funcionario*/
+const insert_relatorio = async (relatorio) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "INSERT INTO relatorio(titulo,conteudo,fk_funcionario) VALUES (?,?,?)";
+    const values = [
+      relatorio.titulo,
+      relatorio.conteudo,
+      relatorio.fk_funcionario,
+    ];
+    await conn.execute(sql, values);
+    console.log("inclusão do relatorio do funcionario feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*seleção de todos os funcionarios*/
 const select_funcionarioAll = async () => {
   try {
@@ -32,6 +51,25 @@ const select_funcionarioAll = async () => {
     } else {
       console.log("selcionamento do funcionario realizado com sucesso");
       return funcionario;
+    }
+  } catch (error) {
+    console.log("deu error, por alguma causa", error);
+    return "Error";
+  }
+};
+
+/*seleção de todos os funcionarios*/
+const select_relatorioAll = async () => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT r.id, r.titulo, r.conteudo, f.usuario AS nome_funcionario FROM relatorio AS r JOIN funcionario AS f ON r.fk_funcionario = f.matricula;";
+    const [relatorio] = await conn.execute(sql);
+    if (relatorio == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento dos relatorios realizado com sucesso");
+      return relatorio;
     }
   } catch (error) {
     console.log("deu error, por alguma causa", error);
@@ -144,6 +182,25 @@ const select_funcionario1 = async (matricula) => {
   }
 };
 
+/*seleção de um relatorio*/
+const select_relatorio1 = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM relatorio WHERE id = ?;";
+    const value = [id];
+    const [relatorio] = await conn.execute(sql, value);
+    if (relatorio == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do relatorio realizado com sucesso");
+      return relatorio;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 const select_admin = async (matricula) => {
   try {
     const conn = await bd.con();
@@ -163,6 +220,19 @@ const select_admin = async (matricula) => {
   }
 };
 
+/*alteração de dados do relatorio do funcionario*/
+const update_relatorio = async (relatorio) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE relatorio SET titulo = ?, conteudo = ? WHERE id = ?;";
+    const values = [relatorio.titulo, relatorio.conteudo, relatorio.id];
+    await conn.execute(sql, values);
+    console.log("alteração do relatorio feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
 /*alteração do funcionario*/
 const update_funcionario = async (funcionario) => {
   try {
@@ -204,25 +274,6 @@ const update_funcionario_senha = async (funcionario) => {
   }
 };
 
-/*inclusão de relatorio do funcionario*/
-const insert_relatorio = async (relatorio) => {
-  try {
-    const conn = await bd.con();
-    const sql =
-      "INSERT INTO relatorio(titulo,conteudo,fk_funcionario) VALUES (?,?,?)";
-    const values = [
-      relatorio.titulo,
-      relatorio.conteudo,
-      relatorio.fk_funcionario,
-    ];
-    await conn.execute(sql, values);
-    console.log("inclusão do relatorio do funcionario feita com sucesso");
-  } catch (error) {
-    console.log("deu error por alguma causa", error);
-    return "error";
-  }
-};
-
 /*exclusão do funcionario*/
 const delete_funcionario = async (matricula) => {
   try {
@@ -236,17 +287,33 @@ const delete_funcionario = async (matricula) => {
   }
 };
 
+/*exclusão do relatorio*/
+const delete_relatorio = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql = "DELETE FROM relatorio WHERE id = ?;";
+    await conn.execute(sql, [id]);
+    console.log("exclução do relatorio feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
 module.exports = {
   insert_funcionario,
   select_funcionarioAll,
+  select_relatorioAll,
   select_funcionario,
   select_senha,
   select_celular,
   select_residencial,
   select_funcionario1,
+  select_relatorio1,
   select_admin,
   update_funcionario,
+  update_relatorio,
   update_funcionario_senha,
   insert_relatorio,
   delete_funcionario,
+  delete_relatorio,
 };

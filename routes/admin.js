@@ -17,6 +17,7 @@ var aluno1;
 var professor1;
 var funcionario1;
 var chamado1;
+var relatorio1;
 
 router.get("/", (req, res) => {
   /*if (req.user[0].eAdmin == 1) {
@@ -794,8 +795,19 @@ router.get("/chamado", (req, res) => {
   });
 });
 
-router.get("/relatorios", (req, res) => {
-  res.render("admin/relatorios");
+/*seleção de dados do relatorio do funcionario*/
+router.get("/relatorio", (req, res) => {
+  bd1.select_relatorioAll().then((relatorio) => {
+    if (relatorio === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("admin/relatorios", { error_mensagem });
+    } else if (relatorio === "vazio") {
+      var aviso_mensagem = "!!! Nenhum relatório cadastrado no sistema !!!";
+      res.render("admin/relatorios", { aviso_mensagem });
+    } else {
+      res.render("admin/relatorios", { relatorio });
+    }
+  });
 });
 
 /*seleção de dados do funcionario*/
@@ -841,6 +853,64 @@ router.get("/professor", (req, res) => {
       res.render("admin/professores", { professor });
     }
   });
+});
+
+/*alteração de dados do relatorio*/
+router.get("/relatorio/alteracao/:id", (req, res) => {
+  bd1.select_relatorio1(req.params.id).then((relatorio) => {
+    if (relatorio === "vazio") {
+      req.flash("error_msg", "relatorio não encontrado");
+      res.redirect("/admin/relatorio");
+    } else if (relatorio === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("admin/relatorio");
+    } else {
+      relatorio = relatorio[0];
+      relatorio1 = relatorio;
+      res.render("admin/edicao_relatorio", { relatorio });
+    }
+  });
+});
+
+router.post("/relatorio/alteracao/", (req, res) => {
+  var error;
+  if (
+    !req.body.titulo ||
+    typeof req.body.titulo === undefined ||
+    req.body.titulo === null
+  ) {
+    error = "Título invalido";
+    res.render("admin/edicao_relatorio", {
+      error,
+      relatorio: relatorio1,
+    });
+  } else if (
+    !req.body.conteudo ||
+    typeof req.body.conteudo === undefined ||
+    req.body.conteudo === null
+  ) {
+    error = "Relatório invalido";
+    res.render("admin/edicao_relatorio", {
+      error,
+      relatorio: relatorio1,
+    });
+  } else {
+    bd1
+      .update_relatorio({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo,
+        id: relatorio1.id,
+      })
+      .then((relatorio) => {
+        if (relatorio === "error") {
+          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+          res.redirect("/admin/relatorio");
+        } else {
+          req.flash("sucess_msg", "Alteração do relatório feita com sucesso");
+          res.redirect("/admin/relatorio");
+        }
+      });
+  }
 });
 
 /*alteração de dados do aluno*/
@@ -5843,6 +5913,19 @@ router.get("/professor/exclusao/:matricula", (req, res) => {
     } else {
       req.flash("sucess_msg", "Exclusão do professor feita com sucesso");
       res.redirect("/admin/professor");
+    }
+  });
+});
+
+/*exclusão do relatorio*/
+router.get("/relatorio/exclusao/:id", (req, res) => {
+  bd1.delete_relatorio(req.params.id).then((error) => {
+    if (error === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/admin/relatorio");
+    } else {
+      req.flash("sucess_msg", "Exclusão do relatório feita com sucesso");
+      res.redirect("/admin/relatorio");
     }
   });
 });

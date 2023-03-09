@@ -16,6 +16,7 @@ const alteracaoProfessorImagem = upload
 var aluno1;
 var professor1;
 var chamado1;
+var relatorio1;
 
 /*pagina inicial do funcionario*/
 router.get("/", (req, res) => {
@@ -593,6 +594,24 @@ router.get("/aluno", (req, res) => {
   });
 });
 
+/*seleção de dados do relatorio*/
+router.get("/relatorio", (req, res) => {
+  bd3.select_relatorio_funcionario(req.user).then((relatorio) => {
+    if (relatorio === "Error") {
+      var error_mensagem = "Error no sistema tente novamente mais tarde";
+      res.render("funcionario/relatorios", { error_mensagem });
+    } else if (relatorio === "matricula") {
+      error_mensagem = "Você não é funcionário, o que você tá fazendo aqui?";
+      res.render("funcionario/relatorios", { error_mensagem });
+    } else if (relatorio === "vazio") {
+      var aviso_mensagem = "!!! Nenhum relatório cadastrado no sistema !!!";
+      res.render("funcionario/relatorios", { aviso_mensagem });
+    } else {
+      res.render("funcionario/relatorios", { relatorio });
+    }
+  });
+});
+
 /*seleção de dados do chamado*/
 router.get("/chamado", (req, res) => {
   bd2.select_chamadoAll().then((chamado) => {
@@ -615,6 +634,64 @@ router.get("/chamado", (req, res) => {
       res.render("funcionario/chamado", { chamado });
     }
   });
+});
+
+/*alteração de dados do relatorio*/
+router.get("/relatorio/alteracao/:id", (req, res) => {
+  bd3.select_relatorio1(req.params.id).then((relatorio) => {
+    if (relatorio === "vazio") {
+      req.flash("error_msg", "relatorio não encontrado");
+      res.redirect("/funcionario/relatorio");
+    } else if (relatorio === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("funcionario/relatorio");
+    } else {
+      relatorio = relatorio[0];
+      relatorio1 = relatorio;
+      res.render("funcionario/edicao_relatorio", { relatorio });
+    }
+  });
+});
+
+router.post("/relatorio/alteracao/", (req, res) => {
+  var error;
+  if (
+    !req.body.titulo ||
+    typeof req.body.titulo === undefined ||
+    req.body.titulo === null
+  ) {
+    error = "Título invalido";
+    res.render("funcionario/edicao_relatorio", {
+      error,
+      relatorio: relatorio1,
+    });
+  } else if (
+    !req.body.conteudo ||
+    typeof req.body.conteudo === undefined ||
+    req.body.conteudo === null
+  ) {
+    error = "Relatório invalido";
+    res.render("funcionario/edicao_relatorio", {
+      error,
+      relatorio: relatorio1,
+    });
+  } else {
+    bd3
+      .update_relatorio({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo,
+        id: relatorio1.id,
+      })
+      .then((relatorio) => {
+        if (relatorio === "error") {
+          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+          res.redirect("/funcionario/relatorio");
+        } else {
+          req.flash("sucess_msg", "Alteração do relatório feita com sucesso");
+          res.redirect("/funcionario/relatorio");
+        }
+      });
+  }
 });
 
 /*alteração de dados do professor*/

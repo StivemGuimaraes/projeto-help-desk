@@ -58,7 +58,7 @@ const select_funcionarioAll = async () => {
   }
 };
 
-/*seleção de todos os funcionarios*/
+/*seleção de todos os relatorios*/
 const select_relatorioAll = async () => {
   try {
     const conn = await bd.con();
@@ -70,6 +70,32 @@ const select_relatorioAll = async () => {
     } else {
       console.log("selecionamento dos relatorios realizado com sucesso");
       return relatorio;
+    }
+  } catch (error) {
+    console.log("deu error, por alguma causa", error);
+    return "Error";
+  }
+};
+
+/*seleção dos relatorios de um funcionario*/
+const select_relatorio_funcionario = async (funcionario) => {
+  try {
+    if (funcionario[0].eAdmin == 0) {
+      var funcionario_matricula = [funcionario[0].matricula];
+      const conn = await bd.con();
+      const sql =
+        "SELECT r.id, r.titulo, r.conteudo FROM relatorio AS r JOIN funcionario AS f ON r.fk_funcionario = f.matricula WHERE f.matricula = ?;";
+      const [relatorio] = await conn.execute(sql, funcionario_matricula);
+      if (relatorio == "") {
+        return "vazio";
+      } else {
+        console.log(
+          "selecionamento do relatorio de um funcionario realizado com sucesso"
+        );
+        return relatorio;
+      }
+    } else {
+      return "matricula";
     }
   } catch (error) {
     console.log("deu error, por alguma causa", error);
@@ -303,6 +329,7 @@ module.exports = {
   insert_funcionario,
   select_funcionarioAll,
   select_relatorioAll,
+  select_relatorio_funcionario,
   select_funcionario,
   select_senha,
   select_celular,

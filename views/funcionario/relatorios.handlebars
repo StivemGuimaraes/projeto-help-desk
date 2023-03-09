@@ -1,5 +1,5 @@
 <head>
-  <title>Lista de funcionarios</title>
+  <title>Lista de relatórios</title>
 </head>
 <header
   class="shadow fixed-top"
@@ -15,7 +15,7 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
-        <a href="/admin" class="text-decoration-none text-white">
+        <a href="/funcionario" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
             src="/img/logo_tcc.png"
@@ -27,7 +27,10 @@
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
-        <a href="/admin" class="text-white text-decoration-none d-inline-block">
+        <a
+          href="/funcionario"
+          class="text-white text-decoration-none d-inline-block"
+        >
           <h1 class="text-start fs-2" title="academy help desk">Academy Help
             Desk</h1>
         </a>
@@ -64,22 +67,17 @@
     <div class="offcanvas-body">
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="/admin" class="btn btn-outline-dark" type="button">Inicio</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
           <a
-            href="/admin/funcionario"
+            href="/funcionario"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de funcionários</a>
+          >Inicio</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/chamado"
+            href="/funcionario/chamado"
             class="btn btn-outline-dark"
             type="button"
           >Lista de chamados</a>
@@ -87,14 +85,8 @@
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="/admin/relatorio" class="btn btn-outline-dark" type="button">Lista de
-            relatórios</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
           <a
-            href="/admin/professor"
+            href="/funcionario/professor"
             class="btn btn-outline-dark"
             type="button"
           >Lista de professores</a>
@@ -103,7 +95,7 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/aluno"
+            href="/funcionario/aluno"
             class="btn btn-outline-dark"
             type="button"
           >Lista de alunos</a>
@@ -112,7 +104,16 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-professor"
+            href="/funcionario/relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-professor"
             class="btn btn-outline-dark"
             type="button"
           >Cadastro de professores</a>
@@ -121,7 +122,7 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-aluno"
+            href="/funcionario/cadastrar-aluno"
             class="btn btn-outline-dark"
             type="button"
           >Cadastro de alunos</a>
@@ -130,10 +131,10 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-funcionario"
+            href="/funcionario/cadastrar-relatorio"
             class="btn btn-outline-dark"
             type="button"
-          >Cadastro de funcionários</a>
+          >Cadastro de relatórios</a>
         </div>
       </div>
       <div class="row mt-5">
@@ -144,8 +145,8 @@
     </div>
   </div>
 </header>
-<main style="margin-top: 100px;">
-  {{> _msg}}
+<main style="margin-top: 150px;">
+    {{> _msg}}
   {{#if error_mensagem}}
   <div class="container mt-5">
     <div class="row justify-content-center text-center">
@@ -160,43 +161,22 @@
     </div>
   </div>
 {{/if}}
-  {{#each funcionario}}
-  <div class="container w-50">
-  <div class="card mt-4 mb-4 shadow">
-  <h5 class="card-header">{{this.matricula}}</h5>
-  <div class="card-body">
-    <h5 class="card-title">{{this.usuario}}</h5>
-    <p class="card-text mb-1">Senha: {{this.senha}}</p>
-    {{#if telefone_residencial}}
-    <p class="card-text mb-1">Telefone celular: {{this.telefone_celular}}</p>
-    <p class="card-text">Telefone residencial: {{this.telefone_residencial}}</p>
-    {{else}}
-    <p class="card-text">Telefone celular: {{this.telefone_celular}}</p>
-    {{/if}}   
-    <a href="/admin/funcionario/alteracao/{{this.matricula}}" class="btn btn-warning">Alterar</a>
-    <a data-bs-toggle="modal" data-bs-target="#exampleModal{{this.matricula}}" class="btn btn-danger">Deletar</a>
-  </div>
-</div>
-</div>
-<!--Modal-->
-  <div class="modal fade" id="exampleModal{{this.matricula}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="margin-left: 200px;" id="exampleModalLabel">AVISO</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+{{#each relatorio}}
+    <div class="container w-50 mt-5 mb-5">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title m-0 p-2">{{this.titulo}}</h5></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body collapse" id="collapseExample{{this.id}}">              
+                    <label for="conteudo" class="form-label" style="font-size: 13pt;">Relatório:</label>
+                    <textarea class="form-control mb-3" id="conteudo" rows="200" style="height: 220px;" disabled readonly>{{this.conteudo}}</textarea>
+                    <a href="/funcionario/relatorio/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+            </div>
         </div>
-        <div class="modal-body text-center">
-          <p>Certeza que deseja excluir um funcionário do sistema?</p>
-        </div>
-        <div class="modal-footer">
-          <div style="margin-right: 150px;">
-          <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <a href="/admin/funcionario/exclusao/{{this.matricula}}"><button type="button" class="btn btn-danger">Deletar</button></a>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-  {{/each}}
+{{/each}}
 </main>

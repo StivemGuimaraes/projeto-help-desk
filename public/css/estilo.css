@@ -90,6 +90,14 @@ input[type="number"] {
   background-size: cover;
   transition: 1s;
 }
+.relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/documents.png");
+  background-size: cover;
+  transition: 1s;
+}
 .card-hover:hover > .funcionarios-img {
   width: 64px;
   height: 64px;
@@ -115,6 +123,13 @@ input[type="number"] {
   width: 63.19px;
   height: 63.19px;
   background-image: url("../img/livro.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/documento.gif");
   background-size: cover;
   transition: 1s;
 }

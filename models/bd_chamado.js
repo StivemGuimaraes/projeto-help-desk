@@ -83,7 +83,6 @@ const select_usuario_imagem = async (id) => {
 const select_chamadoProfessor = async (professor) => {
   try {
     if (professor[0].eAdmin == 2) {
-      console.log(professor[0].matricula);
       var professor_matricula = [professor[0].matricula];
       const conn = await bd.con();
       const sql =

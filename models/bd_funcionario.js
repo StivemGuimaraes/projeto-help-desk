@@ -5,10 +5,11 @@ const insert_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO funcionario(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?)";
+      "INSERT INTO funcionario(matricula,usuario,email,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?,?)";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.email,
       funcionario.celular,
       funcionario.residencial,
       funcionario.senha,
@@ -117,6 +118,27 @@ const select_funcionario = async (funcionario) => {
         "selecionamento da matricula do funcionario realizado com sucesso"
       );
       return "Matrícula do funcionário já cadastrada no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção da email do funcionario*/
+const select_email = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT email FROM funcionario WHERE email = ?;";
+    const value = [funcionario];
+    const [email] = await conn.execute(sql, value);
+    if (email == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do email do funcionario realizado com sucesso"
+      );
+      return "Email do funcionário já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -331,6 +353,7 @@ module.exports = {
   select_relatorioAll,
   select_relatorio_funcionario,
   select_funcionario,
+  select_email,
   select_senha,
   select_celular,
   select_residencial,

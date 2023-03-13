@@ -7,6 +7,7 @@ usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15) not null,
 telefone_residencial varchar(14),
+email varchar(100) not null,
 eAdmin int not null default 2
 );
 create table aluno
@@ -16,6 +17,7 @@ usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15),
 telefone_residencial varchar(14),
+email varchar(100) not null,
 eAdmin int not null default 3
 );
 create table funcionario
@@ -25,6 +27,7 @@ usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15),
 telefone_residencial varchar(14),
+email varchar(100) not null,
 eAdmin int not null default 0
 );
 create table relatorio (
@@ -72,4 +75,4 @@ add foreign key(id_chamado) references chamado(id),
 add foreign key(matricula_A) references aluno(matricula),
 add foreign key(matricula_F) references professor(matricula);
 
-insert into funcionario (matricula, usuario, senha, telefone_celular, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", 1);
+insert into funcionario (matricula, usuario, senha, telefone_celular, email, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", "lucas@gmail.com", 1);

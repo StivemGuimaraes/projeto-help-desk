@@ -229,6 +229,32 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite seu email</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="email"
+                      name="email"
+                      maxlength="100"
+                      value="{{aluno.email}}"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu email</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu email
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
                     for="floatingInput1"
                     style="font-weight: bold"
                   >Digite seu telefone celular</label>

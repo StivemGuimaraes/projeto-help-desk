@@ -286,10 +286,11 @@ const update_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE funcionario SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE funcionario SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.email,
       funcionario.celular,
       funcionario.residencial,
       funcionario.senha,

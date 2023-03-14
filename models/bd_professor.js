@@ -172,10 +172,11 @@ const delete_update_professor = async (professor) => {
     await conn.execute(sql, values);
     console.log("deletação do chamado do professor feita com sucesso");
     const sql1 =
-      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE professor SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values1 = [
       professor.matricula,
       professor.usuario,
+      professor.email,
       professor.celular,
       professor.residencial,
       professor.senha,
@@ -194,10 +195,11 @@ const update_professor = async (professor) => {
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE professor SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values = [
       professor.matricula,
       professor.usuario,
+      professor.email,
       professor.celular,
       professor.residencial,
       professor.senha,

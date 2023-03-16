@@ -2,7 +2,7 @@ create database academy_desk;
 use academy_desk;
 create table professor
 (
-matricula int not null primary key,
+matricula varchar(150) not null primary key,
 usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15) not null,
@@ -12,7 +12,7 @@ eAdmin int not null default 2
 );
 create table aluno
 (
-matricula int not null primary key,
+matricula varchar(150) not null primary key,
 usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15),
@@ -22,7 +22,7 @@ eAdmin int not null default 3
 );
 create table funcionario
 (
-matricula int not null primary key,
+matricula varchar(150) not null primary key,
 usuario varchar(90) not null,
 senha varchar(40) not null,
 telefone_celular varchar(15),

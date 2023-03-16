@@ -166,11 +166,12 @@
 
                   <div class="form-floating mb-4">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       id="matricula"
                       placeholder="user"
                       name="matricula"
+                      maxlength="150"
                       value="{{dados.matricula}}"
                       required
                     />
@@ -197,6 +198,7 @@
                       id="floatingInput"
                       placeholder="user"
                       name="usuario"
+                      maxlength="90"
                       value="{{dados.usuario}}"
                       required
                     />
@@ -204,6 +206,32 @@
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">
                       Por favor, digite seu usuário
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite seu email</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="email"
+                      name="email"
+                      maxlength="100"
+                      value="{{dados.email}}"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu email</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu email
                     </div>
                   </div>
                 </div>

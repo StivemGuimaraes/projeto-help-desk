@@ -24,8 +24,8 @@ router.get("/", (req, res) => {
     var admin_matricula = req.user[0].matricula;
   } else {
     var admin_matricula = null;
-  }
-  var admin_matricula = null;*/
+  }*/
+  var admin_matricula = null;
 
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
@@ -5035,7 +5035,7 @@ router.get("/professor/alteracao/:matricula", (req, res) => {
     } else {
       professor = professor[0];
       professor1 = professor;
-      res.render("admin/edicao_funcionario", { professor });
+      res.render("admin/edicao_professor", { professor });
     }
   });
 });

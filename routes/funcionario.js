@@ -930,19 +930,17 @@ router.post("/professor/alteracao/", (req, res) => {
     });
   } else if (
     req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
     req.body.celular != professor1.telefone_celular &&
     req.body.residencial != professor1.telefone_residencial &&
     req.body.senha != ""
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -950,7 +948,290 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_celular(req.body.celular).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1
+                                  .select_celular(req.body.celular)
+                                  .then((msg) => {
+                                    if (msg) {
+                                      error = msg;
+                                      res.render("funcionario/edicao_professor", {
+                                        error,
+                                        professor: professor1,
+                                      });
+                                    } else {
+                                      bd3.select_celular(req.body.celular)
+                                        .then((msg) => {
+                                          if (msg) {
+                                            error = msg;
+                                            res.render(
+                                              "funcionario/edicao_professor",
+                                              {
+                                                error,
+                                                professor: professor1,
+                                              }
+                                            );
+                                          } else {
+                                            bd.select_residencial(
+                                              req.body.residencial
+                                            ).then((msg) => {
+                                              if (msg) {
+                                                error = msg;
+                                                res.render(
+                                                  "funcionario/edicao_professor",
+                                                  {
+                                                    error,
+                                                    professor: professor1,
+                                                  }
+                                                );
+                                              } else {
+                                                bd1
+                                                  .select_residencial(
+                                                    req.body.residencial
+                                                  )
+                                                  .then((msg) => {
+                                                    if (msg) {
+                                                      error = msg;
+                                                      res.render(
+                                                        "funcionario/edicao_professor",
+                                                        {
+                                                          error,
+                                                          professor: professor1,
+                                                        }
+                                                      );
+                                                    } else {
+                                                      bd3.select_residencial(
+                                                          req.body.residencial
+                                                        )
+                                                        .then((msg) => {
+                                                          if (msg) {
+                                                            error = msg;
+                                                            res.render(
+                                                              "funcionario/edicao_professor",
+                                                              {
+                                                                error,
+                                                                professor:
+                                                                  professor1,
+                                                              }
+                                                            );
+                                                          } else if (
+                                                            req.body.senha
+                                                              .length <= 7 ||
+                                                            req.body.senha2
+                                                              .length <= 7
+                                                          ) {
+                                                            error =
+                                                              "A senha deve ter no mínimo 8 caracteres";
+                                                            res.render(
+                                                              "funcionario/edicao_professor",
+                                                              {
+                                                                error,
+                                                                professor:
+                                                                  professor1,
+                                                              }
+                                                            );
+                                                          } else {
+                                                            bd.select_senha(
+                                                              req.body.senha
+                                                            ).then((msg) => {
+                                                              if (msg) {
+                                                                error = msg;
+                                                                res.render(
+                                                                  "funcionario/edicao_professor",
+                                                                  {
+                                                                    error,
+                                                                    professor:
+                                                                      professor1,
+                                                                  }
+                                                                );
+                                                              } else {
+                                                                bd1
+                                                                  .select_senha(
+                                                                    req.body
+                                                                      .senha
+                                                                  )
+                                                                  .then(
+                                                                    (msg) => {
+                                                                      if (msg) {
+                                                                        error =
+                                                                          msg;
+                                                                        res.render(
+                                                                          "funcionario/edicao_professor",
+                                                                          {
+                                                                            error,
+                                                                            professor:
+                                                                              professor1,
+                                                                          }
+                                                                        );
+                                                                      } else {
+                                                                        bd3.select_senha(
+                                                                            req
+                                                                              .body
+                                                                              .senha
+                                                                          )
+                                                                          .then(
+                                                                            (
+                                                                              msg
+                                                                            ) => {
+                                                                              if (
+                                                                                msg
+                                                                              ) {
+                                                                                error =
+                                                                                  msg;
+                                                                                res.render(
+                                                                                  "funcionario/edicao_professor",
+                                                                                  {
+                                                                                    error,
+                                                                                    professor:
+                                                                                      professor1,
+                                                                                  }
+                                                                                );
+                                                                              } else {
+                                                                                bd1.delete_update_professor(
+                                                                                  {
+                                                                                    matricula:
+                                                                                      req
+                                                                                        .body
+                                                                                        .matricula,
+                                                                                    usuario:
+                                                                                      req
+                                                                                        .body
+                                                                                        .usuario,
+                                                                                    email:
+                                                                                      req
+                                                                                        .body
+                                                                                        .email,
+                                                                                    celular:
+                                                                                      req
+                                                                                        .body
+                                                                                        .celular,
+                                                                                    residencial:
+                                                                                      req
+                                                                                        .body
+                                                                                        .residencial,
+                                                                                    senha:
+                                                                                      req
+                                                                                        .body
+                                                                                        .senha,
+                                                                                    matricula1:
+                                                                                      professor1.matricula,
+                                                                                  }
+                                                                                ).then(
+                                                                                  (
+                                                                                    professor
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      professor ===
+                                                                                      "error"
+                                                                                    ) {
+                                                                                      req.flash(
+                                                                                        "error_msg",
+                                                                                        "Error no sistema tente novamente mais tarde"
+                                                                                      );
+                                                                                      res.redirect(
+                                                                                        "/funcionario/professor"
+                                                                                      );
+                                                                                    } else {
+                                                                                      req.flash(
+                                                                                        "sucess_msg",
+                                                                                        "Alteração do professor feita com sucesso"
+                                                                                      );
+                                                                                      res.redirect(
+                                                                                        "/funcionario/professor"
+                                                                                      );
+                                                                                    }
+                                                                                  }
+                                                                                );
+                                                                              }
+                                                                            }
+                                                                          );
+                                                                      }
+                                                                    }
+                                                                  );
+                                                              }
+                                                            });
+                                                          }
+                                                        });
+                                                    }
+                                                  });
+                                              }
+                                            });
+                                          }
+                                        });
+                                    }
+                                  });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.residencial != professor1.telefone_residencial &&
+    req.body.senha != ""
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -996,13 +1277,624 @@ router.post("/professor/alteracao/", (req, res) => {
                                     .then((msg) => {
                                       if (msg) {
                                         error = msg;
-                                        res.render(
-                                          "funcionario/edicao_professor",
-                                          {
-                                            error,
-                                            professor: professor1,
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd3.select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else if (
+                                              req.body.senha.length <= 7 ||
+                                              req.body.senha2.length <= 7
+                                            ) {
+                                              error =
+                                                "A senha deve ter no mínimo 8 caracteres";
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "funcionario/edicao_professor",
+                                                    {
+                                                      error,
+                                                      professor: professor1,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "funcionario/edicao_professor",
+                                                          {
+                                                            error,
+                                                            professor:
+                                                              professor1,
+                                                          }
+                                                        );
+                                                      } else {
+                                                        bd3.select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "funcionario/edicao_professor",
+                                                                {
+                                                                  error,
+                                                                  professor:
+                                                                    professor1,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd1.delete_update_professor(
+                                                                {
+                                                                  matricula:
+                                                                    req.body
+                                                                      .matricula,
+                                                                  usuario:
+                                                                    req.body
+                                                                      .usuario,
+                                                                  email:
+                                                                    req.body
+                                                                      .email,
+                                                                  celular:
+                                                                    req.body
+                                                                      .celular,
+                                                                  residencial:
+                                                                    req.body
+                                                                      .residencial,
+                                                                  senha:
+                                                                    req.body
+                                                                      .senha,
+                                                                  matricula1:
+                                                                    professor1.matricula,
+                                                                }
+                                                              ).then(
+                                                                (professor) => {
+                                                                  if (
+                                                                    professor ===
+                                                                    "error"
+                                                                  ) {
+                                                                    req.flash(
+                                                                      "error_msg",
+                                                                      "Error no sistema tente novamente mais tarde"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
+                                                                  } else {
+                                                                    req.flash(
+                                                                      "sucess_msg",
+                                                                      "Alteração do professor feita com sucesso"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
+                                                                  }
+                                                                }
+                                                              );
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.residencial != professor1.telefone_residencial
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_celular(req.body.celular).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1
+                                  .select_celular(req.body.celular)
+                                  .then((msg) => {
+                                    if (msg) {
+                                      error = msg;
+                                      res.render("funcionario/edicao_professor", {
+                                        error,
+                                        professor: professor1,
+                                      });
+                                    } else {
+                                      bd3.select_celular(req.body.celular)
+                                        .then((msg) => {
+                                          if (msg) {
+                                            error = msg;
+                                            res.render(
+                                              "funcionario/edicao_professor",
+                                              {
+                                                error,
+                                                professor: professor1,
+                                              }
+                                            );
+                                          } else {
+                                            bd.select_residencial(
+                                              req.body.residencial
+                                            ).then((msg) => {
+                                              if (msg) {
+                                                error = msg;
+                                                res.render(
+                                                  "funcionario/edicao_professor",
+                                                  {
+                                                    error,
+                                                    professor: professor1,
+                                                  }
+                                                );
+                                              } else {
+                                                bd1
+                                                  .select_residencial(
+                                                    req.body.residencial
+                                                  )
+                                                  .then((msg) => {
+                                                    if (msg) {
+                                                      error = msg;
+                                                      res.render(
+                                                        "funcionario/edicao_professor",
+                                                        {
+                                                          error,
+                                                          professor: professor1,
+                                                        }
+                                                      );
+                                                    } else {
+                                                      bd3.select_residencial(
+                                                          req.body.residencial
+                                                        )
+                                                        .then((msg) => {
+                                                          if (msg) {
+                                                            error = msg;
+                                                            res.render(
+                                                              "funcionario/edicao_professor",
+                                                              {
+                                                                error,
+                                                                professor:
+                                                                  professor1,
+                                                              }
+                                                            );
+                                                          } else {
+                                                            bd1.delete_update_professor(
+                                                              {
+                                                                matricula:
+                                                                  req.body
+                                                                    .matricula,
+                                                                usuario:
+                                                                  req.body
+                                                                    .usuario,
+                                                                email:
+                                                                  req.body
+                                                                    .email,
+                                                                celular:
+                                                                  req.body
+                                                                    .celular,
+                                                                residencial:
+                                                                  req.body
+                                                                    .residencial,
+                                                                senha:
+                                                                  professor1.senha,
+                                                                matricula1:
+                                                                  professor1.matricula,
+                                                              }
+                                                            ).then(
+                                                              (professor) => {
+                                                                if (
+                                                                  professor ===
+                                                                  "error"
+                                                                ) {
+                                                                  req.flash(
+                                                                    "error_msg",
+                                                                    "Error no sistema tente novamente mais tarde"
+                                                                  );
+                                                                  res.redirect(
+                                                                    "/funcionario/professor"
+                                                                  );
+                                                                } else {
+                                                                  req.flash(
+                                                                    "sucess_msg",
+                                                                    "Alteração do professor feita com sucesso"
+                                                                  );
+                                                                  res.redirect(
+                                                                    "/funcionario/professor"
+                                                                  );
+                                                                }
+                                                              }
+                                                            );
+                                                          }
+                                                        });
+                                                    }
+                                                  });
+                                              }
+                                            });
                                           }
-                                        );
+                                        });
+                                    }
+                                  });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.senha != ""
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_celular(req.body.celular).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1
+                                  .select_celular(req.body.celular)
+                                  .then((msg) => {
+                                    if (msg) {
+                                      error = msg;
+                                      res.render("funcionario/edicao_professor", {
+                                        error,
+                                        professor: professor1,
+                                      });
+                                    } else {
+                                      bd3.select_celular(req.body.celular)
+                                        .then((msg) => {
+                                          if (msg) {
+                                            error = msg;
+                                            res.render(
+                                              "funcionario/edicao_professor",
+                                              {
+                                                error,
+                                                professor: professor1,
+                                              }
+                                            );
+                                          } else if (
+                                            req.body.senha.length <= 7 ||
+                                            req.body.senha2.length <= 7
+                                          ) {
+                                            error =
+                                              "A senha deve ter no mínimo 8 caracteres";
+                                            res.render(
+                                              "funcionario/edicao_professor",
+                                              {
+                                                error,
+                                                professor: professor1,
+                                              }
+                                            );
+                                          } else {
+                                            bd.select_senha(
+                                              req.body.senha
+                                            ).then((msg) => {
+                                              if (msg) {
+                                                error = msg;
+                                                res.render(
+                                                  "funcionario/edicao_professor",
+                                                  {
+                                                    error,
+                                                    professor: professor1,
+                                                  }
+                                                );
+                                              } else {
+                                                bd1
+                                                  .select_senha(req.body.senha)
+                                                  .then((msg) => {
+                                                    if (msg) {
+                                                      error = msg;
+                                                      res.render(
+                                                        "funcionario/edicao_professor",
+                                                        {
+                                                          error,
+                                                          professor: professor1,
+                                                        }
+                                                      );
+                                                    } else {
+                                                      bd3
+                                                        .select_senha(
+                                                          req.body.senha
+                                                        )
+                                                        .then((msg) => {
+                                                          if (msg) {
+                                                            error = msg;
+                                                            res.render(
+                                                              "funcionario/edicao_professor",
+                                                              {
+                                                                error,
+                                                                professor:
+                                                                  professor1,
+                                                              }
+                                                            );
+                                                          } else {
+                                                            bd1.delete_update_professor(
+                                                              {
+                                                                matricula:
+                                                                  req.body
+                                                                    .matricula,
+                                                                usuario:
+                                                                  req.body
+                                                                    .usuario,
+                                                                email:
+                                                                  req.body
+                                                                    .email,
+                                                                celular:
+                                                                  req.body
+                                                                    .celular,
+                                                                residencial:
+                                                                  req.body
+                                                                    .residencial,
+                                                                senha:
+                                                                  req.body
+                                                                    .senha,
+                                                                matricula1:
+                                                                  professor1.matricula,
+                                                              }
+                                                            ).then(
+                                                              (professor) => {
+                                                                if (
+                                                                  professor ===
+                                                                  "error"
+                                                                ) {
+                                                                  req.flash(
+                                                                    "error_msg",
+                                                                    "Error no sistema tente novamente mais tarde"
+                                                                  );
+                                                                  res.redirect(
+                                                                    "/funcionario/professor"
+                                                                  );
+                                                                } else {
+                                                                  req.flash(
+                                                                    "sucess_msg",
+                                                                    "Alteração do professor feita com sucesso"
+                                                                  );
+                                                                  res.redirect(
+                                                                    "/funcionario/professor"
+                                                                  );
+                                                                }
+                                                              }
+                                                            );
+                                                          }
+                                                        });
+                                                    }
+                                                  });
+                                              }
+                                            });
+                                          }
+                                        });
+                                    }
+                                  });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
+    req.body.residencial != professor1.telefone_residencial &&
+    req.body.senha != ""
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("funcionario/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
                                       } else {
                                         bd3
                                           .select_residencial(
@@ -1077,54 +1969,53 @@ router.post("/professor/alteracao/", (req, res) => {
                                                                 }
                                                               );
                                                             } else {
-                                                              bd1
-                                                                .delete_update_professor(
-                                                                  {
-                                                                    matricula:
-                                                                      req.body
-                                                                        .matricula,
-                                                                    usuario:
-                                                                      req.body
-                                                                        .usuario,
-                                                                    celular:
-                                                                      req.body
-                                                                        .celular,
-                                                                    residencial:
-                                                                      req.body
-                                                                        .residencial,
-                                                                    senha:
-                                                                      req.body
-                                                                        .senha,
-                                                                    matricula1:
-                                                                      professor1.matricula,
+                                                              bd1.delete_update_professor(
+                                                                {
+                                                                  matricula:
+                                                                    req.body
+                                                                      .matricula,
+                                                                  usuario:
+                                                                    req.body
+                                                                      .usuario,
+                                                                  email:
+                                                                    req.body
+                                                                      .email,
+                                                                  celular:
+                                                                    req.body
+                                                                      .celular,
+                                                                  residencial:
+                                                                    req.body
+                                                                      .residencial,
+                                                                  senha:
+                                                                    req.body
+                                                                      .senha,
+                                                                  matricula1:
+                                                                    professor1.matricula,
+                                                                }
+                                                              ).then(
+                                                                (professor) => {
+                                                                  if (
+                                                                    professor ===
+                                                                    "error"
+                                                                  ) {
+                                                                    req.flash(
+                                                                      "error_msg",
+                                                                      "Error no sistema tente novamente mais tarde"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
+                                                                  } else {
+                                                                    req.flash(
+                                                                      "sucess_msg",
+                                                                      "Alteração do professor feita com sucesso"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
                                                                   }
-                                                                )
-                                                                .then(
-                                                                  (
-                                                                    professor
-                                                                  ) => {
-                                                                    if (
-                                                                      professor ===
-                                                                      "error"
-                                                                    ) {
-                                                                      req.flash(
-                                                                        "error_msg",
-                                                                        "Error no sistema tente novamente mais tarde"
-                                                                      );
-                                                                      res.redirect(
-                                                                        "/funcionario/professor"
-                                                                      );
-                                                                    } else {
-                                                                      req.flash(
-                                                                        "sucess_msg",
-                                                                        "Alteração do professor feita com sucesso"
-                                                                      );
-                                                                      res.redirect(
-                                                                        "/funcionario/professor"
-                                                                      );
-                                                                    }
-                                                                  }
-                                                                );
+                                                                }
+                                                              );
                                                             }
                                                           });
                                                       }
@@ -1155,15 +2046,12 @@ router.post("/professor/alteracao/", (req, res) => {
     req.body.celular != professor1.telefone_celular &&
     req.body.residencial != professor1.telefone_residencial
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1171,7 +2059,7 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1217,13 +2105,10 @@ router.post("/professor/alteracao/", (req, res) => {
                                     .then((msg) => {
                                       if (msg) {
                                         error = msg;
-                                        res.render(
-                                          "funcionario/edicao_professor",
-                                          {
-                                            error,
-                                            professor: professor1,
-                                          }
-                                        );
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
                                       } else {
                                         bd3
                                           .select_residencial(
@@ -1240,36 +2125,167 @@ router.post("/professor/alteracao/", (req, res) => {
                                                 }
                                               );
                                             } else {
-                                              bd1
-                                                .delete_update_professor({
-                                                  matricula: req.body.matricula,
-                                                  usuario: req.body.usuario,
-                                                  celular: req.body.celular,
-                                                  residencial:
-                                                    req.body.residencial,
-                                                  senha: professor1.senha,
-                                                  matricula1:
-                                                    professor1.matricula,
-                                                })
-                                                .then((professor) => {
-                                                  if (professor === "error") {
-                                                    req.flash(
-                                                      "error_msg",
-                                                      "Error no sistema tente novamente mais tarde"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  } else {
-                                                    req.flash(
-                                                      "sucess_msg",
-                                                      "Alteração do professor feita com sucesso"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  }
-                                                });
+                                              bd1.delete_update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: professor1.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
+    req.body.residencial != professor1.telefone_residencial
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("funcionario/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd3
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1.delete_update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: professor1.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
                                             }
                                           });
                                       }
@@ -1292,17 +2308,14 @@ router.post("/professor/alteracao/", (req, res) => {
   } else if (
     req.body.matricula != professor1.matricula &&
     req.body.celular != professor1.telefone_celular &&
-    req.body.senha != ""
+    req.body.email != professor1.telefone_email
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1310,7 +2323,250 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_email(req.body.email).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1.select_email(req.body.email).then((msg) => {
+                                  if (msg) {
+                                    error = msg;
+                                    res.render("funcionario/edicao_professor", {
+                                      error,
+                                      professor: professor1,
+                                    });
+                                  } else {
+                                    bd3
+                                      .select_email(req.body.email)
+                                      .then((msg) => {
+                                        if (msg) {
+                                          error = msg;
+                                          res.render("funcionario/edicao_professor", {
+                                            error,
+                                            professor: professor1,
+                                          });
+                                        } else {
+                                          bd1.delete_update_professor({
+                                            matricula: req.body.matricula,
+                                            usuario: req.body.usuario,
+                                            email: req.body.email,
+                                            celular: req.body.celular,
+                                            residencial: req.body.residencial,
+                                            senha: professor1.senha,
+                                            matricula1: professor1.matricula,
+                                          }).then((professor) => {
+                                            if (professor === "error") {
+                                              req.flash(
+                                                "error_msg",
+                                                "Error no sistema tente novamente mais tarde"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            } else {
+                                              req.flash(
+                                                "sucess_msg",
+                                                "Alteração do professor feita com sucesso"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            }
+                                          });
+                                        }
+                                      });
+                                  }
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.email != professor1.email &&
+    req.body.senha != ""
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else if (
+                            req.body.senha.length <= 7 ||
+                            req.body.senha2.length <= 7
+                          ) {
+                            error = "A senha deve ter no mínimo 8 caracteres";
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_senha(req.body.senha).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1.select_senha(req.body.senha).then((msg) => {
+                                  if (msg) {
+                                    error = msg;
+                                    res.render("funcionario/edicao_professor", {
+                                      error,
+                                      professor: professor1,
+                                    });
+                                  } else {
+                                    bd3
+                                      .select_senha(req.body.senha)
+                                      .then((msg) => {
+                                        if (msg) {
+                                          error = msg;
+                                          res.render("funcionario/edicao_professor", {
+                                            error,
+                                            professor: professor1,
+                                          });
+                                        } else {
+                                          bd1.delete_update_professor({
+                                            matricula: req.body.matricula,
+                                            usuario: req.body.usuario,
+                                            email: req.body.email,
+                                            celular: req.body.celular,
+                                            residencial: req.body.residencial,
+                                            senha: req.body.senha,
+                                            matricula1: professor1.matricula,
+                                          }).then((professor) => {
+                                            if (professor === "error") {
+                                              req.flash(
+                                                "error_msg",
+                                                "Error no sistema tente novamente mais tarde"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            } else {
+                                              req.flash(
+                                                "sucess_msg",
+                                                "Alteração do professor feita com sucesso"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            }
+                                          });
+                                        }
+                                      });
+                                  }
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.senha != ""
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1372,42 +2628,34 @@ router.post("/professor/alteracao/", (req, res) => {
                                       .then((msg) => {
                                         if (msg) {
                                           error = msg;
-                                          res.render(
-                                            "funcionario/edicao_professor",
-                                            {
-                                              error,
-                                              professor: professor1,
-                                            }
-                                          );
+                                          res.render("funcionario/edicao_professor", {
+                                            error,
+                                            professor: professor1,
+                                          });
                                         } else {
-                                          bd1
-                                            .delete_update_professor({
-                                              matricula: req.body.matricula,
-                                              usuario: req.body.usuario,
-                                              celular: req.body.celular,
-                                              residencial: req.body.residencial,
-                                              senha: req.body.senha,
-                                              matricula1: professor1.matricula,
-                                            })
-                                            .then((professor) => {
-                                              if (professor === "error") {
-                                                req.flash(
-                                                  "error_msg",
-                                                  "Error no sistema tente novamente mais tarde"
-                                                );
-                                                res.redirect(
-                                                  "/funcionario/professor"
-                                                );
-                                              } else {
-                                                req.flash(
-                                                  "sucess_msg",
-                                                  "Alteração do professor feita com sucesso"
-                                                );
-                                                res.redirect(
-                                                  "/funcionario/professor"
-                                                );
-                                              }
-                                            });
+                                          bd1.delete_update_professor({
+                                            matricula: req.body.matricula,
+                                            usuario: req.body.usuario,
+                                            email: req.body.email,
+                                            celular: req.body.celular,
+                                            residencial: req.body.residencial,
+                                            senha: req.body.senha,
+                                            matricula1: professor1.matricula,
+                                          }).then((professor) => {
+                                            if (professor === "error") {
+                                              req.flash(
+                                                "error_msg",
+                                                "Error no sistema tente novamente mais tarde"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            } else {
+                                              req.flash(
+                                                "sucess_msg",
+                                                "Alteração do professor feita com sucesso"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            }
+                                          });
                                         }
                                       });
                                   }
@@ -1431,15 +2679,12 @@ router.post("/professor/alteracao/", (req, res) => {
     req.body.residencial != professor1.telefone_residencial &&
     req.body.senha != ""
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1447,7 +2692,7 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1503,13 +2748,10 @@ router.post("/professor/alteracao/", (req, res) => {
                                     .then((msg) => {
                                       if (msg) {
                                         error = msg;
-                                        res.render(
-                                          "funcionario/edicao_professor",
-                                          {
-                                            error,
-                                            professor: professor1,
-                                          }
-                                        );
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
                                       } else {
                                         bd3
                                           .select_senha(req.body.senha)
@@ -1524,36 +2766,35 @@ router.post("/professor/alteracao/", (req, res) => {
                                                 }
                                               );
                                             } else {
-                                              bd1
-                                                .delete_update_professor({
-                                                  matricula: req.body.matricula,
-                                                  usuario: req.body.usuario,
-                                                  celular: req.body.celular,
-                                                  residencial:
-                                                    req.body.residencial,
-                                                  senha: req.body.senha,
-                                                  matricula1:
-                                                    professor1.matricula,
-                                                })
-                                                .then((professor) => {
-                                                  if (professor === "error") {
-                                                    req.flash(
-                                                      "error_msg",
-                                                      "Error no sistema tente novamente mais tarde"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  } else {
-                                                    req.flash(
-                                                      "sucess_msg",
-                                                      "Alteração do professor feita com sucesso"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  }
-                                                });
+                                              bd1.delete_update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: req.body.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
                                             }
                                           });
                                       }
@@ -1574,17 +2815,14 @@ router.post("/professor/alteracao/", (req, res) => {
     });
   } else if (
     req.body.matricula != professor1.matricula &&
-    req.body.celular != professor1.telefone_celular
+    req.body.email != professor1.email
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1592,7 +2830,91 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd1.delete_update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: professor1.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.matricula != professor1.matricula &&
+    req.body.celular != professor1.telefone_celular
+  ) {
+    bd.select_aluno(req.body.matricula).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_professor(req.body.matricula).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1624,30 +2946,29 @@ router.post("/professor/alteracao/", (req, res) => {
                               professor: professor1,
                             });
                           } else {
-                            bd1
-                              .delete_update_professor({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: professor1.senha,
-                                matricula1: professor1.matricula,
-                              })
-                              .then((professor) => {
-                                if (professor === "error") {
-                                  req.flash(
-                                    "error_msg",
-                                    "Error no sistema tente novamente mais tarde"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                } else {
-                                  req.flash(
-                                    "sucess_msg",
-                                    "Alteração do professor feita com sucesso"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                }
-                              });
+                            bd1.delete_update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: professor1.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
                           }
                         });
                       }
@@ -1664,15 +2985,12 @@ router.post("/professor/alteracao/", (req, res) => {
     req.body.matricula != professor1.matricula &&
     req.body.residencial != professor1.telefone_residencial
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1680,7 +2998,7 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1714,30 +3032,29 @@ router.post("/professor/alteracao/", (req, res) => {
                                 professor: professor1,
                               });
                             } else {
-                              bd1
-                                .delete_update_professor({
-                                  matricula: req.body.matricula,
-                                  usuario: req.body.usuario,
-                                  celular: req.body.celular,
-                                  residencial: req.body.residencial,
-                                  senha: professor1.senha,
-                                  matricula1: professor1.matricula,
-                                })
-                                .then((professor) => {
-                                  if (professor === "error") {
-                                    req.flash(
-                                      "error_msg",
-                                      "Error no sistema tente novamente mais tarde"
-                                    );
-                                    res.redirect("/funcionario/professor");
-                                  } else {
-                                    req.flash(
-                                      "sucess_msg",
-                                      "Alteração do professor feita com sucesso"
-                                    );
-                                    res.redirect("/funcionario/professor");
-                                  }
-                                });
+                              bd1.delete_update_professor({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                email: req.body.email,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: professor1.senha,
+                                matricula1: professor1.matricula,
+                              }).then((professor) => {
+                                if (professor === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do professor feita com sucesso"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                }
+                              });
                             }
                           });
                       }
@@ -1754,15 +3071,12 @@ router.post("/professor/alteracao/", (req, res) => {
     req.body.matricula != professor1.matricula &&
     req.body.senha != ""
   ) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1770,7 +3084,7 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1811,30 +3125,29 @@ router.post("/professor/alteracao/", (req, res) => {
                               professor: professor1,
                             });
                           } else {
-                            bd1
-                              .delete_update_professor({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: req.body.senha,
-                                matricula1: professor1.matricula,
-                              })
-                              .then((professor) => {
-                                if (professor === "error") {
-                                  req.flash(
-                                    "error_msg",
-                                    "Error no sistema tente novamente mais tarde"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                } else {
-                                  req.flash(
-                                    "sucess_msg",
-                                    "Alteração do professor feita com sucesso"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                }
-                              });
+                            bd1.delete_update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: req.body.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
                           }
                         });
                       }
@@ -1848,15 +3161,12 @@ router.post("/professor/alteracao/", (req, res) => {
       }
     });
   } else if (req.body.matricula != professor1.matricula) {
-    bd1.select_professor(req.body.matricula).then((msg) => {
+    bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
-        bd3.select_funcionario(req.body.matricula).then((msg) => {
+        bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/edicao_professor", {
@@ -1864,7 +3174,7 @@ router.post("/professor/alteracao/", (req, res) => {
               professor: professor1,
             });
           } else {
-            bd.select_aluno(req.body.matricula).then((msg) => {
+            bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
@@ -1872,30 +3182,509 @@ router.post("/professor/alteracao/", (req, res) => {
                   professor: professor1,
                 });
               } else {
-                bd1
-                  .delete_update_professor({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: professor1.senha,
-                    matricula1: professor1.matricula,
-                  })
-                  .then((professor) => {
-                    if (professor === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/funcionario/professor");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do professor feita com sucesso"
-                      );
-                      res.redirect("/funcionario/professor");
-                    }
-                  });
+                bd1.delete_update_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  email: req.body.email,
+                  celular: req.body.celular,
+                  residencial: req.body.residencial,
+                  senha: professor1.senha,
+                  matricula1: professor1.matricula,
+                }).then((professor) => {
+                  if (professor === "error") {
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                    res.redirect("/funcionario/professor");
+                  } else {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração do professor feita com sucesso"
+                    );
+                    res.redirect("/funcionario/professor");
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.email != professor1.email &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.residencial != professor1.telefone_residencial &&
+    req.body.senha != ""
+  ) {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("funcionario/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd3
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else if (
+                                              req.body.senha.length <= 7 ||
+                                              req.body.senha2.length <= 7
+                                            ) {
+                                              error =
+                                                "A senha deve ter no mínimo 8 caracteres";
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd.select_senha(
+                                                req.body.senha
+                                              ).then((msg) => {
+                                                if (msg) {
+                                                  error = msg;
+                                                  res.render(
+                                                    "funcionario/edicao_professor",
+                                                    {
+                                                      error,
+                                                      professor: professor1,
+                                                    }
+                                                  );
+                                                } else {
+                                                  bd1
+                                                    .select_senha(
+                                                      req.body.senha
+                                                    )
+                                                    .then((msg) => {
+                                                      if (msg) {
+                                                        error = msg;
+                                                        res.render(
+                                                          "funcionario/edicao_professor",
+                                                          {
+                                                            error,
+                                                            professor:
+                                                              professor1,
+                                                          }
+                                                        );
+                                                      } else {
+                                                        bd3
+                                                          .select_senha(
+                                                            req.body.senha
+                                                          )
+                                                          .then((msg) => {
+                                                            if (msg) {
+                                                              error = msg;
+                                                              res.render(
+                                                                "funcionario/edicao_professor",
+                                                                {
+                                                                  error,
+                                                                  professor:
+                                                                    professor1,
+                                                                }
+                                                              );
+                                                            } else {
+                                                              bd1.update_professor(
+                                                                {
+                                                                  matricula:
+                                                                    req.body
+                                                                      .matricula,
+                                                                  usuario:
+                                                                    req.body
+                                                                      .usuario,
+                                                                  email:
+                                                                    req.body
+                                                                      .email,
+                                                                  celular:
+                                                                    req.body
+                                                                      .celular,
+                                                                  residencial:
+                                                                    req.body
+                                                                      .residencial,
+                                                                  senha:
+                                                                    req.body
+                                                                      .senha,
+                                                                  matricula1:
+                                                                    professor1.matricula,
+                                                                }
+                                                              ).then(
+                                                                (professor) => {
+                                                                  if (
+                                                                    professor ===
+                                                                    "error"
+                                                                  ) {
+                                                                    req.flash(
+                                                                      "error_msg",
+                                                                      "Error no sistema tente novamente mais tarde"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
+                                                                  } else {
+                                                                    req.flash(
+                                                                      "sucess_msg",
+                                                                      "Alteração do professor feita com sucesso"
+                                                                    );
+                                                                    res.redirect(
+                                                                      "/funcionario/professor"
+                                                                    );
+                                                                  }
+                                                                }
+                                                              );
+                                                            }
+                                                          });
+                                                      }
+                                                    });
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.celular != professor1.telefone_celular &&
+    req.body.email != professor1.email &&
+    req.body.senha != ""
+  ) {
+    bd.select_celular(req.body.celular).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_celular(req.body.celular).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_celular(req.body.celular).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else if (
+                            req.body.senha.length <= 7 ||
+                            req.body.senha2.length <= 7
+                          ) {
+                            error = "A senha deve ter no mínimo 8 caracteres";
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_senha(req.body.senha).then((msg) => {
+                              if (msg) {
+                                error = msg;
+                                res.render("funcionario/edicao_professor", {
+                                  error,
+                                  professor: professor1,
+                                });
+                              } else {
+                                bd1.select_senha(req.body.senha).then((msg) => {
+                                  if (msg) {
+                                    error = msg;
+                                    res.render("funcionario/edicao_professor", {
+                                      error,
+                                      professor: professor1,
+                                    });
+                                  } else {
+                                    bd3
+                                      .select_senha(req.body.senha)
+                                      .then((msg) => {
+                                        if (msg) {
+                                          error = msg;
+                                          res.render("funcionario/edicao_professor", {
+                                            error,
+                                            professor: professor1,
+                                          });
+                                        } else {
+                                          bd1.update_professor({
+                                            matricula: req.body.matricula,
+                                            usuario: req.body.usuario,
+                                            email: req.body.email,
+                                            celular: req.body.celular,
+                                            residencial: req.body.residencial,
+                                            senha: req.body.senha,
+                                            matricula1: professor1.matricula,
+                                          }).then((professor) => {
+                                            if (professor === "error") {
+                                              req.flash(
+                                                "error_msg",
+                                                "Error no sistema tente novamente mais tarde"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            } else {
+                                              req.flash(
+                                                "sucess_msg",
+                                                "Alteração do professor feita com sucesso"
+                                              );
+                                              res.redirect("/funcionario/professor");
+                                            }
+                                          });
+                                        }
+                                      });
+                                  }
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.email != professor1.email &&
+    req.body.residencial != professor1.telefone_residencial &&
+    req.body.senha != ""
+  ) {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("funcionario/edicao_professor", {
+                                error,
+                                professor: professor1,
+                              });
+                            } else if (
+                              req.body.senha.length <= 7 ||
+                              req.body.senha2.length <= 7
+                            ) {
+                              error = "A senha deve ter no mínimo 8 caracteres";
+                              res.render("funcionario/edicao_professor", {
+                                error,
+                                professor: professor1,
+                              });
+                            } else {
+                              bd.select_senha(req.body.senha).then((msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("funcionario/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_senha(req.body.senha)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd3
+                                          .select_senha(req.body.senha)
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1.update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: req.body.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
               }
             });
           }
@@ -1910,10 +3699,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -1979,13 +3765,10 @@ router.post("/professor/alteracao/", (req, res) => {
                                     .then((msg) => {
                                       if (msg) {
                                         error = msg;
-                                        res.render(
-                                          "funcionario/edicao_professor",
-                                          {
-                                            error,
-                                            professor: professor1,
-                                          }
-                                        );
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
                                       } else {
                                         bd3
                                           .select_senha(req.body.senha)
@@ -2000,36 +3783,35 @@ router.post("/professor/alteracao/", (req, res) => {
                                                 }
                                               );
                                             } else {
-                                              bd1
-                                                .update_professor({
-                                                  matricula: req.body.matricula,
-                                                  usuario: req.body.usuario,
-                                                  celular: req.body.celular,
-                                                  residencial:
-                                                    req.body.residencial,
-                                                  senha: req.body.senha,
-                                                  matricula1:
-                                                    professor1.matricula,
-                                                })
-                                                .then((professor) => {
-                                                  if (professor === "error") {
-                                                    req.flash(
-                                                      "error_msg",
-                                                      "Error no sistema tente novamente mais tarde"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  } else {
-                                                    req.flash(
-                                                      "sucess_msg",
-                                                      "Alteração do professor feita com sucesso"
-                                                    );
-                                                    res.redirect(
-                                                      "/funcionario/professor"
-                                                    );
-                                                  }
-                                                });
+                                              bd1.update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: req.body.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
                                             }
                                           });
                                       }
@@ -2049,16 +3831,315 @@ router.post("/professor/alteracao/", (req, res) => {
       }
     });
   } else if (
+    req.body.email != professor1.email &&
+    req.body.celular != professor1.telefone_celular &&
+    req.body.residencial != professor1.telefone_residencial
+  ) {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_celular(req.body.celular).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_celular(req.body.celular).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_celular(req.body.celular).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd.select_residencial(req.body.residencial).then(
+                              (msg) => {
+                                if (msg) {
+                                  error = msg;
+                                  res.render("funcionario/edicao_professor", {
+                                    error,
+                                    professor: professor1,
+                                  });
+                                } else {
+                                  bd1
+                                    .select_residencial(req.body.residencial)
+                                    .then((msg) => {
+                                      if (msg) {
+                                        error = msg;
+                                        res.render("funcionario/edicao_professor", {
+                                          error,
+                                          professor: professor1,
+                                        });
+                                      } else {
+                                        bd3
+                                          .select_residencial(
+                                            req.body.residencial
+                                          )
+                                          .then((msg) => {
+                                            if (msg) {
+                                              error = msg;
+                                              res.render(
+                                                "funcionario/edicao_professor",
+                                                {
+                                                  error,
+                                                  professor: professor1,
+                                                }
+                                              );
+                                            } else {
+                                              bd1.update_professor({
+                                                matricula: req.body.matricula,
+                                                usuario: req.body.usuario,
+                                                email: req.body.email,
+                                                celular: req.body.celular,
+                                                residencial:
+                                                  req.body.residencial,
+                                                senha: professor1.senha,
+                                                matricula1:
+                                                  professor1.matricula,
+                                              }).then((professor) => {
+                                                if (professor === "error") {
+                                                  req.flash(
+                                                    "error_msg",
+                                                    "Error no sistema tente novamente mais tarde"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                } else {
+                                                  req.flash(
+                                                    "sucess_msg",
+                                                    "Alteração do professor feita com sucesso"
+                                                  );
+                                                  res.redirect(
+                                                    "/funcionario/professor"
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          });
+                                      }
+                                    });
+                                }
+                              }
+                            );
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.email != professor1.email &&
+    req.body.residencial != professor1.telefone_residencial
+  ) {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_residencial(req.body.residencial).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_residencial(req.body.residencial).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3
+                          .select_residencial(req.body.residencial)
+                          .then((msg) => {
+                            if (msg) {
+                              error = msg;
+                              res.render("funcionario/edicao_professor", {
+                                error,
+                                professor: professor1,
+                              });
+                            } else {
+                              bd1.update_professor({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                email: req.body.email,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: professor1.senha,
+                                matricula1: professor1.matricula,
+                              }).then((professor) => {
+                                if (professor === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do professor feita com sucesso"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                }
+                              });
+                            }
+                          });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
+    req.body.celular != professor1.telefone_celular &&
+    req.body.email != professor1.email
+  ) {
+    bd.select_celular(req.body.celular).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_celular(req.body.celular).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_celular(req.body.celular).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_email(req.body.email).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_email(req.body.email).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_email(req.body.email).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd1.update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: professor1.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (
     req.body.celular != professor1.telefone_celular &&
     req.body.residencial != professor1.telefone_residencial
   ) {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -2102,34 +4183,174 @@ router.post("/professor/alteracao/", (req, res) => {
                                 professor: professor1,
                               });
                             } else {
-                              bd1
-                                .update_professor({
-                                  matricula: req.body.matricula,
-                                  usuario: req.body.usuario,
-                                  celular: req.body.celular,
-                                  residencial: req.body.residencial,
-                                  senha: professor1.senha,
-                                  matricula1: professor1.matricula,
-                                })
-                                .then((professor) => {
-                                  if (professor === "error") {
-                                    req.flash(
-                                      "error_msg",
-                                      "Error no sistema tente novamente mais tarde"
-                                    );
-                                    res.redirect("/funcionario/professor");
-                                  } else {
-                                    req.flash(
-                                      "sucess_msg",
-                                      "Alteração do professor feita com sucesso"
-                                    );
-                                    res.redirect("/funcionario/professor");
-                                  }
-                                });
+                              bd1.update_professor({
+                                matricula: req.body.matricula,
+                                usuario: req.body.usuario,
+                                email: req.body.email,
+                                celular: req.body.celular,
+                                residencial: req.body.residencial,
+                                senha: professor1.senha,
+                                matricula1: professor1.matricula,
+                              }).then((professor) => {
+                                if (professor === "error") {
+                                  req.flash(
+                                    "error_msg",
+                                    "Error no sistema tente novamente mais tarde"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                } else {
+                                  req.flash(
+                                    "sucess_msg",
+                                    "Alteração do professor feita com sucesso"
+                                  );
+                                  res.redirect("/funcionario/professor");
+                                }
+                              });
                             }
                           });
                       }
                     });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (req.body.email != professor1.email && req.body.senha != "") {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else if (
+                req.body.senha.length <= 7 ||
+                req.body.senha2.length <= 7
+              ) {
+                error = "A senha deve ter no mínimo 8 caracteres";
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd.select_senha(req.body.senha).then((msg) => {
+                  if (msg) {
+                    error = msg;
+                    res.render("funcionario/edicao_professor", {
+                      error,
+                      professor: professor1,
+                    });
+                  } else {
+                    bd1.select_senha(req.body.senha).then((msg) => {
+                      if (msg) {
+                        error = msg;
+                        res.render("funcionario/edicao_professor", {
+                          error,
+                          professor: professor1,
+                        });
+                      } else {
+                        bd3.select_senha(req.body.senha).then((msg) => {
+                          if (msg) {
+                            error = msg;
+                            res.render("funcionario/edicao_professor", {
+                              error,
+                              professor: professor1,
+                            });
+                          } else {
+                            bd1.update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: req.body.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  } else if (req.body.email != professor1.email) {
+    bd.select_email(req.body.email).then((msg) => {
+      if (msg) {
+        error = msg;
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
+      } else {
+        bd1.select_email(req.body.email).then((msg) => {
+          if (msg) {
+            error = msg;
+            res.render("funcionario/edicao_professor", {
+              error,
+              professor: professor1,
+            });
+          } else {
+            bd3.select_email(req.body.email).then((msg) => {
+              if (msg) {
+                error = msg;
+                res.render("funcionario/edicao_professor", {
+                  error,
+                  professor: professor1,
+                });
+              } else {
+                bd1.update_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  email: req.body.email,
+                  celular: req.body.celular,
+                  residencial: req.body.residencial,
+                  senha: professor1.senha,
+                  matricula1: professor1.matricula,
+                }).then((professor) => {
+                  if (professor === "error") {
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                    res.redirect("/funcionario/professor");
+                  } else {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração do professor feita com sucesso"
+                    );
+                    res.redirect("/funcionario/professor");
                   }
                 });
               }
@@ -2145,10 +4366,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -2199,30 +4417,29 @@ router.post("/professor/alteracao/", (req, res) => {
                               professor: professor1,
                             });
                           } else {
-                            bd1
-                              .update_professor({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: req.body.senha,
-                                matricula1: professor1.matricula,
-                              })
-                              .then((professor) => {
-                                if (professor === "error") {
-                                  req.flash(
-                                    "error_msg",
-                                    "Error no sistema tente novamente mais tarde"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                } else {
-                                  req.flash(
-                                    "sucess_msg",
-                                    "Alteração do professor feita com sucesso"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                }
-                              });
+                            bd1.update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: req.body.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
                           }
                         });
                       }
@@ -2239,10 +4456,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -2260,30 +4474,29 @@ router.post("/professor/alteracao/", (req, res) => {
                   professor: professor1,
                 });
               } else {
-                bd1
-                  .update_professor({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: professor1.senha,
-                    matricula1: professor1.matricula,
-                  })
-                  .then((professor) => {
-                    if (professor === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/funcionario/professor");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do professor feita com sucesso"
-                      );
-                      res.redirect("/funcionario/professor");
-                    }
-                  });
+                bd1.update_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  email: req.body.email,
+                  celular: req.body.celular,
+                  residencial: req.body.residencial,
+                  senha: professor1.senha,
+                  matricula1: professor1.matricula,
+                }).then((professor) => {
+                  if (professor === "error") {
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                    res.redirect("/funcionario/professor");
+                  } else {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração do professor feita com sucesso"
+                    );
+                    res.redirect("/funcionario/professor");
+                  }
+                });
               }
             });
           }
@@ -2297,10 +4510,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
@@ -2351,30 +4561,29 @@ router.post("/professor/alteracao/", (req, res) => {
                               professor: professor1,
                             });
                           } else {
-                            bd1
-                              .update_professor({
-                                matricula: req.body.matricula,
-                                usuario: req.body.usuario,
-                                celular: req.body.celular,
-                                residencial: req.body.residencial,
-                                senha: req.body.senha,
-                                matricula1: professor1.matricula,
-                              })
-                              .then((professor) => {
-                                if (professor === "error") {
-                                  req.flash(
-                                    "error_msg",
-                                    "Error no sistema tente novamente mais tarde"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                } else {
-                                  req.flash(
-                                    "sucess_msg",
-                                    "Alteração do professor feita com sucesso"
-                                  );
-                                  res.redirect("/funcionario/professor");
-                                }
-                              });
+                            bd1.update_professor({
+                              matricula: req.body.matricula,
+                              usuario: req.body.usuario,
+                              email: req.body.email,
+                              celular: req.body.celular,
+                              residencial: req.body.residencial,
+                              senha: req.body.senha,
+                              matricula1: professor1.matricula,
+                            }).then((professor) => {
+                              if (professor === "error") {
+                                req.flash(
+                                  "error_msg",
+                                  "Error no sistema tente novamente mais tarde"
+                                );
+                                res.redirect("/funcionario/professor");
+                              } else {
+                                req.flash(
+                                  "sucess_msg",
+                                  "Alteração do professor feita com sucesso"
+                                );
+                                res.redirect("/funcionario/professor");
+                              }
+                            });
                           }
                         });
                       }
@@ -2391,10 +4600,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
@@ -2412,30 +4618,29 @@ router.post("/professor/alteracao/", (req, res) => {
                   professor: professor1,
                 });
               } else {
-                bd1
-                  .update_professor({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: professor1.senha,
-                    matricula1: professor1.matricula,
-                  })
-                  .then((professor) => {
-                    if (professor === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/funcionario/professor");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do professor feita com sucesso"
-                      );
-                      res.redirect("/funcionario/professor");
-                    }
-                  });
+                bd1.update_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  email: req.body.email,
+                  celular: req.body.celular,
+                  residencial: req.body.residencial,
+                  senha: professor1.senha,
+                  matricula1: professor1.matricula,
+                }).then((professor) => {
+                  if (professor === "error") {
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                    res.redirect("/funcionario/professor");
+                  } else {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração do professor feita com sucesso"
+                    );
+                    res.redirect("/funcionario/professor");
+                  }
+                });
               }
             });
           }
@@ -2446,10 +4651,7 @@ router.post("/professor/alteracao/", (req, res) => {
     bd.select_senha(req.body.senha).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/edicao_professor", {
-          error,
-          professor: professor1,
-        });
+        res.render("funcionario/edicao_professor", { error, professor: professor1 });
       } else {
         bd1.select_senha(req.body.senha).then((msg) => {
           if (msg) {
@@ -2476,30 +4678,29 @@ router.post("/professor/alteracao/", (req, res) => {
                   professor: professor1,
                 });
               } else {
-                bd1
-                  .update_professor({
-                    matricula: req.body.matricula,
-                    usuario: req.body.usuario,
-                    celular: req.body.celular,
-                    residencial: req.body.residencial,
-                    senha: req.body.senha,
-                    matricula1: professor1.matricula,
-                  })
-                  .then((professor) => {
-                    if (professor === "error") {
-                      req.flash(
-                        "error_msg",
-                        "Error no sistema tente novamente mais tarde"
-                      );
-                      res.redirect("/funcionario/professor");
-                    } else {
-                      req.flash(
-                        "sucess_msg",
-                        "Alteração do professor feita com sucesso"
-                      );
-                      res.redirect("/funcionario/professor");
-                    }
-                  });
+                bd1.update_professor({
+                  matricula: req.body.matricula,
+                  usuario: req.body.usuario,
+                  email: req.body.email,
+                  celular: req.body.celular,
+                  residencial: req.body.residencial,
+                  senha: req.body.senha,
+                  matricula1: professor1.matricula,
+                }).then((professor) => {
+                  if (professor === "error") {
+                    req.flash(
+                      "error_msg",
+                      "Error no sistema tente novamente mais tarde"
+                    );
+                    res.redirect("/funcionario/professor");
+                  } else {
+                    req.flash(
+                      "sucess_msg",
+                      "Alteração do professor feita com sucesso"
+                    );
+                    res.redirect("/funcionario/professor");
+                  }
+                });
               }
             });
           }
@@ -2507,24 +4708,23 @@ router.post("/professor/alteracao/", (req, res) => {
       }
     });
   } else {
-    bd1
-      .update_professor({
-        matricula: req.body.matricula,
-        usuario: req.body.usuario,
-        celular: req.body.celular,
-        residencial: req.body.residencial,
-        senha: professor1.senha,
-        matricula1: professor1.matricula,
-      })
-      .then((professor) => {
-        if (professor === "error") {
-          req.flash("error_msg", "Error no sistema tente novamente mais tarde");
-          res.redirect("/funcionario/professor");
-        } else {
-          req.flash("sucess_msg", "Alteração do professor feita com sucesso");
-          res.redirect("/funcionario/professor");
-        }
-      });
+    bd1.update_professor({
+      matricula: req.body.matricula,
+      usuario: req.body.usuario,
+      email: req.body.email,
+      celular: req.body.celular,
+      residencial: req.body.residencial,
+      senha: professor1.senha,
+      matricula1: professor1.matricula,
+    }).then((professor) => {
+      if (professor === "error") {
+        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+        res.redirect("/funcionario/professor");
+      } else {
+        req.flash("sucess_msg", "Alteração do professor feita com sucesso");
+        res.redirect("/funcionario/professor");
+      }
+    });
   }
 });
 

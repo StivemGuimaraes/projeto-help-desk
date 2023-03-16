@@ -24,8 +24,9 @@ router.get("/", (req, res) => {
     var admin_matricula = req.user[0].matricula;
   } else {
     var admin_matricula = null;
-  }*/
-  var admin_matricula = null;
+  }
+  var admin_matricula = null;*/
+
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       res.render("admin/index", { usuario: "[coloque seu nome aqui!]" });

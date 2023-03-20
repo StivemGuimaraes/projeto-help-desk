@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bd = require("../models/bd_chamado");
+const bd1 = require("../models/bd_aluno");
 const upload = require("../config/multer");
 const multer = require("multer");
 const fs = require("fs");
@@ -10,11 +11,29 @@ const uploadChamadoAluno = upload
 const alteracaoAlunoImagem = upload
   .alteracao_aluno_imagem()
   .array("imagem_alteracao_chamado", 3);
-const uploadAluno = upload.upload_aluno();
 var chamado1;
 
+/*pagina inicial*/
 router.get("/", (req, res) => {
-  res.render("aluno/index");
+  try {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+  } catch (error) {
+    var aluno_matricula = null;
+  }
+
+  bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
+    if (aluno === "vazio") {
+      res.render("aluno/index", { usuario: "[Você não devia estar aqui!!!]" });
+    } else if (aluno === "error") {
+      res.render("aluno/index", { usuario: "[Error com o nome do usuário]" });
+    } else {
+      res.render("aluno/index", { usuario: aluno[0].usuario });
+    }
+  });
 });
 router.get("/atendimento", (req, res) => {
   res.render("aluno/atendimento");

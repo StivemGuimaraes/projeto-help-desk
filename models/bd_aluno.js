@@ -159,6 +159,25 @@ const select_aluno1 = async (matricula) => {
   }
 };
 
+/*seleção de um usuário de um aluno*/
+const select_aluno_usuario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT usuario FROM aluno WHERE matricula = ?;";
+    const value = [matricula];
+    const [aluno] = await conn.execute(sql, value);
+    if (aluno == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do aluno realizado com sucesso");
+      return aluno;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do chamado e alteração de um aluno*/
 const delete_update_aluno = async (aluno) => {
   try {
@@ -253,6 +272,7 @@ module.exports = {
   select_celular,
   select_residencial,
   select_aluno1,
+  select_aluno_usuario,
   delete_update_aluno,
   update_aluno,
   update_aluno_senha,

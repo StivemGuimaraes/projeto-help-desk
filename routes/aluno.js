@@ -12,6 +12,7 @@ const alteracaoAlunoImagem = upload
   .alteracao_aluno_imagem()
   .array("imagem_alteracao_chamado", 3);
 var chamado1;
+var usuario;
 
 /*pagina inicial*/
 router.get("/", (req, res) => {
@@ -36,16 +37,70 @@ router.get("/", (req, res) => {
   });
 });
 router.get("/atendimento", (req, res) => {
-  res.render("aluno/atendimento");
+  try {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+  } catch (error) {
+    var aluno_matricula = null;
+  }
+
+  bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
+    if (aluno === "vazio") {
+      res.render("aluno/atendimento", {
+        usuario: "[Você não devia estar aqui!!!]",
+      });
+    } else if (aluno === "error") {
+      res.render("aluno/atendimento", {
+        usuario: "[Error com o nome do usuário]",
+      });
+    } else {
+      res.render("aluno/atendimento", { usuario: aluno[0].usuario });
+    }
+  });
 });
 
 /*inclusão de dados do chamado do aluno*/
 router.get("/criar-chamado", (req, res) => {
-  res.render("aluno/criar_chamado");
+  try {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+  } catch (error) {
+    var aluno_matricula = null;
+  }
+
+  bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
+    if (aluno === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+      res.render("aluno/criar_chamado", {
+        usuario: "[Você não devia estar aqui!!!]",
+      });
+    } else if (aluno === "error") {
+      usuario = "[Error com o nome do usuário]";
+      res.render("aluno/criar_chamado", {
+        usuario: "[Error com o nome do usuário]",
+      });
+    } else {
+      usuario = aluno[0].usuario;
+      res.render("aluno/criar_chamado", { usuario: aluno[0].usuario });
+    }
+  });
 });
 
 router.post("/criar-chamado/nova", (req, res) => {
   uploadChamadoAluno(req, res, (err) => {
+    try {
+      if (req.user[0].eAdmin != 3) {
+        usuario = "[Você não devia estar aqui!!!]";
+      }
+    } catch (error) {
+      usuario = "[Você não devia estar aqui!!!]";
+    }
     var dados = {
       titulo: req.body.titulo,
       assunto: req.body.assunto,
@@ -77,14 +132,14 @@ router.post("/criar-chamado/nova", (req, res) => {
       req.body.titulo === null
     ) {
       error = "Titulo invalido";
-      res.render("aluno/criar_chamado", { error, dados });
+      res.render("aluno/criar_chamado", { usuario, error, dados });
     } else if (
       !req.body.assunto ||
       typeof req.body.assunto === undefined ||
       req.body.assunto === null
     ) {
       error = "Assunto invalido";
-      res.render("aluno/criar_chamado", { error, dados });
+      res.render("aluno/criar_chamado", { usuario, error, dados });
     } else if (
       !req.body.nivel ||
       typeof req.body.nivel === undefined ||
@@ -92,7 +147,7 @@ router.post("/criar-chamado/nova", (req, res) => {
       req.body.nivel === "Selecione"
     ) {
       error = "Nível invalido";
-      res.render("aluno/criar_chamado", { error, dados });
+      res.render("aluno/criar_chamado", { usuario, error, dados });
     } else if (
       !req.body.prioridade ||
       typeof req.body.prioridade === undefined ||
@@ -100,19 +155,19 @@ router.post("/criar-chamado/nova", (req, res) => {
       req.body.prioridade === "Selecione"
     ) {
       error = "Prioridade invalida";
-      res.render("aluno/criar_chamado", { error, dados });
+      res.render("aluno/criar_chamado", { usuario, error, dados });
     } else if (
       !req.body.descricao ||
       typeof req.body.descricao === undefined ||
       req.body.descricao === null
     ) {
       error = "Descrição invalida";
-      res.render("aluno/criar_chamado", { error, dados });
+      res.render("aluno/criar_chamado", { usuario, error, dados });
     } else if (err instanceof multer.MulterError) {
       err = "Envio de arquivos invalida";
-      res.render("aluno/criar_chamado", { error: err, dados });
+      res.render("aluno/criar_chamado", { usuario, error: err, dados });
     } else if (err) {
-      res.render("aluno/criar_chamado", { error: err, dados });
+      res.render("aluno/criar_chamado", { usuario, error: err, dados });
     } else {
       bd.insert_chamado({
         titulo: req.body.titulo,
@@ -129,10 +184,10 @@ router.post("/criar-chamado/nova", (req, res) => {
       }).then((msg) => {
         if (msg) {
           error = msg;
-          res.render("aluno/criar_chamado", { error, dados });
+          res.render("aluno/criar_chamado", { usuario, error, dados });
         } else {
           var sucesso = "Chamado cadastrado com sucesso";
-          res.render("aluno/criar_chamado", { sucesso });
+          res.render("aluno/criar_chamado", { usuario, sucesso });
         }
       });
     }
@@ -141,32 +196,70 @@ router.post("/criar-chamado/nova", (req, res) => {
 
 /*seleção do chamado do aluno*/
 router.get("/chamado", (req, res) => {
+  try {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+  } catch (error) {
+    var aluno_matricula = null;
+  }
+
+  bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
+    if (aluno === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+    } else if (aluno === "error") {
+      usuario = "[Error com o nome do usuário]";
+    } else {
+      usuario = aluno[0].usuario;
+    }
+  });
   bd.select_chamadoAluno(req.user).then((chamado_aluno) => {
     if (chamado_aluno === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("aluno/chamado_aluno", { error_mensagem });
+      res.render("aluno/chamado_aluno", { usuario, error_mensagem });
     } else if (chamado_aluno === "matricula") {
       res.render("aluno/chamado_aluno");
       error_mensagem = "Você não é aluno, o que você tá fazendo aqui?";
-      res.render("aluno/chamado_aluno", { error_mensagem });
+      res.render("aluno/chamado_aluno", { usuario, error_mensagem });
     } else if (chamado_aluno === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
-      res.render("aluno/chamado_aluno", { aviso_mensagem });
+      res.render("aluno/chamado_aluno", { usuario, aviso_mensagem });
     } else if (chamado_aluno[0].statusd == "Aberto") {
       chamado_aluno[0].i1 = "algo";
-      res.render("aluno/chamado_aluno", { chamado_aluno });
+      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
     } else if (chamado_aluno[0].statusd == "Andamento") {
       chamado_aluno[0].i2 = "algo";
-      res.render("aluno/chamado_aluno", { chamado_aluno });
+      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
     } else if (chamado_aluno[0].statusd == "Fechado") {
       chamado_aluno[0].i3 = "algo";
-      res.render("aluno/chamado_aluno", { chamado_aluno });
+      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
     }
   });
 });
 
 /*alteracao do chamado*/
 router.get("/chamado/alteracao/:id", (req, res) => {
+  try {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+  } catch (error) {
+    var aluno_matricula = null;
+  }
+
+  bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
+    if (aluno === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+    } else if (aluno === "error") {
+      usuario = "[Error com o nome do usuário]";
+    } else {
+      usuario = aluno[0].usuario;
+    }
+  });
   bd.select_chamado1(req.params.id).then((chamado) => {
     if (chamado === "vazio") {
       req.flash("error_msg", "Chamado não encontrado");
@@ -177,13 +270,19 @@ router.get("/chamado/alteracao/:id", (req, res) => {
     } else {
       chamado = chamado[0];
       chamado1 = chamado;
-      console.log(chamado1);
-      res.render("aluno/edicao_chamado", { chamado });
+      res.render("aluno/edicao_chamado", { usuario, chamado });
     }
   });
 });
 
 router.post("/chamado/alteracao", (req, res) => {
+  try {
+    if (req.user[0].eAdmin != 3) {
+      usuario = "[Você não devia estar aqui!!!]";
+    }
+  } catch (error) {
+    usuario = "[Você não devia estar aqui!!!]";
+  }
   alteracaoAlunoImagem(req, res, (err) => {
     if (req.body.alterar === "Alterar chamado") {
       if (typeof req.files[0] === "undefined") {
@@ -234,10 +333,10 @@ router.post("/chamado/alteracao", (req, res) => {
       if (err instanceof multer.MulterError) {
         err = "Envio de arquivos invalida";
         res.setTimeout(480000);
-        res.render("aluno/edicao_chamado", { error: err });
+        res.render("aluno/edicao_chamado", { usuario, error: err });
       } else if (err) {
         res.setTimeout(480000);
-        res.render("aluno/edicao_chamado", { error: err });
+        res.render("aluno/edicao_chamado", { usuario, error: err });
       } else {
         bd.update_chamado({
           titulo: req.body.titulo,

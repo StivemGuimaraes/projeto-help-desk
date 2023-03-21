@@ -163,6 +163,25 @@ const select_professor1 = async (matricula) => {
   }
 };
 
+/*seleção de um usuário de um professor*/
+const select_professor_usuario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT usuario FROM professor WHERE matricula = ?;";
+    const value = [matricula];
+    const [professor] = await conn.execute(sql, value);
+    if (professor == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do professor realizado com sucesso");
+      return professor;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do chamado e alteração do professor*/
 const delete_update_professor = async (professor) => {
   try {
@@ -256,6 +275,7 @@ module.exports = {
   select_celular,
   select_residencial,
   select_professor1,
+  select_professor_usuario,
   delete_update_professor,
   update_professor,
   update_professor_senha,

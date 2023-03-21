@@ -249,6 +249,7 @@ const select_relatorio1 = async (id) => {
   }
 };
 
+/*seleção do usuario do admin*/
 const select_admin = async (matricula) => {
   try {
     const conn = await bd.con();
@@ -261,6 +262,25 @@ const select_admin = async (matricula) => {
     } else {
       console.log("selecionamento do admin realizado com sucesso");
       return admin;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*seleção do usuario do funcionario*/
+const select_funcionario_usuario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT usuario FROM funcionario WHERE matricula = ?;";
+    const value = [matricula];
+    const [funcionario] = await conn.execute(sql, value);
+    if (funcionario == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do funcionario realizado com sucesso");
+      return funcionario;
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -361,6 +381,7 @@ module.exports = {
   select_funcionario1,
   select_relatorio1,
   select_admin,
+  select_funcionario_usuario,
   update_funcionario,
   update_relatorio,
   update_funcionario_senha,

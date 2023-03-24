@@ -34,7 +34,7 @@ create table relatorio (
 id int not null primary key auto_increment,
 titulo varchar(40) not null,
 conteudo text not null,
-fk_funcionario int
+fk_funcionario varchar(150)
 );
 alter table relatorio
 add foreign key(fk_funcionario) references funcionario(matricula);
@@ -50,8 +50,8 @@ descricao text not null,
 img1 varchar(150),
 img2 varchar(150),
 img3 varchar(150),
-fk_professor int,
-fk_aluno int
+fk_professor varchar(150),
+fk_aluno varchar(150)
 );
 alter table chamado
 add foreign key(fk_aluno) references aluno(matricula),
@@ -61,8 +61,8 @@ add foreign key(fk_professor) references professor(matricula);
 create table chat (
 id_chat int not null primary key auto_increment, 
 id_chamado int,
-matricula_A int,
-matricula_F int,
+matricula_A varchar(150),
+matricula_F varchar(150),
 mens_professor text not null,
 mens_aluno text not null,
 id_funcionario int,

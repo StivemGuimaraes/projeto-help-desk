@@ -169,7 +169,6 @@ const select_aluno_usuario = async (matricula) => {
     if (aluno == "") {
       return "vazio";
     } else {
-      console.log("selecionamento do aluno realizado com sucesso");
       return aluno;
     }
   } catch (error) {

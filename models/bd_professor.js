@@ -173,7 +173,6 @@ const select_professor_usuario = async (matricula) => {
     if (professor == "") {
       return "vazio";
     } else {
-      console.log("selecionamento do professor realizado com sucesso");
       return professor;
     }
   } catch (error) {

@@ -7,6 +7,7 @@ const bd3 = require("../models/bd_chamado");
 const fs = require("fs");
 const upload = require("../config/multer");
 const multer = require("multer");
+const { eAdmin } = require("../helpers/eAdmin");
 const alteracaoAlunoImagem = upload
   .alteracao_aluno_imagem()
   .array("imagem_alteracao_chamado", 3);
@@ -20,7 +21,7 @@ var chamado1;
 var relatorio1;
 var usuario;
 
-router.get("/", (req, res) => {
+router.get("/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -43,7 +44,7 @@ router.get("/", (req, res) => {
 });
 
 /*inclusão de dados do professor*/
-router.get("/cadastrar-professor", (req, res) => {
+router.get("/cadastrar-professor", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -72,7 +73,7 @@ router.get("/cadastrar-professor", (req, res) => {
   });
 });
 
-router.post("/cadastrar-professor/nova", (req, res) => {
+router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -422,7 +423,7 @@ router.post("/cadastrar-professor/nova", (req, res) => {
 });
 
 /*inclusão de dados do funcionario*/
-router.get("/cadastrar-funcionario", (req, res) => {
+router.get("/cadastrar-funcionario", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -451,7 +452,7 @@ router.get("/cadastrar-funcionario", (req, res) => {
   });
 });
 
-router.post("/cadastrar-funcionario/nova", (req, res) => {
+router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -802,7 +803,7 @@ router.post("/cadastrar-funcionario/nova", (req, res) => {
 });
 
 /*inclusão de dados do aluno*/
-router.get("/cadastrar-aluno", (req, res) => {
+router.get("/cadastrar-aluno", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -831,7 +832,7 @@ router.get("/cadastrar-aluno", (req, res) => {
   });
 });
 
-router.post("/cadastrar-aluno/nova", (req, res) => {
+router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -1175,7 +1176,7 @@ router.post("/cadastrar-aluno/nova", (req, res) => {
 });
 
 /*seleção de dados do chamado*/
-router.get("/chamado", (req, res) => {
+router.get("/chamado", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1218,7 +1219,7 @@ router.get("/chamado", (req, res) => {
 });
 
 /*seleção de dados do relatorio do funcionario*/
-router.get("/relatorio", (req, res) => {
+router.get("/relatorio", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1252,7 +1253,7 @@ router.get("/relatorio", (req, res) => {
 });
 
 /*seleção de dados do funcionario*/
-router.get("/funcionario", (req, res) => {
+router.get("/funcionario", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1286,7 +1287,7 @@ router.get("/funcionario", (req, res) => {
 });
 
 /*seleção de dados do aluno*/
-router.get("/aluno", (req, res) => {
+router.get("/aluno", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1320,7 +1321,7 @@ router.get("/aluno", (req, res) => {
 });
 
 /*seleção de dados do professor*/
-router.get("/professor", (req, res) => {
+router.get("/professor", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1354,7 +1355,7 @@ router.get("/professor", (req, res) => {
 });
 
 /*alteração de dados do relatorio*/
-router.get("/relatorio/alteracao/:id", (req, res) => {
+router.get("/relatorio/alteracao/:id", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -1389,7 +1390,7 @@ router.get("/relatorio/alteracao/:id", (req, res) => {
   });
 });
 
-router.post("/relatorio/alteracao/", (req, res) => {
+router.post("/relatorio/alteracao/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -1440,7 +1441,7 @@ router.post("/relatorio/alteracao/", (req, res) => {
 });
 
 /*alteração de dados do aluno*/
-router.get("/aluno/alteracao/:matricula", (req, res) => {
+router.get("/aluno/alteracao/:matricula", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -5562,7 +5563,7 @@ router.post("/aluno/alteracao/", (req, res) => {
 });
 
 /*alteração de dados do professor*/
-router.get("/professor/alteracao/:matricula", (req, res) => {
+router.get("/professor/alteracao/:matricula", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -5597,7 +5598,7 @@ router.get("/professor/alteracao/:matricula", (req, res) => {
   });
 });
 
-router.post("/professor/alteracao/", (req, res) => {
+router.post("/professor/alteracao/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -9832,7 +9833,7 @@ router.post("/professor/alteracao/", (req, res) => {
 });
 
 /*alteracao de dados do funcionario*/
-router.get("/funcionario/alteracao/:matricula", (req, res) => {
+router.get("/funcionario/alteracao/:matricula", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -9867,7 +9868,7 @@ router.get("/funcionario/alteracao/:matricula", (req, res) => {
   });
 });
 
-router.post("/funcionario/alteracao", (req, res) => {
+router.post("/funcionario/alteracao", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -14208,7 +14209,7 @@ router.post("/funcionario/alteracao", (req, res) => {
 });
 
 /*alteracao do chamado*/
-router.get("/chamado/alteracao/:id", (req, res) => {
+router.get("/chamado/alteracao/:id", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -14244,7 +14245,7 @@ router.get("/chamado/alteracao/:id", (req, res) => {
   });
 });
 
-router.post("/chamado/alteracao", (req, res) => {
+router.post("/chamado/alteracao", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -14521,7 +14522,7 @@ router.post("/chamado/alteracao", (req, res) => {
 });
 
 /*exclusão do professor*/
-router.get("/professor/exclusao/:matricula", (req, res) => {
+router.get("/professor/exclusao/:matricula", eAdmin, (req, res) => {
   bd.delete_professor(req.params.matricula).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -14534,7 +14535,7 @@ router.get("/professor/exclusao/:matricula", (req, res) => {
 });
 
 /*exclusão do relatorio*/
-router.get("/relatorio/exclusao/:id", (req, res) => {
+router.get("/relatorio/exclusao/:id", eAdmin, (req, res) => {
   bd1.delete_relatorio(req.params.id).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -14547,7 +14548,7 @@ router.get("/relatorio/exclusao/:id", (req, res) => {
 });
 
 /*exclusão do chamado*/
-router.get("/chamado/exclusao/:id", (req, res) => {
+router.get("/chamado/exclusao/:id", eAdmin, (req, res) => {
   bd3.select_usuario_imagem(req.params.id).then((usuario) => {
     if (usuario === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -14631,7 +14632,7 @@ router.get("/chamado/exclusao/:id", (req, res) => {
 });
 
 /*exclusao do aluno*/
-router.get("/aluno/exclusao/:matricula", (req, res) => {
+router.get("/aluno/exclusao/:matricula", eAdmin, (req, res) => {
   bd2.delete_aluno(req.params.matricula).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -14644,7 +14645,7 @@ router.get("/aluno/exclusao/:matricula", (req, res) => {
 });
 
 /*exclusao do funcionario*/
-router.get("/funcionario/exclusao/:matricula", (req, res) => {
+router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
   bd1.delete_funcionario(req.params.matricula).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -14652,6 +14653,19 @@ router.get("/funcionario/exclusao/:matricula", (req, res) => {
     } else {
       req.flash("sucess_msg", "Exclusão do funcionário feita com sucesso");
       res.redirect("/admin/funcionario");
+    }
+  });
+});
+
+/*logout do admin*/
+router.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      req.flash("error_msg", "Error ao deslogar como admin!!!");
+      res.redirect("/");
+    } else {
+      req.flash("sucess_msg", "Deslogado como admin feito com sucesso!!!");
+      res.redirect("/");
     }
   });
 });

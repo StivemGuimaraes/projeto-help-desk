@@ -5,6 +5,7 @@ const bd1 = require("../models/bd_aluno");
 const upload = require("../config/multer");
 const multer = require("multer");
 const fs = require("fs");
+const { eAluno } = require("../helpers/eAluno");
 const uploadChamadoAluno = upload
   .upload_chamado_aluno()
   .array("imagem_chamado2", 3);
@@ -15,7 +16,7 @@ var chamado1;
 var usuario;
 
 /*pagina inicial*/
-router.get("/", (req, res) => {
+router.get("/", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
@@ -36,7 +37,7 @@ router.get("/", (req, res) => {
     }
   });
 });
-router.get("/atendimento", (req, res) => {
+router.get("/atendimento", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
@@ -63,7 +64,7 @@ router.get("/atendimento", (req, res) => {
 });
 
 /*inclusão de dados do chamado do aluno*/
-router.get("/criar-chamado", (req, res) => {
+router.get("/criar-chamado", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
@@ -92,7 +93,7 @@ router.get("/criar-chamado", (req, res) => {
   });
 });
 
-router.post("/criar-chamado/nova", (req, res) => {
+router.post("/criar-chamado/nova", eAluno, (req, res) => {
   uploadChamadoAluno(req, res, (err) => {
     try {
       if (req.user[0].eAdmin != 3) {
@@ -195,7 +196,7 @@ router.post("/criar-chamado/nova", (req, res) => {
 });
 
 /*seleção do chamado do aluno*/
-router.get("/chamado", (req, res) => {
+router.get("/chamado", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
@@ -226,21 +227,23 @@ router.get("/chamado", (req, res) => {
     } else if (chamado_aluno === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
       res.render("aluno/chamado_aluno", { usuario, aviso_mensagem });
-    } else if (chamado_aluno[0].statusd == "Aberto") {
-      chamado_aluno[0].i1 = "algo";
-      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
-    } else if (chamado_aluno[0].statusd == "Andamento") {
-      chamado_aluno[0].i2 = "algo";
-      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
-    } else if (chamado_aluno[0].statusd == "Fechado") {
-      chamado_aluno[0].i3 = "algo";
+    } else {
+      chamado_aluno.forEach((valor, i) => {
+        if (chamado_aluno[i].statusd == "Aberto") {
+          chamado_aluno[i].i1 = "algo";
+        } else if (chamado_aluno[i].statusd == "Andamento") {
+          chamado_aluno[i].i2 = "algo";
+        } else if (chamado_aluno[i].statusd == "Fechado") {
+          chamado_aluno[i].i3 = "algo";
+        }
+      });
       res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
     }
   });
 });
 
 /*alteracao do chamado*/
-router.get("/chamado/alteracao/:id", (req, res) => {
+router.get("/chamado/alteracao/:id", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
@@ -275,7 +278,7 @@ router.get("/chamado/alteracao/:id", (req, res) => {
   });
 });
 
-router.post("/chamado/alteracao", (req, res) => {
+router.post("/chamado/alteracao", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin != 3) {
       usuario = "[Você não devia estar aqui!!!]";
@@ -397,7 +400,7 @@ router.post("/chamado/alteracao", (req, res) => {
 });
 
 /*exclusão do chamado*/
-router.get("/chamado/exclusao/:id", (req, res) => {
+router.get("/chamado/exclusao/:id", eAluno, (req, res) => {
   bd.select_usuario_imagem(req.params.id).then((usuario) => {
     if (usuario === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
@@ -444,4 +447,19 @@ router.get("/chamado/exclusao/:id", (req, res) => {
   });
 });
 
+/*logout do aluno*/
+router.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      req.flash("error_msg", "Error ao deslogar como aluno!!!");
+      res.redirect("/");
+    } else {
+      req.flash(
+        "sucess_msg",
+        "Deslogado como aluno feito com sucesso!!!"
+      );
+      res.redirect("/");
+    }
+  });
+});
 module.exports = router;

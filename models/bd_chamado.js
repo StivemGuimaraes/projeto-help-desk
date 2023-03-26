@@ -31,7 +31,7 @@ const select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
     const [chamado] = await conn.execute(
-      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor, a.email AS email_aluno, p.email AS email_professor, a.telefone_celular AS celular_aluno, a.telefone_residencial AS residencial_aluno, p.telefone_residencial AS residencial_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
+      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor, a.email AS email_aluno, p.email AS email_professor, a.telefone_celular AS celular_aluno, p.telefone_celular AS celular_professor, a.telefone_residencial AS residencial_aluno, p.telefone_residencial AS residencial_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
     );
     if (chamado == "") {
       return "vazio";

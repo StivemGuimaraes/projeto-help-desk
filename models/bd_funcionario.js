@@ -260,7 +260,6 @@ const select_admin = async (matricula) => {
     if (admin == "") {
       return "vazio";
     } else {
-      console.log("selecionamento do admin realizado com sucesso");
       return admin;
     }
   } catch (error) {
@@ -279,7 +278,6 @@ const select_funcionario_usuario = async (matricula) => {
     if (funcionario == "") {
       return "vazio";
     } else {
-      console.log("selecionamento do funcionario realizado com sucesso");
       return funcionario;
     }
   } catch (error) {

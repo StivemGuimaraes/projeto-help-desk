@@ -186,21 +186,16 @@
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapseExample{{this.id}}">
-      <div class="row">
-  <div class="col-6">
     <p class="card-text">{{this.assunto}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
     <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
-    </div>
-      <div class="col-6" style="margin-top: 22px;">
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
     <p class="card-text mb-0">Usuário do cliente: {{this.nome_aluno}}</p>
     <p class="card-text mb-0">Email do cliente: {{this.email_aluno}}</p>
     <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_aluno}}</p>
     {{#if residencial_aluno}}
     <p class="card-text">Telefone residencial do cliente: {{this.residencial_aluno}}</p>
     {{/if}}
-    </div>
-    </div>
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
     <div class="row">
@@ -223,21 +218,16 @@
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapse{{this.id}}">
-    <div class="row">
-  <div class="col-6">
     <p class="card-text">{{this.assunto}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
     <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
-    </div>
-      <div class="col-6" style="margin-top: 22px;">
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
     <p class="card-text mb-0">Usuário do cliente: {{this.nome_professor}}</p>
     <p class="card-text mb-0">Email do cliente: {{this.email_professor}}</p>
     <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
     {{#if residencial_professor}}
     <p class="card-text">Telefone residencial do cliente: {{this.residencial_professor}}</p>
     {{/if}}
-    </div>
-    </div>
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
     <div class="row">

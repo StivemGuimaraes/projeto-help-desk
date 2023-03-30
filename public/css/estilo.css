@@ -104,21 +104,22 @@ input[type='number'] {
     margin-bottom: 16px;
   }
 
-  .background-img {
+}
+
+.background-img {
     
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh !important;
-    width: 100%;
-    overflow: hidden;
-    
-    background-image: url('../img/Bacckground.png');
-    box-shadow: inset 500px 200px 250px #070e12;
-    position: relative;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh !important;
+  width: 100%;
+  overflow: hidden;
+  
+  background-image: url('../img/Bacckground.png');
+  box-shadow: inset 500px 200px 250px #070e12;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
 }

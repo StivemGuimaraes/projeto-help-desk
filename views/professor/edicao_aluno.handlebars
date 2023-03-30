@@ -21,7 +21,7 @@
         <a href="/professor" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -115,7 +115,7 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/professor/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@
         <div class="card border border-secondary shadow">
           <div class="card-body">
             <div class="text-center">
-              <img src="" alt="logo aqui" class="img-fluid mb-4 mt-4" />
+              <img src="/img/logo_tcc.png" width="160px" height="160px" alt="logo aqui" class="img-fluid mb-4 mt-4" />
             </div>
             <h2 class="text-center text-dark mb-4">Alteração do Aluno</h2>
             <form
@@ -156,11 +156,12 @@
 
                   <div class="form-floating mb-4">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       id="matricula"
                       placeholder="user"
                       name="matricula"
+                      maxlength="150"
                       value="{{aluno.matricula}}"
                       required
                     />
@@ -187,6 +188,7 @@
                       id="floatingInput#"
                       placeholder="user"
                       name="usuario"
+                      maxlength="90"
                       value="{{aluno.usuario}}"
                       required
                     />
@@ -262,6 +264,7 @@
                       id="floatingPassword2"
                       placeholder="Password"
                       name="senha"
+                      maxlength="40"
                     />
                     <label for="floatingPassword2">Digite sua senha</label>
                     <div class="valid-feedback">Validado!</div>
@@ -282,6 +285,7 @@
                       id="floatingPassword3"
                       placeholder="Password"
                       name="senha2"
+                      maxlength="40"
                     />
                     <label for="floatingPassword3">Repita sua senha</label>
                     <div class="valid-feedback">Validado!</div>
@@ -289,7 +293,7 @@
                 </div>
               </div>
               <div class="row gx-5">
-                <div class="col-md-1 col-lg-1 col-sm-12 me-lg-3 me-md-5">
+                <div class="col-md-1 col-lg-1 col-sm-12 me-lg-4 me-md-5">
                   <button class="btn btn-outline-warning botao" type="submit" id="botao_alterar">
                     Alterar
                   </button>

@@ -19,7 +19,7 @@
         <a href="/aluno" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -93,7 +93,7 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/aluno/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@
     <div class="row justify-content-center mb-5">
       <div class="col-md-12 col-sm-12 col-lg-12">
         <h1 class="text-center text-dark mb-5">Criar chamado</h1>
-        <div class="card border border-secondary">
+        <div class="card border border-secondary shadow">
           <div class="card-body">
             <form action="/aluno/criar-chamado/nova" method="post" enctype="multipart/form-data" class="needs-validation"
               novalidate>
@@ -136,6 +136,7 @@
                       id="floatingInput-titulo"
                       placeholder="Titulo"
                       name="titulo"
+                      maxlength="90"
                       value="{{dados.titulo}}"
                       required
                     />
@@ -160,6 +161,7 @@
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
                       name="assunto"
+                      maxlength="20"
                       value="{{dados.assunto}}"
                       required
                     />
@@ -250,6 +252,7 @@
                     id="formFileMultiple"
                     name="imagem_chamado2"
                     accept="image/*"
+                    maxlength="150"
                     multiple
                   />
                   <p class="mb-0 text-danger">* O envio máximo de arquivos são 3</p>
@@ -258,7 +261,7 @@
                 </div>
               </div>
               <div class="row mb-2">
-                <div class="col-lg-1 col-sm-12 col-md-2 me-lg-4 me-md-4">
+                <div class="col-lg-1 col-sm-12 col-md-2 me-lg-5 me-md-4">
                   <input
                     type="submit"
                     class="btn btn-outline-primary botao"

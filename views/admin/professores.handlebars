@@ -1,5 +1,5 @@
 <head>
-  <title>Listas de professores</title>
+  <title>Lista de professores</title>
 </head>
 <header
   class="shadow fixed-top"
@@ -18,7 +18,7 @@
         <a href="/admin" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -73,7 +73,7 @@
             href="/admin/funcionario"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de funcionários</a>
+          >Lista de funcionários</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -82,13 +82,13 @@
             href="/admin/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de chamados</a>
+          >Lista de chamados</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Listas de
-            relatorios</a>
+          <a href="/admin/relatorio" class="btn btn-outline-dark" type="button">Lista de
+            relatórios</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -97,7 +97,7 @@
             href="/admin/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de professores</a>
+          >Lista de professores</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -106,7 +106,7 @@
             href="/admin/aluno"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de alunos</a>
+          >Lista de alunos</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -138,7 +138,7 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/admin/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -166,6 +166,7 @@
   <h5 class="card-header">{{this.matricula}}</h5>
   <div class="card-body">
     <h5 class="card-title">{{this.usuario}}</h5>
+    <p class="card-text mb-1">Email: {{this.email}}</p>
     <p class="card-text mb-1">Senha: {{this.senha}}</p>
     {{#if telefone_residencial}}
     <p class="card-text mb-1">Telefone celular: {{this.telefone_celular}}</p>

@@ -18,7 +18,7 @@
         <a href="/admin" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -73,7 +73,7 @@
             href="/admin/funcionario"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de funcionários</a>
+          >Lista de funcionários</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -82,13 +82,13 @@
             href="/admin/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de chamados</a>
+          >Lista de chamados</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Listas de
-            relatorios</a>
+          <a href="/admin/relatorio" class="btn btn-outline-dark" type="button">Lista de
+            relatórios</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -97,7 +97,7 @@
             href="/admin/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de professores</a>
+          >Lista de professores</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -106,7 +106,7 @@
             href="/admin/aluno"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de alunos</a>
+          >Lista de alunos</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -138,7 +138,7 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/admin/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -185,7 +185,7 @@
                       value="{{chamado.statusd}}"
                     >{{chamado.statusd}}</option>
                     <option value="Aberto">Aberto</option>
-                    <option value="Andamento">Andamento</option>
+                    <option value="Em Atendimento">Em Atendimento</option>
                     <option value="Fechado">Fechado</option>
                   </select>
                 </div>
@@ -203,6 +203,7 @@
                       id="floatingInput-titulo"
                       placeholder="Titulo"
                       name="titulo"
+                      maxlength="90"
                       value="{{chamado.titulo}}"
                     />
                     <label for="floatingInput-titulo">Título</label>
@@ -222,6 +223,7 @@
                       id="floatingInput-titulo1"
                       placeholder="Assunto"
                       name="assunto"
+                      maxlength="20"
                       value="{{chamado.assunto}}"
                     />
                     <label for="floatingInput-titulo1">Assunto</label>
@@ -372,6 +374,7 @@
                       id="formFileMultiple"
                       name="imagem_alteracao_chamado"
                       accept="image/*"
+                      maxlength="150"
                       multiple
                     />
                     <p class="mb-0 text-danger">* O envio máximo de arquivos são 3</p>
@@ -379,7 +382,7 @@
                   </div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-2 col-lg-1 col-sm-12 me-lg-4">
+                <div class="col-md-2 col-lg-1 col-sm-12 me-lg-5">
                   <input
                     type="submit"
                     class="btn btn-outline-warning botao"

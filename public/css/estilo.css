@@ -50,6 +50,54 @@ input[type='number'] {
   background-size: cover;
   transition: 1s;
 }
+.facebook-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/facebook.png");
+  background-size: cover;
+  transition: 1s;
+}
+.twitter-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/twitter.png");
+  background-size: cover;
+  transition: 1s;
+}
+.instagram-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/instagram.png");
+  background-size: cover;
+  transition: 1s;
+}
+.linkedin-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/linkedin.png");
+  background-size: cover;
+  transition: 1s;
+}
+.github-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/github.png");
+  background-size: cover;
+  transition: 1s;
+}
+.relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/documents.png");
+  background-size: cover;
+  transition: 1s;
+}
 .card-hover:hover > .funcionarios-img {
   width: 64px;
   height: 64px;
@@ -75,6 +123,53 @@ input[type='number'] {
   width: 63.19px;
   height: 63.19px;
   background-image: url('../img/livro.gif');
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/documento.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.facebook-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/facebook.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.twitter-img:hover {
+  width: 85px;
+  height: 85px;
+  display: inline-block;
+  background-image: url("../img/twitter.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.instagram-img:hover {
+  width: 85px;
+  height: 85px;
+  display: inline-block;
+  background-image: url("../img/instagram.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.linkedin-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/linkedin.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.github-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/github.gif");
   background-size: cover;
   transition: 1s;
 }

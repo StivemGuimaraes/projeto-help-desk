@@ -20,7 +20,7 @@
         <a href="/admin" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -75,7 +75,7 @@
             href="/admin/funcionario"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de funcionários</a>
+          >Lista de funcionários</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -84,13 +84,16 @@
             href="/admin/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de chamados</a>
+          >Lista de chamados</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Listas de
-            relatorios</a>
+          <a
+            href="/admin/relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de relatórios</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -99,7 +102,7 @@
             href="/admin/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de professores</a>
+          >Lista de professores</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -108,7 +111,7 @@
             href="/admin/aluno"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de alunos</a>
+          >Lista de alunos</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -140,7 +143,11 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a
+            href="/admin/logout"
+            class="btn btn-outline-danger"
+            type="button"
+          >Sair</a>
         </div>
       </div>
     </div>
@@ -167,7 +174,13 @@
         <div class="card border border-secondary shadow">
           <div class="card-body">
             <div class="text-center">
-              <img src="" alt="logo aqui" class="img-fluid mb-4 mt-4" />
+              <img
+                src="/img/logo_tcc.png"
+                width="160px"
+                height="160px"
+                alt="logo aqui"
+                class="img-fluid mb-4 mt-4"
+              />
             </div>
             <h2 class="text-center text-dark mb-4">Cadastramento do Aluno</h2>
             <form
@@ -186,11 +199,12 @@
 
                   <div class="form-floating mb-4">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       id="matricula"
                       placeholder="user"
                       name="matricula"
+                      maxlength="150"
                       value="{{dados.matricula}}"
                       required
                     />
@@ -217,6 +231,7 @@
                       id="floatingInput"
                       placeholder="user"
                       name="usuario"
+                      maxlength="90"
                       value="{{dados.usuario}}"
                       required
                     />
@@ -224,6 +239,32 @@
                     <div class="valid-feedback">Validado!</div>
                     <div class="invalid-feedback">
                       Por favor, digite seu usuário
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite seu email</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="email"
+                      name="email"
+                      maxlength="100"
+                      value="{{dados.email}}"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu email</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu email
                     </div>
                   </div>
                 </div>

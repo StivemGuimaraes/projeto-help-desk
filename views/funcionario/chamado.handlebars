@@ -1,5 +1,5 @@
 <head>
-  <title>Listas de Chamados</title>
+  <title>Lista de Chamados</title>
 </head>
 <header
   class="shadow fixed-top"
@@ -18,7 +18,7 @@
         <a href="/funcionario" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -80,7 +80,7 @@
             href="/funcionario/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de chamados</a>
+          >Lista de chamados</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -89,7 +89,7 @@
             href="/funcionario/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de professores</a>
+          >Lista de professores</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -98,7 +98,16 @@
             href="/funcionario/aluno"
             class="btn btn-outline-dark"
             type="button"
-          >Listas de alunos</a>
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus relatórios</a>
         </div>
       </div>
       <div class="row mb-3">
@@ -121,13 +130,13 @@
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="" class="btn btn-outline-dark" type="button">Cadastro de
-            relatorios</a>
+          <a href="/funcionario/cadastrar-relatorio" class="btn btn-outline-dark" type="button">Cadastro de
+            relatórios</a>
         </div>
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/funcionario/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -166,7 +175,7 @@
         {{/if}}
       </div>
       <div class="col-sm-12 col-md-11 col-lg-11 p-0">
-        <p class="mb-0 fs-6">{{this.statusd}}</p>
+        <p class="mb-0 me-2 fs-6">{{this.statusd}}</p>
       </div>
     </div>
   </div>
@@ -174,10 +183,16 @@
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapseExample{{this.id}}">
-    <p class="card-text mb-0">{{this.assunto}}</p>
-    <p class="card-text">nome do cliente: {{this.nome_aluno}}</p>
+    <p class="card-text">{{this.assunto}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
-    <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
+    <p class="card-text mb-0">Usuário do cliente: {{this.nome_aluno}}</p>
+    <p class="card-text mb-0">Email do cliente: {{this.email_aluno}}</p>
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_aluno}}</p>
+    {{#if residencial_aluno}}
+    <p class="card-text">Telefone residencial do cliente: {{this.residencial_aluno}}</p>
+    {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
     <div class="row">
@@ -200,10 +215,16 @@
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapse{{this.id}}">
-    <p class="card-text mb-0">{{this.assunto}}</p>
-    <p class="card-text">nome do cliente: {{this.nome_professor}}</p>
+    <p class="card-text">{{this.assunto}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
-    <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
+    <p class="card-text mb-0">Usuário do cliente: {{this.nome_professor}}</p>
+    <p class="card-text mb-0">Email do cliente: {{this.email_professor}}</p>
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
+    {{#if residencial_professor}}
+    <p class="card-text">Telefone residencial do cliente: {{this.residencial_professor}}</p>
+    {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
     <div class="row">

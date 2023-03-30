@@ -5,10 +5,11 @@ const insert_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO funcionario(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?)";
+      "INSERT INTO funcionario(matricula,usuario,email,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?,?)";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.email,
       funcionario.celular,
       funcionario.residencial,
       funcionario.senha,
@@ -18,6 +19,25 @@ const insert_funcionario = async (funcionario) => {
   } catch (error) {
     console.log("deu erro, por alguma causa", error);
     return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*inclusão de relatorio do funcionario*/
+const insert_relatorio = async (relatorio) => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "INSERT INTO relatorio(titulo,conteudo,fk_funcionario) VALUES (?,?,?)";
+    const values = [
+      relatorio.titulo,
+      relatorio.conteudo,
+      relatorio.fk_funcionario,
+    ];
+    await conn.execute(sql, values);
+    console.log("inclusão do relatorio do funcionario feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
   }
 };
 
@@ -39,6 +59,51 @@ const select_funcionarioAll = async () => {
   }
 };
 
+/*seleção de todos os relatorios*/
+const select_relatorioAll = async () => {
+  try {
+    const conn = await bd.con();
+    const sql =
+      "SELECT r.id, r.titulo, r.conteudo, f.usuario AS nome_funcionario FROM relatorio AS r JOIN funcionario AS f ON r.fk_funcionario = f.matricula;";
+    const [relatorio] = await conn.execute(sql);
+    if (relatorio == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento dos relatorios realizado com sucesso");
+      return relatorio;
+    }
+  } catch (error) {
+    console.log("deu error, por alguma causa", error);
+    return "Error";
+  }
+};
+
+/*seleção dos relatorios de um funcionario*/
+const select_relatorio_funcionario = async (funcionario) => {
+  try {
+    if (funcionario[0].eAdmin == 0) {
+      var funcionario_matricula = [funcionario[0].matricula];
+      const conn = await bd.con();
+      const sql =
+        "SELECT r.id, r.titulo, r.conteudo FROM relatorio AS r JOIN funcionario AS f ON r.fk_funcionario = f.matricula WHERE f.matricula = ?;";
+      const [relatorio] = await conn.execute(sql, funcionario_matricula);
+      if (relatorio == "") {
+        return "vazio";
+      } else {
+        console.log(
+          "selecionamento do relatorio de um funcionario realizado com sucesso"
+        );
+        return relatorio;
+      }
+    } else {
+      return "matricula";
+    }
+  } catch (error) {
+    console.log("deu error, por alguma causa", error);
+    return "Error";
+  }
+};
+
 /*seleção da matricula do funcionario*/
 const select_funcionario = async (funcionario) => {
   try {
@@ -53,6 +118,27 @@ const select_funcionario = async (funcionario) => {
         "selecionamento da matricula do funcionario realizado com sucesso"
       );
       return "Matrícula do funcionário já cadastrada no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção da email do funcionario*/
+const select_email = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT email FROM funcionario WHERE email = ?;";
+    const value = [funcionario];
+    const [email] = await conn.execute(sql, value);
+    if (email == "") {
+      return false;
+    } else {
+      console.log(
+        "selecionamento do email do funcionario realizado com sucesso"
+      );
+      return "Email do funcionário já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -144,6 +230,26 @@ const select_funcionario1 = async (matricula) => {
   }
 };
 
+/*seleção de um relatorio*/
+const select_relatorio1 = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT * FROM relatorio WHERE id = ?;";
+    const value = [id];
+    const [relatorio] = await conn.execute(sql, value);
+    if (relatorio == "") {
+      return "vazio";
+    } else {
+      console.log("selecionamento do relatorio realizado com sucesso");
+      return relatorio;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*seleção do usuario do admin*/
 const select_admin = async (matricula) => {
   try {
     const conn = await bd.con();
@@ -154,7 +260,6 @@ const select_admin = async (matricula) => {
     if (admin == "") {
       return "vazio";
     } else {
-      console.log("selecionamento do admin realizado com sucesso");
       return admin;
     }
   } catch (error) {
@@ -163,15 +268,47 @@ const select_admin = async (matricula) => {
   }
 };
 
+/*seleção do usuario do funcionario*/
+const select_funcionario_usuario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT usuario FROM funcionario WHERE matricula = ?;";
+    const value = [matricula];
+    const [funcionario] = await conn.execute(sql, value);
+    if (funcionario == "") {
+      return "vazio";
+    } else {
+      return funcionario;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*alteração de dados do relatorio do funcionario*/
+const update_relatorio = async (relatorio) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE relatorio SET titulo = ?, conteudo = ? WHERE id = ?;";
+    const values = [relatorio.titulo, relatorio.conteudo, relatorio.id];
+    await conn.execute(sql, values);
+    console.log("alteração do relatorio feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
 /*alteração do funcionario*/
 const update_funcionario = async (funcionario) => {
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE funcionario SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE funcionario SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values = [
       funcionario.matricula,
       funcionario.usuario,
+      funcionario.email,
       funcionario.celular,
       funcionario.residencial,
       funcionario.senha,
@@ -217,16 +354,36 @@ const delete_funcionario = async (matricula) => {
   }
 };
 
+/*exclusão do relatorio*/
+const delete_relatorio = async (id) => {
+  try {
+    const conn = await bd.con();
+    const sql = "DELETE FROM relatorio WHERE id = ?;";
+    await conn.execute(sql, [id]);
+    console.log("exclução do relatorio feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
 module.exports = {
   insert_funcionario,
   select_funcionarioAll,
+  select_relatorioAll,
+  select_relatorio_funcionario,
   select_funcionario,
+  select_email,
   select_senha,
   select_celular,
   select_residencial,
   select_funcionario1,
+  select_relatorio1,
   select_admin,
+  select_funcionario_usuario,
   update_funcionario,
+  update_relatorio,
   update_funcionario_senha,
+  insert_relatorio,
   delete_funcionario,
+  delete_relatorio,
 };

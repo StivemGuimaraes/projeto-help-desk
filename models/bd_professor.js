@@ -5,10 +5,11 @@ const insert_professor = async (professor) => {
   try {
     const conn = await bd.con();
     const sql =
-      "INSERT INTO professor(matricula,usuario,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?);";
+      "INSERT INTO professor(matricula,usuario,email,telefone_celular,telefone_residencial,senha) VALUES (?,?,?,?,?,?);";
     const values = [
       professor.matricula,
       professor.usuario,
+      professor.email,
       professor.celular,
       professor.residencial,
       professor.senha,
@@ -53,6 +54,25 @@ const select_professor = async (professor) => {
         "selecionamento da matricula do professor realizado com sucesso"
       );
       return "Matrícula do professor já cadastrada no sistema";
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "Error no sistema tente novamente mais tarde";
+  }
+};
+
+/*seleção da email do professor*/
+const select_email = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT email FROM professor WHERE email = ?";
+    const value = [professor];
+    const [email] = await conn.execute(sql, value);
+    if (email == "") {
+      return false;
+    } else {
+      console.log("selecionamento do email do professor realizado com sucesso");
+      return "Email do professor já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -143,6 +163,24 @@ const select_professor1 = async (matricula) => {
   }
 };
 
+/*seleção de um usuário de um professor*/
+const select_professor_usuario = async (matricula) => {
+  try {
+    const conn = await bd.con();
+    const sql = "SELECT usuario FROM professor WHERE matricula = ?;";
+    const value = [matricula];
+    const [professor] = await conn.execute(sql, value);
+    if (professor == "") {
+      return "vazio";
+    } else {
+      return professor;
+    }
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do chamado e alteração do professor*/
 const delete_update_professor = async (professor) => {
   try {
@@ -152,10 +190,11 @@ const delete_update_professor = async (professor) => {
     await conn.execute(sql, values);
     console.log("deletação do chamado do professor feita com sucesso");
     const sql1 =
-      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE professor SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values1 = [
       professor.matricula,
       professor.usuario,
+      professor.email,
       professor.celular,
       professor.residencial,
       professor.senha,
@@ -174,10 +213,11 @@ const update_professor = async (professor) => {
   try {
     const conn = await bd.con();
     const sql =
-      "UPDATE professor SET matricula = ?, usuario = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
+      "UPDATE professor SET matricula = ?, usuario = ?, email = ?, telefone_celular = ?, telefone_residencial = ?, senha = ? WHERE matricula = ?;";
     const values = [
       professor.matricula,
       professor.usuario,
+      professor.email,
       professor.celular,
       professor.residencial,
       professor.senha,
@@ -229,10 +269,12 @@ module.exports = {
   insert_professor,
   select_professorAll,
   select_professor,
+  select_email,
   select_senha,
   select_celular,
   select_residencial,
   select_professor1,
+  select_professor_usuario,
   delete_update_professor,
   update_professor,
   update_professor_senha,

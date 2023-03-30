@@ -18,7 +18,7 @@
         <a href="/aluno" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
-            src="/img/logo.png"
+            src="/img/logo_tcc.png"
             alt="logo aqui"
             width="90px"
             height="90px"
@@ -92,7 +92,7 @@
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
-          <a href="/" class="btn btn-outline-danger" type="button">Sair</a>
+          <a href="/aluno/logout" class="btn btn-outline-danger" type="button">Sair</a>
         </div>
       </div>
     </div>
@@ -116,18 +116,18 @@
 {{/if}}
   {{#each chamado_aluno}}
   <div class="container w-50 mt-5 mb-5">
-  <div class="card">
+  <div class="card shadow">
   <div class="card-header h-0">
     <div class="row">
       <div class="col-sm-12 col-md-1 col-lg-1">
         {{#if this.i1}}
-        <div class="rounded-circle bg-success w-50 h-75 mt-1 ms-3"></div>
+        <div class="rounded-circle bg-success mt-1 ms-3" style="width: 20px; height: 20px;"></div>
         {{/if}}
         {{#if this.i2}}
-        <div class="rounded-circle bg-warning w-50 h-75 mt-1 ms-3"></div>
+        <div class="rounded-circle bg-warning mt-1 ms-3" style="width: 20px; height: 20px;"></div>
         {{/if}}
         {{#if this.i3}}
-        <div class="rounded-circle bg-danger w-50 h-75 mt-1 ms-3"></div>
+        <div class="rounded-circle bg-danger mt-1 ms-3" style="width: 20px; height: 20px;"></div>
         {{/if}}
       </div>
       <div class="col-sm-12 col-md-11 col-lg-11 p-0">
@@ -138,10 +138,16 @@
   <div class="card-body">
     <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
     <div class="collapse" id="collapse{{this.id}}">
-    <p class="card-text mb-0">{{this.assunto}}</p>
-    <p class="card-text">nome do cliente: {{this.nome_aluno}}</p>
+    <p class="card-text">{{this.assunto}}</p>
     <p class="card-text mb-0">Nível: {{this.nivel}}</p>
-    <p class="card-text">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
+    <p class="card-text mb-0">Usuário do cliente: {{this.nome_aluno}}</p>
+    <p class="card-text mb-0">Email do cliente: {{this.email_aluno}}</p>
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_aluno}}</p>
+    {{#if residencial_aluno}}
+    <p class="card-text">Telefone residencial do cliente: {{this.residencial_aluno}}</p>
+    {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
     <div class="row">

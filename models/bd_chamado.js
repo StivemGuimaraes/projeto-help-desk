@@ -1,5 +1,6 @@
 const bd = require("../conexao");
 
+/*inclusão de dados do chamado*/
 const insert_chamado = async (chamado) => {
   try {
     const conn = await bd.con();
@@ -25,11 +26,12 @@ const insert_chamado = async (chamado) => {
   }
 };
 
+/*seleção de todos os chamados*/
 const select_chamadoAll = async () => {
   try {
     const conn = await bd.con();
     const [chamado] = await conn.execute(
-      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
+      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor, a.email AS email_aluno, p.email AS email_professor, a.telefone_celular AS celular_aluno, p.telefone_celular AS celular_professor, a.telefone_residencial AS residencial_aluno, p.telefone_residencial AS residencial_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
     );
     if (chamado == "") {
       return "vazio";
@@ -49,7 +51,7 @@ const select_chamado1 = async (id) => {
   try {
     const conn = await bd.con();
     const sql =
-      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) where id = ?;";
+      "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, p.usuario AS nome_professor, a.email AS email_aluno, p.email AS email_professor, a.telefone_celular AS celular_aluno, p.telefone_residencial AS residencial_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) where id = ?;";
     const value = [id];
     const [chamado] = await conn.execute(sql, value);
     if (chamado == "") {
@@ -64,12 +66,12 @@ const select_chamado1 = async (id) => {
   }
 };
 
-/*seleção de um usuario*/
+/*seleção de um chamado com imagens*/
 const select_usuario_imagem = async (id) => {
   try {
     const conn = await bd.con();
     const sql =
-      "SELECT c.img1, c.img2, c.img3, a.usuario AS nome_aluno, p.usuario AS nome_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) where id = ?;";
+      "SELECT c.img1, c.img2, c.img3, a.usuario AS nome_aluno, p.usuario AS nome_professor, a.email AS email_aluno, p.email AS email_professor, a.telefone_celular AS celular_aluno, p.telefone_celular AS celular_professor, a.telefone_residencial AS residencial_aluno, p.telefone_residencial AS residencial_professor FROM ((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) where id = ?;";
     const value = [id];
     const [chamado] = await conn.execute(sql, value);
     console.log("selecionamento do chamado realizado com sucesso");
@@ -83,11 +85,10 @@ const select_usuario_imagem = async (id) => {
 const select_chamadoProfessor = async (professor) => {
   try {
     if (professor[0].eAdmin == 2) {
-      console.log(professor[0].matricula);
       var professor_matricula = [professor[0].matricula];
       const conn = await bd.con();
       const sql =
-        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, p.usuario AS nome_professor FROM chamado AS c JOIN professor AS p ON c.fk_professor = p.matricula WHERE p.matricula = ?;";
+        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, p.usuario AS nome_professor, p.email AS email_professor, p.telefone_celular AS celular_professor, p.telefone_residencial AS residencial_professor FROM chamado AS c JOIN professor AS p ON c.fk_professor = p.matricula WHERE p.matricula = ?;";
       const [chamado_professor] = await conn.execute(sql, professor_matricula);
       if (chamado_professor == "") {
         return "vazio";
@@ -110,7 +111,7 @@ const select_chamadoAluno = async (aluno) => {
       var aluno_matricula = [aluno[0].matricula];
       const conn = await bd.con();
       const sql =
-        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula WHERE a.matricula = ?;";
+        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, a.email AS email_aluno, a.telefone_celular AS celular_aluno, a.telefone_residencial AS residencial_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula WHERE a.matricula = ?;";
       const [chamado_aluno] = await conn.execute(sql, aluno_matricula);
       if (chamado_aluno == "") {
         return "vazio";

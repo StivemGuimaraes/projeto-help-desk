@@ -51,7 +51,7 @@ const select_aluno = async (aluno) => {
       return false;
     } else {
       console.log("selecionamento da matricula do aluno realizado com sucesso");
-      return "Matrícula do aluno já cadastrada no sistema";
+      return "Matrícula já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -70,7 +70,7 @@ const select_email = async (aluno) => {
       return false;
     } else {
       console.log("selecionamento do email do aluno realizado com sucesso");
-      return "Email do aluno já cadastrado no sistema";
+      return "Email já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -89,7 +89,7 @@ const select_senha = async (aluno) => {
       return false;
     } else {
       console.log("selecionamento da senha do aluno realizado com sucesso");
-      return "Senha do aluno já cadastrada no sistema";
+      return "Senha já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -110,7 +110,7 @@ const select_celular = async (aluno) => {
       console.log(
         "selecionamento do telefone celular do aluno realizado com sucesso"
       );
-      return "Telefone celular do aluno já cadastrado no sistema";
+      return "Telefone celular já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -132,7 +132,7 @@ const select_residencial = async (aluno) => {
       console.log(
         "selecionamento do telefone residencial do aluno realizado com sucesso"
       );
-      return "Telefone residencial do aluno já cadastrado no sistema";
+      return "Telefone residencial já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);

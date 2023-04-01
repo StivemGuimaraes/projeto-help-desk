@@ -3,18 +3,18 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 #img-hover {
   height: 40px;
   width: 40px;
-  background-image: url('../img/lista-de-reproducao.png');
+  background-image: url("../img/lista-de-reproducao.png");
   background-size: cover;
   transition: 0.5s;
 }
 #img-hover:hover {
-  background-image: url('../img/lista.gif');
+  background-image: url("../img/lista.gif");
   background-size: cover;
   transition: 1s;
 }
@@ -22,7 +22,7 @@ input[type='number'] {
   width: 64px;
   height: 64px;
   display: inline-block;
-  background-image: url('../img/carteira-de-identidade.png');
+  background-image: url("../img/carteira-de-identidade.png");
   background-size: cover;
   transition: 1s;
 }
@@ -30,7 +30,7 @@ input[type='number'] {
   width: 63.19px;
   height: 63.19px;
   display: inline-block;
-  background-image: url('../img/conferencia.png');
+  background-image: url("../img/conferencia.png");
   background-size: cover;
   transition: 1s;
 }
@@ -38,7 +38,7 @@ input[type='number'] {
   width: 63.19px;
   height: 63.19px;
   display: inline-block;
-  background-image: url('../img/professor.png');
+  background-image: url("../img/professor.png");
   background-size: cover;
   transition: 1s;
 }
@@ -46,7 +46,7 @@ input[type='number'] {
   width: 63.19px;
   height: 63.19px;
   display: inline-block;
-  background-image: url('../img/aluna.png');
+  background-image: url("../img/aluna.png");
   background-size: cover;
   transition: 1s;
 }
@@ -101,28 +101,28 @@ input[type='number'] {
 .card-hover:hover > .funcionarios-img {
   width: 64px;
   height: 64px;
-  background-image: url('../img/cracha.gif');
+  background-image: url("../img/cracha.gif");
   background-size: cover;
   transition: 1s;
 }
 .card-hover:hover > .chamados-img {
   width: 63.19px;
   height: 63.19px;
-  background-image: url('../img/suporte-tecnico.gif');
+  background-image: url("../img/suporte-tecnico.gif");
   background-size: cover;
   transition: 1s;
 }
 .card-hover:hover > .professores-img {
   width: 63.19px;
   height: 63.19px;
-  background-image: url('../img/maca.gif');
+  background-image: url("../img/maca.gif");
   background-size: cover;
   transition: 1s;
 }
 .card-hover:hover > .alunos-img {
   width: 63.19px;
   height: 63.19px;
-  background-image: url('../img/livro.gif');
+  background-image: url("../img/livro.gif");
   background-size: cover;
   transition: 1s;
 }
@@ -198,23 +198,17 @@ input[type='number'] {
   .nivel {
     margin-bottom: 16px;
   }
-
 }
-
 .background-img {
-    
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh !important;
   width: 100%;
   overflow: hidden;
-  
-  background-image: url('../img/Bacckground.png');
-  box-shadow: inset 500px 200px 250px #070e12;
+  background-image: url("../img/");
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;
   background-size: cover;
 }

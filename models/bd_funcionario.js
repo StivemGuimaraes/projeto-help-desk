@@ -117,7 +117,7 @@ const select_funcionario = async (funcionario) => {
       console.log(
         "selecionamento da matricula do funcionario realizado com sucesso"
       );
-      return "Matrícula do funcionário já cadastrada no sistema";
+      return "Matrícula já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -138,7 +138,7 @@ const select_email = async (funcionario) => {
       console.log(
         "selecionamento do email do funcionario realizado com sucesso"
       );
-      return "Email do funcionário já cadastrado no sistema";
+      return "Email já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -159,7 +159,7 @@ const select_senha = async (funcionario) => {
       console.log(
         "selecionamento da senha do funcionario realizado com sucesso"
       );
-      return "Senha do funcionário já cadastrada no sistema";
+      return "Senha já cadastrada no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -181,7 +181,7 @@ const select_celular = async (funcionario) => {
       console.log(
         "selecionamento do telefone celular do funcionario realizado com sucesso"
       );
-      return "Telefone celular do funcionário já cadastrado no sistema";
+      return "Telefone celular já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);
@@ -203,7 +203,7 @@ const select_residencial = async (funcionario) => {
       console.log(
         "selecionamento do telefone residencial do funcionario realizado com sucesso"
       );
-      return "Telefone residencial do funcionário já cadastrado no sistema";
+      return "Telefone residencial já cadastrado no sistema";
     }
   } catch (error) {
     console.log("deu error por alguma causa", error);

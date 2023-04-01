@@ -627,7 +627,7 @@ router.get("/chamado", eProfessor, (req, res) => {
       chamado_professor.forEach((valor, i) => {
         if (chamado_professor[i].statusd == "Aberto") {
           chamado_professor[i].i1 = "algo";
-        } else if (chamado_professor[i].statusd == "Andamento") {
+        } else if (chamado_professor[i].statusd == "Em Atendimento") {
           chamado_professor[i].i2 = "algo";
         } else if (chamado_professor[i].statusd == "Fechado") {
           chamado_professor[i].i3 = "algo";

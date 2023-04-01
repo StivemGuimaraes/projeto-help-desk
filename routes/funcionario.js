@@ -1045,7 +1045,7 @@ router.get("/chamado", eFuncionario, (req, res) => {
       chamado.forEach((valor, i) => {
         if (chamado[i].statusd == "Aberto") {
           chamado[i].i1 = "algo";
-        } else if (chamado[i].statusd == "Andamento") {
+        } else if (chamado[i].statusd == "Em Atendimento") {
           chamado[i].i2 = "algo";
         } else if (chamado[i].statusd == "Fechado") {
           chamado[i].i3 = "algo";

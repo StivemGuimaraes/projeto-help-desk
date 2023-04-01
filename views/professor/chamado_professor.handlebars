@@ -164,9 +164,11 @@
     <p class="card-text fw-bold">ENTRE EM CONTATO</p>
     <p class="card-text mb-0">Usuário do cliente: {{this.nome_professor}}</p>
     <p class="card-text mb-0">Email do cliente: {{this.email_professor}}</p>
-    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
     {{#if residencial_professor}}
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
     <p class="card-text">Telefone residencial do cliente: {{this.residencial_professor}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular do cliente: {{this.celular_professor}}</p>
     {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>

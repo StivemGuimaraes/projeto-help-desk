@@ -231,7 +231,7 @@ router.get("/chamado", eAluno, (req, res) => {
       chamado_aluno.forEach((valor, i) => {
         if (chamado_aluno[i].statusd == "Aberto") {
           chamado_aluno[i].i1 = "algo";
-        } else if (chamado_aluno[i].statusd == "Andamento") {
+        } else if (chamado_aluno[i].statusd == "Em Atendimento") {
           chamado_aluno[i].i2 = "algo";
         } else if (chamado_aluno[i].statusd == "Fechado") {
           chamado_aluno[i].i3 = "algo";
@@ -454,10 +454,7 @@ router.get("/logout", (req, res) => {
       req.flash("error_msg", "Error ao deslogar como aluno!!!");
       res.redirect("/");
     } else {
-      req.flash(
-        "sucess_msg",
-        "Deslogado como aluno feito com sucesso!!!"
-      );
+      req.flash("sucess_msg", "Deslogado como aluno feito com sucesso!!!");
       res.redirect("/");
     }
   });

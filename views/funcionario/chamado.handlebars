@@ -189,9 +189,11 @@
     <p class="card-text fw-bold">ENTRE EM CONTATO</p>
     <p class="card-text mb-0">Usuário do cliente: {{this.nome_aluno}}</p>
     <p class="card-text mb-0">Email do cliente: {{this.email_aluno}}</p>
-    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_aluno}}</p>
     {{#if residencial_aluno}}
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_aluno}}</p>
     <p class="card-text">Telefone residencial do cliente: {{this.residencial_aluno}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular do cliente: {{this.celular_aluno}}</p>
     {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
@@ -209,6 +211,7 @@
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_aluno{{this.id}}" class="btn btn-danger">Deletar</a>
+    <a href="" class="btn btn-outline-dark ms-3">Fazer atendimento</a>
     </div>
   </div>
   {{else}}
@@ -221,9 +224,11 @@
     <p class="card-text fw-bold">ENTRE EM CONTATO</p>
     <p class="card-text mb-0">Usuário do cliente: {{this.nome_professor}}</p>
     <p class="card-text mb-0">Email do cliente: {{this.email_professor}}</p>
-    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
     {{#if residencial_professor}}
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
     <p class="card-text">Telefone residencial do cliente: {{this.residencial_professor}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular do cliente: {{this.celular_professor}}</p>
     {{/if}}
     {{#if this.img1}}
     <p class="card-text mb-0">Imagens:</p>
@@ -241,6 +246,7 @@
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_professor{{this.id}}" class="btn btn-danger">Deletar</a>
+    <a href="" class="btn btn-outline-dark ms-3">Fazer atendimento</a>
     </div>
   </div>
   {{/if}}

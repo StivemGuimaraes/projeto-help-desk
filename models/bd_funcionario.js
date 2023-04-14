@@ -249,12 +249,12 @@ const select_relatorio1 = async (id) => {
   }
 };
 
-/*seleção do usuario do admin*/
+/*seleção do usuario e foto de perfil do admin*/
 const select_admin = async (matricula) => {
   try {
     const conn = await bd.con();
     const sql =
-      "SELECT usuario FROM funcionario WHERE matricula = ? AND eAdmin = 1;";
+      "SELECT usuario, foto_perfil FROM funcionario WHERE matricula = ? AND eAdmin = 1;";
     const value = [matricula];
     const [admin] = await conn.execute(sql, value);
     if (admin == "") {
@@ -299,6 +299,7 @@ const update_relatorio = async (relatorio) => {
     return "error";
   }
 };
+
 /*alteração do funcionario*/
 const update_funcionario = async (funcionario) => {
   try {
@@ -338,6 +339,19 @@ const update_funcionario_senha = async (funcionario) => {
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "error";
+  }
+};
+
+/*alteração da foto de perfil do admin*/
+const update_foto_admin = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE funcionario SET foto_perfil = ? WHERE matricula = ?;";
+    const values = [funcionario.foto_perfil, funcionario.matricula];
+    await conn.execute(sql, values);
+    console.log("alteração de foto de perfil do admin feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
   }
 };
 
@@ -383,6 +397,7 @@ module.exports = {
   update_funcionario,
   update_relatorio,
   update_funcionario_senha,
+  update_foto_admin,
   insert_relatorio,
   delete_funcionario,
   delete_relatorio,

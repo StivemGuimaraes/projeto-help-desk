@@ -8,6 +8,7 @@ senha varchar(40) not null,
 telefone_celular varchar(15) not null,
 telefone_residencial varchar(14),
 email varchar(100) not null,
+foto_perfil varchar(150),
 eAdmin int not null default 2
 );
 create table aluno
@@ -18,6 +19,7 @@ senha varchar(40) not null,
 telefone_celular varchar(15),
 telefone_residencial varchar(14),
 email varchar(100) not null,
+foto_perfil varchar(150),
 eAdmin int not null default 3
 );
 create table funcionario
@@ -28,6 +30,7 @@ senha varchar(40) not null,
 telefone_celular varchar(15),
 telefone_residencial varchar(14),
 email varchar(100) not null,
+foto_perfil varchar(150),
 eAdmin int not null default 0
 );
 create table relatorio (

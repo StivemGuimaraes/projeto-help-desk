@@ -14,6 +14,7 @@ const alteracaoAlunoImagem = upload
 const alteracaoProfessorImagem = upload
   .alteracao_professor_imagem()
   .array("imagem_alteracao_chamado", 3);
+const admin_perfil = upload.upload_admin().single("admin_foto");
 var aluno1;
 var professor1;
 var funcionario1;
@@ -21,7 +22,7 @@ var chamado1;
 var relatorio1;
 var usuario;
 
-router.get("/", eAdmin, (req, res) => {
+router.get("/", (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -34,12 +35,44 @@ router.get("/", eAdmin, (req, res) => {
 
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
-      res.render("admin/index", { usuario: "[Você não devia estar aqui!!!]" });
+      res.render("admin/index", {
+        usuario: "[Você não devia estar aqui!!!]",
+        foto: admin[0].foto_perfil,
+      });
     } else if (admin === "error") {
-      res.render("admin/index", { usuario: "[Error com o nome do usuário]" });
+      res.render("admin/index", {
+        usuario: "[Error com o nome do usuário]",
+        foto: admin[0].foto_perfil,
+      });
     } else {
-      res.render("admin/index", { usuario: admin[0].usuario });
+      res.render("admin/index", {
+        usuario: admin[0].usuario,
+        foto: admin[0].foto_perfil,
+      });
     }
+  });
+});
+
+router.post("/", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then(() => {
+        res.redirect("/admin");
+      });
   });
 });
 

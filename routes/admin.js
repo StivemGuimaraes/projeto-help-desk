@@ -21,8 +21,10 @@ var funcionario1;
 var chamado1;
 var relatorio1;
 var usuario;
+var foto_admin;
 
-router.get("/", (req, res) => {
+/*pagina incial do admin*/
+router.get("/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
@@ -45,9 +47,11 @@ router.get("/", (req, res) => {
         foto: admin[0].foto_perfil,
       });
     } else {
+      foto_admin = admin[0].foto_perfil;
       res.render("admin/index", {
         usuario: admin[0].usuario,
         foto: admin[0].foto_perfil,
+        matricula: admin_matricula,
       });
     }
   });
@@ -63,6 +67,12 @@ router.post("/", eAdmin, (req, res) => {
 
     if (typeof req.file === "undefined") {
       req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
     }
 
     bd1
@@ -70,8 +80,12 @@ router.post("/", eAdmin, (req, res) => {
         foto_perfil: req.file.filename,
         matricula: admin_matricula,
       })
-      .then(() => {
-        res.redirect("/admin");
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin");
+        }
       });
   });
 });
@@ -93,16 +107,55 @@ router.get("/cadastrar-professor", eAdmin, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("admin/cadastro_professor", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: admin[0].foto_perfil,
       });
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("admin/cadastro_professor", {
         usuario: "[Error com o nome do usuário]",
+        foto: admin[0].foto_perfil,
       });
     } else {
       usuario = admin[0].usuario;
-      res.render("admin/cadastro_professor", { usuario: admin[0].usuario });
+      foto_admin = admin[0].foto_perfil;
+      res.render("admin/cadastro_professor", {
+        usuario: admin[0].usuario,
+        foto: admin[0].foto_perfil,
+      });
     }
+  });
+});
+
+router.post("/cadastrar-professor/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/cadastrar-professor");
+        }
+      });
   });
 });
 
@@ -130,71 +183,132 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      foto_admin,
+      error,
+      dados,
+    });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      foto_admin,
+      error,
+      dados,
+    });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      foto_admin,
+      error,
+      dados,
+    });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      foto_admin,
+      error,
+      dados,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      foto_admin,
+      error,
+      dados,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      admin_foto,
+      error,
+      dados,
+    });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      admin_foto,
+      error,
+      dados,
+    });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      admin_foto,
+      error,
+      dados,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
 
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      admin_foto,
+      error,
+      dados,
+    });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("admin/cadastro_professor", { usuario, error, dados });
+    res.render("admin/cadastro_professor", {
+      usuario,
+      admin_foto,
+      error,
+      dados,
+    });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/cadastro_professor", { usuario, error, dados });
+        res.render("admin/cadastro_professor", {
+          usuario,
+          admin_foto,
+          error,
+          dados,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/cadastro_professor", { usuario, error, dados });
+            res.render("admin/cadastro_professor", {
+              usuario,
+              admin_foto,
+              error,
+              dados,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("admin/cadastro_professor", {
                   usuario,
+                  admin_foto,
                   error,
                   dados,
                 });
@@ -204,6 +318,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                     error = msg;
                     res.render("admin/cadastro_professor", {
                       usuario,
+                      admin_foto,
                       error,
                       dados,
                     });
@@ -213,6 +328,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                         error = msg;
                         res.render("admin/cadastro_professor", {
                           usuario,
+                          admin_foto,
                           error,
                           dados,
                         });
@@ -222,6 +338,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                             error = msg;
                             res.render("admin/cadastro_professor", {
                               usuario,
+                              admin_foto,
                               error,
                               dados,
                             });
@@ -231,6 +348,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                 error = msg;
                                 res.render("admin/cadastro_professor", {
                                   usuario,
+                                  admin_foto,
                                   error,
                                   dados,
                                 });
@@ -242,6 +360,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                       error = msg;
                                       res.render("admin/cadastro_professor", {
                                         usuario,
+                                        admin_foto,
                                         error,
                                         dados,
                                       });
@@ -255,6 +374,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                               "admin/cadastro_professor",
                                               {
                                                 usuario,
+                                                admin_foto,
                                                 error,
                                                 dados,
                                               }
@@ -269,6 +389,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                   "admin/cadastro_professor",
                                                   {
                                                     usuario,
+                                                    admin_foto,
                                                     error,
                                                     dados,
                                                   }
@@ -285,6 +406,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                         "admin/cadastro_professor",
                                                         {
                                                           usuario,
+                                                          admin_foto,
                                                           error,
                                                           dados,
                                                         }
@@ -301,6 +423,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                               "admin/cadastro_professor",
                                                               {
                                                                 usuario,
+                                                                admin_foto,
                                                                 error,
                                                                 dados,
                                                               }
@@ -315,6 +438,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                   "admin/cadastro_professor",
                                                                   {
                                                                     usuario,
+                                                                    admin_foto,
                                                                     error,
                                                                     dados,
                                                                   }
@@ -334,6 +458,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                           "admin/cadastro_professor",
                                                                           {
                                                                             usuario,
+                                                                            admin_foto,
                                                                             error,
                                                                             dados,
                                                                           }
@@ -358,6 +483,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                   "admin/cadastro_professor",
                                                                                   {
                                                                                     usuario,
+                                                                                    admin_foto,
                                                                                     error,
                                                                                     dados,
                                                                                   }
@@ -403,6 +529,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                         "admin/cadastro_professor",
                                                                                         {
                                                                                           usuario,
+                                                                                          admin_foto,
                                                                                           error,
                                                                                           dados,
                                                                                         }
@@ -414,6 +541,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                         "admin/cadastro_professor",
                                                                                         {
                                                                                           usuario,
+                                                                                          admin_foto,
                                                                                           sucesso,
                                                                                         }
                                                                                       );
@@ -472,16 +600,55 @@ router.get("/cadastrar-funcionario", eAdmin, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("admin/cadastro_funcionario", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: admin[0].foto_perfil,
       });
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("admin/cadastro_funcionario", {
         usuario: "[Error com o nome do usuário]",
+        foto: admin[0].foto_perfil,
       });
     } else {
       usuario = admin[0].usuario;
-      res.render("admin/cadastro_funcionario", { usuario: admin[0].usuario });
+      foto_admin = admin[0].foto_perfil;
+      res.render("admin/cadastro_funcionario", {
+        usuario: admin[0].usuario,
+        foto: admin[0].foto_perfil,
+      });
     }
+  });
+});
+
+router.post("/cadastrar-funcionario/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/cadastrar-funcionario");
+        }
+      });
   });
 });
 
@@ -509,64 +676,124 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("admin/cadastro_funcionario", { usuario, error, dados });
+    res.render("admin/cadastro_funcionario", {
+      usuario,
+      error,
+      foto_admin,
+      dados,
+    });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/cadastro_funcionario", { usuario, error, dados });
+        res.render("admin/cadastro_funcionario", {
+          usuario,
+          error,
+          foto_admin,
+          dados,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/cadastro_funcionario", { usuario, error, dados });
+            res.render("admin/cadastro_funcionario", {
+              usuario,
+              error,
+              foto_admin,
+              dados,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
@@ -574,6 +801,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                 res.render("admin/cadastro_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
                   dados,
                 });
               } else {
@@ -583,6 +811,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                     res.render("admin/cadastro_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
                       dados,
                     });
                   } else {
@@ -592,6 +821,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                         res.render("admin/cadastro_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
                           dados,
                         });
                       } else {
@@ -601,6 +831,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                             res.render("admin/cadastro_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
                               dados,
                             });
                           } else {
@@ -610,6 +841,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                 res.render("admin/cadastro_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
                                   dados,
                                 });
                               } else {
@@ -621,6 +853,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                       res.render("admin/cadastro_funcionario", {
                                         usuario,
                                         error,
+                                        foto_admin,
                                         dados,
                                       });
                                     } else {
@@ -634,6 +867,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
                                                 dados,
                                               }
                                             );
@@ -648,6 +882,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
                                                     dados,
                                                   }
                                                 );
@@ -664,6 +899,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
                                                           dados,
                                                         }
                                                       );
@@ -680,6 +916,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
                                                                 dados,
                                                               }
                                                             );
@@ -694,6 +931,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                   {
                                                                     usuario,
                                                                     error,
+                                                                    foto_admin,
                                                                     dados,
                                                                   }
                                                                 );
@@ -713,6 +951,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                           {
                                                                             usuario,
                                                                             error,
+                                                                            foto_admin,
                                                                             dados,
                                                                           }
                                                                         );
@@ -737,6 +976,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                   {
                                                                                     usuario,
                                                                                     error,
+                                                                                    foto_admin,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -784,6 +1024,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                           {
                                                                                             usuario,
                                                                                             error,
+                                                                                            foto_admin,
                                                                                             dados,
                                                                                           }
                                                                                         );
@@ -794,6 +1035,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                           "admin/cadastro_funcionario",
                                                                                           {
                                                                                             usuario,
+                                                                                            foto_admin,
                                                                                             sucesso,
                                                                                           }
                                                                                         );
@@ -852,16 +1094,55 @@ router.get("/cadastrar-aluno", eAdmin, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("admin/cadastro_aluno", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: admin[0].foto_perfil,
       });
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("admin/cadastro_aluno", {
         usuario: "[Error com o nome do usuário]",
+        foto: admin[0].foto_perfil,
       });
     } else {
       usuario = admin[0].usuario;
-      res.render("admin/cadastro_aluno", { usuario: admin[0].usuario });
+      foto_admin = admin[0].foto_perfil;
+      res.render("admin/cadastro_aluno", {
+        usuario: admin[0].usuario,
+        foto: admin[0].foto_perfil,
+      });
     }
+  });
+});
+
+router.post("/cadastrar-aluno/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/cadastrar-aluno");
+        }
+      });
   });
 });
 
@@ -889,69 +1170,84 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_aluno", { usuario, error, dados });
+    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("admin/cadastro_aluno", { error, dados });
+    res.render("admin/cadastro_aluno", { error, foto_admin, dados });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/cadastro_aluno", { usuario, error, dados });
+        res.render("admin/cadastro_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          dados,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("admin/cadastro_aluno", { usuario, error, dados });
+            res.render("admin/cadastro_aluno", {
+              usuario,
+              error,
+              foto_admin,
+              dados,
+            });
           } else {
             bd2.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
-                res.render("admin/cadastro_aluno", { usuario, error, dados });
+                res.render("admin/cadastro_aluno", {
+                  usuario,
+                  error,
+                  foto_admin,
+                  dados,
+                });
               } else {
                 bd.select_email(req.body.email).then((msg) => {
                   if (msg) {
@@ -959,6 +1255,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                     res.render("admin/cadastro_aluno", {
                       usuario,
                       error,
+                      foto_admin,
                       dados,
                     });
                   } else {
@@ -968,6 +1265,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                         res.render("admin/cadastro_aluno", {
                           usuario,
                           error,
+                          foto_admin,
                           dados,
                         });
                       } else {
@@ -977,6 +1275,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                             res.render("admin/cadastro_aluno", {
                               usuario,
                               error,
+                              foto_admin,
                               dados,
                             });
                           } else {
@@ -986,6 +1285,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                 res.render("admin/cadastro_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
                                   dados,
                                 });
                               } else {
@@ -997,6 +1297,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                       res.render("admin/cadastro_aluno", {
                                         usuario,
                                         error,
+                                        foto_admin,
                                         dados,
                                       });
                                     } else {
@@ -1008,6 +1309,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                             res.render("admin/cadastro_aluno", {
                                               usuario,
                                               error,
+                                              foto_admin,
                                               dados,
                                             });
                                           } else {
@@ -1021,6 +1323,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
                                                     dados,
                                                   }
                                                 );
@@ -1037,6 +1340,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
                                                           dados,
                                                         }
                                                       );
@@ -1053,6 +1357,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
                                                                 dados,
                                                               }
                                                             );
@@ -1067,6 +1372,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                   {
                                                                     usuario,
                                                                     error,
+                                                                    foto_admin,
                                                                     dados,
                                                                   }
                                                                 );
@@ -1086,6 +1392,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                           {
                                                                             usuario,
                                                                             error,
+                                                                            foto_admin,
                                                                             dados,
                                                                           }
                                                                         );
@@ -1110,6 +1417,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                   {
                                                                                     usuario,
                                                                                     error,
+                                                                                    foto_admin,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -1157,6 +1465,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                           {
                                                                                             usuario,
                                                                                             error,
+                                                                                            foto_admin,
                                                                                             dados,
                                                                                           }
                                                                                         );
@@ -1167,6 +1476,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                           "admin/cadastro_aluno",
                                                                                           {
                                                                                             usuario,
+                                                                                            foto_admin,
                                                                                             sucesso,
                                                                                           }
                                                                                         );
@@ -14565,6 +14875,27 @@ router.get("/professor/exclusao/:matricula", eAdmin, (req, res) => {
       res.redirect("/admin/professor");
     }
   });
+});
+
+/*exclusão da foto de perfil do admin*/
+router.get("/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin");
+      }
+    });
 });
 
 /*exclusão do relatorio*/

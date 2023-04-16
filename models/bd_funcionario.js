@@ -352,6 +352,7 @@ const update_foto_admin = async (funcionario) => {
     console.log("alteração de foto de perfil do admin feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
+    return "error";
   }
 };
 

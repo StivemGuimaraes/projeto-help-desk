@@ -76,14 +76,22 @@
               class="rounded-circle mx-auto d-block"
               id="foto_perfil"
               height="100px"
+              width="100px"
               style="cursor: pointer;"
             />
+            <div class="text-center mt-3">
+              <a
+                href="/admin/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
           {{else}}
             <img
               src="\img\do-utilizador.png"
               class="rounded-circle mx-auto d-block"
               id="foto_perfil"
               height="100px"
+              width="100px"
               style="cursor: pointer;"
             />
           {{/if}}

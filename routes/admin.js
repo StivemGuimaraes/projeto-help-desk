@@ -14,7 +14,7 @@ const alteracaoAlunoImagem = upload
 const alteracaoProfessorImagem = upload
   .alteracao_professor_imagem()
   .array("imagem_alteracao_chamado", 3);
-const admin_perfil = upload.upload_admin().single("admin_foto");
+const admin_perfil = upload.upload_admin().single("foto_admin");
 var aluno1;
 var professor1;
 var funcionario1;
@@ -121,6 +121,7 @@ router.get("/cadastrar-professor", eAdmin, (req, res) => {
       res.render("admin/cadastro_professor", {
         usuario: admin[0].usuario,
         foto: admin[0].foto_perfil,
+        matricula: admin_matricula,
       });
     }
   });
@@ -137,11 +138,7 @@ router.post("/cadastrar-professor/foto", eAdmin, (req, res) => {
     if (typeof req.file === "undefined") {
       req.file.filename = null;
     } else if (typeof foto_admin !== "undefined") {
-      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
     }
 
     bd1
@@ -163,6 +160,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -186,6 +185,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     res.render("admin/cadastro_professor", {
       usuario,
       foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -198,6 +198,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     res.render("admin/cadastro_professor", {
       usuario,
       foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -210,6 +211,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     res.render("admin/cadastro_professor", {
       usuario,
       foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -222,6 +224,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     res.render("admin/cadastro_professor", {
       usuario,
       foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -230,6 +233,7 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     res.render("admin/cadastro_professor", {
       usuario,
       foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -237,7 +241,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     error = "Número residencial invalido";
     res.render("admin/cadastro_professor", {
       usuario,
-      admin_foto,
+      foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -249,7 +254,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     error = "Senha invalida";
     res.render("admin/cadastro_professor", {
       usuario,
-      admin_foto,
+      foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -261,7 +267,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     error = "Repetição de senha invalida";
     res.render("admin/cadastro_professor", {
       usuario,
-      admin_foto,
+      foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -270,7 +277,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
 
     res.render("admin/cadastro_professor", {
       usuario,
-      admin_foto,
+      foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -278,7 +286,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
     error = "A senha deve ter no mínimo 8 caracteres";
     res.render("admin/cadastro_professor", {
       usuario,
-      admin_foto,
+      foto_admin,
+      admin_matricula,
       error,
       dados,
     });
@@ -288,7 +297,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
         error = msg;
         res.render("admin/cadastro_professor", {
           usuario,
-          admin_foto,
+          foto_admin,
+          admin_matricula,
           error,
           dados,
         });
@@ -298,7 +308,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
             error = msg;
             res.render("admin/cadastro_professor", {
               usuario,
-              admin_foto,
+              foto_admin,
+              admin_matricula,
               error,
               dados,
             });
@@ -308,7 +319,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                 error = msg;
                 res.render("admin/cadastro_professor", {
                   usuario,
-                  admin_foto,
+                  foto_admin,
+                  admin_matricula,
                   error,
                   dados,
                 });
@@ -318,7 +330,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                     error = msg;
                     res.render("admin/cadastro_professor", {
                       usuario,
-                      admin_foto,
+                      foto_admin,
+                      admin_matricula,
                       error,
                       dados,
                     });
@@ -328,7 +341,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                         error = msg;
                         res.render("admin/cadastro_professor", {
                           usuario,
-                          admin_foto,
+                          foto_admin,
+                          admin_matricula,
                           error,
                           dados,
                         });
@@ -338,7 +352,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                             error = msg;
                             res.render("admin/cadastro_professor", {
                               usuario,
-                              admin_foto,
+                              foto_admin,
+                              admin_matricula,
                               error,
                               dados,
                             });
@@ -348,7 +363,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                 error = msg;
                                 res.render("admin/cadastro_professor", {
                                   usuario,
-                                  admin_foto,
+                                  foto_admin,
+                                  admin_matricula,
                                   error,
                                   dados,
                                 });
@@ -360,7 +376,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                       error = msg;
                                       res.render("admin/cadastro_professor", {
                                         usuario,
-                                        admin_foto,
+                                        foto_admin,
+                                        admin_matricula,
                                         error,
                                         dados,
                                       });
@@ -374,7 +391,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                               "admin/cadastro_professor",
                                               {
                                                 usuario,
-                                                admin_foto,
+                                                foto_admin,
+                                                admin_matricula,
                                                 error,
                                                 dados,
                                               }
@@ -389,7 +407,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                   "admin/cadastro_professor",
                                                   {
                                                     usuario,
-                                                    admin_foto,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     error,
                                                     dados,
                                                   }
@@ -406,7 +425,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                         "admin/cadastro_professor",
                                                         {
                                                           usuario,
-                                                          admin_foto,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           error,
                                                           dados,
                                                         }
@@ -423,7 +443,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                               "admin/cadastro_professor",
                                                               {
                                                                 usuario,
-                                                                admin_foto,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 error,
                                                                 dados,
                                                               }
@@ -438,7 +459,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                   "admin/cadastro_professor",
                                                                   {
                                                                     usuario,
-                                                                    admin_foto,
+                                                                    foto_admin,
+                                                                    admin_matricula,
                                                                     error,
                                                                     dados,
                                                                   }
@@ -458,7 +480,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                           "admin/cadastro_professor",
                                                                           {
                                                                             usuario,
-                                                                            admin_foto,
+                                                                            foto_admin,
+                                                                            admin_matricula,
                                                                             error,
                                                                             dados,
                                                                           }
@@ -483,7 +506,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                   "admin/cadastro_professor",
                                                                                   {
                                                                                     usuario,
-                                                                                    admin_foto,
+                                                                                    foto_admin,
+                                                                                    admin_matricula,
                                                                                     error,
                                                                                     dados,
                                                                                   }
@@ -529,7 +553,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                         "admin/cadastro_professor",
                                                                                         {
                                                                                           usuario,
-                                                                                          admin_foto,
+                                                                                          foto_admin,
+                                                                                          admin_matricula,
                                                                                           error,
                                                                                           dados,
                                                                                         }
@@ -541,7 +566,8 @@ router.post("/cadastrar-professor/nova", eAdmin, (req, res) => {
                                                                                         "admin/cadastro_professor",
                                                                                         {
                                                                                           usuario,
-                                                                                          admin_foto,
+                                                                                          foto_admin,
+                                                                                          admin_matricula,
                                                                                           sucesso,
                                                                                         }
                                                                                       );
@@ -630,11 +656,7 @@ router.post("/cadastrar-funcionario/foto", eAdmin, (req, res) => {
     if (typeof req.file === "undefined") {
       req.file.filename = null;
     } else if (typeof foto_admin !== "undefined") {
-      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
     }
 
     bd1
@@ -656,6 +678,8 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -680,6 +704,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (
@@ -692,6 +717,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (
@@ -704,6 +730,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (
@@ -716,6 +743,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (req.body.celular.length < 15) {
@@ -724,6 +752,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
@@ -732,6 +761,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (
@@ -744,6 +774,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (
@@ -756,6 +787,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (req.body.senha !== req.body.senha2) {
@@ -764,6 +796,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
@@ -772,6 +805,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
       usuario,
       error,
       foto_admin,
+      admin_matricula,
       dados,
     });
   } else {
@@ -782,6 +816,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
           usuario,
           error,
           foto_admin,
+          admin_matricula,
           dados,
         });
       } else {
@@ -792,6 +827,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
               usuario,
               error,
               foto_admin,
+              admin_matricula,
               dados,
             });
           } else {
@@ -802,6 +838,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                   usuario,
                   error,
                   foto_admin,
+                  admin_matricula,
                   dados,
                 });
               } else {
@@ -812,6 +849,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                       usuario,
                       error,
                       foto_admin,
+                      admin_matricula,
                       dados,
                     });
                   } else {
@@ -822,6 +860,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                           usuario,
                           error,
                           foto_admin,
+                          admin_matricula,
                           dados,
                         });
                       } else {
@@ -832,6 +871,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                               usuario,
                               error,
                               foto_admin,
+                              admin_matricula,
                               dados,
                             });
                           } else {
@@ -842,6 +882,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                   usuario,
                                   error,
                                   foto_admin,
+                                  admin_matricula,
                                   dados,
                                 });
                               } else {
@@ -854,6 +895,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                         usuario,
                                         error,
                                         foto_admin,
+                                        admin_matricula,
                                         dados,
                                       });
                                     } else {
@@ -868,6 +910,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                 usuario,
                                                 error,
                                                 foto_admin,
+                                                admin_matricula,
                                                 dados,
                                               }
                                             );
@@ -883,6 +926,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                     usuario,
                                                     error,
                                                     foto_admin,
+                                                    admin_matricula,
                                                     dados,
                                                   }
                                                 );
@@ -900,6 +944,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                           usuario,
                                                           error,
                                                           foto_admin,
+                                                          admin_matricula,
                                                           dados,
                                                         }
                                                       );
@@ -917,6 +962,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                 usuario,
                                                                 error,
                                                                 foto_admin,
+                                                                admin_matricula,
                                                                 dados,
                                                               }
                                                             );
@@ -932,6 +978,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                     usuario,
                                                                     error,
                                                                     foto_admin,
+                                                                    admin_matricula,
                                                                     dados,
                                                                   }
                                                                 );
@@ -952,6 +999,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                             usuario,
                                                                             error,
                                                                             foto_admin,
+                                                                            admin_matricula,
                                                                             dados,
                                                                           }
                                                                         );
@@ -977,6 +1025,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                     usuario,
                                                                                     error,
                                                                                     foto_admin,
+                                                                                    admin_matricula,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -1025,6 +1074,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                             usuario,
                                                                                             error,
                                                                                             foto_admin,
+                                                                                            admin_matricula,
                                                                                             dados,
                                                                                           }
                                                                                         );
@@ -1036,6 +1086,7 @@ router.post("/cadastrar-funcionario/nova", eAdmin, (req, res) => {
                                                                                           {
                                                                                             usuario,
                                                                                             foto_admin,
+                                                                                            admin_matricula,
                                                                                             sucesso,
                                                                                           }
                                                                                         );
@@ -1108,6 +1159,7 @@ router.get("/cadastrar-aluno", eAdmin, (req, res) => {
       res.render("admin/cadastro_aluno", {
         usuario: admin[0].usuario,
         foto: admin[0].foto_perfil,
+        matricula: admin_matricula,
       });
     }
   });
@@ -1124,11 +1176,7 @@ router.post("/cadastrar-aluno/foto", eAdmin, (req, res) => {
     if (typeof req.file === "undefined") {
       req.file.filename = null;
     } else if (typeof foto_admin !== "undefined") {
-      fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
     }
 
     bd1
@@ -1150,6 +1198,8 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -1170,54 +1220,113 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("admin/cadastro_aluno", { usuario, error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("admin/cadastro_aluno", { error, foto_admin, dados });
+    res.render("admin/cadastro_aluno", {
+      error,
+      foto_admin,
+      admin_matricula,
+      dados,
+    });
   } else {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
@@ -1226,6 +1335,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
           usuario,
           error,
           foto_admin,
+          admin_matricula,
           dados,
         });
       } else {
@@ -1236,6 +1346,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
               usuario,
               error,
               foto_admin,
+              admin_matricula,
               dados,
             });
           } else {
@@ -1246,6 +1357,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                   usuario,
                   error,
                   foto_admin,
+                  admin_matricula,
                   dados,
                 });
               } else {
@@ -1256,6 +1368,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                       usuario,
                       error,
                       foto_admin,
+                      admin_matricula,
                       dados,
                     });
                   } else {
@@ -1266,6 +1379,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                           usuario,
                           error,
                           foto_admin,
+                          admin_matricula,
                           dados,
                         });
                       } else {
@@ -1276,6 +1390,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                               usuario,
                               error,
                               foto_admin,
+                              admin_matricula,
                               dados,
                             });
                           } else {
@@ -1286,6 +1401,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                   usuario,
                                   error,
                                   foto_admin,
+                                  admin_matricula,
                                   dados,
                                 });
                               } else {
@@ -1298,6 +1414,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                         usuario,
                                         error,
                                         foto_admin,
+                                        admin_matricula,
                                         dados,
                                       });
                                     } else {
@@ -1310,6 +1427,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                               usuario,
                                               error,
                                               foto_admin,
+                                              admin_matricula,
                                               dados,
                                             });
                                           } else {
@@ -1324,6 +1442,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                     usuario,
                                                     error,
                                                     foto_admin,
+                                                    admin_matricula,
                                                     dados,
                                                   }
                                                 );
@@ -1341,6 +1460,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                           usuario,
                                                           error,
                                                           foto_admin,
+                                                          admin_matricula,
                                                           dados,
                                                         }
                                                       );
@@ -1358,6 +1478,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                 usuario,
                                                                 error,
                                                                 foto_admin,
+                                                                admin_matricula,
                                                                 dados,
                                                               }
                                                             );
@@ -1373,6 +1494,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                     usuario,
                                                                     error,
                                                                     foto_admin,
+                                                                    admin_matricula,
                                                                     dados,
                                                                   }
                                                                 );
@@ -1393,6 +1515,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                             usuario,
                                                                             error,
                                                                             foto_admin,
+                                                                            admin_matricula,
                                                                             dados,
                                                                           }
                                                                         );
@@ -1418,6 +1541,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                     usuario,
                                                                                     error,
                                                                                     foto_admin,
+                                                                                    admin_matricula,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -1466,6 +1590,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                             usuario,
                                                                                             error,
                                                                                             foto_admin,
+                                                                                            admin_matricula,
                                                                                             dados,
                                                                                           }
                                                                                         );
@@ -1477,6 +1602,7 @@ router.post("/cadastrar-aluno/nova", eAdmin, (req, res) => {
                                                                                           {
                                                                                             usuario,
                                                                                             foto_admin,
+                                                                                            admin_matricula,
                                                                                             sucesso,
                                                                                           }
                                                                                         );
@@ -1533,19 +1659,32 @@ router.get("/chamado", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd3.select_chamadoAll().then((chamado) => {
     if (chamado === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("admin/chamado", { usuario, error_mensagem });
+      res.render("admin/chamado", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        error_mensagem,
+      });
     } else if (chamado === "vazio") {
       var aviso_mensagem = "!!! Nenhum chamado cadastrado no sistema !!!";
-      res.render("admin/chamado", { usuario, aviso_mensagem });
+      res.render("admin/chamado", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aviso_mensagem,
+      });
     } else {
       chamado.forEach((valor, i) => {
         if (chamado[i].statusd == "Aberto") {
@@ -1556,8 +1695,42 @@ router.get("/chamado", eAdmin, (req, res) => {
           chamado[i].i3 = "algo";
         }
       });
-      res.render("admin/chamado", { usuario, chamado });
+      res.render("admin/chamado", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        chamado,
+      });
     }
+  });
+});
+
+router.post("/chamado/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/chamado");
+        }
+      });
   });
 });
 
@@ -1576,22 +1749,69 @@ router.get("/relatorio", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd1.select_relatorioAll().then((relatorio) => {
     if (relatorio === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("admin/relatorios", { usuario, error_mensagem });
+      res.render("admin/relatorios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        error_mensagem,
+      });
     } else if (relatorio === "vazio") {
       var aviso_mensagem = "!!! Nenhum relatório cadastrado no sistema !!!";
-      res.render("admin/relatorios", { usuario, aviso_mensagem });
+      res.render("admin/relatorios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aviso_mensagem,
+      });
     } else {
-      res.render("admin/relatorios", { usuario, relatorio });
+      res.render("admin/relatorios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        relatorio,
+      });
     }
+  });
+});
+
+router.post("/relatorio/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/relatorio");
+        }
+      });
   });
 });
 
@@ -1610,22 +1830,69 @@ router.get("/funcionario", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd1.select_funcionarioAll().then((funcionario) => {
     if (funcionario === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("admin/funcionarios", { usuario, error_mensagem });
+      res.render("admin/funcionarios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        error_mensagem,
+      });
     } else if (funcionario === "vazio") {
       var aviso_mensagem = "!!! Nenhum funcionário cadastrado no sistema !!!";
-      res.render("admin/funcionarios", { usuario, aviso_mensagem });
+      res.render("admin/funcionarios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aviso_mensagem,
+      });
     } else {
-      res.render("admin/funcionarios", { usuario, funcionario });
+      res.render("admin/funcionarios", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        funcionario,
+      });
     }
+  });
+});
+
+router.post("/funcionario/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/funcionario");
+        }
+      });
   });
 });
 
@@ -1644,22 +1911,69 @@ router.get("/aluno", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd2.select_alunoAll().then((aluno) => {
     if (aluno === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("admin/alunos", { usuario, error_mensagem });
+      res.render("admin/alunos", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        error_mensagem,
+      });
     } else if (aluno === "vazio") {
       var aviso_mensagem = "!!! Nenhum aluno cadastrado no sistema !!!";
-      res.render("admin/alunos", { usuario, aviso_mensagem });
+      res.render("admin/alunos", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aviso_mensagem,
+      });
     } else {
-      res.render("admin/alunos", { usuario, aluno });
+      res.render("admin/alunos", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aluno,
+      });
     }
+  });
+});
+
+router.post("/aluno/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/aluno");
+        }
+      });
   });
 });
 
@@ -1678,22 +1992,69 @@ router.get("/professor", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd.select_professorAll().then((professor) => {
     if (professor === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("admin/professores", { usuario, error_mensagem });
+      res.render("admin/professores", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        error_mensagem,
+      });
     } else if (professor === "vazio") {
       var aviso_mensagem = "!!! Nenhum professor cadastrado no sistema !!!";
-      res.render("admin/professores", { usuario, aviso_mensagem });
+      res.render("admin/professores", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aviso_mensagem,
+      });
     } else {
-      res.render("admin/professores", { usuario, professor });
+      res.render("admin/professores", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        professor,
+      });
     }
+  });
+});
+
+router.post("/professor/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/professor");
+        }
+      });
   });
 });
 
@@ -1712,10 +2073,13 @@ router.get("/relatorio/alteracao/:id", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd1.select_relatorio1(req.params.id).then((relatorio) => {
@@ -1728,8 +2092,42 @@ router.get("/relatorio/alteracao/:id", eAdmin, (req, res) => {
     } else {
       relatorio = relatorio[0];
       relatorio1 = relatorio;
-      res.render("admin/edicao_relatorio", { usuario, relatorio });
+      res.render("admin/edicao_relatorio", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        relatorio,
+      });
     }
+  });
+});
+
+router.post("/relatorio/alteracao/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/relatorio/alteracao/" + relatorio1.id);
+        }
+      });
   });
 });
 
@@ -1737,6 +2135,8 @@ router.post("/relatorio/alteracao/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -1751,6 +2151,8 @@ router.post("/relatorio/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_relatorio", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       relatorio: relatorio1,
     });
   } else if (
@@ -1762,6 +2164,8 @@ router.post("/relatorio/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_relatorio", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       relatorio: relatorio1,
     });
   } else {
@@ -1798,10 +2202,13 @@ router.get("/aluno/alteracao/:matricula", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd2.select_aluno1(req.params.matricula).then((aluno) => {
@@ -1814,8 +2221,42 @@ router.get("/aluno/alteracao/:matricula", eAdmin, (req, res) => {
     } else {
       aluno = aluno[0];
       aluno1 = aluno;
-      res.render("admin/edicao_aluno", { usuario, aluno });
+      res.render("admin/edicao_aluno", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        aluno,
+      });
     }
+  });
+});
+
+router.post("/aluno/alteracao/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/aluno/alteracao/" + aluno1.matricula);
+        }
+      });
   });
 });
 
@@ -1823,6 +2264,8 @@ router.post("/aluno/alteracao/", (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -1837,6 +2280,8 @@ router.post("/aluno/alteracao/", (req, res) => {
     res.render("admin/edicao_aluno", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -1848,6 +2293,8 @@ router.post("/aluno/alteracao/", (req, res) => {
     res.render("admin/edicao_aluno", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -1859,6 +2306,8 @@ router.post("/aluno/alteracao/", (req, res) => {
     res.render("admin/edicao_aluno", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -1867,18 +2316,38 @@ router.post("/aluno/alteracao/", (req, res) => {
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+    res.render("admin/edicao_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+    res.render("admin/edicao_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+    res.render("admin/edicao_aluno", {
+      usuario,
+      error,
+      foto_admin,
+      admin_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("admin/edicao_aluno", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -1891,7 +2360,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -1899,6 +2374,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -1908,6 +2385,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -1917,6 +2396,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -1926,6 +2407,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -1935,6 +2418,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -1944,6 +2429,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -1955,6 +2442,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                       res.render("admin/edicao_aluno", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -1966,6 +2455,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                             res.render("admin/edicao_aluno", {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               aluno: aluno1,
                                             });
                                           } else {
@@ -1979,6 +2470,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -1995,6 +2488,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -2011,6 +2506,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -2027,6 +2524,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -2041,6 +2540,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                   {
                                                                     usuario,
                                                                     error,
+                                                                    foto_admin,
+                                                                    admin_matricula,
                                                                     aluno:
                                                                       aluno1,
                                                                   }
@@ -2061,6 +2562,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                           {
                                                                             usuario,
                                                                             error,
+                                                                            foto_admin,
+                                                                            admin_matricula,
                                                                             aluno:
                                                                               aluno1,
                                                                           }
@@ -2086,6 +2589,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                                   {
                                                                                     usuario,
                                                                                     error,
+                                                                                    foto_admin,
+                                                                                    admin_matricula,
                                                                                     aluno:
                                                                                       aluno1,
                                                                                   }
@@ -2189,7 +2694,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -2197,6 +2708,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2206,6 +2719,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2215,6 +2730,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2224,6 +2741,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2233,6 +2752,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2243,6 +2764,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -2254,6 +2777,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -2267,6 +2792,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else if (
@@ -2278,6 +2805,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -2291,6 +2820,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -2307,6 +2838,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -2323,6 +2856,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -2410,7 +2945,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -2418,6 +2959,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2427,6 +2970,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2436,6 +2981,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2445,6 +2992,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2454,6 +3003,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2463,6 +3014,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -2474,6 +3027,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                       res.render("admin/edicao_aluno", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -2485,6 +3040,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                             res.render("admin/edicao_aluno", {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               aluno: aluno1,
                                             });
                                           } else {
@@ -2498,6 +3055,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -2514,6 +3073,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -2530,6 +3091,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -2613,7 +3176,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -2621,6 +3190,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2630,6 +3201,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2639,6 +3212,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2648,6 +3223,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2657,6 +3234,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2666,6 +3245,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -2677,6 +3258,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                       res.render("admin/edicao_aluno", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -2688,6 +3271,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                             res.render("admin/edicao_aluno", {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               aluno: aluno1,
                                             });
                                           } else if (
@@ -2699,6 +3284,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                             res.render("admin/edicao_aluno", {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               aluno: aluno1,
                                             });
                                           } else {
@@ -2712,6 +3299,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -2726,6 +3315,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -2742,6 +3333,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -2826,7 +3419,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -2834,6 +3433,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2843,6 +3444,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2852,6 +3455,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2861,6 +3466,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2870,6 +3477,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2880,6 +3489,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -2891,6 +3502,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -2904,6 +3517,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else if (
@@ -2915,6 +3530,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -2928,6 +3545,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -2944,6 +3563,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -2960,6 +3581,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -3046,7 +3669,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3054,6 +3683,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3063,6 +3694,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3072,6 +3705,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3081,6 +3716,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3090,6 +3727,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3100,6 +3739,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3111,6 +3752,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3124,6 +3767,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -3184,7 +3829,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3192,6 +3843,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3201,6 +3854,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3210,6 +3865,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3219,6 +3876,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3228,6 +3887,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3238,6 +3899,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3249,6 +3912,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3262,6 +3927,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -3322,7 +3989,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3330,6 +4003,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3339,6 +4014,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3348,6 +4025,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3357,6 +4036,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3366,6 +4047,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3375,6 +4058,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -3384,6 +4069,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                     res.render("admin/edicao_aluno", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -3395,6 +4082,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                           res.render("admin/edicao_aluno", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -3449,7 +4138,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3457,6 +4152,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3466,6 +4163,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3475,6 +4174,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3484,6 +4185,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3493,6 +4196,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -3503,6 +4208,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3512,6 +4219,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -3521,6 +4230,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                     res.render("admin/edicao_aluno", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -3532,6 +4243,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                           res.render("admin/edicao_aluno", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -3586,7 +4299,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3594,6 +4313,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3603,6 +4324,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3612,6 +4335,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3621,6 +4346,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3630,6 +4357,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -3640,6 +4369,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3649,6 +4380,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -3658,6 +4391,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                     res.render("admin/edicao_aluno", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -3669,6 +4404,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                           res.render("admin/edicao_aluno", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -3723,7 +4460,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3731,6 +4474,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3740,6 +4485,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3749,6 +4496,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3758,6 +4507,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3769,6 +4520,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -3779,6 +4532,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -3788,6 +4543,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3799,6 +4556,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3810,6 +4569,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -3868,7 +4629,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3876,6 +4643,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3885,6 +4654,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3894,6 +4665,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3903,6 +4676,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3912,6 +4687,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3959,7 +4736,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -3967,6 +4750,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3976,6 +4761,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3985,6 +4772,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3994,6 +4783,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4003,6 +4794,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               uusario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4050,7 +4843,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -4058,6 +4857,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4067,6 +4868,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4076,6 +4879,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4085,6 +4890,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4096,6 +4903,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -4140,7 +4949,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -4148,6 +4963,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4157,6 +4974,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -4167,6 +4986,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4176,6 +4997,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4185,6 +5008,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4194,6 +5019,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4238,7 +5065,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
@@ -4246,6 +5079,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4255,6 +5090,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4298,7 +5135,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -4306,6 +5149,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4315,6 +5160,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4324,6 +5171,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4333,6 +5182,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4342,6 +5193,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4352,6 +5205,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -4363,6 +5218,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -4376,6 +5233,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else if (
@@ -4387,6 +5246,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -4400,6 +5261,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -4416,6 +5279,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -4432,6 +5297,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -4516,7 +5383,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -4524,6 +5397,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4533,6 +5408,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4542,6 +5419,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4551,6 +5430,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4560,6 +5441,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -4570,6 +5453,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4579,6 +5464,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                 res.render("admin/edicao_aluno", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -4588,6 +5475,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                     res.render("admin/edicao_aluno", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -4599,6 +5488,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                           res.render("admin/edicao_aluno", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -4653,7 +5544,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -4661,6 +5558,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4670,6 +5569,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4679,6 +5580,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4688,6 +5591,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4699,6 +5604,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -4709,6 +5616,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -4718,6 +5627,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -4729,6 +5640,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -4740,6 +5653,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -4799,7 +5714,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -4807,6 +5728,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4816,6 +5739,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4825,6 +5750,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4834,6 +5761,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4845,6 +5774,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -4855,6 +5786,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -4864,6 +5797,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -4875,6 +5810,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -4886,6 +5823,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -4945,7 +5884,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -4953,6 +5898,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4962,6 +5909,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4971,6 +5920,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4980,6 +5931,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4989,6 +5942,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4999,6 +5954,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                   res.render("admin/edicao_aluno", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -5010,6 +5967,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                         res.render("admin/edicao_aluno", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -5023,6 +5982,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                                               res.render("admin/edicao_aluno", {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 aluno: aluno1,
                                               });
                                             } else {
@@ -5082,7 +6043,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -5090,6 +6057,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5099,6 +6068,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5108,6 +6079,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5117,6 +6090,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5128,6 +6103,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -5175,7 +6152,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -5183,6 +6166,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5192,6 +6177,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5201,6 +6188,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5210,6 +6199,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5219,6 +6210,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -5266,7 +6259,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -5274,6 +6273,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5283,6 +6284,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5292,6 +6295,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5301,6 +6306,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5312,6 +6319,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                               res.render("admin/edicao_aluno", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -5356,7 +6365,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -5364,6 +6379,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5373,6 +6390,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -5383,6 +6402,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5392,6 +6413,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5401,6 +6424,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5410,6 +6435,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -5454,7 +6481,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_email(req.body.email).then((msg) => {
           if (msg) {
@@ -5462,6 +6495,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5471,6 +6506,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5512,7 +6549,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -5520,6 +6563,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5529,6 +6574,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -5539,6 +6586,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5548,6 +6597,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5557,6 +6608,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5566,6 +6619,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -5610,7 +6665,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_celular(req.body.celular).then((msg) => {
           if (msg) {
@@ -5618,6 +6679,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5627,6 +6690,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5668,7 +6733,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
@@ -5676,6 +6747,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5685,6 +6758,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -5695,6 +6770,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5704,6 +6781,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                     res.render("admin/edicao_aluno", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -5713,6 +6792,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                         res.render("admin/edicao_aluno", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -5722,6 +6803,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                             res.render("admin/edicao_aluno", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -5766,7 +6849,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
@@ -5774,6 +6863,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5783,6 +6874,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5821,7 +6914,13 @@ router.post("/aluno/alteracao/", (req, res) => {
     bd.select_senha(req.body.senha).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("admin/edicao_aluno", { usuario, error, aluno: aluno1 });
+        res.render("admin/edicao_aluno", {
+          usuario,
+          error,
+          foto_admin,
+          admin_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd1.select_senha(req.body.senha).then((msg) => {
           if (msg) {
@@ -5829,6 +6928,8 @@ router.post("/aluno/alteracao/", (req, res) => {
             res.render("admin/edicao_aluno", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               aluno: aluno1,
             });
           } else {
@@ -5838,6 +6939,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -5848,6 +6951,8 @@ router.post("/aluno/alteracao/", (req, res) => {
                 res.render("admin/edicao_aluno", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -5920,10 +7025,13 @@ router.get("/professor/alteracao/:matricula", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd.select_professor1(req.params.matricula).then((professor) => {
@@ -5936,8 +7044,42 @@ router.get("/professor/alteracao/:matricula", eAdmin, (req, res) => {
     } else {
       professor = professor[0];
       professor1 = professor;
-      res.render("admin/edicao_professor", { usuario, professor });
+      res.render("admin/edicao_professor", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        professor,
+      });
     }
+  });
+});
+
+router.post("/professor/alteracao/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/professor/alteracao/" + professor1.matricula);
+        }
+      });
   });
 });
 
@@ -5945,6 +7087,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -5959,6 +7103,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (
@@ -5970,6 +7116,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (
@@ -5981,6 +7129,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (
@@ -5992,6 +7142,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (req.body.celular.length < 15) {
@@ -5999,6 +7151,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (req.body.residencial) {
@@ -6007,6 +7161,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
       res.render("admin/edicao_professor", {
         usuario,
         error,
+        foto_admin,
+        admin_matricula,
         professor: professor1,
       });
     }
@@ -6016,6 +7172,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
     res.render("admin/edicao_professor", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       professor: professor1,
     });
   } else if (
@@ -6031,6 +7189,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -6040,6 +7200,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -6049,6 +7211,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -6058,6 +7222,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -6067,6 +7233,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -6076,6 +7244,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -6085,6 +7255,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -6096,6 +7268,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                       res.render("admin/edicao_professor", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         professor: professor1,
                                       });
                                     } else {
@@ -6109,6 +7283,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -6123,6 +7299,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -6139,6 +7317,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -6155,6 +7335,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -6172,6 +7354,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -6187,6 +7371,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                   {
                                                                     usuario,
                                                                     error,
+                                                                    foto_admin,
+                                                                    admin_matricula,
                                                                     professor:
                                                                       professor1,
                                                                   }
@@ -6207,6 +7393,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                           {
                                                                             usuario,
                                                                             error,
+                                                                            foto_admin,
+                                                                            admin_matricula,
                                                                             professor:
                                                                               professor1,
                                                                           }
@@ -6232,6 +7420,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                                   {
                                                                                     usuario,
                                                                                     error,
+                                                                                    foto_admin,
+                                                                                    admin_matricula,
                                                                                     professor:
                                                                                       professor1,
                                                                                   }
@@ -6336,6 +7526,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -6345,6 +7537,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -6354,6 +7548,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -6363,6 +7559,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -6372,6 +7570,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -6381,6 +7581,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -6391,6 +7593,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -6402,6 +7606,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -6417,6 +7623,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -6431,6 +7639,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -6445,6 +7655,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -6461,6 +7673,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -6478,6 +7692,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -6567,6 +7783,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -6576,6 +7794,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -6585,6 +7805,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -6594,6 +7816,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -6603,6 +7827,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -6612,6 +7838,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -6621,6 +7849,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -6632,6 +7862,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                       res.render("admin/edicao_professor", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         professor: professor1,
                                       });
                                     } else {
@@ -6645,6 +7877,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -6659,6 +7893,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -6675,6 +7911,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -6691,6 +7929,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -6778,6 +8018,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -6787,6 +8029,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -6796,6 +8040,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -6805,6 +8051,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -6814,6 +8062,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -6823,6 +8073,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -6832,6 +8084,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -6843,6 +8097,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                       res.render("admin/edicao_professor", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         professor: professor1,
                                       });
                                     } else {
@@ -6856,6 +8112,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -6870,6 +8128,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -6884,6 +8144,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -6898,6 +8160,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -6914,6 +8178,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -7002,6 +8268,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7011,6 +8279,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7020,6 +8290,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7029,6 +8301,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7038,6 +8312,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7047,6 +8323,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7057,6 +8335,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -7068,6 +8348,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -7083,6 +8365,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -7097,6 +8381,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -7111,6 +8397,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -7127,6 +8415,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -7144,6 +8434,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -7232,6 +8524,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7241,6 +8535,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7250,6 +8546,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7259,6 +8557,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7268,6 +8568,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7277,6 +8579,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7287,6 +8591,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -7298,6 +8604,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -7313,6 +8621,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -7376,6 +8686,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7385,6 +8697,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7394,6 +8708,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7403,6 +8719,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7412,6 +8730,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7421,6 +8741,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7431,6 +8753,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -7442,6 +8766,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -7457,6 +8783,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -7520,6 +8848,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7529,6 +8859,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7538,6 +8870,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7547,6 +8881,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7556,6 +8892,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7565,6 +8903,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7574,6 +8914,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -7583,6 +8925,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                     res.render("admin/edicao_professor", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -7594,6 +8938,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                           res.render("admin/edicao_professor", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             professor: professor1,
                                           });
                                         } else {
@@ -7649,6 +8995,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7658,6 +9006,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7667,6 +9017,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7676,6 +9028,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7685,6 +9039,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7694,6 +9050,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -7704,6 +9062,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7713,6 +9073,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -7722,6 +9084,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                     res.render("admin/edicao_professor", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -7733,6 +9097,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                           res.render("admin/edicao_professor", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             professor: professor1,
                                           });
                                         } else {
@@ -7788,6 +9154,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7797,6 +9165,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7806,6 +9176,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7815,6 +9187,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7824,6 +9198,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7833,6 +9209,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -7843,6 +9221,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -7852,6 +9232,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -7861,6 +9243,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                     res.render("admin/edicao_professor", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -7872,6 +9256,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                           res.render("admin/edicao_professor", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             professor: professor1,
                                           });
                                         } else {
@@ -7927,6 +9313,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -7936,6 +9324,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -7945,6 +9335,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -7954,6 +9346,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -7963,6 +9357,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -7974,6 +9370,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -7984,6 +9382,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -7993,6 +9393,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -8004,6 +9406,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -8017,6 +9421,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -8078,6 +9484,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8087,6 +9495,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8096,6 +9506,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8105,6 +9517,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8114,6 +9528,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8123,6 +9539,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -8171,6 +9589,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8180,6 +9600,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8189,6 +9611,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8198,6 +9622,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8207,6 +9633,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8216,6 +9644,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -8264,6 +9694,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8273,6 +9705,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8282,6 +9716,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8291,6 +9727,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8300,6 +9738,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8311,6 +9751,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -8359,6 +9801,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8368,6 +9812,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8377,6 +9823,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -8387,6 +9835,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8396,6 +9846,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8405,6 +9857,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8414,6 +9868,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -8459,6 +9915,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8468,6 +9926,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8477,6 +9937,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8521,6 +9983,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8530,6 +9994,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8539,6 +10005,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8548,6 +10016,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8557,6 +10027,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8566,6 +10038,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -8576,6 +10050,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -8587,6 +10063,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -8602,6 +10080,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -8616,6 +10096,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -8630,6 +10112,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -8646,6 +10130,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -8663,6 +10149,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -8751,6 +10239,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8760,6 +10250,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8769,6 +10261,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8778,6 +10272,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8787,6 +10283,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8796,6 +10294,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -8806,6 +10306,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -8815,6 +10317,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                 res.render("admin/edicao_professor", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -8824,6 +10328,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                     res.render("admin/edicao_professor", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -8835,6 +10341,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                           res.render("admin/edicao_professor", {
                                             usuario,
                                             error,
+                                            foto_admin,
+                                            admin_matricula,
                                             professor: professor1,
                                           });
                                         } else {
@@ -8890,6 +10398,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -8899,6 +10409,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -8908,6 +10420,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -8917,6 +10431,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -8926,6 +10442,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -8937,6 +10455,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -8947,6 +10467,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -8956,6 +10478,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -8967,6 +10491,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -8980,6 +10506,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -9042,6 +10570,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9051,6 +10581,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9060,6 +10592,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9069,6 +10603,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9078,6 +10614,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9089,6 +10627,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -9099,6 +10639,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -9108,6 +10650,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -9119,6 +10663,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -9132,6 +10678,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -9194,6 +10742,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9203,6 +10753,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9212,6 +10764,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9221,6 +10775,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9230,6 +10786,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9239,6 +10797,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -9249,6 +10809,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                   res.render("admin/edicao_professor", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -9260,6 +10822,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                         res.render("admin/edicao_professor", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           professor: professor1,
                                         });
                                       } else {
@@ -9275,6 +10839,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -9337,6 +10903,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9346,6 +10914,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9355,6 +10925,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9364,6 +10936,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9373,6 +10947,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9384,6 +10960,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -9432,6 +11010,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9441,6 +11021,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9450,6 +11032,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9459,6 +11043,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9468,6 +11054,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9477,6 +11065,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -9525,6 +11115,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9534,6 +11126,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9543,6 +11137,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9552,6 +11148,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9561,6 +11159,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9572,6 +11172,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                               res.render("admin/edicao_professor", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -9617,6 +11219,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9626,6 +11230,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9635,6 +11241,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -9645,6 +11253,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9654,6 +11264,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9663,6 +11275,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9672,6 +11286,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -9717,6 +11333,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9726,6 +11344,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9735,6 +11355,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9777,6 +11399,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9786,6 +11410,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9795,6 +11421,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -9805,6 +11433,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9814,6 +11444,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9823,6 +11455,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9832,6 +11466,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -9877,6 +11513,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9886,6 +11524,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9895,6 +11535,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9937,6 +11579,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -9946,6 +11590,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -9955,6 +11601,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -9965,6 +11613,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -9974,6 +11624,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                     res.render("admin/edicao_professor", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -9983,6 +11635,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                         res.render("admin/edicao_professor", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -9992,6 +11646,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                             res.render("admin/edicao_professor", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -10037,6 +11693,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -10046,6 +11704,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -10055,6 +11715,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -10094,6 +11756,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
         res.render("admin/edicao_professor", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           professor: professor1,
         });
       } else {
@@ -10103,6 +11767,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
             res.render("admin/edicao_professor", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               professor: professor1,
             });
           } else {
@@ -10112,6 +11778,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -10122,6 +11790,8 @@ router.post("/professor/alteracao/", eAdmin, (req, res) => {
                 res.render("admin/edicao_professor", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   professor: professor1,
                 });
               } else {
@@ -10190,10 +11860,13 @@ router.get("/funcionario/alteracao/:matricula", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd1.select_funcionario1(req.params.matricula).then((funcionario) => {
@@ -10206,8 +11879,44 @@ router.get("/funcionario/alteracao/:matricula", eAdmin, (req, res) => {
     } else {
       funcionario = funcionario[0];
       funcionario1 = funcionario;
-      res.render("admin/edicao_funcionario", { usuario, funcionario });
+      res.render("admin/edicao_funcionario", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        funcionario,
+      });
     }
+  });
+});
+
+router.post("/funcionario/alteracao/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect(
+            "/admin/funcionario/alteracao/" + funcionario1.matricula
+          );
+        }
+      });
   });
 });
 
@@ -10215,6 +11924,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -10229,6 +11940,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (
@@ -10240,6 +11953,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (
@@ -10251,6 +11966,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (
@@ -10262,6 +11979,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (req.body.celular.length < 15) {
@@ -10269,6 +11988,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
@@ -10276,6 +11997,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (req.body.senha !== req.body.senha2) {
@@ -10283,6 +12006,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
     res.render("admin/edicao_funcionario", {
       usuario,
       error,
+      foto_admin,
+      admin_matricula,
       funcionario: funcionario1,
     });
   } else if (
@@ -10298,6 +12023,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -10307,6 +12034,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -10316,6 +12045,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -10325,6 +12056,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -10334,6 +12067,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -10343,6 +12078,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -10352,6 +12089,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -10363,6 +12102,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                       res.render("admin/edicao_funcionario", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         funcionario: funcionario1,
                                       });
                                     } else {
@@ -10376,6 +12117,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 funcionario: funcionario1,
                                               }
                                             );
@@ -10390,6 +12133,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     funcionario: funcionario1,
                                                   }
                                                 );
@@ -10406,6 +12151,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           funcionario:
                                                             funcionario1,
                                                         }
@@ -10423,6 +12170,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 funcionario:
                                                                   funcionario1,
                                                               }
@@ -10440,6 +12189,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 funcionario:
                                                                   funcionario1,
                                                               }
@@ -10455,6 +12206,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                   {
                                                                     usuario,
                                                                     error,
+                                                                    foto_admin,
+                                                                    admin_matricula,
                                                                     funcionario:
                                                                       funcionario1,
                                                                   }
@@ -10475,6 +12228,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                           {
                                                                             usuario,
                                                                             error,
+                                                                            foto_admin,
+                                                                            admin_matricula,
                                                                             funcionario:
                                                                               funcionario1,
                                                                           }
@@ -10500,6 +12255,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                                   {
                                                                                     usuario,
                                                                                     error,
+                                                                                    foto_admin,
+                                                                                    admin_matricula,
                                                                                     funcionario:
                                                                                       funcionario1,
                                                                                   }
@@ -10606,6 +12363,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -10615,6 +12374,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -10624,6 +12385,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -10633,6 +12396,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -10642,6 +12407,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -10651,6 +12418,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -10661,6 +12430,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -10672,6 +12443,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -10687,6 +12460,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -10701,6 +12476,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -10715,6 +12492,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       funcionario: funcionario1,
                                                     }
                                                   );
@@ -10731,6 +12510,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             funcionario:
                                                               funcionario1,
                                                           }
@@ -10748,6 +12529,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   funcionario:
                                                                     funcionario1,
                                                                 }
@@ -10841,6 +12624,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -10850,6 +12635,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -10859,6 +12646,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -10868,6 +12657,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -10877,6 +12668,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -10886,6 +12679,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -10895,6 +12690,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -10906,6 +12703,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                       res.render("admin/edicao_funcionario", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         funcionario: funcionario1,
                                       });
                                     } else {
@@ -10919,6 +12718,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 funcionario: funcionario1,
                                               }
                                             );
@@ -10933,6 +12734,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     funcionario: funcionario1,
                                                   }
                                                 );
@@ -10949,6 +12752,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           funcionario:
                                                             funcionario1,
                                                         }
@@ -10966,6 +12771,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 funcionario:
                                                                   funcionario1,
                                                               }
@@ -11057,6 +12864,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11066,6 +12875,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11075,6 +12886,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11084,6 +12897,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11093,6 +12908,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11102,6 +12919,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -11111,6 +12930,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -11122,6 +12943,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                       res.render("admin/edicao_funcionario", {
                                         usuario,
                                         error,
+                                        foto_admin,
+                                        admin_matricula,
                                         funcionario: funcionario1,
                                       });
                                     } else {
@@ -11135,6 +12958,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 funcionario: funcionario1,
                                               }
                                             );
@@ -11149,6 +12974,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                               {
                                                 usuario,
                                                 error,
+                                                foto_admin,
+                                                admin_matricula,
                                                 funcionario: funcionario1,
                                               }
                                             );
@@ -11163,6 +12990,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                   {
                                                     usuario,
                                                     error,
+                                                    foto_admin,
+                                                    admin_matricula,
                                                     funcionario: funcionario1,
                                                   }
                                                 );
@@ -11177,6 +13006,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                         {
                                                           usuario,
                                                           error,
+                                                          foto_admin,
+                                                          admin_matricula,
                                                           funcionario:
                                                             funcionario1,
                                                         }
@@ -11194,6 +13025,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                               {
                                                                 usuario,
                                                                 error,
+                                                                foto_admin,
+                                                                admin_matricula,
                                                                 funcionario:
                                                                   funcionario1,
                                                               }
@@ -11286,6 +13119,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11295,6 +13130,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11304,6 +13141,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11313,6 +13152,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11322,6 +13163,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11331,6 +13174,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -11341,6 +13186,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -11352,6 +13199,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -11367,6 +13216,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -11381,6 +13232,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -11395,6 +13248,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       funcionario: funcionario1,
                                                     }
                                                   );
@@ -11411,6 +13266,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             funcionario:
                                                               funcionario1,
                                                           }
@@ -11428,6 +13285,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   funcionario:
                                                                     funcionario1,
                                                                 }
@@ -11520,6 +13379,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11529,6 +13390,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11538,6 +13401,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11547,6 +13412,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11556,6 +13423,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11565,6 +13434,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -11575,6 +13446,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -11586,6 +13459,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -11601,6 +13476,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -11666,6 +13543,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11675,6 +13554,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11684,6 +13565,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11693,6 +13576,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11702,6 +13587,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11711,6 +13598,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -11721,6 +13610,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -11732,6 +13623,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -11747,6 +13640,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -11812,6 +13707,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11821,6 +13718,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11830,6 +13729,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11839,6 +13740,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11848,6 +13751,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11857,6 +13762,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -11866,6 +13773,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -11875,6 +13784,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                     res.render("admin/edicao_funcionario", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       funcionario: funcionario1,
                                     });
                                   } else {
@@ -11888,6 +13799,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                             {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               funcionario: funcionario1,
                                             }
                                           );
@@ -11951,6 +13864,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -11960,6 +13875,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -11969,6 +13886,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -11978,6 +13897,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -11987,6 +13908,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -11996,6 +13919,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else if (
@@ -12006,6 +13931,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12015,6 +13942,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -12024,6 +13953,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                     res.render("admin/edicao_funcionario", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       funcionario: funcionario1,
                                     });
                                   } else {
@@ -12037,6 +13968,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                             {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               funcionario: funcionario1,
                                             }
                                           );
@@ -12100,6 +14033,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12109,6 +14044,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12118,6 +14055,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12127,6 +14066,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12136,6 +14077,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12145,6 +14088,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else if (
@@ -12155,6 +14100,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12164,6 +14111,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -12173,6 +14122,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                     res.render("admin/edicao_funcionario", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       funcionario: funcionario1,
                                     });
                                   } else {
@@ -12186,6 +14137,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                             {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               funcionario: funcionario1,
                                             }
                                           );
@@ -12249,6 +14202,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12258,6 +14213,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12267,6 +14224,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12276,6 +14235,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12285,6 +14246,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12296,6 +14259,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else if (
@@ -12306,6 +14271,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -12315,6 +14282,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -12326,6 +14295,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -12339,6 +14310,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -12402,6 +14375,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12411,6 +14386,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12420,6 +14397,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12429,6 +14408,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12438,6 +14419,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12447,6 +14430,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12497,6 +14482,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12506,6 +14493,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12515,6 +14504,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12524,6 +14515,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12533,6 +14526,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12542,6 +14537,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12592,6 +14589,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12601,6 +14600,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12610,6 +14611,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12619,6 +14622,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12628,6 +14633,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12639,6 +14646,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -12689,6 +14698,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12698,6 +14709,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12707,6 +14720,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else if (
@@ -12717,6 +14732,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12726,6 +14743,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12735,6 +14754,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12744,6 +14765,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12791,6 +14814,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12800,6 +14825,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12809,6 +14836,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12855,6 +14884,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -12864,6 +14895,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -12873,6 +14906,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -12882,6 +14917,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -12891,6 +14928,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -12900,6 +14939,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -12910,6 +14951,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -12921,6 +14964,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -12936,6 +14981,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -12950,6 +14997,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -12964,6 +15013,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                     {
                                                       usuario,
                                                       error,
+                                                      foto_admin,
+                                                      admin_matricula,
                                                       funcionario: funcionario1,
                                                     }
                                                   );
@@ -12980,6 +15031,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                           {
                                                             usuario,
                                                             error,
+                                                            foto_admin,
+                                                            admin_matricula,
                                                             funcionario:
                                                               funcionario1,
                                                           }
@@ -12997,6 +15050,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                                 {
                                                                   usuario,
                                                                   error,
+                                                                  foto_admin,
+                                                                  admin_matricula,
                                                                   funcionario:
                                                                     funcionario1,
                                                                 }
@@ -13089,6 +15144,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13098,6 +15155,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13107,6 +15166,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13116,6 +15177,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13125,6 +15188,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13134,6 +15199,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else if (
@@ -13144,6 +15211,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -13153,6 +15222,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                 res.render("admin/edicao_funcionario", {
                                   usuario,
                                   error,
+                                  foto_admin,
+                                  admin_matricula,
                                   funcionario: funcionario1,
                                 });
                               } else {
@@ -13162,6 +15233,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                     res.render("admin/edicao_funcionario", {
                                       usuario,
                                       error,
+                                      foto_admin,
+                                      admin_matricula,
                                       funcionario: funcionario1,
                                     });
                                   } else {
@@ -13175,6 +15248,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                             {
                                               usuario,
                                               error,
+                                              foto_admin,
+                                              admin_matricula,
                                               funcionario: funcionario1,
                                             }
                                           );
@@ -13238,6 +15313,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13247,6 +15324,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13256,6 +15335,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13265,6 +15346,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13274,6 +15357,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13285,6 +15370,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else if (
@@ -13295,6 +15382,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -13304,6 +15393,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -13315,6 +15406,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -13328,6 +15421,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -13392,6 +15487,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13401,6 +15498,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13410,6 +15509,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13419,6 +15520,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13428,6 +15531,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13439,6 +15544,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else if (
@@ -13449,6 +15556,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -13458,6 +15567,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -13469,6 +15580,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -13482,6 +15595,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -13546,6 +15661,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13555,6 +15672,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13564,6 +15683,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13573,6 +15694,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13582,6 +15705,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13591,6 +15716,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -13601,6 +15728,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                   res.render("admin/edicao_funcionario", {
                                     usuario,
                                     error,
+                                    foto_admin,
+                                    admin_matricula,
                                     funcionario: funcionario1,
                                   });
                                 } else {
@@ -13612,6 +15741,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                         res.render("admin/edicao_funcionario", {
                                           usuario,
                                           error,
+                                          foto_admin,
+                                          admin_matricula,
                                           funcionario: funcionario1,
                                         });
                                       } else {
@@ -13627,6 +15758,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                                                 {
                                                   usuario,
                                                   error,
+                                                  foto_admin,
+                                                  admin_matricula,
                                                   funcionario: funcionario1,
                                                 }
                                               );
@@ -13691,6 +15824,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13700,6 +15835,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13709,6 +15846,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13718,6 +15857,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13727,6 +15868,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13738,6 +15881,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -13788,6 +15933,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13797,6 +15944,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13806,6 +15955,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13815,6 +15966,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13824,6 +15977,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13833,6 +15988,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -13883,6 +16040,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13892,6 +16051,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13901,6 +16062,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -13910,6 +16073,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -13919,6 +16084,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -13930,6 +16097,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                               res.render("admin/edicao_funcionario", {
                                 usuario,
                                 error,
+                                foto_admin,
+                                admin_matricula,
                                 funcionario: funcionario1,
                               });
                             } else {
@@ -13977,6 +16146,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -13986,6 +16157,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -13995,6 +16168,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else if (
@@ -14005,6 +16180,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14014,6 +16191,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -14023,6 +16202,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -14032,6 +16213,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -14079,6 +16262,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14088,6 +16273,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14097,6 +16284,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14141,6 +16330,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14150,6 +16341,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14159,6 +16352,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else if (
@@ -14169,6 +16364,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14178,6 +16375,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -14187,6 +16386,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -14196,6 +16397,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -14243,6 +16446,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14252,6 +16457,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14261,6 +16468,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14305,6 +16514,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14314,6 +16525,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14323,6 +16536,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else if (
@@ -14333,6 +16548,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14342,6 +16559,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                     res.render("admin/edicao_funcionario", {
                       usuario,
                       error,
+                      foto_admin,
+                      admin_matricula,
                       funcionario: funcionario1,
                     });
                   } else {
@@ -14351,6 +16570,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                         res.render("admin/edicao_funcionario", {
                           usuario,
                           error,
+                          foto_admin,
+                          admin_matricula,
                           funcionario: funcionario1,
                         });
                       } else {
@@ -14360,6 +16581,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                             res.render("admin/edicao_funcionario", {
                               usuario,
                               error,
+                              foto_admin,
+                              admin_matricula,
                               funcionario: funcionario1,
                             });
                           } else {
@@ -14407,6 +16630,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14416,6 +16641,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14425,6 +16652,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14466,6 +16695,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
         res.render("admin/edicao_funcionario", {
           usuario,
           error,
+          foto_admin,
+          admin_matricula,
           funcionario: funcionario1,
         });
       } else {
@@ -14475,6 +16706,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
             res.render("admin/edicao_funcionario", {
               usuario,
               error,
+              foto_admin,
+              admin_matricula,
               funcionario: funcionario1,
             });
           } else {
@@ -14484,6 +16717,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else if (
@@ -14494,6 +16729,8 @@ router.post("/funcionario/alteracao", eAdmin, (req, res) => {
                 res.render("admin/edicao_funcionario", {
                   usuario,
                   error,
+                  foto_admin,
+                  admin_matricula,
                   funcionario: funcionario1,
                 });
               } else {
@@ -14566,10 +16803,13 @@ router.get("/chamado/alteracao/:id", eAdmin, (req, res) => {
   bd1.select_admin(admin_matricula).then((admin) => {
     if (admin === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
     } else if (admin === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
     } else {
       usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
     }
   });
   bd3.select_chamado1(req.params.id).then((chamado) => {
@@ -14582,9 +16822,42 @@ router.get("/chamado/alteracao/:id", eAdmin, (req, res) => {
     } else {
       chamado = chamado[0];
       chamado1 = chamado;
-      console.log(chamado1);
-      res.render("admin/edicao_chamado", { usuario, chamado });
+      res.render("admin/edicao_chamado", {
+        usuario,
+        foto_admin,
+        admin_matricula,
+        chamado,
+      });
     }
+  });
+});
+
+router.post("/chamado/alteracao/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
+
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/chamado/alteracao/" + chamado1.id);
+        }
+      });
   });
 });
 
@@ -14592,6 +16865,8 @@ router.post("/chamado/alteracao", eAdmin, (req, res) => {
   try {
     if (req.user[0].eAdmin != 1) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -14644,10 +16919,20 @@ router.post("/chamado/alteracao", eAdmin, (req, res) => {
         if (err instanceof multer.MulterError) {
           err = "Envio de arquivos invalida";
           res.setTimeout(480000);
-          res.render("admin/edicao_chamado", { usuario, error: err });
+          res.render("admin/edicao_chamado", {
+            usuario,
+            foto_admin,
+            admin_matricula,
+            error: err,
+          });
         } else if (err) {
           res.setTimeout(480000);
-          res.render("admin/edicao_chamado", { usuario, error: err });
+          res.render("admin/edicao_chamado", {
+            usuario,
+            foto_admin,
+            admin_matricula,
+            error: err,
+          });
         } else {
           bd3
             .update_chamado({
@@ -14781,10 +17066,20 @@ router.post("/chamado/alteracao", eAdmin, (req, res) => {
         if (err instanceof multer.MulterError) {
           err = "Envio de arquivos invalida";
           res.setTimeout(480000);
-          res.render("admin/edicao_chamado", { usuario, error: err });
+          res.render("admin/edicao_chamado", {
+            usuario,
+            foto_admin,
+            admin_matricula,
+            error: err,
+          });
         } else if (err) {
           res.setTimeout(480000);
-          res.render("admin/edicao_chamado", { usuario, error: err });
+          res.render("admin/edicao_chamado", {
+            usuario,
+            foto_admin,
+            admin_matricula,
+            error: err,
+          });
         } else {
           bd3
             .update_chamado({
@@ -14877,7 +17172,7 @@ router.get("/professor/exclusao/:matricula", eAdmin, (req, res) => {
   });
 });
 
-/*exclusão da foto de perfil do admin*/
+/*exclusão da foto de perfil do admin na pagina inicial*/
 router.get("/exclusao/:matricula", eAdmin, (req, res) => {
   bd1
     .update_foto_admin({
@@ -14894,6 +17189,279 @@ router.get("/exclusao/:matricula", eAdmin, (req, res) => {
           }
         });
         res.redirect("/admin");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de cadastro de professor*/
+router.get("/cadastrar-professor/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/cadastrar-professor");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de cadastro de funcionario*/
+router.get("/cadastrar-funcionario/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/cadastrar-funcionario");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de cadastro de aluno*/
+router.get("/cadastrar-aluno/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/cadastrar-aluno");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alunos*/
+router.get("/aluno/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/aluno");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de professores*/
+router.get("/professor/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/professor");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de funcionarios*/
+router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/funcionario");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de chamados*/
+router.get("/chamado/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/chamado");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de relatorios*/
+router.get("/relatorio/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/relatorio");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alteração de relatorio*/
+router.get("/relatorio/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/relatorio/alteracao/" + relatorio1.id);
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alteração de aluno*/
+router.get("/aluno/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/aluno/alteracao/" + aluno1.matricula);
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alteração do chamado*/
+router.get("/chamado/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/chamado/alteracao/" + chamado1.id);
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alteração do funcionario */
+router.get("/funcionario/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/funcionario/alteracao/" + funcionario1.matricula);
+      }
+    });
+});
+
+/*exclusão da foto de perfil do admin na pagina de alteração do professor*/
+router.get("/professor/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/professor/alteracao/" + professor1.matricula);
       }
     });
 });

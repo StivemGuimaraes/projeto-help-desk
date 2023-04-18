@@ -272,7 +272,8 @@ const select_admin = async (matricula) => {
 const select_funcionario_usuario = async (matricula) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT usuario FROM funcionario WHERE matricula = ?;";
+    const sql =
+      "SELECT usuario, foto_perfil FROM funcionario WHERE matricula = ?;";
     const value = [matricula];
     const [funcionario] = await conn.execute(sql, value);
     if (funcionario == "") {

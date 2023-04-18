@@ -12,8 +12,10 @@ const uploadChamadoAluno = upload
 const alteracaoAlunoImagem = upload
   .alteracao_aluno_imagem()
   .array("imagem_alteracao_chamado", 3);
+const aluno_perfil = upload.upload_aluno().single("aluno_foto");
 var chamado1;
 var usuario;
+var foto_aluno;
 
 /*pagina inicial*/
 router.get("/", eAluno, (req, res) => {
@@ -29,14 +31,55 @@ router.get("/", eAluno, (req, res) => {
 
   bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
     if (aluno === "vazio") {
-      res.render("aluno/index", { usuario: "[Você não devia estar aqui!!!]" });
+      res.render("aluno/index", {
+        usuario: "[Você não devia estar aqui!!!]",
+        foto: aluno[0].foto_perfil,
+      });
     } else if (aluno === "error") {
-      res.render("aluno/index", { usuario: "[Error com o nome do usuário]" });
+      res.render("aluno/index", {
+        usuario: "[Error com o nome do usuário]",
+        foto: aluno[0].foto_perfil,
+      });
     } else {
-      res.render("aluno/index", { usuario: aluno[0].usuario });
+      foto_aluno = aluno[0].foto_perfil;
+      res.render("aluno/index", {
+        usuario: aluno[0].usuario,
+        foto: aluno[0].foto_perfil,
+        matricula: aluno_matricula,
+      });
     }
   });
 });
+
+router.post("/", eAluno, (req, res) => {
+  aluno_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_aluno !== "undefined") {
+      fs.unlink("./public/upload/aluno/" + foto_aluno, () => {});
+    }
+
+    bd1
+      .update_foto_aluno({
+        foto_perfil: req.file.filename,
+        matricula: aluno_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do aluno");
+        } else {
+          res.redirect("/aluno");
+        }
+      });
+  });
+});
+
 router.get("/atendimento", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
@@ -80,16 +123,52 @@ router.get("/criar-chamado", eAluno, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("aluno/criar_chamado", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: aluno[0].foto_perfil,
       });
     } else if (aluno === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("aluno/criar_chamado", {
         usuario: "[Error com o nome do usuário]",
+        foto: aluno[0].foto_perfil,
       });
     } else {
       usuario = aluno[0].usuario;
-      res.render("aluno/criar_chamado", { usuario: aluno[0].usuario });
+      foto_aluno = aluno[0].foto_perfil;
+      res.render("aluno/criar_chamado", {
+        usuario: aluno[0].usuario,
+        foto: aluno[0].foto_perfil,
+        matricula: aluno_matricula,
+      });
     }
+  });
+});
+
+router.post("/criar-chamado/foto", eAluno, (req, res) => {
+  aluno_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_aluno !== "undefined") {
+      fs.unlink("./public/upload/aluno/" + foto_aluno, () => {});
+    }
+
+    bd1
+      .update_foto_aluno({
+        foto_perfil: req.file.filename,
+        matricula: aluno_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do aluno");
+        } else {
+          res.redirect("/aluno/criar-chamado");
+        }
+      });
   });
 });
 
@@ -133,14 +212,26 @@ router.post("/criar-chamado/nova", eAluno, (req, res) => {
       req.body.titulo === null
     ) {
       error = "Titulo invalido";
-      res.render("aluno/criar_chamado", { usuario, error, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (
       !req.body.assunto ||
       typeof req.body.assunto === undefined ||
       req.body.assunto === null
     ) {
       error = "Assunto invalido";
-      res.render("aluno/criar_chamado", { usuario, error, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (
       !req.body.nivel ||
       typeof req.body.nivel === undefined ||
@@ -148,7 +239,13 @@ router.post("/criar-chamado/nova", eAluno, (req, res) => {
       req.body.nivel === "Selecione"
     ) {
       error = "Nível invalido";
-      res.render("aluno/criar_chamado", { usuario, error, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (
       !req.body.prioridade ||
       typeof req.body.prioridade === undefined ||
@@ -156,19 +253,43 @@ router.post("/criar-chamado/nova", eAluno, (req, res) => {
       req.body.prioridade === "Selecione"
     ) {
       error = "Prioridade invalida";
-      res.render("aluno/criar_chamado", { usuario, error, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (
       !req.body.descricao ||
       typeof req.body.descricao === undefined ||
       req.body.descricao === null
     ) {
       error = "Descrição invalida";
-      res.render("aluno/criar_chamado", { usuario, error, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (err instanceof multer.MulterError) {
       err = "Envio de arquivos invalida";
-      res.render("aluno/criar_chamado", { usuario, error: err, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error: err,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else if (err) {
-      res.render("aluno/criar_chamado", { usuario, error: err, dados });
+      res.render("aluno/criar_chamado", {
+        usuario,
+        error: err,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+        dados,
+      });
     } else {
       bd.insert_chamado({
         titulo: req.body.titulo,
@@ -185,10 +306,21 @@ router.post("/criar-chamado/nova", eAluno, (req, res) => {
       }).then((msg) => {
         if (msg) {
           error = msg;
-          res.render("aluno/criar_chamado", { usuario, error, dados });
+          res.render("aluno/criar_chamado", {
+            usuario,
+            error,
+            foto: foto_aluno,
+            matricula: aluno_matricula,
+            dados,
+          });
         } else {
           var sucesso = "Chamado cadastrado com sucesso";
-          res.render("aluno/criar_chamado", { usuario, sucesso });
+          res.render("aluno/criar_chamado", {
+            usuario,
+            sucesso,
+            foto: foto_aluno,
+            matricula: aluno_matricula,
+          });
         }
       });
     }
@@ -210,23 +342,36 @@ router.get("/chamado", eAluno, (req, res) => {
   bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
     if (aluno === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_aluno = aluno[0].foto_perfil;
     } else if (aluno === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_aluno = aluno[0].foto_perfil;
     } else {
       usuario = aluno[0].usuario;
+      foto_aluno = aluno[0].foto_perfil;
     }
   });
   bd.select_chamadoAluno(req.user).then((chamado_aluno) => {
     if (chamado_aluno === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("aluno/chamado_aluno", { usuario, error_mensagem });
+      res.render("aluno/chamado_aluno", {
+        usuario,
+        error_mensagem,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+      });
     } else if (chamado_aluno === "matricula") {
       res.render("aluno/chamado_aluno");
       error_mensagem = "Você não é aluno, o que você tá fazendo aqui?";
       res.render("aluno/chamado_aluno", { usuario, error_mensagem });
     } else if (chamado_aluno === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
-      res.render("aluno/chamado_aluno", { usuario, aviso_mensagem });
+      res.render("aluno/chamado_aluno", {
+        usuario,
+        aviso_mensagem,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+      });
     } else {
       chamado_aluno.forEach((valor, i) => {
         if (chamado_aluno[i].statusd == "Aberto") {
@@ -237,8 +382,42 @@ router.get("/chamado", eAluno, (req, res) => {
           chamado_aluno[i].i3 = "algo";
         }
       });
-      res.render("aluno/chamado_aluno", { usuario, chamado_aluno });
+      res.render("aluno/chamado_aluno", {
+        usuario,
+        chamado_aluno,
+        foto: foto_aluno,
+        matricula: aluno_matricula,
+      });
     }
+  });
+});
+
+router.post("/chamado/foto", eAluno, (req, res) => {
+  aluno_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_aluno !== "undefined") {
+      fs.unlink("./public/upload/aluno/" + foto_aluno, () => {});
+    }
+
+    bd1
+      .update_foto_aluno({
+        foto_perfil: req.file.filename,
+        matricula: aluno_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do aluno");
+        } else {
+          res.redirect("/aluno/chamado");
+        }
+      });
   });
 });
 
@@ -397,6 +576,69 @@ router.post("/chamado/alteracao", eAluno, (req, res) => {
       });
     }
   });
+});
+
+/*exclusão da foto de perfil do aluno na pagina inicial*/
+router.get("/exclusao/:matricula", eAluno, (req, res) => {
+  bd1
+    .update_foto_aluno({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do aluno");
+      } else {
+        fs.unlink("./public/upload/aluno/" + foto_aluno, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/aluno");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do aluno na pagina de chamados*/
+router.get("/chamado/foto/exclusao/:matricula", eAluno, (req, res) => {
+  bd1
+    .update_foto_aluno({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do aluno");
+      } else {
+        fs.unlink("./public/upload/aluno/" + foto_aluno, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/aluno/chamado");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do aluno na pagina de criação de chamados*/
+router.get("/criar-chamado/exclusao/:matricula", eAluno, (req, res) => {
+  bd1
+    .update_foto_aluno({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do aluno");
+      } else {
+        fs.unlink("./public/upload/aluno/" + foto_aluno, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/aluno/criar-chamado");
+      }
+    });
 });
 
 /*exclusão do chamado*/

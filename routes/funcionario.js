@@ -996,6 +996,8 @@ router.post("/cadastrar-relatorio/nova", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin != 0) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -1253,7 +1255,7 @@ router.post("/relatorio/alteracao/", eFuncionario, (req, res) => {
     error = "Título invalido";
     res.render("funcionario/edicao_relatorio", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       relatorio: relatorio1,
     });
   } else if (
@@ -1264,7 +1266,7 @@ router.post("/relatorio/alteracao/", eFuncionario, (req, res) => {
     error = "Relatório invalido";
     res.render("funcionario/edicao_relatorio", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       relatorio: relatorio1,
     });
   } else {
@@ -1301,10 +1303,13 @@ router.get("/professor/alteracao/:matricula", eFuncionario, (req, res) => {
   bd3.select_funcionario_usuario(funcionario_matricula).then((funcionario) => {
     if (funcionario === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_funcionario = funcionario[0].foto_perfil
     } else if (funcionario === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_funcionario = funcionario[0].foto_perfil
     } else {
       usuario = funcionario[0].usuario;
+      foto_funcionario = funcionario[0].foto_perfil
     }
   });
   bd1.select_professor1(req.params.matricula).then((professor) => {
@@ -1317,7 +1322,7 @@ router.get("/professor/alteracao/:matricula", eFuncionario, (req, res) => {
     } else {
       professor = professor[0];
       professor1 = professor;
-      res.render("funcionario/edicao_professor", { usuario, professor });
+      res.render("funcionario/edicao_professor", { usuario, foto: foto_funcionario, matricula: funcionario_matricula, professor });
     }
   });
 });
@@ -1326,6 +1331,8 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin != 0) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -1339,7 +1346,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
     error = "Matricula invalida";
     res.render("funcionario/edicao_professor", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       professor: professor1,
     });
   } else if (
@@ -1361,7 +1368,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
     error = "Email invalido";
     res.render("funcionario/edicao_professor", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       professor: professor1,
     });
   } else if (
@@ -1372,20 +1379,20 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
     error = "Telefone celular invalido";
     res.render("funcionario/edicao_professor", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       professor: professor1,
     });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("funcionario/edicao_professor", { usuario, error, dados });
+    res.render("funcionario/edicao_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("funcionario/edicao_professor", { usuario, error, dados });
+    res.render("funcionario/edicao_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("funcionario/edicao_professor", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       professor: professor1,
     });
   } else if (
@@ -1400,7 +1407,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -1409,7 +1416,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -1418,7 +1425,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -1427,7 +1434,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -1436,7 +1443,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -1445,7 +1452,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -1454,7 +1461,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -1467,7 +1474,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                         "funcionario/edicao_professor",
                                         {
                                           usuario,
-                                          error,
+                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                           professor: professor1,
                                         }
                                       );
@@ -1481,7 +1488,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                               "funcionario/edicao_professor",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -1495,7 +1502,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                   "funcionario/edicao_professor",
                                                   {
                                                     usuario,
-                                                    error,
+                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -1511,7 +1518,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                         "funcionario/edicao_professor",
                                                         {
                                                           usuario,
-                                                          error,
+                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -1527,7 +1534,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                               "funcionario/edicao_professor",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -1544,7 +1551,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                               "funcionario/edicao_professor",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -1559,7 +1566,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                   "funcionario/edicao_professor",
                                                                   {
                                                                     usuario,
-                                                                    error,
+                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                     professor:
                                                                       professor1,
                                                                   }
@@ -1579,7 +1586,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                           "funcionario/edicao_professor",
                                                                           {
                                                                             usuario,
-                                                                            error,
+                                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                             professor:
                                                                               professor1,
                                                                           }
@@ -1604,7 +1611,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                                   "funcionario/edicao_professor",
                                                                                   {
                                                                                     usuario,
-                                                                                    error,
+                                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                                     professor:
                                                                                       professor1,
                                                                                   }
@@ -1710,7 +1717,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -1719,7 +1726,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -1728,7 +1735,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -1737,7 +1744,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -1746,7 +1753,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -1755,7 +1762,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -1765,7 +1772,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -1778,7 +1785,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -1794,7 +1801,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -1808,7 +1815,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -1822,7 +1829,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                     "funcionario/edicao_professor",
                                                     {
                                                       usuario,
-                                                      error,
+                                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -1838,7 +1845,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                           "funcionario/edicao_professor",
                                                           {
                                                             usuario,
-                                                            error,
+                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -1855,7 +1862,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                 "funcionario/edicao_professor",
                                                                 {
                                                                   usuario,
-                                                                  error,
+                                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -1948,7 +1955,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -1957,7 +1964,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -1966,7 +1973,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -1975,7 +1982,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -1984,7 +1991,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -1993,7 +2000,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2002,7 +2009,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -2015,7 +2022,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                         "funcionario/edicao_professor",
                                         {
                                           usuario,
-                                          error,
+                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                           professor: professor1,
                                         }
                                       );
@@ -2029,7 +2036,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                               "funcionario/edicao_professor",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -2043,7 +2050,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                   "funcionario/edicao_professor",
                                                   {
                                                     usuario,
-                                                    error,
+                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -2059,7 +2066,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                         "funcionario/edicao_professor",
                                                         {
                                                           usuario,
-                                                          error,
+                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -2075,7 +2082,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                               "funcionario/edicao_professor",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -2164,7 +2171,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -2173,7 +2180,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -2182,7 +2189,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -2191,7 +2198,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -2200,7 +2207,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -2209,7 +2216,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2218,7 +2225,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -2231,7 +2238,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                         "funcionario/edicao_professor",
                                         {
                                           usuario,
-                                          error,
+                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                           professor: professor1,
                                         }
                                       );
@@ -2245,7 +2252,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                               "funcionario/edicao_professor",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -2259,7 +2266,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                               "funcionario/edicao_professor",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 professor: professor1,
                                               }
                                             );
@@ -2273,7 +2280,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                   "funcionario/edicao_professor",
                                                   {
                                                     usuario,
-                                                    error,
+                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                     professor: professor1,
                                                   }
                                                 );
@@ -2287,7 +2294,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                         "funcionario/edicao_professor",
                                                         {
                                                           usuario,
-                                                          error,
+                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                           professor: professor1,
                                                         }
                                                       );
@@ -2303,7 +2310,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                               "funcionario/edicao_professor",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 professor:
                                                                   professor1,
                                                               }
@@ -2393,7 +2400,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -2402,7 +2409,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -2411,7 +2418,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -2420,7 +2427,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -2429,7 +2436,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -2438,7 +2445,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2448,7 +2455,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -2461,7 +2468,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -2477,7 +2484,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -2491,7 +2498,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -2505,7 +2512,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                     "funcionario/edicao_professor",
                                                     {
                                                       usuario,
-                                                      error,
+                                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -2521,7 +2528,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                           "funcionario/edicao_professor",
                                                           {
                                                             usuario,
-                                                            error,
+                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -2538,7 +2545,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                 "funcionario/edicao_professor",
                                                                 {
                                                                   usuario,
-                                                                  error,
+                                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -2630,7 +2637,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -2639,7 +2646,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -2648,7 +2655,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -2657,7 +2664,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -2666,7 +2673,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -2675,7 +2682,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2685,7 +2692,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -2698,7 +2705,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -2714,7 +2721,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -2779,7 +2786,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -2788,7 +2795,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -2797,7 +2804,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -2806,7 +2813,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -2815,7 +2822,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -2824,7 +2831,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2834,7 +2841,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -2847,7 +2854,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -2863,7 +2870,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -2928,7 +2935,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -2937,7 +2944,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -2946,7 +2953,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -2955,7 +2962,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -2964,7 +2971,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -2973,7 +2980,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -2982,7 +2989,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -2991,7 +2998,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                     error = msg;
                                     res.render("funcionario/edicao_professor", {
                                       usuario,
-                                      error,
+                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -3004,7 +3011,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                             "funcionario/edicao_professor",
                                             {
                                               usuario,
-                                              error,
+                                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                                               professor: professor1,
                                             }
                                           );
@@ -3066,7 +3073,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3075,7 +3082,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3084,7 +3091,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3093,7 +3100,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3102,7 +3109,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3111,7 +3118,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -3121,7 +3128,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -3130,7 +3137,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -3139,7 +3146,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                     error = msg;
                                     res.render("funcionario/edicao_professor", {
                                       usuario,
-                                      error,
+                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -3152,7 +3159,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                             "funcionario/edicao_professor",
                                             {
                                               usuario,
-                                              error,
+                                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                                               professor: professor1,
                                             }
                                           );
@@ -3214,7 +3221,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3223,7 +3230,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3232,7 +3239,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3241,7 +3248,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3250,7 +3257,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3259,7 +3266,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -3269,7 +3276,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -3278,7 +3285,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -3287,7 +3294,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                     error = msg;
                                     res.render("funcionario/edicao_professor", {
                                       usuario,
-                                      error,
+                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -3300,7 +3307,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                             "funcionario/edicao_professor",
                                             {
                                               usuario,
-                                              error,
+                                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                                               professor: professor1,
                                             }
                                           );
@@ -3362,7 +3369,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3371,7 +3378,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3380,7 +3387,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3389,7 +3396,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3398,7 +3405,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3409,7 +3416,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -3419,7 +3426,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -3428,7 +3435,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -3441,7 +3448,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -3455,7 +3462,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -3518,7 +3525,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3527,7 +3534,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3536,7 +3543,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3545,7 +3552,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3554,7 +3561,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3563,7 +3570,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -3613,7 +3620,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3622,7 +3629,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3631,7 +3638,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3640,7 +3647,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3649,7 +3656,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3658,7 +3665,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -3708,7 +3715,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3717,7 +3724,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3726,7 +3733,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3735,7 +3742,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3744,7 +3751,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3755,7 +3762,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -3805,7 +3812,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3814,7 +3821,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3823,7 +3830,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -3833,7 +3840,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3842,7 +3849,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -3851,7 +3858,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -3860,7 +3867,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -3907,7 +3914,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3916,7 +3923,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3925,7 +3932,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3971,7 +3978,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -3980,7 +3987,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -3989,7 +3996,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -3998,7 +4005,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4007,7 +4014,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4016,7 +4023,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -4026,7 +4033,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -4039,7 +4046,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -4055,7 +4062,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -4069,7 +4076,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -4083,7 +4090,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                     "funcionario/edicao_professor",
                                                     {
                                                       usuario,
-                                                      error,
+                                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                       professor: professor1,
                                                     }
                                                   );
@@ -4099,7 +4106,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                           "funcionario/edicao_professor",
                                                           {
                                                             usuario,
-                                                            error,
+                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                             professor:
                                                               professor1,
                                                           }
@@ -4116,7 +4123,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                                 "funcionario/edicao_professor",
                                                                 {
                                                                   usuario,
-                                                                  error,
+                                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                   professor:
                                                                     professor1,
                                                                 }
@@ -4208,7 +4215,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4217,7 +4224,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4226,7 +4233,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4235,7 +4242,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4244,7 +4251,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4253,7 +4260,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else if (
@@ -4263,7 +4270,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -4272,7 +4279,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/edicao_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   professor: professor1,
                                 });
                               } else {
@@ -4281,7 +4288,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                     error = msg;
                                     res.render("funcionario/edicao_professor", {
                                       usuario,
-                                      error,
+                                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                                       professor: professor1,
                                     });
                                   } else {
@@ -4294,7 +4301,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                             "funcionario/edicao_professor",
                                             {
                                               usuario,
-                                              error,
+                                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                                               professor: professor1,
                                             }
                                           );
@@ -4356,7 +4363,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4365,7 +4372,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4374,7 +4381,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4383,7 +4390,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4392,7 +4399,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4403,7 +4410,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -4413,7 +4420,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -4422,7 +4429,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -4435,7 +4442,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -4449,7 +4456,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -4513,7 +4520,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4522,7 +4529,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4531,7 +4538,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4540,7 +4547,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4549,7 +4556,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4560,7 +4567,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else if (
@@ -4570,7 +4577,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -4579,7 +4586,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -4592,7 +4599,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -4606,7 +4613,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -4670,7 +4677,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4679,7 +4686,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4688,7 +4695,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4697,7 +4704,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4706,7 +4713,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4715,7 +4722,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -4725,7 +4732,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                   error = msg;
                                   res.render("funcionario/edicao_professor", {
                                     usuario,
-                                    error,
+                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                     professor: professor1,
                                   });
                                 } else {
@@ -4738,7 +4745,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                           "funcionario/edicao_professor",
                                           {
                                             usuario,
-                                            error,
+                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                             professor: professor1,
                                           }
                                         );
@@ -4754,7 +4761,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                                                 "funcionario/edicao_professor",
                                                 {
                                                   usuario,
-                                                  error,
+                                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                   professor: professor1,
                                                 }
                                               );
@@ -4818,7 +4825,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4827,7 +4834,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4836,7 +4843,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4845,7 +4852,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4854,7 +4861,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4865,7 +4872,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -4915,7 +4922,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -4924,7 +4931,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -4933,7 +4940,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -4942,7 +4949,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -4951,7 +4958,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -4960,7 +4967,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -5010,7 +5017,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5019,7 +5026,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5028,7 +5035,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5037,7 +5044,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -5046,7 +5053,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -5057,7 +5064,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                               error = msg;
                               res.render("funcionario/edicao_professor", {
                                 usuario,
-                                error,
+                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                 professor: professor1,
                               });
                             } else {
@@ -5104,7 +5111,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5113,7 +5120,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5122,7 +5129,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -5132,7 +5139,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5141,7 +5148,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -5150,7 +5157,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -5159,7 +5166,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -5206,7 +5213,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5215,7 +5222,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5224,7 +5231,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5268,7 +5275,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5277,7 +5284,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5286,7 +5293,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -5296,7 +5303,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5305,7 +5312,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -5314,7 +5321,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -5323,7 +5330,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -5370,7 +5377,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5379,7 +5386,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5388,7 +5395,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5432,7 +5439,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5441,7 +5448,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5450,7 +5457,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -5460,7 +5467,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5469,7 +5476,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/edicao_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       professor: professor1,
                     });
                   } else {
@@ -5478,7 +5485,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/edicao_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           professor: professor1,
                         });
                       } else {
@@ -5487,7 +5494,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/edicao_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               professor: professor1,
                             });
                           } else {
@@ -5534,7 +5541,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5543,7 +5550,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5552,7 +5559,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5593,7 +5600,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
         error = msg;
         res.render("funcionario/edicao_professor", {
           usuario,
-          error,
+          error, foto: foto_funcionario, matricula: funcionario_matricula,
           professor: professor1,
         });
       } else {
@@ -5602,7 +5609,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
             error = msg;
             res.render("funcionario/edicao_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               professor: professor1,
             });
           } else {
@@ -5611,7 +5618,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else if (
@@ -5621,7 +5628,7 @@ router.post("/professor/alteracao/", eFuncionario, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("funcionario/edicao_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   professor: professor1,
                 });
               } else {
@@ -5732,7 +5739,7 @@ router.post("/aluno/alteracao/", eFuncionario, (req, res) => {
     error = "Matricula invalida";
     res.render("funcionario/edicao_aluno", {
       usuario,
-      error,
+      error, foto: foto_funcionario, matricula: funcionario_matricula,
       aluno: aluno1,
     });
   } else if (

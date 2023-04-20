@@ -155,7 +155,7 @@ const upload_professor = () =>
   multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.resolve("/public/upload/professor"));
+        cb(null, path.resolve("./public/upload/professor"));
       },
       filename: (req, file, cb) => {
         cb(null, Date.now().toString() + "_" + file.originalname);
@@ -176,6 +176,31 @@ const upload_professor = () =>
     },
   });
 
+const upload_funcionario = () =>
+  multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.resolve("./public/upload/funcionario"));
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now().toString() + "_" + file.originalname);
+      },
+    }),
+    fileFilter: (req, file, cb) => {
+      var extensaoImg = path.extname(file.originalname).toLocaleLowerCase();
+
+      if (
+        extensaoImg == ".jpg" ||
+        extensaoImg == ".png" ||
+        extensaoImg == ".jpeg"
+      ) {
+        return cb(null, true);
+      } else {
+        cb("Apenas envio de arquivos de imagens", false);
+      }
+    },
+});
+
 module.exports = {
   upload_chamado_professor,
   alteracao_professor_imagem,
@@ -184,4 +209,5 @@ module.exports = {
   upload_admin,
   upload_aluno,
   upload_professor,
+  upload_funcionario,
 };

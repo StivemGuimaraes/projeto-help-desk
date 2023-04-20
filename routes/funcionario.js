@@ -14,11 +14,13 @@ const alteracaoAlunoImagem = upload
 const alteracaoProfessorImagem = upload
   .alteracao_professor_imagem()
   .array("imagem_alteracao_chamado", 3);
+const funcionario_perfil = upload.upload_funcionario().single("funcionario_foto");
 var aluno1;
 var professor1;
 var chamado1;
 var relatorio1;
 var usuario;
+var foto_funcionario;
 
 /*pagina inicial do funcionario*/
 router.get("/", eFuncionario, (req, res) => {
@@ -36,14 +38,46 @@ router.get("/", eFuncionario, (req, res) => {
     if (funcionario === "vazio") {
       res.render("funcionario/index", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: funcionario[0].foto_perfil
       });
     } else if (funcionario === "error") {
       res.render("funcionario/index", {
         usuario: "[Error com o nome do usuário]",
+        foto: funcionario[0].foto_perfil
       });
     } else {
-      res.render("funcionario/index", { usuario: funcionario[0].usuario });
+      foto_funcionario = funcionario[0].foto_perfil
+      res.render("funcionario/index", { usuario: funcionario[0].usuario, foto: funcionario[0].foto_perfil, matricula: funcionario_matricula });
     }
+  });
+});
+
+router.post("/", eFuncionario, (req, res) => {
+  funcionario_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_funcionario !== "undefined") {
+      fs.unlink("./public/upload/funcionario/" + foto_funcionario, () => {});
+    }
+
+    bd3
+      .update_foto_funcionario({
+        foto_perfil: req.file.filename,
+        matricula: funcionario_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do funcionario");
+        } else {
+          res.redirect("/funcionario");
+        }
+      });
   });
 });
 
@@ -64,18 +98,52 @@ router.get("/cadastrar-aluno", eFuncionario, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("funcionario/cadastro_aluno", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: funcionario[0].foto_perfil
       });
     } else if (funcionario === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("funcionario/cadastro_aluno", {
         usuario: "[Error com o nome do usuário]",
+        foto: funcionario[0].foto_perfil
       });
     } else {
       usuario = funcionario[0].usuario;
+      foto_funcionario = funcionario[0].foto_perfil
       res.render("funcionario/cadastro_aluno", {
         usuario: funcionario[0].usuario,
+        foto: funcionario[0].foto_perfil,
+        matricula: funcionario_matricula
       });
     }
+  });
+});
+
+router.post("/cadastrar-aluno/foto", eFuncionario, (req, res) => {
+  funcionario_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_funcionario !== "undefined") {
+      fs.unlink("./public/upload/funcionario/" + foto_funcionario, () => {});
+    }
+
+    bd3
+      .update_foto_funcionario({
+        foto_perfil: req.file.filename,
+        matricula: funcionario_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do funcionario");
+        } else {
+          res.redirect("/funcionario/cadastrar-aluno");
+        }
+      });
   });
 });
 
@@ -83,6 +151,8 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin != 0) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -103,71 +173,71 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuario invalido";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+    res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+        res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
       } else {
         bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("funcionario/cadastro_aluno", { usuario, error, dados });
+            res.render("funcionario/cadastro_aluno", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
           } else {
             bd3.select_funcionario(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("funcionario/cadastro_aluno", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   dados,
                 });
               } else {
@@ -176,7 +246,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/cadastro_aluno", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       dados,
                     });
                   } else {
@@ -185,7 +255,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/cadastro_aluno", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           dados,
                         });
                       } else {
@@ -194,7 +264,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/cadastro_aluno", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               dados,
                             });
                           } else {
@@ -203,7 +273,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/cadastro_aluno", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   dados,
                                 });
                               } else {
@@ -214,7 +284,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                       error = msg;
                                       res.render("funcionario/cadastro_aluno", {
                                         usuario,
-                                        error,
+                                        error, foto: foto_funcionario, matricula: funcionario_matricula,
                                         dados,
                                       });
                                     } else {
@@ -227,7 +297,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                               "funcionario/cadastro_aluno",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 dados,
                                               }
                                             );
@@ -241,7 +311,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                   "funcionario/cadastro_aluno",
                                                   {
                                                     usuario,
-                                                    error,
+                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                     dados,
                                                   }
                                                 );
@@ -257,7 +327,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                         "funcionario/cadastro_aluno",
                                                         {
                                                           usuario,
-                                                          error,
+                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                           dados,
                                                         }
                                                       );
@@ -273,7 +343,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                               "funcionario/cadastro_aluno",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 dados,
                                                               }
                                                             );
@@ -287,7 +357,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                                   "funcionario/cadastro_aluno",
                                                                   {
                                                                     usuario,
-                                                                    error,
+                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                     dados,
                                                                   }
                                                                 );
@@ -306,7 +376,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                                           "funcionario/cadastro_aluno",
                                                                           {
                                                                             usuario,
-                                                                            error,
+                                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                             dados,
                                                                           }
                                                                         );
@@ -330,7 +400,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                                                   "funcionario/cadastro_aluno",
                                                                                   {
                                                                                     usuario,
-                                                                                    error,
+                                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -375,7 +445,7 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                                                         "funcionario/cadastro_aluno",
                                                                                         {
                                                                                           usuario,
-                                                                                          error,
+                                                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                                           dados,
                                                                                         }
                                                                                       );
@@ -386,6 +456,8 @@ router.post("/cadastrar-aluno/nova", eFuncionario, (req, res) => {
                                                                                         "funcionario/cadastro_aluno",
                                                                                         {
                                                                                           usuario,
+                                                                                          foto: foto_funcionario,
+                                                                                          matricula: funcionario_matricula,
                                                                                           sucesso,
                                                                                         }
                                                                                       );
@@ -444,18 +516,52 @@ router.get("/cadastrar-professor", eFuncionario, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("funcionario/cadastro_professor", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: funcionario[0].foto_perfil
       });
     } else if (funcionario === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("funcionario/cadastro_professor", {
         usuario: "[Error com o nome do usuário]",
+        foto: funcionario[0].foto_perfil
       });
     } else {
       usuario = funcionario[0].usuario;
+      foto_funcionario = funcionario[0].foto_perfil
       res.render("funcionario/cadastro_professor", {
         usuario: funcionario[0].usuario,
+        foto: funcionario[0].foto_perfil,
+        matricula: funcionario_matricula,
       });
     }
+  });
+});
+
+router.post("/cadastrar-professor/foto", eFuncionario, (req, res) => {
+  funcionario_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_funcionario !== "undefined") {
+      fs.unlink("./public/upload/funcionario/" + foto_funcionario, () => {});
+    }
+
+    bd3
+      .update_foto_funcionario({
+        foto_perfil: req.file.filename,
+        matricula: funcionario_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do funcionario");
+        } else {
+          res.redirect("/funcionario/cadastrar-professor");
+        }
+      });
   });
 });
 
@@ -463,6 +569,8 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin != 0) {
       usuario = "[Você não devia estar aqui!!!]";
+    } else if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -483,66 +591,66 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("funcionario/cadastro_professor", { usuario, error, dados });
+    res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
   } else {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("funcionario/cadastro_professor", { usuario, error, dados });
+        res.render("funcionario/cadastro_professor", { usuario, error, foto: foto_funcionario, matricula: funcionario_matricula, dados });
       } else {
         bd1.select_professor(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("funcionario/cadastro_professor", {
               usuario,
-              error,
+              error, foto: foto_funcionario, matricula: funcionario_matricula,
               dados,
             });
           } else {
@@ -551,7 +659,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                 error = msg;
                 res.render("funcionario/cadastro_professor", {
                   usuario,
-                  error,
+                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                   dados,
                 });
               } else {
@@ -560,7 +668,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                     error = msg;
                     res.render("funcionario/cadastro_professor", {
                       usuario,
-                      error,
+                      error, foto: foto_funcionario, matricula: funcionario_matricula,
                       dados,
                     });
                   } else {
@@ -569,7 +677,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                         error = msg;
                         res.render("funcionario/cadastro_professor", {
                           usuario,
-                          error,
+                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                           dados,
                         });
                       } else {
@@ -578,7 +686,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                             error = msg;
                             res.render("funcionario/cadastro_professor", {
                               usuario,
-                              error,
+                              error, foto: foto_funcionario, matricula: funcionario_matricula,
                               dados,
                             });
                           } else {
@@ -587,7 +695,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                 error = msg;
                                 res.render("funcionario/cadastro_professor", {
                                   usuario,
-                                  error,
+                                  error, foto: foto_funcionario, matricula: funcionario_matricula,
                                   dados,
                                 });
                               } else {
@@ -600,7 +708,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                         "funcionario/cadastro_professor",
                                         {
                                           usuario,
-                                          error,
+                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                           dados,
                                         }
                                       );
@@ -614,7 +722,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                               "funcionario/cadastro_professor",
                                               {
                                                 usuario,
-                                                error,
+                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                 dados,
                                               }
                                             );
@@ -628,7 +736,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                   "funcionario/cadastro_professor",
                                                   {
                                                     usuario,
-                                                    error,
+                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                     dados,
                                                   }
                                                 );
@@ -644,7 +752,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                         "funcionario/cadastro_professor",
                                                         {
                                                           usuario,
-                                                          error,
+                                                          error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                           dados,
                                                         }
                                                       );
@@ -660,7 +768,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                               "funcionario/cadastro_professor",
                                                               {
                                                                 usuario,
-                                                                error,
+                                                                error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                 dados,
                                                               }
                                                             );
@@ -674,7 +782,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                                   "funcionario/cadastro_professor",
                                                                   {
                                                                     usuario,
-                                                                    error,
+                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                     dados,
                                                                   }
                                                                 );
@@ -693,7 +801,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                                           "funcionario/cadastro_professor",
                                                                           {
                                                                             usuario,
-                                                                            error,
+                                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                             dados,
                                                                           }
                                                                         );
@@ -717,7 +825,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                                                   "funcionario/cadastro_professor",
                                                                                   {
                                                                                     usuario,
-                                                                                    error,
+                                                                                    error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -764,7 +872,7 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                                                           "funcionario/cadastro_professor",
                                                                                           {
                                                                                             usuario,
-                                                                                            error,
+                                                                                            error, foto: foto_funcionario, matricula: funcionario_matricula,
                                                                                             dados,
                                                                                           }
                                                                                         );
@@ -775,6 +883,8 @@ router.post("/cadastrar-professor/nova", eFuncionario, (req, res) => {
                                                                                           "funcionario/cadastro_professor",
                                                                                           {
                                                                                             usuario,
+                                                                                            foto: foto_funcionario,
+                                                                                            matricula: funcionario_matricula,
                                                                                             sucesso,
                                                                                           }
                                                                                         );
@@ -833,18 +943,52 @@ router.get("/cadastrar-relatorio", eFuncionario, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("funcionario/cadastro_relatorio", {
         usuario: "[Você não devia estar aqui!!!]",
+        foto: funcionario[0].foto_perfil
       });
     } else if (funcionario === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("funcionario/cadastro_relatorio", {
         usuario: "[Error com o nome do usuário]",
+        foto: funcionario[0].foto_perfil
       });
     } else {
       usuario = funcionario[0].usuario;
+      foto_funcionario = funcionario[0].foto_perfil
       res.render("funcionario/cadastro_relatorio", {
         usuario: funcionario[0].usuario,
+        foto: funcionario[0].foto_perfil,
+        matricula: funcionario_matricula
       });
     }
+  });
+});
+
+router.post("/cadastrar-relatorio/foto", eFuncionario, (req, res) => {
+  funcionario_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_funcionario !== "undefined") {
+      fs.unlink("./public/upload/funcionario/" + foto_funcionario, () => {});
+    }
+
+    bd3
+      .update_foto_funcionario({
+        foto_perfil: req.file.filename,
+        matricula: funcionario_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do funcionario");
+        } else {
+          res.redirect("/funcionario/cadastrar-relatorio");
+        }
+      });
   });
 });
 
@@ -10103,6 +10247,27 @@ router.post("/chamado/alteracao", eFuncionario, (req, res) => {
       }
     });
   }
+});
+
+/*exclusão da foto de perfil do funcionario na pagina de inicial*/
+router.get("/exclusao/:matricula", eFuncionario, (req, res) => {
+  bd3
+    .update_foto_funcionario({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do funcionario");
+      } else {
+        fs.unlink("./public/upload/funcionario/" + foto_funcionario, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/funcionario");
+      }
+    });
 });
 
 /*exclusao do aluno*/

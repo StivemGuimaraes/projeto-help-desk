@@ -167,7 +167,7 @@ const select_professor1 = async (matricula) => {
 const select_professor_usuario = async (matricula) => {
   try {
     const conn = await bd.con();
-    const sql = "SELECT usuario FROM professor WHERE matricula = ?;";
+    const sql = "SELECT usuario, foto_perfil FROM professor WHERE matricula = ?;";
     const value = [matricula];
     const [professor] = await conn.execute(sql, value);
     if (professor == "") {
@@ -250,6 +250,20 @@ const update_professor_senha = async (professor) => {
   }
 };
 
+/*alteração da foto de perfil do professor*/
+const update_foto_professor = async (professor) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE professor SET foto_perfil = ? WHERE matricula = ?;";
+    const values = [professor.foto_perfil, professor.matricula];
+    await conn.execute(sql, values);
+    console.log("alteração de foto de perfil do professor feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
 /*exclusão do professor*/
 const delete_professor = async (matricula) => {
   try {
@@ -278,5 +292,6 @@ module.exports = {
   delete_update_professor,
   update_professor,
   update_professor_senha,
+  update_foto_professor,
   delete_professor,
 };

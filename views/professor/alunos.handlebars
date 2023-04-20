@@ -1,5 +1,6 @@
 <head>
   <title>Listas de Alunos</title>
+  <script defer src="/js/foto_perfil.js"></script>
 </head>
 <header
   class="shadow fixed-top"
@@ -62,6 +63,49 @@
       ></button>
     </div>
     <div class="offcanvas-body">
+      <div class="row mb-4">
+        <form
+          action="/professor/aluno/foto"
+          method="post"
+          enctype="multipart/form-data"
+          id="form_perfil"
+        >
+          {{#if foto}}
+            <img
+              src="/upload/professor/{{foto}}"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+            <div class="text-center mt-3">
+              <a
+                href="/professor/aluno/foto/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
+          {{else}}
+            <img
+              src="\img\do-utilizador.png"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+          {{/if}}
+          <input
+            class="form-control"
+            type="file"
+            name="professor_foto"
+            accept="image/*"
+            maxlength="150"
+            id="input_perfil"
+            hidden
+          />
+        </form>
+      </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a href="/professor" class="btn btn-outline-dark" type="button">Inicio</a>

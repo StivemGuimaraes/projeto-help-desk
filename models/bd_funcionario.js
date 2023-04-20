@@ -347,10 +347,24 @@ const update_funcionario_senha = async (funcionario) => {
 const update_foto_admin = async (funcionario) => {
   try {
     const conn = await bd.con();
-    const sql = "UPDATE funcionario SET foto_perfil = ? WHERE matricula = ?;";
+    const sql = "UPDATE funcionario SET foto_perfil = ? WHERE matricula = ? AND eAdmin = 1;";
     const values = [funcionario.foto_perfil, funcionario.matricula];
     await conn.execute(sql, values);
     console.log("alteração de foto de perfil do admin feita com sucesso");
+  } catch (error) {
+    console.log("deu error por alguma causa", error);
+    return "error";
+  }
+};
+
+/*alteração da foto de perfil do funcionario*/
+const update_foto_funcionario = async (funcionario) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE funcionario SET foto_perfil = ? WHERE matricula = ?;";
+    const values = [funcionario.foto_perfil, funcionario.matricula];
+    await conn.execute(sql, values);
+    console.log("alteração de foto de perfil do funcionario feita com sucesso");
   } catch (error) {
     console.log("deu error por alguma causa", error);
     return "error";
@@ -400,6 +414,7 @@ module.exports = {
   update_relatorio,
   update_funcionario_senha,
   update_foto_admin,
+  update_foto_funcionario,
   insert_relatorio,
   delete_funcionario,
   delete_relatorio,

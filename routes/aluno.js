@@ -436,10 +436,13 @@ router.get("/chamado/alteracao/:id", eAluno, (req, res) => {
   bd1.select_aluno_usuario(aluno_matricula).then((aluno) => {
     if (aluno === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
+      foto_aluno = aluno[0].foto_perfil
     } else if (aluno === "error") {
       usuario = "[Error com o nome do usuário]";
+      foto_aluno = aluno[0].foto_perfil
     } else {
       usuario = aluno[0].usuario;
+      foto_aluno = aluno[0].foto_perfil
     }
   });
   bd.select_chamado1(req.params.id).then((chamado) => {
@@ -452,8 +455,37 @@ router.get("/chamado/alteracao/:id", eAluno, (req, res) => {
     } else {
       chamado = chamado[0];
       chamado1 = chamado;
-      res.render("aluno/edicao_chamado", { usuario, chamado });
+      res.render("aluno/edicao_chamado", { usuario, foto: foto_aluno, matricula: aluno_matricula, chamado });
     }
+  });
+});
+
+router.post("/chamado/alteracao/foto", eAluno, (req, res) => {
+  aluno_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 3) {
+      var aluno_matricula = req.user[0].matricula;
+    } else {
+      var aluno_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_aluno !== "undefined") {
+      fs.unlink("./public/upload/aluno/" + foto_aluno, () => {});
+    }
+
+    bd1
+      .update_foto_aluno({
+        foto_perfil: req.file.filename,
+        matricula: aluno_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do aluno");
+        } else {
+          res.redirect("/aluno/chamado/alteracao/" + chamado1.id);
+        }
+      });
   });
 });
 
@@ -637,6 +669,27 @@ router.get("/criar-chamado/exclusao/:matricula", eAluno, (req, res) => {
           }
         });
         res.redirect("/aluno/criar-chamado");
+      }
+    });
+});
+
+/*exclusão da foto de perfil do aluno na pagina de alteração de chamados*/
+router.get("/chamado/alteracao/exclusao/:matricula", eAluno, (req, res) => {
+  bd1
+    .update_foto_aluno({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do aluno");
+      } else {
+        fs.unlink("./public/upload/aluno/" + foto_aluno, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/aluno/chamado/alteracao/" + chamado1.id);
       }
     });
 });

@@ -1,10 +1,12 @@
 <head>
   <title>Professor</title>
   <script defer src="/js/foto_perfil.js"></script>
+  <script defer src="/js/layout_chatbot.js"></script>
   <script src="https://cdn.botpress.cloud/webchat/v0/inject.js"></script>
 <script src="https://mediafiles.botpress.cloud/434f6ee6-01c1-45de-9836-18ce2d956e70/webchat/config.js" defer></script>
 </head>
 <header
+  id="header-chatbot"
   class="shadow fixed-top"
   style="
         background: rgb(45, 111, 131);
@@ -13,6 +15,7 @@
           rgba(45, 111, 131, 1) 17%,
           rgba(28, 46, 76, 1) 100%
         );
+        z-index: 1;
       "
 >
   <div class="container-fluid">
@@ -61,6 +64,7 @@
         {{usuario}}
       </h5>
       <button
+        id="fechar-botao"
         type="button"
         class="btn-close text-reset"
         data-bs-dismiss="offcanvas"

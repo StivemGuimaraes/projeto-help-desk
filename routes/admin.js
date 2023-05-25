@@ -17643,6 +17643,11 @@ router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
   });
 });
 
+/*chat*/
+router.get("/chat", (req, res) => {
+  res.render("admin/chat");
+});
+
 /*logout do admin*/
 router.get("/logout", (req, res) => {
   req.logout((err) => {

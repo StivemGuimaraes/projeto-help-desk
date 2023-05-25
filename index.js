@@ -14,6 +14,10 @@ const auth_admin = require("./config/auth_admin");
 const auth_funcionario = require("./config/auth_funcionario");
 const auth_professor = require("./config/auth_professor");
 const auth_aluno = require("./config/auth_aluno");
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 const bd = require("./models/bd_aluno");
 const bd1 = require("./models/bd_funcionario");
 const bd2 = require("./models/bd_professor");
@@ -271,7 +275,17 @@ app.post("/", (req, res, next) => {
     });
 });
 
+io.on("connection", (socket) => {
+  console.log("a user connected");
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
+  });
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
 // outros
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("servidor nodemon funcionando finalmente");
 });

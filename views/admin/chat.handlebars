@@ -38,6 +38,30 @@
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
+
+// Lógica do cliente
+const messages = document.getElementById('messages');
+
+socket.on('connect', () => {
+  socket.emit('joinRoom', 'sala1');
+});
+
+socket.on('message', (message) => {
+  const newMessage = document.createElement('div');
+  newMessage.innerText = message;
+  messages.appendChild(newMessage);
+});
+
+function sendMessage() {
+  const input = document.getElementById('messageInput');
+  const message = input.value;
+  socket.emit('chatMessage', {
+    room: 'sala1',
+    message: message,
+  });
+  input.value = '';
+}
+  
 </script>
     </form>
   </main>

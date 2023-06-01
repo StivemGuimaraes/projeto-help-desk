@@ -275,15 +275,77 @@ app.post("/", (req, res, next) => {
     });
 });
 
+
+const rooms = {};
+
 io.on("connection", (socket) => {
   console.log("a user connected");
+//new
+
+  /*socket.on('joinRoom', (room) => {
+    socket.join(room);
+    console.log(`Usuário entrou na sala: ${room}`);
+  });
+
+  socket.on('leaveRoom', (room) => {
+    socket.leave(room);
+    console.log(`Usuário saiu da sala: ${room}`);
+  });
+
+  socket.on('chatMessage', (data) => {
+    io.to(data.room).emit('message', data.message);
+    console.log(`Nova mensagem na sala ${data.room}: ${data.message}`);
+  }); */
+
+   // Evento para entrar em uma sala específica
+   socket.on('join', (room) => {
+    // Verifica se a sala existe, caso contrário, cria uma nova
+    if (!rooms[room]) {
+      rooms[room] = [];
+    }
+
+    // Adiciona o usuário à sala
+    rooms[room].push(socket.id);
+    socket.join(room);
+
+    console.log(`Usuário ${socket.id} entrou na sala ${room}`);
+
+    // Envia uma mensagem de confirmação para o usuário
+    socket.emit('message', 'Você entrou na sala ' + room);
+
+    // Notifica outros usuários da sala sobre o novo usuário
+    socket.to(room).emit('message', `Usuário ${socket.id} entrou na sala`);
+
+    // Atualiza a lista de usuários na sala
+    io.to(room).emit('userList', rooms[room]);
+  });
+  //end 
+
+  
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
+
+     // Envia a mensagem para todos os usuários na sala
+     socket.to(room).emit('message', `Usuário ${socket.id}: ${message}`);
+    
   });
   socket.on("disconnect", () => {
     console.log("user disconnected");
+ // Remove o usuário de todas as salas
+    for (const room in rooms) {
+      const index = rooms[room].indexOf(socket.id);
+      if (index !== -1) {
+        rooms[room].splice(index, 1);
+        socket.leave(room);
+        io.to(room).emit('userList', rooms[room]);
+        socket.to(room).emit('message', `Usuário ${socket.id} saiu da sala`);
+      }
+    }
+    
   });
 });
+
+
 
 // outros
 server.listen(port, () => {

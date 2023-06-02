@@ -742,6 +742,11 @@ router.get("/chamado/exclusao/:id", eAluno, (req, res) => {
   });
 });
 
+/*chat*/
+router.get("/chat", (req, res) => {
+  res.render("aluno/chat");
+});
+
 /*logout do aluno*/
 router.get("/logout", (req, res) => {
   req.logout((err) => {

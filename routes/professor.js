@@ -5372,6 +5372,11 @@ router.get("/atendimento", eProfessor, (req, res) => {
   res.render("professor/atendimento");
 });
 
+/*chat*/
+router.get("/chat", (req, res) => {
+  res.render("professor/chat");
+});
+
 /*logout do professor*/
 router.get("/logout", (req, res) => {
   req.logout((err) => {

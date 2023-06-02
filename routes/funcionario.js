@@ -12385,6 +12385,11 @@ router.get("/chamado/exclusao/:id", eFuncionario, (req, res) => {
   });
 });
 
+/*chat*/
+router.get("/chat", (req, res) => {
+  res.render("funcionario/chat");
+});
+
 /*logout do funcionario*/
 router.get("/logout", (req, res) => {
   req.logout((err) => {

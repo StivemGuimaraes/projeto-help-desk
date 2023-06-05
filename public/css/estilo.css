@@ -203,12 +203,13 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh !important;
+  height: 70vh !important;
   width: 100%;
   overflow: hidden;
-  background-image: url("../img/");
+  background-image: url("../img/imagem_fundo.jpeg");
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
   background-size: cover;
 }

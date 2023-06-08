@@ -178,6 +178,26 @@ const delete_chamado = async (id) => {
   }
 };
 
+//seleção chamado-chat
+const select_chamadochat = async () => {
+  try {
+    const conn = await bd.con();
+    const [chamado] = await conn.execute(
+      "SELECT c.id, c.titulo, c.assunto, a.usuario AS nome_aluno, f.usuario AS nome_funcionario, p.usuario AS nome_professor  FROM (((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN funcionario AS f ON c.fk_funcionario = f.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula);"
+    );
+    if (chamado == "") {
+      return "vazio";
+    } else {
+      console.log("seleção dos chamados realizado com sucesso");
+      console.log(chamado);
+      return chamado;
+    }
+  } catch (error) {
+    console.log("deu erro, por alguma causa", error);
+    return "Error";
+  }
+};
+
 module.exports = {
   insert_chamado,
   select_chamadoAll,
@@ -185,6 +205,7 @@ module.exports = {
   select_usuario_imagem,
   select_chamadoProfessor,
   select_chamadoAluno,
+  select_chamadochat,
   update_chamado,
   update_imagem,
   delete_chamado,

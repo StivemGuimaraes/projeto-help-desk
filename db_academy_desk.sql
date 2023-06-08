@@ -41,6 +41,8 @@ fk_funcionario varchar(150)
 );
 alter table relatorio
 add foreign key(fk_funcionario) references funcionario(matricula);
+
+
 create table chamado
 (
 id int not null primary key auto_increment,
@@ -53,12 +55,14 @@ descricao text not null,
 img1 varchar(150),
 img2 varchar(150),
 img3 varchar(150),
+fk_funcionario varchar(150),
 fk_professor varchar(150),
 fk_aluno varchar(150)
 );
 alter table chamado
 add foreign key(fk_aluno) references aluno(matricula),
-add foreign key(fk_professor) references professor(matricula);
+add foreign key(fk_professor) references professor(matricula),
+add foreign key(fk_funcionario) references funcionario(matricula);
 
 
 create table chat (
@@ -79,3 +83,6 @@ add foreign key(matricula_A) references aluno(matricula),
 add foreign key(matricula_F) references professor(matricula);
 
 insert into funcionario (matricula, usuario, senha, telefone_celular, email, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", "lucas@gmail.com", 1);
+
+insert into Aluno (matricula, usuario, senha, telefone_celular, email ) values (157, "arthur", "arthur", "(11) 93652-2589", "arthur@gmail.com");
+

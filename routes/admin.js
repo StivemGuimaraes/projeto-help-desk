@@ -17632,7 +17632,7 @@ router.get("/aluno/exclusao/:matricula", eAdmin, (req, res) => {
 
 /*exclusao do funcionario*/
 router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
-  bd1.delete_funcionario(req.params.matricula).then((error) => {
+  bd1.delete_funcionario(req.params.maricula).then((error) => {
     if (error === "error") {
       req.flash("error_msg", "Error no sistema tente novamente mais tarde");
       res.redirect("/admin/funcionario");
@@ -17645,6 +17645,24 @@ router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
 
 /*chat*/
 router.get("/chat", (req, res) => {
+bd3.select_chamadochat().then((chamado) => {
+  if(chat === "error"){
+    req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+    res.redirect("/admin");
+  }
+  else{
+    res.render(chat)
+    {
+      usuario,
+      chamado.id
+
+    }
+
+  }
+}
+
+)
+  
   res.render("admin/chat");
 });
 

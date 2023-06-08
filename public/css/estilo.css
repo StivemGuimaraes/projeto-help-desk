@@ -98,6 +98,15 @@ input[type="number"] {
   background-size: cover;
   transition: 1s;
 }
+.chat-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/headset.png");
+  background-size: cover;
+  transition: 1s;
+}
+
 .card-hover:hover > .funcionarios-img {
   width: 64px;
   height: 64px;
@@ -130,6 +139,13 @@ input[type="number"] {
   width: 63.19px;
   height: 63.19px;
   background-image: url("../img/documento.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .chat-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/support.gif");
   background-size: cover;
   transition: 1s;
 }
@@ -173,6 +189,14 @@ input[type="number"] {
   background-size: cover;
   transition: 1s;
 }
+.chat-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/support.gif");
+  background-size: cover;
+  transition: 1s;
+}
 .card-hover:hover {
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.15);
   transition: 1s;
@@ -199,14 +223,28 @@ input[type="number"] {
     margin-bottom: 16px;
   }
 }
-.background-img {
+.background-img-usuarios {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 70vh !important;
+  height: 80vh !important;
   width: 100%;
   overflow: hidden;
   background-image: url("../img/imagem_fundo.jpeg");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.background-img-funcionarios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh !important;
+  width: 100%;
+  overflow: hidden;
+  background-image: url("../img/logo_tcc1.png");
   position: relative;
   background-repeat: no-repeat;
   background-position: center;

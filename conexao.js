@@ -18,6 +18,7 @@ const con = () => {
     return con;
   } catch (error) {
     console.log("algo deu erro na conexão com banco de dados");
+    console.log(process.env.DB_HOST);
   }
 };
 module.exports = { con };

@@ -84,5 +84,3 @@ add foreign key(matricula_F) references professor(matricula);
 
 insert into funcionario (matricula, usuario, senha, telefone_celular, email, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", "lucas@gmail.com", 1);
 
-insert into Aluno (matricula, usuario, senha, telefone_celular, email ) values (157, "arthur", "arthur", "(11) 93652-2589", "arthur@gmail.com");
-

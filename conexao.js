@@ -6,6 +6,7 @@ const con = () => {
     const con = mysql.createPool({
       host: process.env.host | "localhost",
       user: process.env.user | "root",
+      port: process.env.port,
       database: process.env.database | "academy_desk",
       password: process.env.password | "Mysqlstivem123",
       waitForConnections: true,

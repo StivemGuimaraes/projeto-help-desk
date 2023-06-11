@@ -16,6 +16,10 @@ const con = () => {
     return con;
   } catch (error) {
     console.log("algo deu erro na conexão com banco de dados:", error);
+    console.log(process.env.DB_DATABASE);
+    console.log(process.env.DB_USER);
+    console.log(process.env.DB_PASSWORD);
+    console.log(process.env.DB_HOST);
   }
 };
 module.exports = { con };

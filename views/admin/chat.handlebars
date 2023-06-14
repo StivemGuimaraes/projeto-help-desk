@@ -1,5 +1,6 @@
 <head>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script defer src="/js/foto_perfil.js"></script>
     <title>chat teste</title>
    <!-- <style>
       main { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -44,9 +45,7 @@
     overflow-y: auto;
     height: 90vh;
     padding-right: 20px;
-
-    
-    
+    margin-top: 78px;  
   }
   
   .chat-messages {
@@ -57,8 +56,7 @@
     overflow-y: auto;
     padding-top: 40px;
     height: 74vh;
-    
-
+    margin-top: 70px;
   }
   .chat{
     flex: 2;
@@ -67,19 +65,19 @@
   }
   .chat-input {
     flex: 2;
-    padding: 20px;
+    padding: 32px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
     align-items: end;
   }
   
   .chat-input input[type="text"] {
     flex: 1;
-    padding: 10px;
+    padding: 14px;
     border: none;
     border-radius: 4px;
-    
+    width: 84%;
+    display: inline-block;
   }
   
   .chat-input button {
@@ -113,18 +111,6 @@
   
   </style>
   </head>
-  <main>
-    <!--<ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Enviar</button>-->
-
- <body>
-    <h1>Teste chat</h1>
-    <head>
-  <title>Admin</title>
-  <script defer src="/js/foto_perfil.js"></script>
-</head>
-
 <header
   class="shadow fixed-top"
   style="
@@ -188,7 +174,7 @@
     <div class="offcanvas-body">
       <div class="row mb-4">
         <form
-          action="/admin"
+          action="/admin/chat/foto"
           method="post"
           enctype="multipart/form-data"
           id="form_perfil"
@@ -204,7 +190,7 @@
             />
             <div class="text-center mt-3">
               <a
-                href="/admin/exclusao/{{matricula}}"
+                href="/admin/chat/exclusao/{{matricula}}"
                 class="btn btn-outline-danger"
               >Excluir</a>
             </div>
@@ -306,6 +292,16 @@
           >Cadastro de funcionários</a>
         </div>
       </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a 
+          href="/admin/chat" 
+          class="btn btn-outline-dark" 
+          type="button">
+          Chat
+          </a>
+        </div>
+      </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
           <a
@@ -318,6 +314,10 @@
     </div>
   </div>
 </header>
+<main>
+    <!--<ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Enviar</button>-->
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3>Selecione um chat</h3>
@@ -332,7 +332,7 @@
           <div class="chat-messages" id="messages"></div>
               <div class="chat-input"><div>
               <p id="currentRoom"></p>
-              <input type="text" id="messageInput" placeholder="Digite sua mensagem">
+              <input type="text" class="form-control" id="messageInput" placeholder="Digite sua mensagem">
               <button onclick="sendMessage()">
                 Enviar
               </button>

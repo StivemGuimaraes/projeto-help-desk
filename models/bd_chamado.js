@@ -153,6 +153,20 @@ const update_chamado = async (chamado) => {
   }
 };
 
+/*update do funcionario no chamado*/
+const update_chamado_funcionario = async (chamado) => {
+  try {
+    const conn = await bd.con();
+    const sql = "UPDATE chamado SET fk_funcionario = ? WHERE id = ?;";
+    const values = [chamado.fk_funcionario, chamado.id];
+    await conn.execute(sql, values);
+    console.log("alteração do funcionario no chamado realizado com sucesso");
+  } catch (error) {
+    console.log("deu erro, por alguma causa", error);
+    return "Error";
+  }
+};
+
 const update_imagem = async (chamado) => {
   try {
     const conn = await bd.con();
@@ -200,6 +214,7 @@ const select_chamadochat = async () => {
 
 module.exports = {
   insert_chamado,
+  update_chamado_funcionario,
   select_chamadoAll,
   select_chamado1,
   select_usuario_imagem,

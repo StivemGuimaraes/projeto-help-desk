@@ -12390,6 +12390,31 @@ router.get("/chat", (req, res) => {
   res.render("funcionario/chat");
 });
 
+router.get("/chat/:id", (req, res) => {
+  try {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+  } catch (error) {
+    var funcionario_matricula = null;
+  }
+  bd2
+    .update_chamado_funcionario({
+      fk_funcionario: funcionario_matricula,
+      id: req.params.id,
+    })
+    .then((error) => {
+      if (error === "Error") {
+        req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+        res.redirect("/funcionario/chamado");
+      } else {
+        res.redirect("/funcionario/chat");
+      }
+    });
+});
+
 /*logout do funcionario*/
 router.get("/logout", (req, res) => {
   req.logout((err) => {

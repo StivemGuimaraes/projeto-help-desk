@@ -17499,6 +17499,27 @@ router.get("/funcionario/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
     });
 });
 
+/*exclusão da foto de do admin na pagina de chat*/
+router.get("/chat/exclusao/:matricula", eAdmin, (req, res) => {
+  bd1
+    .update_foto_admin({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do admin");
+      } else {
+        fs.unlink("./public/upload/admin/" + foto_admin, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/admin/chat");
+      }
+    });
+});
+
 /*exclusão da foto de perfil do admin na pagina de alteração do professor*/
 router.get("/professor/alteracao/exclusao/:matricula", eAdmin, (req, res) => {
   bd1
@@ -17645,25 +17666,70 @@ router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
 
 /*chat*/
 router.get("/chat", (req, res) => {
-bd3.select_chamadochat().then((chamado) => {
-  if(chat === "error"){
-    req.flash("error_msg", "Error no sistema tente novamente mais tarde");
-    res.redirect("/admin");
+  try {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
+    }
+  } catch (error) {
+    var admin_matricula = null;
   }
-  else{
-    res.render(chat)
-    {
-      usuario,
-      chamado.id
 
+  bd1.select_admin(admin_matricula).then((admin) => {
+    if (admin === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+      foto_admin = admin[0].foto_perfil;
+    } else if (admin === "error") {
+      usuario = "[Error com o nome do usuário]";
+      foto_admin = admin[0].foto_perfil;
+    } else {
+      usuario = admin[0].usuario;
+      foto_admin = admin[0].foto_perfil;
+    }
+  });
+  bd3.select_chamadochat().then((chamado) => {
+    if (chamado === "error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/admin");
+    } else {
+      res.render("admin/chat", {
+        usuario,
+        foto: foto_admin,
+        matricula: admin_matricula,
+        chamado,
+      });
+    }
+  });
+});
+
+router.post("/chat/foto", eAdmin, (req, res) => {
+  admin_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 1) {
+      var admin_matricula = req.user[0].matricula;
+    } else {
+      var admin_matricula = null;
     }
 
-  }
-}
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_admin !== "undefined") {
+      fs.unlink("./public/upload/admin/" + foto_admin, () => {});
+    }
 
-)
-  
-  res.render("admin/chat");
+    bd1
+      .update_foto_admin({
+        foto_perfil: req.file.filename,
+        matricula: admin_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do admin");
+        } else {
+          res.redirect("/admin/chat");
+        }
+      });
+  });
 });
 
 /*logout do admin*/

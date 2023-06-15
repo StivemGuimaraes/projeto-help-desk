@@ -329,16 +329,16 @@
           {{#if this.nome_professor}}
           <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
-          <li><button onclick="joinChat('chat3')">Chat 3</button></li>
+          <!--<li><button onclick="joinChat('chat3')">Chat 3</button></li>-->
           {{/each}}
         </ul> 
         
       </div>
      <div class="chat">
           <div class="chat-messages" id="messages"></div>
-              <div class="chat-input"><div>
+              <div class="chat-input" ><div>
               <!--willian não precisar avisar o chat atual, só precisar mudar a cor dos botoes--> 
-              <!--<p id="currentRoom"></p>-->
+              <input id="currentRoom" hidden>
               <input type="text"  id="messageInput" placeholder="Digite sua mensagem">
               <button class="btn btn-success" onclick="sendMessage()">
                 Enviar
@@ -398,6 +398,7 @@ function sendMessage() {
 
 <script>
       const socket = io();
+      var chatId = (id="currentRoom")
 
       // Função para entrar em um chat
       function joinChat(chatId) {

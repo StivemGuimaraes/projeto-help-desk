@@ -22,6 +22,7 @@ const bd = require("./models/bd_aluno");
 const bd1 = require("./models/bd_funcionario");
 const bd2 = require("./models/bd_professor");
 const port = 8008;
+var usuario;
 
 // config
 //--sessão
@@ -362,7 +363,7 @@ io.on("connection", (socket) => {
     // Adiciona o usuário ao chat
     socket.join(chatId);
 
-    console.log(`Usuário ${socket.id} entrou no chat ${chatId}`);
+    console.log(`Usuário ${usuario} entrou no chat ${chatId}`);
 
     // Envia as mensagens existentes no chat para o novo usuário
     socket.emit("chatMessages", chats[chatId]);
@@ -373,15 +374,15 @@ io.on("connection", (socket) => {
     console.log(`Nova mensagem no chat ${chatId}: ${message}`);
 
     // Adiciona a mensagem ao chat
-    chats[chatId].push({ user: socket.id, message });
+    chats[chatId].push({ user: usuario, message });
 
     // Envia a mensagem para todos os usuários no chat
-    io.to(chatId).emit("message", { user: socket.id, message });
+    io.to(chatId).emit("message", { user: usuario, message });
   });
 
   // Evento para desconectar o usuário
   socket.on("disconnect", () => {
-    console.log(`Usuário ${socket.id} desconectado`);
+    console.log(`Usuário ${usuario} desconectado`);
   });
 });
 

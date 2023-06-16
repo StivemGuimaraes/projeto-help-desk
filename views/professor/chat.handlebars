@@ -43,7 +43,7 @@
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    height: 730px;
+    height: 90vh;
     padding-right: 20px;
     margin-top: 80px;  
   }
@@ -108,6 +108,21 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+@media (max-width: 1024px) {
+  .chat-input input[type="text"] {
+    width: 78%;
+  }
+  .chat-input {
+    padding: 10px;
+  }
+  .chat-sidebar {
+    margin-top: 60px;
+  }
+  .chat-messages {
+    margin-top: 60px;
+  }
+}
   
   </style>
   </head>
@@ -125,7 +140,7 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-2 col-sm-1 col-lg-1">
-        <a href="/admin" class="text-decoration-none text-white">
+        <a href="/professor" class="text-decoration-none text-white">
           <img
             class="img-fluid float-start"
             src="/img/logo_tcc.png"
@@ -137,7 +152,7 @@
         </a>
       </div>
       <div class="col-md-5 col-sm-6 col-lg-4">
-        <a href="/admin" class="text-white text-decoration-none d-inline-block">
+        <a href="/professor" class="text-white text-decoration-none d-inline-block">
           <h1 class="text-start fs-2" title="academy help desk">Academy Help
             Desk</h1>
         </a>
@@ -165,6 +180,7 @@
         {{usuario}}
       </h5>
       <button
+        id="fechar-botao"
         type="button"
         class="btn-close text-reset"
         data-bs-dismiss="offcanvas"
@@ -174,14 +190,14 @@
     <div class="offcanvas-body">
       <div class="row mb-4">
         <form
-          action="/admin/chat/foto"
+          action="/professor"
           method="post"
           enctype="multipart/form-data"
           id="form_perfil"
         >
           {{#if foto}}
             <img
-              src="/upload/admin/{{foto}}"
+              src="/upload/professor/{{foto}}"
               class="rounded-circle mx-auto d-block"
               id="foto_perfil"
               height="100px"
@@ -190,7 +206,7 @@
             />
             <div class="text-center mt-3">
               <a
-                href="/admin/chat/exclusao/{{matricula}}"
+                href="/professor/exclusao/{{matricula}}"
                 class="btn btn-outline-danger"
               >Excluir</a>
             </div>
@@ -207,7 +223,7 @@
           <input
             class="form-control"
             type="file"
-            name="admin_foto"
+            name="professor_foto"
             accept="image/*"
             maxlength="150"
             id="input_perfil"
@@ -217,49 +233,17 @@
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
-          <a href="/admin" class="btn btn-outline-dark" type="button">Inicio</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
           <a
-            href="/admin/funcionario"
+            href="/professor"
             class="btn btn-outline-dark"
             type="button"
-          >Lista de funcionários</a>
+          >Inicio</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/chamado"
-            class="btn btn-outline-dark"
-            type="button"
-          >Lista de chamados</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
-          <a
-            href="/admin/relatorio"
-            class="btn btn-outline-dark"
-            type="button"
-          >Lista de relatórios</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
-          <a
-            href="/admin/professor"
-            class="btn btn-outline-dark"
-            type="button"
-          >Lista de professores</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
-          <a
-            href="/admin/aluno"
+            href="/professor/aluno"
             class="btn btn-outline-dark"
             type="button"
           >Lista de alunos</a>
@@ -268,16 +252,16 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-professor"
+            href="/professor/chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Cadastro de professores</a>
+          >Seus chamados</a>
         </div>
       </div>
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-aluno"
+            href="/professor/cadastrar-aluno"
             class="btn btn-outline-dark"
             type="button"
           >Cadastro de alunos</a>
@@ -286,26 +270,16 @@
       <div class="row mb-3">
         <div class="d-grid gap-2">
           <a
-            href="/admin/cadastrar-funcionario"
+            href="/professor/criar-chamado"
             class="btn btn-outline-dark"
             type="button"
-          >Cadastro de funcionários</a>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-grid gap-2">
-          <a 
-          href="/admin/chat" 
-          class="btn btn-outline-dark" 
-          type="button">
-          Chat
-          </a>
+          >Cadastro de chamados</a>
         </div>
       </div>
       <div class="row mt-5">
         <div class="d-grid gap-2">
           <a
-            href="/admin/logout"
+            href="/professor/logout"
             class="btn btn-outline-danger"
             type="button"
           >Sair</a>
@@ -336,10 +310,9 @@
       </div>
      <div class="chat">
           <div class="chat-messages" id="messages"></div>
-              <div class="chat-input"><div>
-              <!--willian não precisar avisar o chat atual, só precisar mudar a cor dos botoes--> 
-              <!--<p id="currentRoom"></p>-->
-              <input type="text" class="form-control" id="messageInput" placeholder="Digite sua mensagem">
+              <div class="chat-input" ><div> 
+              <input id="currentRoom" hidden>
+              <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem">
               <button class="btn btn-success" onclick="sendMessage()">
                 Enviar
               </button>
@@ -398,6 +371,7 @@ function sendMessage() {
 
 <script>
       const socket = io();
+      var chatId = (id="currentRoom")
 
       // Função para entrar em um chat
       function joinChat(chatId) {
@@ -408,7 +382,7 @@ function sendMessage() {
         document.getElementById('messages').innerHTML = '';
 
         // Exibe o chat atual
-        // document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
+        document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
       }
 
       // Função para enviar uma mensagem

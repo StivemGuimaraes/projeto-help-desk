@@ -248,6 +248,32 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                   <label
                     class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite seu email</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="email"
+                      name="email"
+                      maxlength="100"
+                      value="{{aluno.email}}"
+                      required
+                    />
+                    <label for="floatingInput1">Digite seu email</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite seu email
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
                     for="floatingInput1"
                     style="font-weight: bold"
                   >Digite seu telefone celular</label>
@@ -336,16 +362,17 @@
                   </div>
                 </div>
               </div>
-              <div class="row gx-5">
-                <div class="col-md-1 col-lg-1 col-sm-12 me-lg-4 me-md-5">
-                  <button class="btn btn-outline-warning botao" type="submit" id="botao_alterar">
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <button class="btn btn-outline-warning botao" id="botao_alterar" type="submit">
                     Alterar
                   </button>
-                </div>
-                <div class="col-md-1 col-lg-1 col-sm-12">
-                  <a href="/professor/aluno"><button class="btn btn-outline-primary botao" type="button">
-                    Voltar
-                  </button></a>
+                  <a href="/professor/aluno"><button
+                      type="button"
+                      class="btn btn-outline-primary botao"
+                    >
+                      Voltar
+                    </button></a>
                 </div>
               </div>
               <!--Modal-->

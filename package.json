@@ -4,10 +4,10 @@
   "description": "projeto de TCC",
   "main": "index.js",
   "engines": {
-    "node": "18"
+    "node": "13"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

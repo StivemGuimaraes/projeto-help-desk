@@ -2,41 +2,6 @@
   <title>Alteração de senha</title>
   <script defer src="/js/login_validacao.js"></script>
 </head>
-<header
-  class="shadow border-secondary border-bottom mb-4"
-  style="
-        background: rgb(45, 111, 131);
-        background: linear-gradient(
-          90deg,
-          rgba(45, 111, 131, 1) 17%,
-          rgba(28, 46, 76, 1) 100%
-        );
-      "
->
-  <div class="container-fluid">
-    <div class="row align-items-center">
-      <div class="col-md-2 col-sm-1 col-xl-1">
-        <a href="/esqueci-senha" class="text-decoration-none text-white">
-          <img
-            class="img-fluid float-start"
-            src="/img/logo.png"
-            alt="logo aqui"
-            width="90px"
-            height="90px"
-          />
-        </a>
-      </div>
-      <div class="col-md-3 col-sm-11 col-xl-3">
-        <a
-          href="/esqueci-senha"
-          class="text-white text-decoration-none d-inline-block"
-        >
-          <h1 class="text-start fs-2">Academy Help Desk</h1>
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
 <main>
   {{#if error}}
     <div class="container mt-5">
@@ -52,13 +17,13 @@
           <div class="card-body">
             <div class="text-center">
               <img
-                src="\img\logo.png"
+                src="/img/logo_tcc.png"
                 alt="logo aqui"
                 width="160px"
                 height="160px"
               />
             </div>
-            <h1 class="h3 mb-3 fw-normal text-center">Alteração de senha</h1>
+            <h2 class="text-center text-dark mb-4">Alteração de senha</h2>
             <form
               action="/esqueci-senha"
               method="POST"

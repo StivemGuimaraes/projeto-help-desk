@@ -108,6 +108,21 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+@media (max-width: 1024px) {
+  .chat-input input[type="text"] {
+    width: 78%;
+  }
+  .chat-input {
+    padding: 10px;
+  }
+  .chat-sidebar {
+    margin-top: 60px;
+  }
+  .chat-messages {
+    margin-top: 60px;
+  }
+}
   
   </style>
   </head>
@@ -336,10 +351,9 @@
       </div>
      <div class="chat">
           <div class="chat-messages" id="messages"></div>
-              <div class="chat-input" ><div>
-              <!--willian não precisar avisar o chat atual, só precisar mudar a cor dos botoes--> 
+              <div class="chat-input" ><div> 
               <input id="currentRoom" hidden>
-              <input type="text"  id="messageInput" placeholder="Digite sua mensagem">
+              <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem">
               <button class="btn btn-success" onclick="sendMessage()">
                 Enviar
               </button>

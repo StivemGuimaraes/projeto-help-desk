@@ -4,10 +4,10 @@ const con = () => {
   try {
     const mysql = require("mysql2/promise");
     const con = mysql.createPool({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      database: process.env.DB_DATABASE,
-      password: process.env.DB_PASSWORD,
+      host: "localhost",
+      user: "root",
+      database: "academy_desk",
+      password: "Mysqlstivem123",
       waitForConnections: true,
       connectionLimit: 30,
       queueLimit: 0,

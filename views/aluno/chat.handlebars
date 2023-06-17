@@ -1,7 +1,7 @@
 <head>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <script defer src="/js/foto_perfil.js"></script>
-    <title>chat teste</title>
+    <title>Chat</title>
    <!-- <style>
       main { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
@@ -190,7 +190,7 @@
     <div class="offcanvas-body">
       <div class="row mb-4">
         <form
-          action="/aluno"
+          action="/aluno/chat/foto"
           method="post"
           enctype="multipart/form-data"
           id="form_perfil"
@@ -206,7 +206,7 @@
             />
             <div class="text-center mt-3">
               <a
-                href="/aluno/exclusao/{{matricula}}"
+                href="/aluno/chat/exclusao/{{matricula}}"
                 class="btn btn-outline-danger"
               >Excluir</a>
             </div>
@@ -285,13 +285,7 @@
         <h3 class="text-center">Selecione um chat</h3>
         <ul>
           {{#each chamado}}
-          {{#if this.nome_aluno}}
           <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
-          {{/if}}
-          {{#if this.nome_professor}}
-          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
-          {{/if}}
-          <!--<li><button onclick="joinChat('chat3')">Chat 3</button></li>-->
           {{/each}}
         </ul> 
         
@@ -300,7 +294,7 @@
           <div class="chat-messages" id="messages"></div>
               <div class="chat-input" ><div> 
               <input id="currentRoom" hidden>
-              <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem">
+              <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
               <button class="btn btn-success" onclick="sendMessage()">
                 Enviar
               </button>

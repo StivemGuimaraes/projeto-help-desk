@@ -14,11 +14,11 @@ const uploadChamadoProfessor = upload
 const alteracaoProfessorImagem = upload
   .alteracao_professor_imagem()
   .array("imagem_alteracao_chamado", 3);
-const professor_perfil = upload.upload_professor().single("professor_foto")
+const professor_perfil = upload.upload_professor().single("professor_foto");
 var chamado1;
 var aluno1;
 var usuario;
-var foto_professor
+var foto_professor;
 
 /*pagina inicial do professor*/
 router.get("/", eProfessor, (req, res) => {
@@ -36,16 +36,20 @@ router.get("/", eProfessor, (req, res) => {
     if (professor === "vazio") {
       res.render("professor/index", {
         usuario: "[Você não devia estar aqui!!!]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else if (professor === "error") {
       res.render("professor/index", {
         usuario: "[Error com o nome do usuário]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else {
-      foto_professor = professor[0].foto_perfil
-      res.render("professor/index", { usuario: professor[0].usuario, foto: professor[0].foto_perfil, matricula: professor_matricula });
+      foto_professor = professor[0].foto_perfil;
+      res.render("professor/index", {
+        usuario: professor[0].usuario,
+        foto: professor[0].foto_perfil,
+        matricula: professor_matricula,
+      });
     }
   });
 });
@@ -96,18 +100,22 @@ router.get("/cadastrar-aluno", eProfessor, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("professor/cadastro_aluno", {
         usuario: "[Você não devia estar aqui!!!]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("professor/cadastro_aluno", {
         usuario: "[Error com o nome do usuário]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
-      res.render("professor/cadastro_aluno", { usuario: professor[0].usuario, foto: professor[0].foto_perfil, matricula: professor_matricula });
+      foto_professor = professor[0].foto_perfil;
+      res.render("professor/cadastro_aluno", {
+        usuario: professor[0].usuario,
+        foto: professor[0].foto_perfil,
+        matricula: professor_matricula,
+      });
     }
   });
 });
@@ -146,7 +154,7 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
     if (req.user[0].eAdmin != 2) {
       usuario = "[Você não devia estar aqui!!!]";
     } else if (req.user[0].eAdmin == 2) {
-      var professor_matricula = req.user[0].matricula
+      var professor_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -167,71 +175,145 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
     req.body.matricula === null
   ) {
     error = "Matricula invalida";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (
     !req.body.usuario ||
     typeof req.body.usuario === undefined ||
     req.body.usuario === null
   ) {
     error = "Usuário invalido";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (
     !req.body.email ||
     typeof req.body.email === undefined ||
     req.body.email === null
   ) {
     error = "Email invalido";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (
     !req.body.celular ||
     typeof req.body.celular === undefined ||
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (
     !req.body.senha ||
     typeof req.body.senha === undefined ||
     req.body.senha === null
   ) {
     error = "Senha invalida";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (
     !req.body.senha2 ||
     typeof req.body.senha2 === undefined ||
     req.body.senha2 === null
   ) {
     error = "Repetição de senha invalida";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else if (req.body.senha.length <= 7 || req.body.senha2.length <= 7) {
     error = "A senha deve ter no mínimo 8 caracteres";
-    res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+    res.render("professor/cadastro_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      dados,
+    });
   } else {
     bd3.select_professor(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+        res.render("professor/cadastro_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          dados,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
-            res.render("professor/cadastro_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+            res.render("professor/cadastro_aluno", {
+              usuario,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
+              dados,
+            });
           } else {
             bd.select_aluno(req.body.matricula).then((msg) => {
               if (msg) {
                 error = msg;
                 res.render("professor/cadastro_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   dados,
                 });
               } else {
@@ -240,7 +322,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/cadastro_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       dados,
                     });
                   } else {
@@ -249,7 +333,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/cadastro_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           dados,
                         });
                       } else {
@@ -258,7 +344,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/cadastro_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               dados,
                             });
                           } else {
@@ -267,7 +355,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/cadastro_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   dados,
                                 });
                               } else {
@@ -278,7 +368,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                       error = msg;
                                       res.render("professor/cadastro_aluno", {
                                         usuario,
-                                        error, foto: foto_professor, matricula: professor_matricula,
+                                        error,
+                                        foto: foto_professor,
+                                        matricula: professor_matricula,
                                         dados,
                                       });
                                     } else {
@@ -291,7 +383,9 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                               "professor/cadastro_aluno",
                                               {
                                                 usuario,
-                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                error,
+                                                foto: foto_professor,
+                                                matricula: professor_matricula,
                                                 dados,
                                               }
                                             );
@@ -305,7 +399,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                   "professor/cadastro_aluno",
                                                   {
                                                     usuario,
-                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                    error,
+                                                    foto: foto_professor,
+                                                    matricula:
+                                                      professor_matricula,
                                                     dados,
                                                   }
                                                 );
@@ -321,7 +418,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                         "professor/cadastro_aluno",
                                                         {
                                                           usuario,
-                                                          error, foto: foto_professor, matricula: professor_matricula,
+                                                          error,
+                                                          foto: foto_professor,
+                                                          matricula:
+                                                            professor_matricula,
                                                           dados,
                                                         }
                                                       );
@@ -337,7 +437,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                               "professor/cadastro_aluno",
                                                               {
                                                                 usuario,
-                                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                                error,
+                                                                foto: foto_professor,
+                                                                matricula:
+                                                                  professor_matricula,
                                                                 dados,
                                                               }
                                                             );
@@ -351,7 +454,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                                   "professor/cadastro_aluno",
                                                                   {
                                                                     usuario,
-                                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                                    error,
+                                                                    foto: foto_professor,
+                                                                    matricula:
+                                                                      professor_matricula,
                                                                     dados,
                                                                   }
                                                                 );
@@ -370,7 +476,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                                           "professor/cadastro_aluno",
                                                                           {
                                                                             usuario,
-                                                                            error, foto: foto_professor, matricula: professor_matricula,
+                                                                            error,
+                                                                            foto: foto_professor,
+                                                                            matricula:
+                                                                              professor_matricula,
                                                                             dados,
                                                                           }
                                                                         );
@@ -394,7 +503,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                                                   "professor/cadastro_aluno",
                                                                                   {
                                                                                     usuario,
-                                                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                                                    error,
+                                                                                    foto: foto_professor,
+                                                                                    matricula:
+                                                                                      professor_matricula,
                                                                                     dados,
                                                                                   }
                                                                                 );
@@ -439,7 +551,10 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                                                         "professor/cadastro_aluno",
                                                                                         {
                                                                                           usuario,
-                                                                                          error, foto: foto_professor, matricula: professor_matricula,
+                                                                                          error,
+                                                                                          foto: foto_professor,
+                                                                                          matricula:
+                                                                                            professor_matricula,
                                                                                           dados,
                                                                                         }
                                                                                       );
@@ -451,7 +566,8 @@ router.post("/cadastrar-aluno/nova", eProfessor, (req, res) => {
                                                                                         {
                                                                                           usuario,
                                                                                           foto: foto_professor,
-                                                                                          matricula: professor_matricula,
+                                                                                          matricula:
+                                                                                            professor_matricula,
                                                                                           sucesso,
                                                                                         }
                                                                                       );
@@ -510,18 +626,22 @@ router.get("/criar-chamado", eProfessor, (req, res) => {
       usuario = "[Você não devia estar aqui!!!]";
       res.render("professor/criar_chamado", {
         usuario: "[Você não devia estar aqui!!!]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
       res.render("professor/criar_chamado", {
         usuario: "[Error com o nome do usuário]",
-        foto: professor[0].foto_perfil
+        foto: professor[0].foto_perfil,
       });
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
-      res.render("professor/criar_chamado", { usuario: professor[0].usuario, foto: professor[0].foto_perfil, matricula: professor_matricula });
+      foto_professor = professor[0].foto_perfil;
+      res.render("professor/criar_chamado", {
+        usuario: professor[0].usuario,
+        foto: professor[0].foto_perfil,
+        matricula: professor_matricula,
+      });
     }
   });
 });
@@ -595,14 +715,26 @@ router.post("/criar-chamado/nova", eProfessor, (req, res) => {
       req.body.titulo === null
     ) {
       error = "Titulo invalido";
-      res.render("professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (
       !req.body.assunto ||
       typeof req.body.assunto === undefined ||
       req.body.assunto === null
     ) {
       error = "Assunto invalido";
-      res.render("professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (
       !req.body.nivel ||
       typeof req.body.nivel === undefined ||
@@ -610,7 +742,13 @@ router.post("/criar-chamado/nova", eProfessor, (req, res) => {
       req.body.nivel === "Selecione"
     ) {
       error = "Nível invalido";
-      res.render("professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (
       !req.body.prioridade ||
       typeof req.body.prioridade === undefined ||
@@ -618,19 +756,43 @@ router.post("/criar-chamado/nova", eProfessor, (req, res) => {
       req.body.prioridade === "Selecione"
     ) {
       error = "Prioridade invalida";
-      res.render("professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (
       !req.body.descricao ||
       typeof req.body.descricao === undefined ||
       req.body.descricao === null
     ) {
       error = "Descrição invalida";
-      res.render("professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (err instanceof multer.MulterError) {
       err = "Envio de arquivos invalida";
-      res.render("professor/criar_chamado", { usuario, error: err, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error: err,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else if (err) {
-      res.render("professor/criar_chamado", { usuario, error: err, foto: foto_professor, matricula: professor_matricula, dados });
+      res.render("professor/criar_chamado", {
+        usuario,
+        error: err,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        dados,
+      });
     } else {
       bd1
         .insert_chamado({
@@ -649,10 +811,21 @@ router.post("/criar-chamado/nova", eProfessor, (req, res) => {
         .then((msg) => {
           if (msg) {
             error = msg;
-            res.render("/professor/criar_chamado", { usuario, error, foto: foto_professor, matricula: professor_matricula, dados });
+            res.render("/professor/criar_chamado", {
+              usuario,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
+              dados,
+            });
           } else {
             var sucesso = "Chamado cadastrado com sucesso";
-            res.render("professor/criar_chamado", { usuario, foto: foto_professor, matricula: professor_matricula, sucesso });
+            res.render("professor/criar_chamado", {
+              usuario,
+              foto: foto_professor,
+              matricula: professor_matricula,
+              sucesso,
+            });
           }
         });
     }
@@ -673,25 +846,40 @@ router.get("/aluno", eProfessor, (req, res) => {
 
   bd3.select_professor_usuario(professor_matricula).then((professor) => {
     if (professor === "vazio") {
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
       usuario = "[Você não devia estar aqui!!!]";
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     }
   });
   bd.select_alunoAll().then((aluno) => {
     if (aluno === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("professor/alunos", { usuario, error_mensagem, foto: foto_professor, matricula: professor_matricula });
+      res.render("professor/alunos", {
+        usuario,
+        error_mensagem,
+        foto: foto_professor,
+        matricula: professor_matricula,
+      });
     } else if (aluno === "vazio") {
       var aviso_mensagem = "!!! Nenhum aluno cadastrado no sistema !!!";
-      res.render("professor/alunos", { usuario, aviso_mensagem, foto: foto_professor, matricula: professor_matricula });
+      res.render("professor/alunos", {
+        usuario,
+        aviso_mensagem,
+        foto: foto_professor,
+        matricula: professor_matricula,
+      });
     } else {
-      res.render("professor/alunos", { usuario, aluno, foto: foto_professor, matricula: professor_matricula });
+      res.render("professor/alunos", {
+        usuario,
+        aluno,
+        foto: foto_professor,
+        matricula: professor_matricula,
+      });
     }
   });
 });
@@ -740,26 +928,36 @@ router.get("/chamado", eProfessor, (req, res) => {
   bd3.select_professor_usuario(professor_matricula).then((professor) => {
     if (professor === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     }
   });
   bd1.select_chamadoProfessor(req.user).then((chamado_professor) => {
     if (chamado_professor === "Error") {
       var error_mensagem = "Error no sistema tente novamente mais tarde";
-      res.render("professor/chamado_professor", { usuario, foto: foto_professor, matricula: professor_matricula, error_mensagem });
+      res.render("professor/chamado_professor", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        error_mensagem,
+      });
     } else if (chamado_professor === "matricula") {
       res.render("professor/chamado_professor");
       error_mensagem = "Você não é professor, o que você tá fazendo aqui?";
       res.render("professor/chamado_professor", { usuario, error_mensagem });
     } else if (chamado_professor === "vazio") {
       var aviso_mensagem = "!!! Você não cadastrou nenhum chamado !!!";
-      res.render("professor/chamado_professor", { usuario, foto: foto_professor, matricula: professor_matricula, aviso_mensagem });
+      res.render("professor/chamado_professor", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        aviso_mensagem,
+      });
     } else {
       chamado_professor.forEach((valor, i) => {
         if (chamado_professor[i].statusd == "Aberto") {
@@ -770,7 +968,12 @@ router.get("/chamado", eProfessor, (req, res) => {
           chamado_professor[i].i3 = "algo";
         }
       });
-      res.render("professor/chamado_professor", { usuario, foto: foto_professor, matricula: professor_matricula, chamado_professor });
+      res.render("professor/chamado_professor", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        chamado_professor,
+      });
     }
   });
 });
@@ -819,13 +1022,13 @@ router.get("/aluno/alteracao/:matricula", eProfessor, (req, res) => {
   bd3.select_professor_usuario(professor_matricula).then((professor) => {
     if (professor === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     }
   });
   bd.select_aluno1(req.params.matricula).then((aluno) => {
@@ -838,7 +1041,12 @@ router.get("/aluno/alteracao/:matricula", eProfessor, (req, res) => {
     } else {
       aluno = aluno[0];
       aluno1 = aluno;
-      res.render("professor/edicao_aluno", { usuario, foto: foto_professor, matricula: professor_matricula, aluno });
+      res.render("professor/edicao_aluno", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        aluno,
+      });
     }
   });
 });
@@ -877,7 +1085,7 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     if (req.user[0].eAdmin != 2) {
       usuario = "[Você não devia estar aqui!!!]";
     } else if (req.user[0].eAdmin == 2) {
-      var professor_matricula = req.user[0].matricula
+      var professor_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -891,7 +1099,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     error = "Matricula invalida";
     res.render("professor/edicao_aluno", {
       usuario,
-      error, foto: foto_professor, matricula: professor_matricula,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -902,7 +1112,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     error = "Usuário invalido";
     res.render("professor/edicao_aluno", {
       usuario,
-      error, foto: foto_professor, matricula: professor_matricula,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -913,7 +1125,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     error = "Email invalido";
     res.render("professor/edicao_aluno", {
       usuario,
-      error, foto: foto_professor, matricula: professor_matricula,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -922,18 +1136,38 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     req.body.celular === null
   ) {
     error = "Telefone celular invalido";
-    res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+    res.render("professor/edicao_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.celular.length < 15) {
     error = "Número de celular invalido";
-    res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+    res.render("professor/edicao_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.residencial && req.body.residencial.length < 14) {
     error = "Número residencial invalido";
-    res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+    res.render("professor/edicao_aluno", {
+      usuario,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
+      aluno: aluno1,
+    });
   } else if (req.body.senha !== req.body.senha2) {
     error = "Senhas diferentes";
     res.render("professor/edicao_aluno", {
       usuario,
-      error, foto: foto_professor, matricula: professor_matricula,
+      error,
+      foto: foto_professor,
+      matricula: professor_matricula,
       aluno: aluno1,
     });
   } else if (
@@ -946,14 +1180,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -962,7 +1204,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -971,7 +1215,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -980,7 +1226,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -989,7 +1237,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -998,7 +1248,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -1009,7 +1261,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                       error = msg;
                                       res.render("professor/edicao_aluno", {
                                         usuario,
-                                        error, foto: foto_professor, matricula: professor_matricula,
+                                        error,
+                                        foto: foto_professor,
+                                        matricula: professor_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -1022,7 +1276,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                               "professor/edicao_aluno",
                                               {
                                                 usuario,
-                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                error,
+                                                foto: foto_professor,
+                                                matricula: professor_matricula,
                                                 aluno: aluno1,
                                               }
                                             );
@@ -1036,7 +1292,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                   "professor/edicao_aluno",
                                                   {
                                                     usuario,
-                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                    error,
+                                                    foto: foto_professor,
+                                                    matricula:
+                                                      professor_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -1052,7 +1311,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                         "professor/edicao_aluno",
                                                         {
                                                           usuario,
-                                                          error, foto: foto_professor, matricula: professor_matricula,
+                                                          error,
+                                                          foto: foto_professor,
+                                                          matricula:
+                                                            professor_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -1068,7 +1330,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                               "professor/edicao_aluno",
                                                               {
                                                                 usuario,
-                                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                                error,
+                                                                foto: foto_professor,
+                                                                matricula:
+                                                                  professor_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -1084,7 +1349,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                               "professor/edicao_aluno",
                                                               {
                                                                 usuario,
-                                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                                error,
+                                                                foto: foto_professor,
+                                                                matricula:
+                                                                  professor_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -1098,7 +1366,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                   "professor/edicao_aluno",
                                                                   {
                                                                     usuario,
-                                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                                    error,
+                                                                    foto: foto_professor,
+                                                                    matricula:
+                                                                      professor_matricula,
                                                                     aluno:
                                                                       aluno1,
                                                                   }
@@ -1118,7 +1389,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                           "professor/edicao_aluno",
                                                                           {
                                                                             usuario,
-                                                                            error, foto: foto_professor, matricula: professor_matricula,
+                                                                            error,
+                                                                            foto: foto_professor,
+                                                                            matricula:
+                                                                              professor_matricula,
                                                                             aluno:
                                                                               aluno1,
                                                                           }
@@ -1143,7 +1417,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                                   "professor/edicao_aluno",
                                                                                   {
                                                                                     usuario,
-                                                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                                                    error,
+                                                                                    foto: foto_professor,
+                                                                                    matricula:
+                                                                                      professor_matricula,
                                                                                     aluno:
                                                                                       aluno1,
                                                                                   }
@@ -1245,14 +1522,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -1261,7 +1546,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -1270,7 +1557,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -1279,7 +1568,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -1288,7 +1579,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -1298,7 +1591,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -1309,7 +1604,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -1324,7 +1621,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -1338,7 +1638,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -1352,7 +1655,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                     "professor/edicao_aluno",
                                                     {
                                                       usuario,
-                                                      error, foto: foto_professor, matricula: professor_matricula,
+                                                      error,
+                                                      foto: foto_professor,
+                                                      matricula:
+                                                        professor_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -1368,7 +1674,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                           "professor/edicao_aluno",
                                                           {
                                                             usuario,
-                                                            error, foto: foto_professor, matricula: professor_matricula,
+                                                            error,
+                                                            foto: foto_professor,
+                                                            matricula:
+                                                              professor_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -1384,7 +1693,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                 "professor/edicao_aluno",
                                                                 {
                                                                   usuario,
-                                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                                  error,
+                                                                  foto: foto_professor,
+                                                                  matricula:
+                                                                    professor_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -1470,14 +1782,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -1486,7 +1806,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -1495,7 +1817,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -1504,7 +1828,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -1513,7 +1839,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -1522,7 +1850,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -1533,7 +1863,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                       error = msg;
                                       res.render("professor/edicao_aluno", {
                                         usuario,
-                                        error, foto: foto_professor, matricula: professor_matricula,
+                                        error,
+                                        foto: foto_professor,
+                                        matricula: professor_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -1546,7 +1878,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                               "professor/edicao_aluno",
                                               {
                                                 usuario,
-                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                error,
+                                                foto: foto_professor,
+                                                matricula: professor_matricula,
                                                 aluno: aluno1,
                                               }
                                             );
@@ -1560,7 +1894,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                   "professor/edicao_aluno",
                                                   {
                                                     usuario,
-                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                    error,
+                                                    foto: foto_professor,
+                                                    matricula:
+                                                      professor_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -1576,7 +1913,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                         "professor/edicao_aluno",
                                                         {
                                                           usuario,
-                                                          error, foto: foto_professor, matricula: professor_matricula,
+                                                          error,
+                                                          foto: foto_professor,
+                                                          matricula:
+                                                            professor_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -1592,7 +1932,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                               "professor/edicao_aluno",
                                                               {
                                                                 usuario,
-                                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                                error,
+                                                                foto: foto_professor,
+                                                                matricula:
+                                                                  professor_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -1674,14 +2017,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -1690,7 +2041,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -1699,7 +2052,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -1708,7 +2063,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -1717,7 +2074,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -1726,7 +2085,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -1737,7 +2098,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                       error = msg;
                                       res.render("professor/edicao_aluno", {
                                         usuario,
-                                        error, foto: foto_professor, matricula: professor_matricula,
+                                        error,
+                                        foto: foto_professor,
+                                        matricula: professor_matricula,
                                         aluno: aluno1,
                                       });
                                     } else {
@@ -1750,7 +2113,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                               "professor/edicao_aluno",
                                               {
                                                 usuario,
-                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                error,
+                                                foto: foto_professor,
+                                                matricula: professor_matricula,
                                                 aluno: aluno1,
                                               }
                                             );
@@ -1764,7 +2129,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                               "professor/edicao_aluno",
                                               {
                                                 usuario,
-                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                error,
+                                                foto: foto_professor,
+                                                matricula: professor_matricula,
                                                 aluno: aluno1,
                                               }
                                             );
@@ -1778,7 +2145,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                   "professor/edicao_aluno",
                                                   {
                                                     usuario,
-                                                    error, foto: foto_professor, matricula: professor_matricula,
+                                                    error,
+                                                    foto: foto_professor,
+                                                    matricula:
+                                                      professor_matricula,
                                                     aluno: aluno1,
                                                   }
                                                 );
@@ -1792,7 +2162,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                         "professor/edicao_aluno",
                                                         {
                                                           usuario,
-                                                          error, foto: foto_professor, matricula: professor_matricula,
+                                                          error,
+                                                          foto: foto_professor,
+                                                          matricula:
+                                                            professor_matricula,
                                                           aluno: aluno1,
                                                         }
                                                       );
@@ -1808,7 +2181,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                               "professor/edicao_aluno",
                                                               {
                                                                 usuario,
-                                                                error, foto: foto_professor, matricula: professor_matricula,
+                                                                error,
+                                                                foto: foto_professor,
+                                                                matricula:
+                                                                  professor_matricula,
                                                                 aluno: aluno1,
                                                               }
                                                             );
@@ -1891,14 +2267,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -1907,7 +2291,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -1916,7 +2302,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -1925,7 +2313,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -1934,7 +2324,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -1944,7 +2336,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -1955,7 +2349,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -1970,7 +2366,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -1984,7 +2383,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -1998,7 +2400,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                     "professor/edicao_aluno",
                                                     {
                                                       usuario,
-                                                      error, foto: foto_professor, matricula: professor_matricula,
+                                                      error,
+                                                      foto: foto_professor,
+                                                      matricula:
+                                                        professor_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -2014,7 +2419,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                           "professor/edicao_aluno",
                                                           {
                                                             usuario,
-                                                            error, foto: foto_professor, matricula: professor_matricula,
+                                                            error,
+                                                            foto: foto_professor,
+                                                            matricula:
+                                                              professor_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -2030,7 +2438,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                 "professor/edicao_aluno",
                                                                 {
                                                                   usuario,
-                                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                                  error,
+                                                                  foto: foto_professor,
+                                                                  matricula:
+                                                                    professor_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -2115,14 +2526,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2131,7 +2550,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2140,7 +2561,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2149,7 +2572,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2158,7 +2583,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2168,7 +2595,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -2179,7 +2608,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -2194,7 +2625,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -2254,14 +2688,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2270,7 +2712,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2279,7 +2723,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2288,7 +2734,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2297,7 +2745,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2307,7 +2757,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -2318,7 +2770,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -2333,7 +2787,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -2393,14 +2850,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2409,7 +2874,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2418,7 +2885,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2427,7 +2896,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2436,7 +2907,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2445,7 +2918,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -2454,7 +2929,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                     error = msg;
                                     res.render("professor/edicao_aluno", {
                                       usuario,
-                                      error, foto: foto_professor, matricula: professor_matricula,
+                                      error,
+                                      foto: foto_professor,
+                                      matricula: professor_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -2465,7 +2942,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                           error = msg;
                                           res.render("professor/edicao_aluno", {
                                             usuario,
-                                            error, foto: foto_professor, matricula: professor_matricula,
+                                            error,
+                                            foto: foto_professor,
+                                            matricula: professor_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -2518,14 +2997,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2534,7 +3021,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2543,7 +3032,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2552,7 +3043,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2561,7 +3054,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -2571,7 +3066,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2580,7 +3077,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -2589,7 +3088,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                     error = msg;
                                     res.render("professor/edicao_aluno", {
                                       usuario,
-                                      error, foto: foto_professor, matricula: professor_matricula,
+                                      error,
+                                      foto: foto_professor,
+                                      matricula: professor_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -2600,7 +3101,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                           error = msg;
                                           res.render("professor/edicao_aluno", {
                                             usuario,
-                                            error, foto: foto_professor, matricula: professor_matricula,
+                                            error,
+                                            foto: foto_professor,
+                                            matricula: professor_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -2653,14 +3156,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2669,7 +3180,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2678,7 +3191,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2687,7 +3202,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2696,7 +3213,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -2706,7 +3225,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -2715,7 +3236,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -2724,7 +3247,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                     error = msg;
                                     res.render("professor/edicao_aluno", {
                                       usuario,
-                                      error, foto: foto_professor, matricula: professor_matricula,
+                                      error,
+                                      foto: foto_professor,
+                                      matricula: professor_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -2735,7 +3260,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                           error = msg;
                                           res.render("professor/edicao_aluno", {
                                             usuario,
-                                            error, foto: foto_professor, matricula: professor_matricula,
+                                            error,
+                                            foto: foto_professor,
+                                            matricula: professor_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -2788,14 +3315,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2804,7 +3339,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2813,7 +3350,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2822,7 +3361,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2833,7 +3374,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -2843,7 +3386,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -2852,7 +3397,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -2863,7 +3410,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -2876,7 +3425,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -2934,14 +3486,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -2950,7 +3510,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -2959,7 +3521,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -2968,7 +3532,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -2977,7 +3543,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3023,14 +3591,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3039,7 +3615,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3048,7 +3626,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3057,7 +3637,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3066,7 +3648,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3112,14 +3696,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3128,7 +3720,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3137,7 +3731,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3146,7 +3742,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3157,7 +3755,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -3200,14 +3800,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3216,7 +3824,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -3226,7 +3836,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3235,7 +3847,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3244,7 +3858,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3253,7 +3869,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3296,14 +3914,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_aluno(req.body.matricula).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_funcionario(req.body.matricula).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3312,7 +3938,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3354,14 +3982,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3370,7 +4006,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3379,7 +4017,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3388,7 +4028,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3397,7 +4039,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3407,7 +4051,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3418,7 +4064,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3433,7 +4081,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -3447,7 +4098,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -3461,7 +4115,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                     "professor/edicao_aluno",
                                                     {
                                                       usuario,
-                                                      error, foto: foto_professor, matricula: professor_matricula,
+                                                      error,
+                                                      foto: foto_professor,
+                                                      matricula:
+                                                        professor_matricula,
                                                       aluno: aluno1,
                                                     }
                                                   );
@@ -3477,7 +4134,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                           "professor/edicao_aluno",
                                                           {
                                                             usuario,
-                                                            error, foto: foto_professor, matricula: professor_matricula,
+                                                            error,
+                                                            foto: foto_professor,
+                                                            matricula:
+                                                              professor_matricula,
                                                             aluno: aluno1,
                                                           }
                                                         );
@@ -3493,7 +4153,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                                 "professor/edicao_aluno",
                                                                 {
                                                                   usuario,
-                                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                                  error,
+                                                                  foto: foto_professor,
+                                                                  matricula:
+                                                                    professor_matricula,
                                                                   aluno: aluno1,
                                                                 }
                                                               );
@@ -3576,14 +4239,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3592,7 +4263,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3601,7 +4274,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3610,7 +4285,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3619,7 +4296,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else if (
@@ -3629,7 +4308,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = "A senha deve ter no mínimo 8 caracteres";
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -3638,7 +4319,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                 error = msg;
                                 res.render("professor/edicao_aluno", {
                                   usuario,
-                                  error, foto: foto_professor, matricula: professor_matricula,
+                                  error,
+                                  foto: foto_professor,
+                                  matricula: professor_matricula,
                                   aluno: aluno1,
                                 });
                               } else {
@@ -3647,7 +4330,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                     error = msg;
                                     res.render("professor/edicao_aluno", {
                                       usuario,
-                                      error, foto: foto_professor, matricula: professor_matricula,
+                                      error,
+                                      foto: foto_professor,
+                                      matricula: professor_matricula,
                                       aluno: aluno1,
                                     });
                                   } else {
@@ -3658,7 +4343,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                           error = msg;
                                           res.render("professor/edicao_aluno", {
                                             usuario,
-                                            error, foto: foto_professor, matricula: professor_matricula,
+                                            error,
+                                            foto: foto_professor,
+                                            matricula: professor_matricula,
                                             aluno: aluno1,
                                           });
                                         } else {
@@ -3711,14 +4398,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3727,7 +4422,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3736,7 +4433,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3745,7 +4444,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3756,7 +4457,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -3766,7 +4469,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -3775,7 +4480,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3786,7 +4493,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3799,7 +4508,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -3858,14 +4570,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -3874,7 +4594,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -3883,7 +4605,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -3892,7 +4616,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -3903,7 +4629,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else if (
@@ -3913,7 +4641,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = "A senha deve ter no mínimo 8 caracteres";
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -3922,7 +4652,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -3933,7 +4665,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -3946,7 +4680,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -4005,14 +4742,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4021,7 +4766,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4030,7 +4777,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4039,7 +4788,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4048,7 +4799,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4058,7 +4811,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                   error = msg;
                                   res.render("professor/edicao_aluno", {
                                     usuario,
-                                    error, foto: foto_professor, matricula: professor_matricula,
+                                    error,
+                                    foto: foto_professor,
+                                    matricula: professor_matricula,
                                     aluno: aluno1,
                                   });
                                 } else {
@@ -4069,7 +4824,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                         error = msg;
                                         res.render("professor/edicao_aluno", {
                                           usuario,
-                                          error, foto: foto_professor, matricula: professor_matricula,
+                                          error,
+                                          foto: foto_professor,
+                                          matricula: professor_matricula,
                                           aluno: aluno1,
                                         });
                                       } else {
@@ -4084,7 +4841,10 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                                                 "professor/edicao_aluno",
                                                 {
                                                   usuario,
-                                                  error, foto: foto_professor, matricula: professor_matricula,
+                                                  error,
+                                                  foto: foto_professor,
+                                                  matricula:
+                                                    professor_matricula,
                                                   aluno: aluno1,
                                                 }
                                               );
@@ -4143,14 +4903,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4159,7 +4927,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4168,7 +4938,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4177,7 +4949,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4188,7 +4962,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -4234,14 +5010,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4250,7 +5034,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4259,7 +5045,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4268,7 +5056,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4277,7 +5067,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4323,14 +5115,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4339,7 +5139,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4348,7 +5150,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4357,7 +5161,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4368,7 +5174,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                               error = msg;
                               res.render("professor/edicao_aluno", {
                                 usuario,
-                                error, foto: foto_professor, matricula: professor_matricula,
+                                error,
+                                foto: foto_professor,
+                                matricula: professor_matricula,
                                 aluno: aluno1,
                               });
                             } else {
@@ -4411,14 +5219,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4427,7 +5243,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -4437,7 +5255,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4446,7 +5266,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4455,7 +5277,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4464,7 +5288,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4507,14 +5333,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_email(req.body.email).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_email(req.body.email).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4523,7 +5357,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4563,14 +5399,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4579,7 +5423,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -4589,7 +5435,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4598,7 +5446,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4607,7 +5457,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4616,7 +5468,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4659,14 +5513,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_celular(req.body.celular).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_celular(req.body.celular).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4675,7 +5537,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4715,14 +5579,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4731,7 +5603,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -4741,7 +5615,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4750,7 +5626,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                     error = msg;
                     res.render("professor/edicao_aluno", {
                       usuario,
-                      error, foto: foto_professor, matricula: professor_matricula,
+                      error,
+                      foto: foto_professor,
+                      matricula: professor_matricula,
                       aluno: aluno1,
                     });
                   } else {
@@ -4759,7 +5637,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                         error = msg;
                         res.render("professor/edicao_aluno", {
                           usuario,
-                          error, foto: foto_professor, matricula: professor_matricula,
+                          error,
+                          foto: foto_professor,
+                          matricula: professor_matricula,
                           aluno: aluno1,
                         });
                       } else {
@@ -4768,7 +5648,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                             error = msg;
                             res.render("professor/edicao_aluno", {
                               usuario,
-                              error, foto: foto_professor, matricula: professor_matricula,
+                              error,
+                              foto: foto_professor,
+                              matricula: professor_matricula,
                               aluno: aluno1,
                             });
                           } else {
@@ -4811,14 +5693,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_residencial(req.body.residencial).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_residencial(req.body.residencial).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4827,7 +5717,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4864,14 +5756,22 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
     bd.select_senha(req.body.senha).then((msg) => {
       if (msg) {
         error = msg;
-        res.render("professor/edicao_aluno", { usuario, error, foto: foto_professor, matricula: professor_matricula, aluno: aluno1 });
+        res.render("professor/edicao_aluno", {
+          usuario,
+          error,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          aluno: aluno1,
+        });
       } else {
         bd2.select_senha(req.body.senha).then((msg) => {
           if (msg) {
             error = msg;
             res.render("professor/edicao_aluno", {
               usuario,
-              error, foto: foto_professor, matricula: professor_matricula,
+              error,
+              foto: foto_professor,
+              matricula: professor_matricula,
               aluno: aluno1,
             });
           } else {
@@ -4880,7 +5780,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = msg;
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else if (
@@ -4890,7 +5792,9 @@ router.post("/aluno/alteracao/", eProfessor, (req, res) => {
                 error = "A senha deve ter no mínimo 8 caracteres";
                 res.render("professor/edicao_aluno", {
                   usuario,
-                  error, foto: foto_professor, matricula: professor_matricula,
+                  error,
+                  foto: foto_professor,
+                  matricula: professor_matricula,
                   aluno: aluno1,
                 });
               } else {
@@ -4959,13 +5863,13 @@ router.get("/chamado/alteracao/:id", eProfessor, (req, res) => {
   bd3.select_professor_usuario(professor_matricula).then((professor) => {
     if (professor === "vazio") {
       usuario = "[Você não devia estar aqui!!!]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else if (professor === "error") {
       usuario = "[Error com o nome do usuário]";
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     } else {
       usuario = professor[0].usuario;
-      foto_professor = professor[0].foto_perfil
+      foto_professor = professor[0].foto_perfil;
     }
   });
   bd1.select_chamado1(req.params.id).then((chamado) => {
@@ -4978,7 +5882,12 @@ router.get("/chamado/alteracao/:id", eProfessor, (req, res) => {
     } else {
       chamado = chamado[0];
       chamado1 = chamado;
-      res.render("professor/edicao_chamado", { usuario, foto: foto_professor, matricula: professor_matricula, chamado });
+      res.render("professor/edicao_chamado", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        chamado,
+      });
     }
   });
 });
@@ -5017,7 +5926,7 @@ router.post("/chamado/alteracao", eProfessor, (req, res) => {
     if (req.user[0].eAdmin != 2) {
       usuario = "[Você não devia estar aqui!!!]";
     } else if (req.user[0].eAdmin == 2) {
-      var professor_matricula = req.user[0].matricula
+      var professor_matricula = req.user[0].matricula;
     }
   } catch (error) {
     usuario = "[Você não devia estar aqui!!!]";
@@ -5090,10 +5999,20 @@ router.post("/chamado/alteracao", eProfessor, (req, res) => {
       if (err instanceof multer.MulterError) {
         err = "Envio de arquivos invalida";
         res.setTimeout(480000);
-        res.render("professor/edicao_chamado", { usuario, foto: foto_professor, matricula: professor_matricula, error: err });
+        res.render("professor/edicao_chamado", {
+          usuario,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          error: err,
+        });
       } else if (err) {
         res.setTimeout(480000);
-        res.render("professor/edicao_chamado", { usuario, foto: foto_professor, matricula: professor_matricula, error: err });
+        res.render("professor/edicao_chamado", {
+          usuario,
+          foto: foto_professor,
+          matricula: professor_matricula,
+          error: err,
+        });
       } else {
         bd1
           .update_chamado({
@@ -5265,6 +6184,27 @@ router.get("/chamado/foto/exclusao/:matricula", eProfessor, (req, res) => {
     });
 });
 
+/*exclusão da foto de do professor na pagina de chat*/
+router.get("/chat/exclusao/:matricula", eProfessor, (req, res) => {
+  bd3
+    .update_foto_professor({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do professor");
+      } else {
+        fs.unlink("./public/upload/professor/" + foto_professor, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/professor/chat");
+      }
+    });
+});
+
 /*exclusão da foto de perfil do professor na pagina de alteração de aluno*/
 router.get("/aluno/alteracao/exclusao/:matricula", eProfessor, (req, res) => {
   bd3
@@ -5368,13 +6308,72 @@ router.get("/chamado/exclusao/:id", eProfessor, (req, res) => {
   });
 });
 
-router.get("/atendimento", eProfessor, (req, res) => {
-  res.render("professor/atendimento");
+/*chat*/
+router.get("/chat", eProfessor, (req, res) => {
+  try {
+    if (req.user[0].eAdmin == 2) {
+      var professor_matricula = req.user[0].matricula;
+    } else {
+      var professor_matricula = null;
+    }
+  } catch (error) {
+    var professor_matricula = null;
+  }
+
+  bd3.select_professor_usuario(professor_matricula).then((professor) => {
+    if (professor === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+      foto_professor = professor[0].foto_perfil;
+    } else if (professor === "error") {
+      usuario = "[Error com o nome do usuário]";
+      foto_professor = professor[0].foto_perfil;
+    } else {
+      usuario = professor[0].usuario;
+      foto_professor = professor[0].foto_perfil;
+    }
+  });
+  bd1.select_chamadoProfessor(req.user).then((chamado) => {
+    if (chamado === "Error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/professor");
+    } else {
+      res.render("professor/chat", {
+        usuario,
+        foto: foto_professor,
+        matricula: professor_matricula,
+        chamado,
+      });
+    }
+  });
 });
 
-/*chat*/
-router.get("/chat", (req, res) => {
-  res.render("professor/chat");
+router.post("/chat/foto", eProfessor, (req, res) => {
+  professor_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 2) {
+      var professor_matricula = req.user[0].matricula;
+    } else {
+      var professor_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_professor !== "undefined") {
+      fs.unlink("./public/upload/professor/" + foto_professor, () => {});
+    }
+
+    bd3
+      .update_foto_professor({
+        foto_perfil: req.file.filename,
+        matricula: professor_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do professor");
+        } else {
+          res.redirect("/professor/chat");
+        }
+      });
+  });
 });
 
 /*logout do professor*/

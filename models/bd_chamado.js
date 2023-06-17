@@ -88,7 +88,7 @@ const select_chamadoProfessor = async (professor) => {
       var professor_matricula = [professor[0].matricula];
       const conn = await bd.con();
       const sql =
-        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, p.usuario AS nome_professor, p.email AS email_professor, p.telefone_celular AS celular_professor, p.telefone_residencial AS residencial_professor FROM chamado AS c JOIN professor AS p ON c.fk_professor = p.matricula WHERE p.matricula = ?;";
+        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, p.usuario AS nome_professor, f.usuario AS nome_funcionario, p.email AS email_professor, p.telefone_celular AS celular_professor, p.telefone_residencial AS residencial_professor FROM (chamado AS c JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN funcionario AS f ON c.fk_funcionario = f.matricula WHERE p.matricula = ?;";
       const [chamado_professor] = await conn.execute(sql, professor_matricula);
       if (chamado_professor == "") {
         return "vazio";
@@ -111,13 +111,41 @@ const select_chamadoAluno = async (aluno) => {
       var aluno_matricula = [aluno[0].matricula];
       const conn = await bd.con();
       const sql =
-        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, a.email AS email_aluno, a.telefone_celular AS celular_aluno, a.telefone_residencial AS residencial_aluno FROM chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula WHERE a.matricula = ?;";
+        "SELECT c.id, c.titulo, c.assunto, c.statusd, c.nivel, c.prioridade, c.img1, c.img2, c.img3, c.descricao, a.usuario AS nome_aluno, f.usuario AS nome_funcionario, a.email AS email_aluno, a.telefone_celular AS celular_aluno, a.telefone_residencial AS residencial_aluno FROM (chamado AS c JOIN aluno AS a ON c.fk_aluno = a.matricula) LEFT JOIN funcionario AS f ON c.fk_funcionario = f.matricula WHERE a.matricula = ?;";
       const [chamado_aluno] = await conn.execute(sql, aluno_matricula);
       if (chamado_aluno == "") {
         return "vazio";
       } else {
         console.log("seleção dos chamados do aluno realizado com sucesso");
         return chamado_aluno;
+      }
+    } else {
+      return "matricula";
+    }
+  } catch (error) {
+    console.log("deu erro, por alguma causa", error);
+    return "Error";
+  }
+};
+
+const select_chamadofuncionario = async (funcionario) => {
+  try {
+    if (funcionario[0].eAdmin == 0) {
+      var funcionario_matricula = [funcionario[0].matricula];
+      const conn = await bd.con();
+      const sql =
+        "SELECT c.id, c.titulo, c.assunto, a.usuario AS nome_aluno, f.usuario AS nome_funcionario, p.usuario AS nome_professor FROM (((chamado AS c LEFT JOIN professor AS p ON c.fk_professor = p.matricula) LEFT JOIN funcionario AS f ON c.fk_funcionario = f.matricula) LEFT JOIN aluno AS a ON c.fk_aluno = a.matricula) WHERE f.matricula = ?;";
+      const [chamado_funcionario] = await conn.execute(
+        sql,
+        funcionario_matricula
+      );
+      if (chamado_funcionario == "") {
+        return "vazio";
+      } else {
+        console.log(
+          "seleção dos chamados do funcionario realizado com sucesso"
+        );
+        return chamado_funcionario;
       }
     } else {
       return "matricula";
@@ -220,6 +248,7 @@ module.exports = {
   select_usuario_imagem,
   select_chamadoProfessor,
   select_chamadoAluno,
+  select_chamadofuncionario,
   select_chamadochat,
   update_chamado,
   update_imagem,

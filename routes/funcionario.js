@@ -12127,6 +12127,27 @@ router.get("/professor/foto/exclusao/:matricula", eFuncionario, (req, res) => {
     });
 });
 
+/*exclusão da foto de do funcionario na pagina de chat*/
+router.get("/chat/exclusao/:matricula", eFuncionario, (req, res) => {
+  bd3
+    .update_foto_funcionario({
+      foto_perfil: "",
+      matricula: req.params.matricula,
+    })
+    .then((error) => {
+      if (error === "error") {
+        console.log("error ao excluir a foto de perfil do funcionario");
+      } else {
+        fs.unlink("./public/upload/funcionario/" + foto_funcionario, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.redirect("/funcionario/chat");
+      }
+    });
+});
+
 /*exclusão da foto de perfil do funcionario na pagina de relatorios*/
 router.get("/relatorio/foto/exclusao/:matricula", eFuncionario, (req, res) => {
   bd3
@@ -12386,11 +12407,74 @@ router.get("/chamado/exclusao/:id", eFuncionario, (req, res) => {
 });
 
 /*chat*/
-router.get("/chat", (req, res) => {
-  res.render("funcionario/chat");
+router.get("/chat", eFuncionario, (req, res) => {
+  try {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+  } catch (error) {
+    var funcionario_matricula = null;
+  }
+
+  bd3.select_funcionario_usuario(funcionario_matricula).then((funcionario) => {
+    if (funcionario === "vazio") {
+      usuario = "[Você não devia estar aqui!!!]";
+      foto_funcionario = funcionario[0].foto_perfil;
+    } else if (funcionario === "error") {
+      usuario = "[Error com o nome do usuário]";
+      foto_funcionario = funcionario[0].foto_perfil;
+    } else {
+      usuario = funcionario[0].usuario;
+      foto_funcionario = funcionario[0].foto_perfil;
+    }
+  });
+  bd2.select_chamadofuncionario(req.user).then((chamado) => {
+    if (chamado === "Error") {
+      req.flash("error_msg", "Error no sistema tente novamente mais tarde");
+      res.redirect("/funcionario");
+    } else {
+      res.render("funcionario/chat", {
+        usuario,
+        foto: foto_funcionario,
+        matricula: funcionario_matricula,
+        chamado,
+      });
+    }
+  });
 });
 
-router.get("/chat/:id", (req, res) => {
+router.post("/chat/foto", eFuncionario, (req, res) => {
+  funcionario_perfil(req, res, () => {
+    if (req.user[0].eAdmin == 0) {
+      var funcionario_matricula = req.user[0].matricula;
+    } else {
+      var funcionario_matricula = null;
+    }
+
+    if (typeof req.file === "undefined") {
+      req.file.filename = null;
+    } else if (typeof foto_funcionario !== "undefined") {
+      fs.unlink("./public/upload/funcionario/" + foto_funcionario, () => {});
+    }
+
+    bd3
+      .update_foto_funcionario({
+        foto_perfil: req.file.filename,
+        matricula: funcionario_matricula,
+      })
+      .then((error) => {
+        if (error === "error") {
+          console.log("error ao fazer upload da foto de perfil do funcionario");
+        } else {
+          res.redirect("/funcionario/chat");
+        }
+      });
+  });
+});
+
+router.get("/chat/:id", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin == 0) {
       var funcionario_matricula = req.user[0].matricula;

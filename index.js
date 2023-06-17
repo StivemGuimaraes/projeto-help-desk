@@ -205,6 +205,7 @@ app.post("/", (req, res, next) => {
     .admin({ usuario: req.body.usuario, senha: req.body.senha })
     .then((admin) => {
       var [admin1] = admin;
+      usuario = admin1.usuario;
       if (admin1.eAdmin == 1) {
         auth_admin.auth_admin1();
         passport.authenticate("local", {
@@ -225,6 +226,7 @@ app.post("/", (req, res, next) => {
     .funcionario({ usuario: req.body.usuario, senha: req.body.senha })
     .then((funcionario) => {
       var [funcionario1] = funcionario;
+      usuario = funcionario1.usuario;
       if (funcionario1.eAdmin == 0) {
         auth_funcionario.auth_funcionario1();
         passport.authenticate("local", {
@@ -245,6 +247,7 @@ app.post("/", (req, res, next) => {
     .professor({ usuario: req.body.usuario, senha: req.body.senha })
     .then((professor) => {
       var [professor1] = professor;
+      usuario = professor1.usuario;
       if (professor1.eAdmin == 2) {
         auth_professor.auth_professor1();
         passport.authenticate("local", {
@@ -265,6 +268,7 @@ app.post("/", (req, res, next) => {
     .aluno({ usuario: req.body.usuario, senha: req.body.senha })
     .then((aluno) => {
       var [aluno1] = aluno;
+      usuario = aluno1.usuario;
       if (aluno1.eAdmin == 3 || aluno1.error == "error") {
         auth_aluno.auth_aluno1();
         passport.authenticate("local", {

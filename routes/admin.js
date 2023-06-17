@@ -17665,7 +17665,7 @@ router.get("/funcionario/exclusao/:matricula", eAdmin, (req, res) => {
 });
 
 /*chat*/
-router.get("/chat", eAdmin, (req, res) => {
+router.get("/chat", (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;

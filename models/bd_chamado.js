@@ -185,8 +185,9 @@ const update_chamado = async (chamado) => {
 const update_chamado_funcionario = async (chamado) => {
   try {
     const conn = await bd.con();
-    const sql = "UPDATE chamado SET fk_funcionario = ? WHERE id = ?;";
-    const values = [chamado.fk_funcionario, chamado.id];
+    const sql =
+      "UPDATE chamado SET fk_funcionario = ?, statusd = ? WHERE id = ?;";
+    const values = [chamado.fk_funcionario, chamado.statusd, chamado.id];
     await conn.execute(sql, values);
     console.log("alteração do funcionario no chamado realizado com sucesso");
   } catch (error) {

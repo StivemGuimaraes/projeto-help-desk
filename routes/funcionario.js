@@ -12487,6 +12487,7 @@ router.get("/chat/:id", eFuncionario, (req, res) => {
   bd2
     .update_chamado_funcionario({
       fk_funcionario: funcionario_matricula,
+      statusd: "Em Atendimento",
       id: req.params.id,
     })
     .then((error) => {

@@ -265,7 +265,9 @@
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_aluno{{this.id}}" class="btn btn-danger">Deletar</a>
+    {{#if this.i1}}
     <a href="/funcionario/chat/{{this.id}}" class="btn btn-outline-dark ms-3">Fazer atendimento</a>
+    {{/if}}
     </div>
   </div>
   {{else}}
@@ -300,7 +302,9 @@
     <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
     <a href="/funcionario/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
     <a data-bs-toggle="modal" data-bs-target="#deletar_professor{{this.id}}" class="btn btn-danger">Deletar</a>
+    {{#if this.i1}}
     <a href="/funcionario/chat/{{this.id}}" class="btn btn-outline-dark ms-3">Fazer atendimento</a>
+    {{/if}}
     </div>
   </div>
   {{/if}}

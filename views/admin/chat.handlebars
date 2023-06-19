@@ -775,9 +775,9 @@ socket.on('chatMessages', (messages) => {
       imageElement.src = chatfotot;
       imageElement.classList.add('message-image-left');
     }
-    
-    messageElement.appendChild(textElement);
     messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement);
+    
 
     // Verifica se o eAdmin está recebendo a mensagem
     if (eAdmin == message.id) {

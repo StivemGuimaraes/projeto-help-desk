@@ -384,12 +384,15 @@
     </div>
   </body>
 <script>
-const socket = io();
+ const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
   console.log(eAdmin)
+ 
+
+  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -434,6 +437,22 @@ const socket = io();
 
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
+//user
+//const userElement = document.createElement('div');
+//if (eAdmin == data.id) {
+    //userElement.userElement = `${data.user}`;
+    //userElement.classList.add('message-text-right');};
+    //messageElement.appendChild(userElement);
+  // Texto
+  const textElement = document.createElement('div');
+  if (eAdmin == data.id) {
+    textElement.textContent = `${data.message}`;
+    textElement.classList.add('message-text-right');
+  } else {
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+  }
+  messageElement.appendChild(textElement);
 
   // Imagem
   const imageElement = document.createElement('img');
@@ -446,16 +465,7 @@ const socket = io();
   }
   messageElement.appendChild(imageElement);
 
-  // Texto
-  const textElement = document.createElement('div');
-  if (eAdmin == data.id) {
-    textElement.textContent = `${data.user}: ${data.message}`;
-    textElement.classList.add('message-text-right');
-  } else {
-    textElement.innerHTML = `${data.user}<br>${data.message}`;
-    textElement.classList.add('message-text-left');
-  }
-  messageElement.appendChild(textElement);
+  
 
   listItem.appendChild(messageElement);
   document.getElementById('messages').appendChild(listItem);
@@ -469,37 +479,38 @@ socket.on('chatMessages', (messages) => {
     const listItem = document.createElement('li');
     listItem.classList.add('message-balloon');
 
-    // Verifica se o eAdmin está recebendo a mensagem
-    if (eAdmin == message.id) {
-      listItem.classList.add('sent');
-    } else {
-      listItem.classList.add('received');
-    }
-
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
 
     // Imagem
     const imageElement = document.createElement('img');
-    if (eAdmin == message.id) {
-      imageElement.src = chatfotot;
-      imageElement.classList.add('message-image-right');
-    } else {
-      imageElement.src = chatfotot;
-      imageElement.classList.add('message-image-left');
-    }
-    messageElement.appendChild(imageElement);
 
     // Texto
     const textElement = document.createElement('div');
     if (eAdmin == message.id) {
-      textElement.textContent = `${message.user}: ${message.message}`;
+      textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
+       imageElement.src = chatfotot;
+      imageElement.classList.add('message-image-right');
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
+      imageElement.src = chatfotot;
+      imageElement.classList.add('message-image-left');
     }
+    messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);
+    
+
+    // Verifica se o eAdmin está recebendo a mensagem
+    if (eAdmin == message.id) {
+      listItem.classList.add('sent');
+      
+    } 
+    else {
+      listItem.classList.add('received');
+    }
+    
 
     listItem.appendChild(messageElement);
     document.getElementById('messages').appendChild(listItem);

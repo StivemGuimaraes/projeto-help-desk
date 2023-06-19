@@ -17669,6 +17669,7 @@ router.get("/chat", (req, res) => {
   try {
     if (req.user[0].eAdmin == 1) {
       var admin_matricula = req.user[0].matricula;
+      var admin_eAdmin = req.user[0].eAdmin;
     } else {
       var admin_matricula = null;
     }
@@ -17697,6 +17698,7 @@ router.get("/chat", (req, res) => {
         usuario,
         foto: foto_admin,
         matricula: admin_matricula,
+        eAdmin: admin_eAdmin,
         chamado,
       });
     }

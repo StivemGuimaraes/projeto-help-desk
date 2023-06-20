@@ -99,8 +99,12 @@
       .message {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0%;
   justify-content: flex-end;
+  border-radius : 20px ;
+  border: block;
+  background-color: rgb(252, 252, 252);
+  padding: 10px;
 }
 
 .message-left {
@@ -114,6 +118,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  
   text-align: right;
 }
 
@@ -133,20 +138,24 @@
 
 .message-text-right {
   margin: 0;
+  font-size: 25px;
   text-align: right;
   background-color: #007bff;
   color: #fff;
   padding: 10px;
-  border-radius: 8px;
+  margin-right: 10px;
+  border-radius: 20px 0px 20px 20px;
 }
 
 .message-text-left {
   margin: 0;
+  width: auto;
   text-align: left;
   background-color: #d4d9df;
   color: #000000;
   padding: 10px;
   border-radius: 8px;
+  margin-left: 10 px;
 }
 
 .message-balloon {
@@ -417,7 +426,9 @@
 
             
             </div>
-              <div class="chat-input" ><div> 
+            
+              <div class="chat-input" >
+                <div> 
               <input id="currentRoom" hidden>
               <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
               <button class="btn btn-success" onclick="sendMessage()">
@@ -539,7 +550,7 @@ socket.on('chatMessages', (messages) => {
     if (eAdmin == message.id) {
       textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
-       imageElement.src = message.foto;
+       imageElement.src = chatfotot;
       imageElement.classList.add('message-image-right');
        
         messageElement.appendChild(textElement);

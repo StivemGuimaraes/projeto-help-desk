@@ -462,7 +462,7 @@
   console.log(matricula)
   console.log(eAdmin)
  
-socket.emit('foto', chatId, eAdmin, chatfotot);
+socket.emit('foto', eAdmin, chatfotot);
   
 
   // Função para entrar em um chat
@@ -531,7 +531,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = data.foto;
+    imageElement.src = data.foto_aluno;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -570,7 +570,7 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.innerHTML =`<img src="/public/img/do-utilizador.png">`;
+      imageElement.src = message.foto_aluno;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

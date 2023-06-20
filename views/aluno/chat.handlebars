@@ -281,7 +281,7 @@
             />
             <div class="text-center mt-3">
               <a
-                href="/aluno/chat/exclusao/{{matricula}}"
+                href="/aluno/chat/exclusao/{{aluno_matricula}}"
                 class="btn btn-outline-danger"
               >Excluir</a>
             </div>
@@ -372,7 +372,8 @@
           <div class="chat-messages" id="messages">
             <input type="image" id="chatfoto" value="/upload/aluno/{{foto}}" hidden/>
              <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
-             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
+             <input type="text" id="alunoMatricula" value="{{aluno_matricula}}" hidden>
+             <input type="text" id="adminMatricula" hidden>
 
             
             </div>
@@ -394,13 +395,15 @@
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
-  var matricula = document.querySelector("#adminMatricula").value;
-  console.log(matricula)
+  var aluno_matricula = document.querySelector("#alunoMatricula").value;
+  var admin_matricula = document.querySelector("#adminMatricula").value;
+
+  console.log(admin_matricula)
   console.log(eAdmin)
- 
 
   
-
+  socket.emit('foto', chatId, eAdmin, chatfotot);
+  
   // Função para entrar em um chat
   function joinChat(chatId) {
     // Envia o evento de entrada no chat para o servidor
@@ -424,18 +427,17 @@
 
     // Verifica se o eAdmin está enviando a mensagem
     if (eAdmin == chatId) {
-      socket.emit('message', message, chatId, eAdmin, matricula, true);
+      socket.emit('message', message, chatId, eAdmin, chatfotot, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, matricula);
+      socket.emit('message', message, chatId, eAdmin, chatfotot, false);
     }
   }
 
  socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
-  console.log(data)
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
-
+  console.log(data)
   // Verifica se o eAdmin está recebendo a mensagem
   if (eAdmin == data.id) {
     listItem.classList.add('sent');
@@ -468,7 +470,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = data.foto;
+    imageElement.src = data.foto_admin;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -499,7 +501,7 @@ socket.on('chatMessages', (messages) => {
     if (eAdmin == message.id) {
       textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
-       imageElement.src = message.foto;
+       imageElement.src = message.foto_admin;
       imageElement.classList.add('message-image-right');
        
         messageElement.appendChild(textElement);
@@ -507,7 +509,7 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = message.foto;
+      imageElement.src = message.foto_admin;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

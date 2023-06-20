@@ -450,7 +450,7 @@
   console.log(matricula)
   console.log(eAdmin)
  
-
+socket.emit('foto', chatId, eAdmin, chatfotot);
   
 
   // Função para entrar em um chat
@@ -476,9 +476,9 @@
 
     // Verifica se o eAdmin está enviando a mensagem
     if (eAdmin == chatId) {
-      socket.emit('message', message, chatId, eAdmin, matricula, true);
+      socket.emit('message', message, chatId, eAdmin, chatfotot, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, matricula);
+      socket.emit('message', message, chatId, eAdmin, chatfotot, false);
     }
   }
 

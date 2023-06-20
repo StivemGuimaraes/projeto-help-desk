@@ -305,46 +305,20 @@ io.on("connection", (socket) => {
     // Envia as mensagens existentes no chat para o novo usuário
     socket.emit("chatMessages", chats[chatId]);
   });
-
+  socket.on("foto", (eAdmin, foto) => {
+    if (eAdmin == 1) {
+      foto_admin = foto;
+    } else if (eAdmin == 2) {
+      foto_professor = foto;
+    } else if (eAdmin == 3) {
+      foto_aluno = foto;
+    } else if (eAdmin == 0) {
+      foto_funcionario = foto;
+    }
+  });
   // Evento para enviar uma mensagem
-  socket.on("message", (message, chatId, eAdmin, matricula) => {
+  socket.on("message", (message, chatId, eAdmin) => {
     console.log(`Nova mensagem no chat ${chatId}: ${message}`);
-    bd1.select_admin(matricula).then((admin) => {
-      if (admin === "vazio") {
-        foto_admin = "";
-      } else if (admin === "error") {
-        foto_admin = "";
-      } else {
-        foto_admin = "/upload/admin/" + admin[0].foto_perfil;
-      }
-    });
-    bd1.select_funcionario_usuario(matricula).then((funcionario) => {
-      if (funcionario === "vazio") {
-        foto_funcionario = "";
-      } else if (funcionario === "error") {
-        foto_funcionario = "";
-      } else {
-        foto_funcionario = "/upload/funcionario/" + funcionario[0].foto_perfil;
-      }
-    });
-    bd2.select_professor_usuario(matricula).then((professor) => {
-      if (professor === "vazio") {
-        foto_professor = "";
-      } else if (professor === "error") {
-        foto_professor = "";
-      } else {
-        foto_professor = "/upload/professor/" + professor[0].foto_perfil;
-      }
-    });
-    bd.select_aluno_usuario(matricula).then((aluno) => {
-      if (aluno === "vazio") {
-        foto_aluno = "";
-      } else if (aluno === "error") {
-        foto_aluno = "";
-      } else {
-        foto_aluno = "/upload/aluno/" + aluno[0].foto_perfil;
-      }
-    });
 
     switch (eAdmin) {
       case "1":

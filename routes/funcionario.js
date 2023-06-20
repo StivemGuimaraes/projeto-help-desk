@@ -12411,6 +12411,7 @@ router.get("/chat", eFuncionario, (req, res) => {
   try {
     if (req.user[0].eAdmin == 0) {
       var funcionario_matricula = req.user[0].matricula;
+      var funcionario_eAdmin = req.user[0].eAdmin;
     } else {
       var funcionario_matricula = null;
     }
@@ -12438,6 +12439,7 @@ router.get("/chat", eFuncionario, (req, res) => {
       res.render("funcionario/chat", {
         usuario,
         foto: foto_funcionario,
+        eAdmin: funcionario_eAdmin,
         matricula: funcionario_matricula,
         chamado,
       });

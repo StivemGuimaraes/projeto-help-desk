@@ -6313,6 +6313,7 @@ router.get("/chat", eProfessor, (req, res) => {
   try {
     if (req.user[0].eAdmin == 2) {
       var professor_matricula = req.user[0].matricula;
+      var professor_eAdmin = req.user[0].eAdmin;
     } else {
       var professor_matricula = null;
     }
@@ -6340,6 +6341,7 @@ router.get("/chat", eProfessor, (req, res) => {
       res.render("professor/chat", {
         usuario,
         foto: foto_professor,
+        eAdmin: professor_eAdmin,
         matricula: professor_matricula,
         chamado,
       });

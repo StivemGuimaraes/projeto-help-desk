@@ -747,6 +747,7 @@ router.get("/chat", eAluno, (req, res) => {
   try {
     if (req.user[0].eAdmin == 3) {
       var aluno_matricula = req.user[0].matricula;
+      var aluno_eAdmin = req.user[0].eAdmin;
     } else {
       var aluno_matricula = null;
     }
@@ -774,6 +775,7 @@ router.get("/chat", eAluno, (req, res) => {
       res.render("aluno/chat", {
         usuario,
         foto: foto_aluno,
+        eAdmin: aluno_eAdmin,
         matricula: aluno_matricula,
         chamado,
       });

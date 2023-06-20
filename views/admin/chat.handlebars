@@ -465,9 +465,9 @@
 
     // Verifica se o eAdmin está enviando a mensagem
     if (eAdmin == chatId) {
-      socket.emit('message', message, chatId, eAdmin, true);
+      socket.emit('message', message, chatId, eAdmin, matricula, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, false);
+      socket.emit('message', message, chatId, eAdmin, matricula);
     }
   }
 
@@ -499,7 +499,6 @@ const imageElement = document.createElement('img');
   if (eAdmin == data.id) {
     textElement.textContent = `${data.message}`;
     textElement.classList.add('message-text-right');
-
  imageElement.src = chatfotot;
     imageElement.classList.add('message-image-right');
      messageElement.appendChild(textElement);
@@ -509,7 +508,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = chatfotot;
+    imageElement.src = data.foto;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -540,7 +539,7 @@ socket.on('chatMessages', (messages) => {
     if (eAdmin == message.id) {
       textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
-       imageElement.src = chatfotot;
+       imageElement.src = message.foto;
       imageElement.classList.add('message-image-right');
        
         messageElement.appendChild(textElement);
@@ -548,7 +547,7 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = chatfotot;
+      imageElement.src = message.foto;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

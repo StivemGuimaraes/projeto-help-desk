@@ -393,6 +393,7 @@
   </div>
 </header>
 <main>
+   
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3 class="text-center">Selecione um chat</h3>
@@ -428,9 +429,7 @@
     </div>
   </body>
 
-
 <script>
-   
   const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
@@ -439,6 +438,9 @@
   var matricula = document.querySelector("#adminMatricula").value;
   console.log(matricula)
   console.log(eAdmin)
+ 
+
+  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -469,7 +471,7 @@
     }
   }
 
-socket.on('message', (data) => {
+ socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
@@ -549,7 +551,7 @@ socket.on('chatMessages', (messages) => {
       imageElement.src = chatfotot;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement); 
+    messageElement.appendChild(textElement);
     }
     
     
@@ -568,6 +570,7 @@ socket.on('chatMessages', (messages) => {
     document.getElementById('messages').appendChild(listItem);
   });
 });
+
 
     </script>
     </form>

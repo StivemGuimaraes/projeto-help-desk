@@ -16,7 +16,6 @@
     </style>-->
 
     <style>
-   
     body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -200,8 +199,6 @@
   }
 }
   
-  
-  
   </style>
   </head>
 <header
@@ -354,8 +351,8 @@
     </div>
   </div>
 </header>
-
 <main>
+   
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3 class="text-center">Selecione um chat</h3>
@@ -391,9 +388,7 @@
     </div>
   </body>
 
-
 <script>
-   
   const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
@@ -402,6 +397,9 @@
   var matricula = document.querySelector("#adminMatricula").value;
   console.log(matricula)
   console.log(eAdmin)
+ 
+
+  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -426,13 +424,13 @@
 
     // Verifica se o eAdmin está enviando a mensagem
     if (eAdmin == chatId) {
-      socket.emit('message', message, chatId, eAdmin, true);
+      socket.emit('message', message, chatId, eAdmin, matricula, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, false);
+      socket.emit('message', message, chatId, eAdmin, matricula);
     }
   }
 
-socket.on('message', (data) => {
+ socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
@@ -460,7 +458,6 @@ const imageElement = document.createElement('img');
   if (eAdmin == data.id) {
     textElement.textContent = `${data.message}`;
     textElement.classList.add('message-text-right');
-
  imageElement.src = chatfotot;
     imageElement.classList.add('message-image-right');
      messageElement.appendChild(textElement);
@@ -470,7 +467,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = chatfotot;
+    imageElement.src = data.foto;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -501,7 +498,7 @@ socket.on('chatMessages', (messages) => {
     if (eAdmin == message.id) {
       textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
-       imageElement.src = chatfotot;
+       imageElement.src = message.foto;
       imageElement.classList.add('message-image-right');
        
         messageElement.appendChild(textElement);
@@ -509,10 +506,10 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = chatfotot;
+      imageElement.src = message.foto;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement); 
+    messageElement.appendChild(textElement);
     }
     
     

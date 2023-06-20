@@ -280,7 +280,6 @@ app.post("/", (req, res, next) => {
     });
 });
 
-
 // Armazenamento dos chats e suas mensagens
 const chats = {};
 
@@ -304,14 +303,21 @@ io.on("connection", (socket) => {
   });
 
   // Evento para enviar uma mensagem
-  socket.on("message", (message, chatId, eAdmin) => {
+  socket.on("message", (message, chatId, eAdmin, matricula) => {
     console.log(`Nova mensagem no chat ${chatId}: ${message}`);
+    switch (eAdmin) {
+      case "0":
+        bd1.select_funcionario_usuario(matricula).then((funcionario) => {});
+        break;
 
+      default:
+        break;
+    }
     // Adiciona a mensagem ao chat
-    chats[chatId].push({ user: usuario, message, id:eAdmin });
+    chats[chatId].push({ user: usuario, message, id: eAdmin });
 
     // Envia a mensagem para todos os usuários no chat
-    io.to(chatId).emit("message", { user: usuario, message, id:eAdmin });
+    io.to(chatId).emit("message", { user: usuario, message, id: eAdmin });
   });
 
   // Evento para desconectar o usuário

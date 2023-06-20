@@ -506,7 +506,8 @@
      <div class="chat">
           <div class="chat-messages" id="messages">
             <input type="image" id="chatfoto" value="/upload/admin/{{foto}}" hidden/>
-             <input type=" text" id="eAdmin" value="{{eAdmin}}" hidden>
+             <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
+             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
 
             
             </div>
@@ -666,6 +667,8 @@ function sendMessage() {
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
+  var matricula = document.querySelector("#adminMatricula").value;
+  console.log(matricula)
   console.log(eAdmin)
  
 

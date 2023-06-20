@@ -478,7 +478,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = ${data.foto};
+    imageElement.src = data.foto;
     console.log = (data.foto)
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
@@ -518,8 +518,8 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = ${messages.foto};
-      console.log(messages.log);
+      imageElement.src = messages.foto;
+      console.log(messages.foto);
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

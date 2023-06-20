@@ -40,6 +40,7 @@
     flex: 5;
     padding: 20px;
     background-color: #fff;
+    
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     padding-top: 40px;
@@ -96,7 +97,11 @@
     border-radius: 4px;
     cursor: pointer;
   }
-      .message {
+  .user{
+    font-weight: bold;
+    
+  }
+  .message {
   display: flex;
   align-items: center;
   margin-bottom: 0%;
@@ -149,13 +154,15 @@
 
 .message-text-left {
   margin: 0;
-  width: auto;
+   font-size: 25px;
   text-align: left;
   background-color: #d4d9df;
   color: #000000;
   padding: 10px;
   border-radius: 8px;
   margin-left: 10 px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
 }
 
 .message-balloon {
@@ -207,6 +214,7 @@
           rgba(45, 111, 131, 1) 17%,
           rgba(28, 46, 76, 1) 100%
         );
+        
       "
 >
   <div class="container-fluid">
@@ -401,18 +409,20 @@
     </div>
   </div>
 </header>
-<main>
-   
+<main >
     <div class="chat-container">
       <div class="chat-sidebar">
-        <h3 class="text-center">Selecione um chat</h3>
+        <div class="user">
+          <h3 class="text-center">Selecione um chat</h3>
+          </div>
+        
         <ul>
           {{#each chamado}}
           {{#if this.nome_aluno}}
-          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado</div></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{#if this.nome_professor}}
-          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="left"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{/each}}
         </ul> 
@@ -556,7 +566,7 @@ socket.on('chatMessages', (messages) => {
         messageElement.appendChild(textElement);
         messageElement.appendChild(imageElement);
     } else {
-      textElement.innerHTML = `${message.user}<br>${message.message}`;
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
       textElement.classList.add('message-text-left');
       imageElement.src = message.foto;
       imageElement.classList.add('message-image-left');

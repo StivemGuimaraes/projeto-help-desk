@@ -397,14 +397,7 @@
   const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
-  console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
-  var aluno_matricula = document.querySelector("#alunoMatricula").value;
-  var admin_matricula = document.querySelector("#adminMatricula").value;
-
-  console.log(admin_matricula)
-  console.log(eAdmin)
-
   
   socket.emit('foto', eAdmin, chatfotot);
   
@@ -464,10 +457,17 @@ socket.on('message', (data) => {
     imageElement.classList.add('message-image-right');
     messageElement.appendChild(textElement);
     messageElement.appendChild(imageElement);
-  } else {
+  } else if (data.id == "1") {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
     imageElement.src = data.foto_admin;
+    imageElement.classList.add('message-image-left');
+    messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement);
+  } else if (data.id == "0") {
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_funcionario;
     imageElement.classList.add('message-image-left');
     messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);
@@ -501,10 +501,17 @@ socket.on('chatMessages', (messages) => {
       imageElement.classList.add('message-image-right');
       messageElement.appendChild(textElement);
       messageElement.appendChild(imageElement);
-    } else {
+    } else if (message.id == "1") {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
       imageElement.src = message.foto_admin;
+      imageElement.classList.add('message-image-left');
+      messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
+    } else if (message.id == "0") {
+      textElement.innerHTML = `${message.user}<br>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_funcionario;
       imageElement.classList.add('message-image-left');
       messageElement.appendChild(imageElement);
       messageElement.appendChild(textElement);

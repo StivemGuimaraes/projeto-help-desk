@@ -526,12 +526,24 @@ const imageElement = document.createElement('img');
     imageElement.classList.add('message-image-right');
      messageElement.appendChild(textElement);
   messageElement.appendChild(imageElement);
-  } 
-  
-  else {
+  } else if (data.id == "3") {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
     imageElement.src = data.foto_aluno;
+    imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  } else if (data.id == "2") {
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_professor;
+    imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  } else if (data.id == "0") {
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_funcionario;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -567,10 +579,24 @@ socket.on('chatMessages', (messages) => {
        
         messageElement.appendChild(textElement);
         messageElement.appendChild(imageElement);
-    } else {
+    } else if (message.id == "3") {
       textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
       textElement.classList.add('message-text-left');
       imageElement.src = message.foto_aluno;
+      imageElement.classList.add('message-image-left');
+       messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement);
+    } else if (message.id == "2") {
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_professor;
+      imageElement.classList.add('message-image-left');
+       messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement);
+    } else if (message.id == "0") {
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_funcionario;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

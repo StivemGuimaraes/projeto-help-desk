@@ -321,7 +321,7 @@ io.on("connection", (socket) => {
   socket.on("message", (message, chatId, eAdmin) => {
     console.log(`Nova mensagem no chat ${chatId}: ${message}`);
 
-    // Adiciona a mensagem do professor ao chat
+    // Adiciona a mensagem ao chat
     chats[chatId].push({
       user: usuario,
       message,
@@ -332,7 +332,7 @@ io.on("connection", (socket) => {
       foto_professor,
     });
 
-    // Envia a mensagem do professor para todos os usuários no chat
+    // Envia a mensagem para todos os usuários no chat
     io.to(chatId).emit("message", {
       user: usuario,
       message,
@@ -342,92 +342,6 @@ io.on("connection", (socket) => {
       foto_funcionario,
       foto_professor,
     });
-
-    /* switch (eAdmin) {
-      case "1":
-        // Adiciona a mensagem do admin ao chat
-        chats[chatId].push({
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_funcionario,
-          foto_aluno,
-          foto_professor,
-        });
-
-        // Envia a mensagem do admin para todos os usuários no chat
-        io.to(chatId).emit("message", {
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_professor,
-          foto_aluno,
-          foto_funcionario,
-        });
-        break;
-      case "0":
-        // Adiciona a mensagem do funcionario ao chat
-        chats[chatId].push({
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_aluno,
-          foto_professor,
-        });
-
-        // Envia a mensagem do funcionario para todos os usuários no chat
-        io.to(chatId).emit("message", {
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_aluno,
-          foto_professor,
-        });
-        break;
-
-      case "2":
-        // Adiciona a mensagem do professor ao chat
-        chats[chatId].push({
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_funcionario,
-        });
-
-        // Envia a mensagem do professor para todos os usuários no chat
-        io.to(chatId).emit("message", {
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_funcionario,
-        });
-        break;
-
-      case "3":
-        // Adiciona a mensagem do aluno ao chat
-        chats[chatId].push({
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_funcionario,
-        });
-        console.log(chats[chatId]);
-
-        // Envia a mensagem do aluno para todos os usuários no chat
-        io.to(chatId).emit("message", {
-          user: usuario,
-          message,
-          id: eAdmin,
-          foto_admin,
-          foto_funcionario,
-        });
-        break;
-    }*/
   });
 
   // Evento para desconectar o usuário

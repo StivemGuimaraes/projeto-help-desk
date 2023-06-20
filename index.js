@@ -23,6 +23,10 @@ const bd1 = require("./models/bd_funcionario");
 const bd2 = require("./models/bd_professor");
 const port = 8008;
 var usuario;
+var foto_admin;
+var foto_funcionario;
+var foto_professor;
+var foto_aluno;
 
 // config
 //--sessão
@@ -305,24 +309,53 @@ io.on("connection", (socket) => {
   // Evento para enviar uma mensagem
   socket.on("message", (message, chatId, eAdmin, matricula) => {
     console.log(`Nova mensagem no chat ${chatId}: ${message}`);
+    bd1.select_admin(matricula).then((admin) => {
+      if (admin === "vazio") {
+        foto_admin = "";
+      } else if (admin === "error") {
+        foto_admin = "";
+      } else {
+        foto_admin = "/upload/admin/" + admin[0].foto_perfil;
+      }
+    });
+    bd1.select_funcionario_usuario(matricula).then((funcionario) => {
+      if (funcionario === "vazio") {
+        foto_funcionario = "";
+      } else if (funcionario === "error") {
+        foto_funcionario = "";
+      } else {
+        foto_funcionario = "/upload/funcionario/" + funcionario[0].foto_perfil;
+      }
+    });
+    bd2.select_professor_usuario(matricula).then((professor) => {
+      if (professor === "vazio") {
+        foto_professor = "";
+      } else if (professor === "error") {
+        foto_professor = "";
+      } else {
+        foto_professor = "/upload/professor/" + professor[0].foto_perfil;
+      }
+    });
+    bd.select_aluno_usuario(matricula).then((aluno) => {
+      if (aluno === "vazio") {
+        foto_aluno = "";
+      } else if (aluno === "error") {
+        foto_aluno = "";
+      } else {
+        foto_aluno = "/upload/aluno/" + aluno[0].foto_perfil;
+      }
+    });
+
     switch (eAdmin) {
       case "1":
-        var foto_admin;
-        bd1.select_admin(matricula).then((admin) => {
-          if (admin === "vazio") {
-            foto_admin = "";
-          } else if (admin === "error") {
-            foto_admin = "";
-          } else {
-            foto_admin = "/upload/admin/" + admin[0].foto_perfil;
-          }
-        });
         // Adiciona a mensagem do admin ao chat
         chats[chatId].push({
           user: usuario,
           message,
           id: eAdmin,
-          foto_admin,
+          foto_funcionario,
+          foto_aluno,
+          foto_professor,
         });
 
         // Envia a mensagem do admin para todos os usuários no chat
@@ -330,27 +363,20 @@ io.on("connection", (socket) => {
           user: usuario,
           message,
           id: eAdmin,
-          foto_admin,
+          foto_professor,
+          foto_aluno,
+          foto_funcionario,
         });
         break;
       case "0":
-        var foto_funcionario;
-        bd1.select_funcionario_usuario(matricula).then((funcionario) => {
-          if (funcionario === "vazio") {
-            foto_funcionario = "";
-          } else if (funcionario === "error") {
-            foto_funcionario = "";
-          } else {
-            foto_funcionario =
-              "/upload/funcionario/" + funcionario[0].foto_perfil;
-          }
-        });
         // Adiciona a mensagem do funcionario ao chat
         chats[chatId].push({
           user: usuario,
           message,
           id: eAdmin,
-          foto_funcionario,
+          foto_admin,
+          foto_aluno,
+          foto_professor,
         });
 
         // Envia a mensagem do funcionario para todos os usuários no chat
@@ -358,27 +384,20 @@ io.on("connection", (socket) => {
           user: usuario,
           message,
           id: eAdmin,
-          foto_funcionario,
+          foto_admin,
+          foto_aluno,
+          foto_professor,
         });
         break;
 
       case "2":
-        var foto_professor;
-        bd2.select_professor_usuario(matricula).then((professor) => {
-          if (professor === "vazio") {
-            foto_professor = "";
-          } else if (professor === "error") {
-            foto_professor = "";
-          } else {
-            foto_professor = "/upload/professor/" + professor[0].foto_perfil;
-          }
-        });
         // Adiciona a mensagem do professor ao chat
         chats[chatId].push({
           user: usuario,
           message,
           id: eAdmin,
-          foto_professor,
+          foto_admin,
+          foto_funcionario,
         });
 
         // Envia a mensagem do professor para todos os usuários no chat
@@ -386,27 +405,19 @@ io.on("connection", (socket) => {
           user: usuario,
           message,
           id: eAdmin,
-          foto_professor,
+          foto_admin,
+          foto_funcionario,
         });
         break;
 
       case "3":
-        var foto_aluno;
-        bd.select_aluno_usuario(matricula).then((aluno) => {
-          if (aluno === "vazio") {
-            foto_aluno = "";
-          } else if (aluno === "error") {
-            foto_aluno = "";
-          } else {
-            foto_aluno = "/upload/aluno/" + aluno[0].foto_perfil;
-          }
-        });
         // Adiciona a mensagem do aluno ao chat
         chats[chatId].push({
           user: usuario,
           message,
           id: eAdmin,
-          foto_aluno,
+          foto_admin,
+          foto_funcionario,
         });
 
         // Envia a mensagem do aluno para todos os usuários no chat
@@ -414,7 +425,8 @@ io.on("connection", (socket) => {
           user: usuario,
           message,
           id: eAdmin,
-          foto_aluno,
+          foto_admin,
+          foto_funcionario,
         });
         break;
     }

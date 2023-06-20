@@ -15,7 +15,7 @@
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>-->
 
-     <style>
+    <style>
     body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -111,12 +111,8 @@
       .message {
   display: flex;
   align-items: center;
-  margin-bottom: 0%;
+  margin-bottom: 10px;
   justify-content: flex-end;
-  border-radius : 20px ;
-  border: block;
-  background-color: rgb(252, 252, 252);
-  padding: 10px;
 }
 
 .message-left {
@@ -130,7 +126,6 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  
   text-align: right;
 }
 
@@ -150,24 +145,20 @@
 
 .message-text-right {
   margin: 0;
-  font-size: 25px;
   text-align: right;
   background-color: #007bff;
   color: #fff;
   padding: 10px;
-  margin-right: 10px;
-  border-radius: 20px 0px 20px 20px;
+  border-radius: 8px;
 }
 
 .message-text-left {
   margin: 0;
-  width: auto;
   text-align: left;
   background-color: #d4d9df;
   color: #000000;
   padding: 10px;
   border-radius: 8px;
-  margin-left: 10 px;
 }
 
 .message-balloon {
@@ -381,13 +372,11 @@
           <div class="chat-messages" id="messages">
             <input type="image" id="chatfoto" value="/upload/aluno/{{foto}}" hidden/>
              <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
-             <input type="text" id="alunoMatricula" value="{{matricula}}" hidden>
+             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
 
             
             </div>
-            
-              <div class="chat-input" >
-                <div> 
+              <div class="chat-input" ><div> 
               <input id="currentRoom" hidden>
               <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
               <button class="btn btn-success" onclick="sendMessage()">
@@ -405,9 +394,9 @@
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
-  var matricula = document.querySelector("#alunoMatricula").value;
-  console.log(matricula);
-  console.log(eAdmin);
+  var matricula = document.querySelector("#adminMatricula").value;
+  console.log(matricula)
+  console.log(eAdmin)
  
 
   
@@ -437,12 +426,13 @@
     if (eAdmin == chatId) {
       socket.emit('message', message, chatId, eAdmin, matricula, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, matricula, false);
+      socket.emit('message', message, chatId, eAdmin, matricula);
     }
   }
 
  socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
+  console.log(data)
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
 
@@ -478,8 +468,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = ${data.foto};
-    console.log = (data.foto)
+    imageElement.src = data.foto;
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -510,7 +499,7 @@ socket.on('chatMessages', (messages) => {
     if (eAdmin == message.id) {
       textElement.textContent = `${message.message}`;
       textElement.classList.add('message-text-right');
-       imageElement.src = chatfotot;
+       imageElement.src = message.foto;
       imageElement.classList.add('message-image-right');
        
         messageElement.appendChild(textElement);
@@ -518,8 +507,7 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = ${messages.foto};
-      console.log(messages.log);
+      imageElement.src = message.foto;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

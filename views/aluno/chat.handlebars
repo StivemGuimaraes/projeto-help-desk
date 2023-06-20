@@ -2,19 +2,7 @@
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <script defer src="/js/foto_perfil.js"></script>
     <title>Chat</title>
-   <!-- <style>
-      main { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>-->
-
+  
     <style>
     body {
     font-family: Arial, sans-serif;
@@ -52,6 +40,7 @@
     flex: 5;
     padding: 20px;
     background-color: #fff;
+    
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     padding-top: 40px;
@@ -108,11 +97,19 @@
     border-radius: 4px;
     cursor: pointer;
   }
-      .message {
+  .user{
+    font-weight: bold;
+    
+  }
+  .message {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0%;
   justify-content: flex-end;
+  border-radius : 20px ;
+  border: block;
+  background-color: rgb(252, 252, 252);
+  padding: 10px;
 }
 
 .message-left {
@@ -126,6 +123,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  
   text-align: right;
 }
 
@@ -145,20 +143,26 @@
 
 .message-text-right {
   margin: 0;
+  font-size: 25px;
   text-align: right;
   background-color: #007bff;
   color: #fff;
   padding: 10px;
-  border-radius: 8px;
+  margin-right: 10px;
+  border-radius: 20px 0px 20px 20px;
 }
 
 .message-text-left {
   margin: 0;
+   font-size: 25px;
   text-align: left;
   background-color: #d4d9df;
   color: #000000;
   padding: 10px;
   border-radius: 8px;
+  margin-left: 10 px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
 }
 
 .message-balloon {
@@ -433,11 +437,12 @@
     }
   }
 
- socket.on('message', (data) => {
+socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
+  console.log(data)
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
-  console.log(data)
+
   // Verifica se o eAdmin está recebendo a mensagem
   if (eAdmin == data.id) {
     listItem.classList.add('sent');
@@ -447,36 +452,26 @@
 
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
-//user
-//const userElement = document.createElement('div');
-//if (eAdmin == data.id) {
-    //userElement.userElement = `${data.user}`;
-    //userElement.classList.add('message-text-right');};
-    //messageElement.appendChild(userElement);
+
   // Texto - Imagem
-const imageElement = document.createElement('img');
+  const imageElement = document.createElement('img');
   const textElement = document.createElement('div');
-  
-  
+
   if (eAdmin == data.id) {
-    textElement.textContent = `${data.message}`;
+    textElement.textContent = data.message;
     textElement.classList.add('message-text-right');
- imageElement.src = chatfotot;
+    imageElement.src = chatfotot;
     imageElement.classList.add('message-image-right');
-     messageElement.appendChild(textElement);
-  messageElement.appendChild(imageElement);
-  } 
-  
-  else {
+    messageElement.appendChild(textElement);
+    messageElement.appendChild(imageElement);
+  } else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = data.foto_admin;
+    imageElement.src = data.foto;
     imageElement.classList.add('message-image-left');
-     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);
   }
- 
-  
 
   listItem.appendChild(messageElement);
   document.getElementById('messages').appendChild(listItem);
@@ -499,33 +494,27 @@ socket.on('chatMessages', (messages) => {
     // Texto
     const textElement = document.createElement('div');
     if (eAdmin == message.id) {
-      textElement.textContent = `${message.message}`;
+      textElement.textContent = message.message;
       textElement.classList.add('message-text-right');
-       imageElement.src = message.foto_admin;
+       imageElement.src = message.foto;
       imageElement.classList.add('message-image-right');
-       
-        messageElement.appendChild(textElement);
-        messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
+      messageElement.appendChild(imageElement);
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = message.foto_admin;
+      imageElement.src = message.foto;
       imageElement.classList.add('message-image-left');
-       messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement);
+      messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
     }
-    
-    
 
     // Verifica se o eAdmin está recebendo a mensagem
     if (eAdmin == message.id) {
       listItem.classList.add('sent');
-      
-    } 
-    else {
+    } else {
       listItem.classList.add('received');
     }
-    
 
     listItem.appendChild(messageElement);
     document.getElementById('messages').appendChild(listItem);

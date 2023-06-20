@@ -16,7 +16,6 @@
     </style>-->
 
     <style>
-    
     body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -53,6 +52,7 @@
     flex: 5;
     padding: 20px;
     background-color: #fff;
+    
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     padding-top: 40px;
@@ -109,11 +109,19 @@
     border-radius: 4px;
     cursor: pointer;
   }
-      .message {
+  .user{
+    font-weight: bold;
+    
+  }
+  .message {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0%;
   justify-content: flex-end;
+  border-radius : 20px ;
+  border: block;
+  background-color: rgb(252, 252, 252);
+  padding: 10px;
 }
 
 .message-left {
@@ -127,6 +135,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  
   text-align: right;
 }
 
@@ -135,6 +144,7 @@
   height: 60px;
   border-radius: 50%;
   margin-right: 10px;
+  ;
 }
 
 .message-image-left {
@@ -142,24 +152,31 @@
   height: 60px;
   border-radius: 50%;
   margin-right: 10px;
+  
 }
 
 .message-text-right {
   margin: 0;
+  font-size: 25px;
   text-align: right;
   background-color: #007bff;
   color: #fff;
   padding: 10px;
-  border-radius: 8px;
+  margin-right: 10px;
+  border-radius: 20px 0px 20px 20px;
 }
 
 .message-text-left {
   margin: 0;
+   font-size: 25px;
   text-align: left;
   background-color: #d4d9df;
   color: #000000;
   padding: 10px;
   border-radius: 8px;
+  margin-left: 10 px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
 }
 
 .message-balloon {
@@ -374,18 +391,20 @@
     </div>
   </div>
 </header>
-<main>
-   
+<main >
     <div class="chat-container">
       <div class="chat-sidebar">
-        <h3 class="text-center">Selecione um chat</h3>
+        <div class="user">
+          <h3 class="text-center">Selecione um chat</h3>
+          </div>
+        
         <ul>
           {{#each chamado}}
           {{#if this.nome_aluno}}
-          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado de Aluno</div></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{#if this.nome_professor}}
-          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado Professor</div></br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{/each}}
         </ul> 
@@ -393,13 +412,15 @@
       </div>
      <div class="chat">
           <div class="chat-messages" id="messages">
-            <input type="image" id="chatfoto" value="/upload/admin/{{foto}}" hidden/>
+            <input type="image" id="chatfoto" value="/upload/professor/{{foto}}" hidden/>
              <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
-             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
+             <input type="text" id="professorMatricula" value="{{matricula}}" hidden>
 
             
             </div>
-              <div class="chat-input" ><div> 
+            
+              <div class="chat-input" >
+                <div> 
               <input id="currentRoom" hidden>
               <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
               <button class="btn btn-success" onclick="sendMessage()">
@@ -411,17 +432,18 @@
     </div>
   </body>
 
-
 <script>
-   
   const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
-  var matricula = document.querySelector("#adminMatricula").value;
+  var matricula = document.querySelector("#professorMatricula").value;
   console.log(matricula)
   console.log(eAdmin)
+ 
+
+  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -446,13 +468,13 @@
 
     // Verifica se o eAdmin está enviando a mensagem
     if (eAdmin == chatId) {
-      socket.emit('message', message, chatId, eAdmin, true);
+      socket.emit('message', message, chatId, eAdmin, matricula, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, false);
+      socket.emit('message', message, chatId, eAdmin, matricula, false);
     }
   }
 
-socket.on('message', (data) => {
+ socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
@@ -480,7 +502,6 @@ const imageElement = document.createElement('img');
   if (eAdmin == data.id) {
     textElement.textContent = `${data.message}`;
     textElement.classList.add('message-text-right');
-
  imageElement.src = chatfotot;
     imageElement.classList.add('message-image-right');
      messageElement.appendChild(textElement);
@@ -490,7 +511,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = chatfotot;
+    imageElement.src = "\img\do-utilizador.png";
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -527,12 +548,12 @@ socket.on('chatMessages', (messages) => {
         messageElement.appendChild(textElement);
         messageElement.appendChild(imageElement);
     } else {
-      textElement.innerHTML = `${message.user}<br>${message.message}`;
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = chatfotot;
+      imageElement.innerHTML =`<img src="/public/img/do-utilizador.png">`;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement); 
+    messageElement.appendChild(textElement);
     }
     
     
@@ -551,6 +572,7 @@ socket.on('chatMessages', (messages) => {
     document.getElementById('messages').appendChild(listItem);
   });
 });
+
 
     </script>
     </form>

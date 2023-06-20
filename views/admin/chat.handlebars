@@ -132,6 +132,7 @@
   height: 60px;
   border-radius: 50%;
   margin-right: 10px;
+  ;
 }
 
 .message-image-left {
@@ -139,6 +140,7 @@
   height: 60px;
   border-radius: 50%;
   margin-right: 10px;
+  
 }
 
 .message-text-right {
@@ -419,13 +421,13 @@
         <ul>
           {{#each chamado}}
           {{#if this.nome_aluno}}
-          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado</div></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado de Aluno</div></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{#if this.nome_professor}}
-          <li class="left"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado Professor</div></br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
           {{/each}}
-        </ul> 
+        </ul>
         
       </div>
      <div class="chat">
@@ -488,7 +490,7 @@
     if (eAdmin == chatId) {
       socket.emit('message', message, chatId, eAdmin, matricula, true);
     } else {
-      socket.emit('message', message, chatId, eAdmin, matricula);
+      socket.emit('message', message, chatId, eAdmin, matricula, false);
     }
   }
 
@@ -529,7 +531,7 @@ const imageElement = document.createElement('img');
   else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-    imageElement.src = data.foto;
+    imageElement.src = "\img\do-utilizador.png";
     imageElement.classList.add('message-image-left');
      messageElement.appendChild(imageElement); 
     messageElement.appendChild(textElement);
@@ -568,7 +570,7 @@ socket.on('chatMessages', (messages) => {
     } else {
       textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
       textElement.classList.add('message-text-left');
-      imageElement.src = message.foto;
+      imageElement.innerHTML =`<img src="/public/img/do-utilizador.png">`;
       imageElement.classList.add('message-image-left');
        messageElement.appendChild(imageElement);
     messageElement.appendChild(textElement);

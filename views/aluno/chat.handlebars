@@ -16,6 +16,7 @@
     </style>-->
 
     <style>
+   
     body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -108,8 +109,7 @@
     border-radius: 4px;
     cursor: pointer;
   }
-
-        .message {
+      .message {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -199,6 +199,7 @@
     margin-top: 60px;
   }
 }
+  
   
   
   </style>
@@ -353,16 +354,19 @@
     </div>
   </div>
 </header>
+
 <main>
-    <!--<ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Enviar</button>-->
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3 class="text-center">Selecione um chat</h3>
         <ul>
           {{#each chamado}}
+          {{#if this.nome_aluno}}
           <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          {{/if}}
+          {{#if this.nome_professor}}
+          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          {{/if}}
           {{/each}}
         </ul> 
         
@@ -370,8 +374,11 @@
      <div class="chat">
           <div class="chat-messages" id="messages">
             <input type="image" id="chatfoto" value="/upload/admin/{{foto}}" hidden/>
-             <input type=" text" id="eAdmin" value="{{eAdmin}}" hidden>
-          </div>
+             <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
+             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
+
+            
+            </div>
               <div class="chat-input" ><div> 
               <input id="currentRoom" hidden>
               <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
@@ -383,16 +390,18 @@
       </div>
     </div>
   </body>
+
+
 <script>
- const socket = io();
+   
+  const socket = io();
   var chatId = (id="currentRoom");
   var chatfotot = document.querySelector("#chatfoto").value;
   console.log(chatfotot);
   var eAdmin = document.querySelector("#eAdmin").value;
+  var matricula = document.querySelector("#adminMatricula").value;
+  console.log(matricula)
   console.log(eAdmin)
- 
-
-  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -423,7 +432,7 @@
     }
   }
 
- socket.on('message', (data) => {
+socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
@@ -443,28 +452,30 @@
     //userElement.userElement = `${data.user}`;
     //userElement.classList.add('message-text-right');};
     //messageElement.appendChild(userElement);
-  // Texto
+  // Texto - Imagem
+const imageElement = document.createElement('img');
   const textElement = document.createElement('div');
+  
+  
   if (eAdmin == data.id) {
     textElement.textContent = `${data.message}`;
     textElement.classList.add('message-text-right');
-  } else {
+
+ imageElement.src = chatfotot;
+    imageElement.classList.add('message-image-right');
+     messageElement.appendChild(textElement);
+  messageElement.appendChild(imageElement);
+  } 
+  
+  else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-  }
-  messageElement.appendChild(textElement);
-
-  // Imagem
-  const imageElement = document.createElement('img');
-  if (eAdmin == data.id) {
-    imageElement.src = chatfotot;
-    imageElement.classList.add('message-image-right');
-  } else {
     imageElement.src = chatfotot;
     imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
   }
-  messageElement.appendChild(imageElement);
-
+ 
   
 
   listItem.appendChild(messageElement);
@@ -492,14 +503,18 @@ socket.on('chatMessages', (messages) => {
       textElement.classList.add('message-text-right');
        imageElement.src = chatfotot;
       imageElement.classList.add('message-image-right');
+       
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(imageElement);
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
       imageElement.src = chatfotot;
       imageElement.classList.add('message-image-left');
+       messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement); 
     }
-    messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement);
+    
     
 
     // Verifica se o eAdmin está recebendo a mensagem
@@ -516,6 +531,7 @@ socket.on('chatMessages', (messages) => {
     document.getElementById('messages').appendChild(listItem);
   });
 });
+
 
     </script>
     </form>

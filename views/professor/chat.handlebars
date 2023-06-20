@@ -16,6 +16,7 @@
     </style>-->
 
     <style>
+    
     body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -108,7 +109,82 @@
     border-radius: 4px;
     cursor: pointer;
   }
+      .message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
 
+.message-left {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.message-right {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.message-image-right {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-image-left {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-text-right {
+  margin: 0;
+  text-align: right;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.message-text-left {
+  margin: 0;
+  text-align: left;
+  background-color: #d4d9df;
+  color: #000000;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.message-balloon {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.message-balloon.sent {
+  justify-content: flex-end;
+}
+
+.message-image-right.message-balloon.sent {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.message-text-right.message-balloon.sent {
+  background-color: #007bff;
+  color: #fff;
+}
+
+    
 @media (max-width: 1024px) {
   .chat-input input[type="text"] {
     width: 78%;
@@ -299,14 +375,15 @@
   </div>
 </header>
 <main>
-    <!--<ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Enviar</button>-->
+   
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3 class="text-center">Selecione um chat</h3>
         <ul>
           {{#each chamado}}
+          {{#if this.nome_aluno}}
+          <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          {{/if}}
           {{#if this.nome_professor}}
           <li class="text-center"><button class="btn btn-success" style="width: 75%;" onclick="joinChat('{{this.id}}')">Chamado</br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
           {{/if}}
@@ -315,7 +392,13 @@
         
       </div>
      <div class="chat">
-          <div class="chat-messages" id="messages"></div>
+          <div class="chat-messages" id="messages">
+            <input type="image" id="chatfoto" value="/upload/admin/{{foto}}" hidden/>
+             <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
+             <input type="text" id="adminMatricula" value="{{matricula}}" hidden>
+
+            
+            </div>
               <div class="chat-input" ><div> 
               <input id="currentRoom" hidden>
               <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
@@ -328,95 +411,147 @@
     </div>
   </body>
 
-<!--<script>
-  
-  var socket = io();
-  var messages = document.getElementById('messages');
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
-
-  socket.on('chat message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
-// Lógica do cliente
-const messages = document.getElementById('messages');
-
-socket.on('connect', () => {
-  socket.emit('joinRoom', 'sala1');
-});
-
-socket.on('message', (message) => {
-  const newMessage = document.createElement('div');
-  newMessage.innerText = message;
-  messages.appendChild(newMessage);
-});
-
-function sendMessage() {
-  const input = document.getElementById('messageInput');
-  const message = input.value;
-  socket.emit('chatMessage', {
-    room: 'sala1',
-    message: message,
-  });
-  input.value = '';
-}
-  
-</script>-->
 
 <script>
-      const socket = io();
-      var chatId = (id="currentRoom")
+   
+  const socket = io();
+  var chatId = (id="currentRoom");
+  var chatfotot = document.querySelector("#chatfoto").value;
+  console.log(chatfotot);
+  var eAdmin = document.querySelector("#eAdmin").value;
+  var matricula = document.querySelector("#adminMatricula").value;
+  console.log(matricula)
+  console.log(eAdmin)
 
-      // Função para entrar em um chat
-      function joinChat(chatId) {
-        // Envia o evento de entrada no chat para o servidor
-        socket.emit('join', chatId);
+  // Função para entrar em um chat
+  function joinChat(chatId) {
+    // Envia o evento de entrada no chat para o servidor
+    socket.emit('join', chatId);
 
-        // Limpa as mensagens do chat anterior
-        document.getElementById('messages').innerHTML = '';
+    // Limpa as mensagens do chat anterior
+    document.getElementById('messages').innerHTML = '';
 
-        // Exibe o chat atual
-        document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
-      }
+    // Exibe o chat atual
+    document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
+  }
 
-      // Função para enviar uma mensagem
-      function sendMessage() {
-        const messageInput = document.getElementById('messageInput');
-        const message = messageInput.value;
-        messageInput.value = '';
+  // Função para enviar uma mensagem
+  function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value;
+    messageInput.value = '';
 
-        // Envia a mensagem para o servidor
-        const chatId = document.getElementById('currentRoom').textContent.split(' ')[2];
-        socket.emit('message', message, chatId);
-      }
+    // Envia a mensagem para o servidor
+    const chatId = document.getElementById('currentRoom').textContent.split(' ')[2];
 
-      socket.on('message', (data) => {
-        // Exibe a mensagem recebida na interface do usuário
-        const messageElement = document.createElement('p');
-        messageElement.textContent = `${data.user}: ${data.message}`;
-        document.getElementById('messages').appendChild(messageElement);
-      });
+    // Verifica se o eAdmin está enviando a mensagem
+    if (eAdmin == chatId) {
+      socket.emit('message', message, chatId, eAdmin, true);
+    } else {
+      socket.emit('message', message, chatId, eAdmin, false);
+    }
+  }
 
-      socket.on('chatMessages', (messages) => {
-        // Exibe as mensagens existentes no chat ao entrar
-        messages.forEach((message) => {
-          const messageElement = document.createElement('p');
-          messageElement.textContent = `${message.user}: ${message.message}`;
-          document.getElementById('messages').appendChild(messageElement);
-        });
-      });
+socket.on('message', (data) => {
+  // Exibe a mensagem recebida na interface do usuário
+  const listItem = document.createElement('li');
+  listItem.classList.add('message-balloon');
+
+  // Verifica se o eAdmin está recebendo a mensagem
+  if (eAdmin == data.id) {
+    listItem.classList.add('sent');
+  } else {
+    listItem.classList.add('received');
+  }
+
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+//user
+//const userElement = document.createElement('div');
+//if (eAdmin == data.id) {
+    //userElement.userElement = `${data.user}`;
+    //userElement.classList.add('message-text-right');};
+    //messageElement.appendChild(userElement);
+  // Texto - Imagem
+const imageElement = document.createElement('img');
+  const textElement = document.createElement('div');
+  
+  
+  if (eAdmin == data.id) {
+    textElement.textContent = `${data.message}`;
+    textElement.classList.add('message-text-right');
+
+ imageElement.src = chatfotot;
+    imageElement.classList.add('message-image-right');
+     messageElement.appendChild(textElement);
+  messageElement.appendChild(imageElement);
+  } 
+  
+  else {
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = chatfotot;
+    imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  }
+ 
+  
+
+  listItem.appendChild(messageElement);
+  document.getElementById('messages').appendChild(listItem);
+});
+
+socket.on('chatMessages', (messages) => {
+  // Limpa as mensagens do chat anterior
+  document.getElementById('messages').innerHTML = '';
+
+  messages.forEach((message) => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('message-balloon');
+
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+
+    // Imagem
+    const imageElement = document.createElement('img');
+
+    // Texto
+    const textElement = document.createElement('div');
+    if (eAdmin == message.id) {
+      textElement.textContent = `${message.message}`;
+      textElement.classList.add('message-text-right');
+       imageElement.src = chatfotot;
+      imageElement.classList.add('message-image-right');
+       
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(imageElement);
+    } else {
+      textElement.innerHTML = `${message.user}<br>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = chatfotot;
+      imageElement.classList.add('message-image-left');
+       messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement); 
+    }
+    
+    
+
+    // Verifica se o eAdmin está recebendo a mensagem
+    if (eAdmin == message.id) {
+      listItem.classList.add('sent');
+      
+    } 
+    else {
+      listItem.classList.add('received');
+    }
+    
+
+    listItem.appendChild(messageElement);
+    document.getElementById('messages').appendChild(listItem);
+  });
+});
+
     </script>
     </form>
   </main>

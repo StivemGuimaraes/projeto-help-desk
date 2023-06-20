@@ -96,98 +96,6 @@
     border-radius: 4px;
     cursor: pointer;
   }
- /*.message {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-     justify-content: flex-end;
-    }
-
-    .message-right {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      text-align: right;
-    }
-    .message-left {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      text-align: right;
-    }
-  
-  
-    .message-image-right {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-    .message-image-left {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-  
-  .message-bubble {
-      background-color: #f1f0f0;
-      padding: 10px;
-      border-radius: 8px;
-  }
-    .message-bubble-left {
-      background-color: #f1f0f0;
-      padding: 10px;
-      border-radius: 8px;
-    }
-    .message-bubble-right {
-      background-color: #f1f0f0;
-      padding: 10px;
-      border-radius: 8px;
-    }
-  
-    .message-text-right {
-      margin: 0;
-      text-align: right;
-      background-color: #007bff;
-        color: #fff;
-    }
-    .message-text-left {
-      margin: 0;
-      text-align: left;
-      background-color: #d4d9df;
-        color: #000000;
-    }
-
-// Estilos do balão de conversa 
-      .message-balloon {
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 10px;
-      }
-    
-      .message-balloon.sent {
-        justify-content: flex-end;
-      }
-    
-       .message-image-right .message-balloon {
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-        border-radius: 50%;
-      }
-      .message-balloon .message-text-right {
-        padding: 10px;
-        border-radius: 10px;
-        background-color: #007bff;
-        color: #fff;
-      }
-    
-      .message-balloon.sent .message-text-right {
-        background-color: #007bff;
-        color: #fff;
-      }*/
-
       .message {
   display: flex;
   align-items: center;
@@ -485,9 +393,6 @@
   </div>
 </header>
 <main>
-    <!--<ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Enviar</button>-->
     <div class="chat-container">
       <div class="chat-sidebar">
         <h3 class="text-center">Selecione um chat</h3>
@@ -523,144 +428,8 @@
     </div>
   </body>
 
-<!--<script>
-  
-  var socket = io();
-  var messages = document.getElementById('messages');
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
 
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
-
-  socket.on('chat message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
-// Lógica do cliente
-const messages = document.getElementById('messages');
-
-socket.on('connect', () => {
-  socket.emit('joinRoom', 'sala1');
-});
-
-socket.on('message', (message) => {
-  const newMessage = document.createElement('div');
-  newMessage.innerText = message;
-  messages.appendChild(newMessage);
-});
-
-function sendMessage() {
-  const input = document.getElementById('messageInput');
-  const message = input.value;
-  socket.emit('chatMessage', {
-    room: 'sala1',
-    message: message,
-  });
-  input.value = '';
-}
-  
-</script>-->
-
-<script>/*
-      const socket = io();
-      var chatId = (id="currentRoom");
-      var chatfotot = document.querySelector("#chatfoto").value;
-      console.log(chatfotot);
-      var eAdmin = document.querySelector("#eAdmin").value;
-      console.log(eAdmin)
-
-      // Função para entrar em um chat
-      function joinChat(chatId) {
-        // Envia o evento de entrada no chat para o servidor
-        socket.emit('join', chatId);
-
-        // Limpa as mensagens do chat anterior
-        document.getElementById('messages').innerHTML = '';
-
-        // Exibe o chat atual
-        document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
-      }
-
-      // Função para enviar uma mensagem
-      function sendMessage() {
-        const messageInput = document.getElementById('messageInput');
-        const message = messageInput.value;
-        messageInput.value = '';
-
-        // Envia a mensagem para o servidor
-        const chatId = document.getElementById('currentRoom').textContent.split(' ')[2];
-        socket.emit('message', message, chatId, eAdmin);
-      }
-
-      socket.on('message', (data) => {
-        
-        // Exibe a mensagem recebida na interface do usuário
-        const listItem = document.createElement('li');
-        listItem.classList.add('message-balloon');
-        if (eAdmin == data.id) {listItem.classList.add('send-right');} 
-        else {listItem.classList.add('send-lrft');}
-
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-
-        //imagem
-        const imageElement = document.createElement('img');
-        if (eAdmin == data.id) {
-        imageElement.src = chatfotot;
-     messageElement.imageElement = `${data.user.avatar}`;
-        imageElement.classList.add('message-image-right');
-       } else {
-        imageElement.src = chatfotot;
-      messageElement.imageElement = `${data.user.avatar}`;
-        imageElement.classList.add('message-image-left');
-       };
-        
-  
-       messageElement.appendChild(imageElement);
-
-        //texto
-        const textElement = document.createElement('div');
-       if (eAdmin == data.id) {
-        textElement.textContent = ` ${data.user} : ${data.message} ` ;
-      textElement.classList.add('message-text-right');
-       } else {
-        textElement.textContent = `${data.user} <br> ${data.message}` ;
-      textElement.classList.add('message-text-left');
-       };
-        messageElement.appendChild(textElement);
-
-        if (eAdmin == data.id) {
-        listItem.appendChild(textElement);
-        listItem.appendChild(imageElement);
-        
-       } else {
-      listItem.appendChild(imageElement);
-      listItem.appendChild(textElement);;
-       };
-
-        messageElement.appendChild(listItem);
-    
-        document.getElementById('messages').appendChild(messageElement);
-      });
-
-      socket.on('chatMessages', (messages) => {
-        // Exibe as mensagens existentes no chat ao entrar
-        messages.forEach((message) => {
-          const messageElement = document.createElement('p');
-          messageElement.textContent = `${message.user}: ${message.message}`;
-          document.getElementById('messages').appendChild(messageElement);
-        });
-      });
-    */
+<script>
    
   const socket = io();
   var chatId = (id="currentRoom");
@@ -670,9 +439,6 @@ function sendMessage() {
   var matricula = document.querySelector("#adminMatricula").value;
   console.log(matricula)
   console.log(eAdmin)
- 
-
-  
 
   // Função para entrar em um chat
   function joinChat(chatId) {
@@ -703,7 +469,7 @@ function sendMessage() {
     }
   }
 
- socket.on('message', (data) => {
+socket.on('message', (data) => {
   // Exibe a mensagem recebida na interface do usuário
   const listItem = document.createElement('li');
   listItem.classList.add('message-balloon');
@@ -723,28 +489,30 @@ function sendMessage() {
     //userElement.userElement = `${data.user}`;
     //userElement.classList.add('message-text-right');};
     //messageElement.appendChild(userElement);
-  // Texto
+  // Texto - Imagem
+const imageElement = document.createElement('img');
   const textElement = document.createElement('div');
+  
+  
   if (eAdmin == data.id) {
     textElement.textContent = `${data.message}`;
     textElement.classList.add('message-text-right');
-  } else {
+
+ imageElement.src = chatfotot;
+    imageElement.classList.add('message-image-right');
+     messageElement.appendChild(textElement);
+  messageElement.appendChild(imageElement);
+  } 
+  
+  else {
     textElement.innerHTML = `${data.user}<br>${data.message}`;
     textElement.classList.add('message-text-left');
-  }
-  messageElement.appendChild(textElement);
-
-  // Imagem
-  const imageElement = document.createElement('img');
-  if (eAdmin == data.id) {
-    imageElement.src = chatfotot;
-    imageElement.classList.add('message-image-right');
-  } else {
     imageElement.src = chatfotot;
     imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
   }
-  messageElement.appendChild(imageElement);
-
+ 
   
 
   listItem.appendChild(messageElement);
@@ -772,14 +540,18 @@ socket.on('chatMessages', (messages) => {
       textElement.classList.add('message-text-right');
        imageElement.src = chatfotot;
       imageElement.classList.add('message-image-right');
+       
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(imageElement);
     } else {
       textElement.innerHTML = `${message.user}<br>${message.message}`;
       textElement.classList.add('message-text-left');
       imageElement.src = chatfotot;
       imageElement.classList.add('message-image-left');
+       messageElement.appendChild(imageElement);
+    messageElement.appendChild(textElement); 
     }
-    messageElement.appendChild(imageElement);
-    messageElement.appendChild(textElement);
+    
     
 
     // Verifica se o eAdmin está recebendo a mensagem

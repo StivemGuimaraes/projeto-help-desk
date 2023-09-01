@@ -64,7 +64,7 @@ npm start
 Pronto, o projeto já deve estar ativo, agora só falta ir até seu navegador e digitar na url
 
 ```
-localhost:3000
+localhost:8008
 ```
 
 usuario é admin e senha é admin

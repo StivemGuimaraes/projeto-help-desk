@@ -65,23 +65,6 @@ add foreign key(fk_professor) references professor(matricula),
 add foreign key(fk_funcionario) references funcionario(matricula);
 
 
-create table chat (
-id_chat int not null primary key auto_increment, 
-id_chamado int,
-matricula_A varchar(150),
-matricula_F varchar(150),
-mens_professor text not null,
-mens_aluno text not null,
-id_funcionario int,
-mens_func text not null
-);
-
-
-alter table chat
-add foreign key(id_chamado) references chamado(id),
-add foreign key(matricula_A) references aluno(matricula),
-add foreign key(matricula_F) references professor(matricula);
-
 insert into funcionario (matricula, usuario, senha, telefone_celular, email, eAdmin) values (147, "admin", "admin", "(11) 93698-1478", "lucas@gmail.com", 1);
 insert into aluno (matricula, usuario, senha, telefone_celular, email, eAdmin) values (456, "aluno", "aluno123", "(11) 99999-9990", "aluno@gmail.com", 3);
 insert into funcionario (matricula, usuario, senha, telefone_celular, email, eAdmin) values (123, "funcionario", "funcionario", "(11) 99999-9999", "funcionario@gmail.com", 0);

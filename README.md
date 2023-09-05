@@ -76,5 +76,6 @@ Esse projeto foi feito para meu tcc, tivemos a ideia de fazer um help desk para 
 ## Contribuidores
 
 [https://github.com/arthurluccas](https://github.com/arthurluccas) |
-[https://github.com/WillianSousa21](https://github.com/WillianSousa21) |
-[https://github.com/RenatoLJacob](https://github.com/RenatoLJacob)
+[https://github.com/RenatoLJacob](https://github.com/RenatoLJacob) |
+[https://github.com/stivem-guimaraes](https://github.com/stivem-guimaraes) |
+[https://github.com/WillianSousa21](https://github.com/WillianSousa21)
